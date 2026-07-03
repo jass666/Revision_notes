@@ -2,7 +2,7 @@
 
 Static, browser-based revision pages for exam preparation. The repo is designed to be hosted directly from GitHub Pages or any static hosting provider: each topic is a standalone HTML file, and `index.html` builds the hub from `sites.json`.
 
-Repository: https://github.com/jass666/Revision_notes
+Live URL: <a href="https://kznotes.pages.dev/" target="_blank" rel="noopener noreferrer">https://kznotes.pages.dev/</a>
 
 ## Contents
 
@@ -26,18 +26,23 @@ Repository: https://github.com/jass666/Revision_notes
 
 This is a static site, so no build step is required.
 
-For GitHub Pages:
+For Cloudflare Pages:
 
 1. Push the repository to GitHub.
-2. Open the repository settings.
-3. Go to Pages.
-4. Set the source to the main branch and the repository root.
-5. Save and wait for GitHub Pages to publish the site.
+2. Connect the repository in Cloudflare Pages.
+3. Use no build command and the repository root as the output.
+4. Save and wait for Cloudflare Pages to publish the site.
 
-When GitHub Pages is enabled for `jass666/Revision_notes`, topic pages are served from URLs such as:
+The live site is:
 
 ```text
-https://jass666.github.io/Revision_notes/ntpc.html
+https://kznotes.pages.dev/
+```
+
+Topic pages are served from URLs such as:
+
+```text
+https://kznotes.pages.dev/ntpc.html
 ```
 
 ## Push And Deploy Tool
