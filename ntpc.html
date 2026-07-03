@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NTPC CBT-2 | Complete Maths & Reasoning Revision</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#22303f;
+    --text:#e6edf3; --sub:#8b9bab; --accent:#ff9f1c; --accent2:#2ec4b6;
+    --green:#3ddc84; --red:#ff5d5d; --blue:#5eb1ff; --purple:#c792ea;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;line-height:1.55;}
+  header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#0b0f14 85%,transparent);padding:14px 16px 8px;border-bottom:1px solid var(--border);backdrop-filter:blur(6px);}
+  .title-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  h1{font-size:1.15rem;margin:0;letter-spacing:.3px;}
+  h1 span{color:var(--accent);}
+  #countdown{font-size:.8rem;background:var(--panel2);border:1px solid var(--border);padding:5px 10px;border-radius:20px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .tabs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:2px;}
+  .tab-btn{flex:0 0 auto;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--panel);color:var(--sub);font-size:.85rem;cursor:pointer;font-weight:600;}
+  .tab-btn.active{background:var(--accent);color:#1a1200;border-color:var(--accent);}
+  .searchbar{margin-top:10px;}
+  .searchbar input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-size:.9rem;}
+  .searchbar input::placeholder{color:var(--sub);}
+  .quicknav{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;max-height:64px;overflow-y:auto;}
+  .quicknav button{font-family:inherit;font-size:.68rem;padding:4px 8px;border-radius:8px;background:var(--panel2);color:var(--sub);text-decoration:none;border:1px solid var(--border);white-space:nowrap;cursor:pointer;}
+  .quicknav button:hover{color:var(--text);border-color:var(--accent2);}
+  main{max-width:860px;margin:0 auto;padding:14px 12px 60px;}
+  .section-group{display:none;}
+  .section-group.active{display:block;}
+  .topic{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;scroll-margin-top:210px;}
+  .topic-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;gap:10px;}
+  .topic-head:hover{background:var(--panel2);}
+  .topic-head h2{font-size:.98rem;margin:0;color:var(--text);}
+  .chev{color:var(--sub);transition:transform .2s;font-size:.8rem;flex:0 0 auto;}
+  .topic.open .chev{transform:rotate(90deg);}
+  .topic-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .topic.open .topic-body{max-height:6000px;}
+  .topic-inner{padding:0 16px 16px;border-top:1px solid var(--border);}
+  .label{font-size:.7rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 6px;}
+  .label.fund{color:var(--purple);}
+  .label.trickl{color:var(--accent2);}
+  .label.formulal{color:var(--blue);}
+  .label.examplel{color:var(--accent);}
+  .fund{background:rgba(199,146,234,.08);border-left:3px solid var(--purple);padding:10px 12px;border-radius:8px;font-size:.87rem;color:#d8c5ec;}
+  .trick{background:var(--panel2);border-left:3px solid var(--accent2);padding:10px 12px;border-radius:8px;font-size:.87rem;margin-bottom:6px;}
+  .trick b{color:var(--accent2);}
+  .formula{font-family:'Cascadia Code',Consolas,monospace;background:#0d1420;padding:8px 10px;border-radius:8px;font-size:.83rem;color:var(--blue);margin:2px 0;overflow-x:auto;white-space:pre-wrap;}
+  .example{margin-top:10px;padding:10px 12px;background:#0f1620;border-radius:8px;border:1px dashed var(--border);}
+  .example .q{font-size:.87rem;font-weight:600;color:var(--text);margin-bottom:6px;}
+  .example .q::before{content:"Q. ";color:var(--accent);}
+  .sol-toggle{font-size:.78rem;color:var(--accent);cursor:pointer;font-weight:700;display:inline-block;margin-top:2px;}
+  .sol{display:none;font-size:.85rem;color:var(--sub);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+  .sol.show{display:block;}
+  .sol .ans{color:var(--green);font-weight:700;}
+  .done-btn{margin-top:14px;width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--sub);font-size:.78rem;cursor:pointer;}
+  .done-btn.done{background:rgba(61,220,132,.12);border-color:var(--green);color:var(--green);}
+  .progress-wrap{display:flex;align-items:center;gap:8px;margin:10px 0 4px;}
+  .progress-bar{flex:1;height:6px;background:var(--panel2);border-radius:4px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--green));width:0%;transition:width .3s;}
+  .progress-text{font-size:.72rem;color:var(--sub);white-space:nowrap;}
+  .note{font-size:.78rem;color:var(--sub);margin-top:16px;text-align:center;}
+  .hidden{display:none !important;}
+  .day-tag{font-size:.65rem;background:rgba(94,177,255,.15);color:var(--blue);padding:2px 7px;border-radius:6px;font-weight:700;margin-left:6px;white-space:nowrap;}
+  ::-webkit-scrollbar{height:6px;width:6px;}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-row">
+    <h1>NTPC <span>CBT-2</span> Revision</h1>
+    <div id="countdown">7 days left</div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-group="maths">📐 Maths</button>
+    <button class="tab-btn" data-group="reasoning">🧩 Reasoning</button>
+  </div>
+  <div class="searchbar">
+    <input type="text" id="search" placeholder="Search a topic (e.g. profit, syllogism, HCF)...">
+  </div>
+  <div class="quicknav" id="quicknav"></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+    <div class="progress-text" id="progText">0/0 topics revised</div>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== MATHS ===================== -->
+<div class="section-group active" id="maths">
+
+<div class="topic" data-name="number system divisibility unit digit factors">
+  <div class="topic-head"><h2>1. Number System</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Numbers are classified as: <b>Natural</b> (1,2,3...), <b>Whole</b> (0,1,2...), <b>Integers</b> (...−1,0,1...), <b>Rational</b> (expressible as p/q), <b>Irrational</b> (√2, π), and <b>Real</b> (all of these combined). A <b>prime number</b> has exactly 2 factors (1 and itself) — note that 1 is neither prime nor composite, and 2 is the only even prime. A <b>composite number</b> has more than 2 factors.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Number of factors of N = a^p × b^q × c^r → (p+1)(q+1)(r+1)
+Sum of first n natural numbers = n(n+1)/2
+Sum of first n squares = n(n+1)(2n+1)/6
+Sum of first n cubes = [n(n+1)/2]²</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Divisibility:</b> 3 → digit sum ÷3 | 4 → last 2 digits ÷4 | 6 → div by 2 &amp; 3 | 8 → last 3 digits ÷8 | 9 → digit sum ÷9 | 11 → (sum of odd-place digits − sum of even-place digits) is 0 or a multiple of 11.</div>
+    <div class="trick"><b>Unit digit of a^b:</b> find the cyclicity of the unit digit of "a" (cycle length is 1, 2, or 4), divide b by the cycle length, and use the remainder to pick the position (if remainder is 0, use the last value in the cycle).</div>
+    <div class="formula">2→2,4,8,6 (cycle 4)   3→3,9,7,1 (cycle 4)
+4→4,6 (cycle 2)      7→7,9,3,1 (cycle 4)
+8→8,4,2,6 (cycle 4)  9→9,1 (cycle 2)
+0,1,5,6 → always same digit</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">How many factors does 360 have?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">360 = 2³×3²×5¹. Factors = (3+1)(2+1)(1+1) = 4×3×2 = <span class="ans">24</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the unit digit of 47^63.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Unit digit of base = 7. Cycle of 7: 7,9,3,1 (length 4). 63÷4 → remainder 3 → 3rd value = <span class="ans">3</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the remainder when 1234567 is divided by 11.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Odd-place (from right) digits: 7+5+3+1=16. Even-place: 6+4+2=12. Diff=4 → remainder = <span class="ans">4</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="hcf lcm factors multiples">
+  <div class="topic-head"><h2>2. HCF &amp; LCM</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>HCF (Highest Common Factor)</b> is the largest number that divides all given numbers exactly. <b>LCM (Lowest Common Multiple)</b> is the smallest number divisible by all given numbers. HCF is always ≤ the smallest number; LCM is always ≥ the largest number.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Product of two numbers = HCF × LCM   (2-number rule only)
+HCF of fractions = HCF(numerators) / LCM(denominators)
+LCM of fractions = LCM(numerators) / HCF(denominators)</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Division method</b> for HCF of large numbers is fastest: divide larger by smaller, then divisor by remainder, repeat until remainder is 0 — last divisor is HCF.</div>
+    <div class="trick"><b>Bells/lights ringing together</b> type → answer is always LCM of the individual intervals.</div>
+    <div class="trick"><b>"Greatest number that divides x,y,z leaving remainder r"</b> → find HCF of (x−r),(y−r),(z−r).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">HCF and LCM of two numbers are 12 and 336. If one number is 48, find the other.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Other number = (HCF×LCM)/first = (12×336)/48 = <span class="ans">84</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Three bells ring at intervals of 6, 8, 12 minutes. If they ring together at 9:00 AM, when will they ring together again?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">LCM(6,8,12) = 24 minutes → next together at <span class="ans">9:24 AM</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the greatest number that divides 70 and 125, leaving remainders 5 and 8 respectively.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">HCF(70−5, 125−8) = HCF(65,117) = <span class="ans">13</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="simplification bodmas fractions surds">
+  <div class="topic-head"><h2>3. Simplification &amp; BODMAS</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">BODMAS defines the order operations must be performed in: <b>B</b>rackets, <b>O</b>f, <b>D</b>ivision, <b>M</b>ultiplication, <b>A</b>ddition, <b>S</b>ubtraction. Within brackets, solve in the order (), {}, [] from innermost outward. The "vinculum" (a bar over numbers, e.g. line) is solved even before brackets.</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Memorize squares till 30, cubes till 15, and multiplication tables till 20 — this alone saves the most time across simplification, DI, and number system questions.</div>
+    <div class="trick">Convert decimals to fractions when they match the % table (Topic 4) — much faster than long multiplication.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Simplify: 8 ÷ 2 of 2 + 6 − 3 × 2</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">"of" first: 2 of 2 = 4. Now 8÷4 + 6 − 3×2 = 2+6−6 = <span class="ans">2</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Simplify: (0.36 × 0.36 − 0.14 × 0.14) / (0.36 − 0.14)</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Uses a²−b² = (a+b)(a−b) → numerator=(0.36+0.14)(0.36−0.14). Cancel (0.36−0.14) → answer = <span class="ans">0.50</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="percentage fraction equivalents basics">
+  <div class="topic-head"><h2>4. Percentage</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Percentage means "per hundred" — x% = x/100. It's a way to express a fraction or ratio on a common base of 100 so different quantities can be compared directly. If a quantity increases from A to B, % increase = [(B−A)/A]×100. If a value increases by x% then decreases by x%, the net effect is always a decrease of x²/100 %.</div>
+
+    <div class="label formulal">Fraction Table (memorize this — it's the biggest time-saver)</div>
+    <div class="formula">50%=1/2   33.33%=1/3   25%=1/4   20%=1/5
+16.67%=1/6  14.28%=1/7  12.5%=1/8   11.11%=1/9
+10%=1/10   9.09%=1/11  8.33%=1/12  6.67%=1/15</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>x% of y = y% of x</b> — always pick whichever is easier to compute mentally.</div>
+    <div class="trick">If population/value changes by r% every year for n years: Final = P(1±r/100)^n (use + for increase, − for decrease; mixed years, apply each factor separately).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find 16.67% of 480.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">16.67% = 1/6. 480/6 = <span class="ans">80</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">If A's income is 25% more than B's, by what % is B's income less than A's?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">If A is more by 1/4, B is less by [1/(4+1)]×100 = <span class="ans">20%</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">The price of sugar increases by 25%. By what % should consumption be reduced so expenditure stays the same?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Reduction% = [25/(100+25)]×100 = <span class="ans">20%</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="ratio proportion basics variation">
+  <div class="topic-head"><h2>5. Ratio &amp; Proportion</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">A ratio a:b compares two quantities of the same kind — it has no unit. A proportion states two ratios are equal: a:b = c:d, meaning a×d = b×c (cross-multiplication / product of extremes = product of means). <b>Direct variation</b>: as one quantity increases, the other increases proportionally. <b>Inverse variation</b>: as one increases, the other decreases proportionally (their product stays constant).</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">If a:b = m:n, take a=mk, b=nk. Use one variable k to solve everything — avoids fraction chaos entirely.</div>
+    <div class="formula">Componendo: a/b = c/d  ⟹  a/b = (a+c)/(b+d)</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Two numbers are in ratio 3:5. If 9 is added to both, the ratio becomes 3:4. Find the numbers.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Let numbers = 3k, 5k. (3k+9)/(5k+9)=3/4 → 12k+36=15k+27 → k=3. Numbers = <span class="ans">9 and 15</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">₹1200 is divided among A, B, C in the ratio 2:3:5. Find C's share.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Total parts=10. C's share = (5/10)×1200 = <span class="ans">₹600</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="average basics">
+  <div class="topic-head"><h2>6. Average</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Average (arithmetic mean) represents the "central" value of a data set — total sum spread evenly across all items. It is sensitive to every value in the set (unlike median), so one extreme value can shift it significantly.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Average = Sum of observations / Number of observations
+New avg after replacing one item = Old avg + (difference in value / total items)
+Average of n consecutive numbers = middle value (if n is odd) or avg of middle two (if n even)</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">For "included/excluded" type questions: (change in average) × (total count after change) = value added or removed. Apply directly instead of forming two full equations.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Average age of 30 students is 12 years. If the teacher's age is included, the average becomes 13. Find the teacher's age.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">New total people = 31. Teacher's age = New sum − Old sum = (31×13)−(30×12) = 403−360 = <span class="ans">43 years</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">The average of 5 consecutive odd numbers is 61. Find the largest number.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Middle number = 61. Numbers: 57,59,61,63,65. Largest = <span class="ans">65</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="profit loss discount cost selling price basics">
+  <div class="topic-head"><h2>7. Profit, Loss &amp; Discount</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>Cost Price (CP)</b> is what the seller paid; <b>Selling Price (SP)</b> is what the buyer pays; <b>Marked Price (MP)</b> is the labelled/listed price before discount. Profit = SP−CP (when SP&gt;CP); Loss = CP−SP (when CP&gt;SP). Discount is always calculated on MP, while profit/loss % is always calculated on CP unless stated otherwise.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Profit% = (SP−CP)/CP × 100     Loss% = (CP−SP)/CP × 100
+SP = CP(100+P%)/100            CP = SP×100/(100+P%)
+Successive discounts a% &amp; b% → Net = a+b − (ab/100)</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Marked Price trick:</b> if discount d% and profit p% are both given on CP, use SP = MP(1−d/100) = CP(1+p/100) to connect MP and CP directly.</div>
+    <div class="trick">"Sold at a loss as if measuring with a false weight" type → treat it as SP based on false quantity vs CP of true quantity.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A shopkeeper marks goods 40% above CP and gives 10% discount. Find his profit%.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Net effect = 40−10−(40×10/100) = 40−10−4 = <span class="ans">26% profit</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">By selling an article for ₹450, a man loses 10%. At what price should he sell it to gain 10%?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">CP = 450×100/90 = 500. Required SP = 500×110/100 = <span class="ans">₹550</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="simple compound interest basics">
+  <div class="topic-head"><h2>8. Simple &amp; Compound Interest</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>Simple Interest</b> is calculated only on the original principal for every period, so it grows linearly. <b>Compound Interest</b> is calculated on principal + previously accumulated interest, so it grows faster (interest earns interest). CI is always ≥ SI for the same P, R, T (equal only in year 1).</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">SI = P×R×T/100
+CI (annual) = P(1+R/100)^T − P
+CI − SI (2 years) = P×(R/100)²
+CI − SI (3 years) = P×R²(300+R)/100³</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Half-yearly compounding: use R/2 and 2T. Quarterly: use R/4 and 4T.</div>
+    <div class="trick">For 2-year CI questions, use the direct difference formula instead of computing full CI and SI separately — much faster.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find CI on ₹5000 for 2 years at 10% p.a. compounded annually.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">5000×1.1×1.1 = 6050. CI = 6050−5000 = <span class="ans">₹1050</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">The difference between CI and SI on a sum for 2 years at 5% is ₹25. Find the sum.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">P×(5/100)² = 25 → P×0.0025=25 → P = <span class="ans">₹10,000</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="time work efficiency pipes cistern">
+  <div class="topic-head"><h2>9. Time &amp; Work (+ Pipes &amp; Cistern)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Work problems are solved by converting "days to complete a job" into "work done per day" (efficiency), because efficiencies add up directly when people work together, unlike raw days. <b>Pipes &amp; Cistern</b> is the same concept — an inlet pipe does positive work (fills), an outlet pipe does negative work (empties).</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">If A takes x days, B takes y days → together: xy/(x+y) days
+If A does work in x days, B in y days, working together but leaving early:
+   remaining work is handled by dividing total work=LCM(x,y)
+Pipe emptying while another fills: treat outlet efficiency as negative</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>LCM Method (fastest approach):</b> assume total work = LCM of given days. Efficiency = Total work ÷ days taken. Then simply add/subtract efficiencies as needed and divide total work by combined efficiency.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A can do a work in 12 days, B in 15 days. Working together, in how many days will they finish it?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Total work = LCM(12,15)=60. A's efficiency=5/day, B's=4/day. Together=9/day. Days = 60/9 = <span class="ans">6⅔ days</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Pipe A fills a tank in 10 hours, Pipe B empties it in 15 hours. If both are opened together, how long to fill the tank?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Total work = LCM(10,15)=30. A fills 3/hr, B empties 2/hr. Net=1/hr. Time = 30/1 = <span class="ans">30 hours</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="time speed distance train boat basics">
+  <div class="topic-head"><h2>10. Time, Speed &amp; Distance</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Speed = Distance/Time — the three quantities are always linked, so given any two you can find the third. When two objects move toward each other, their speeds add (relative speed); when moving in the same direction, relative speed is the difference. For trains/boats, "length" of the moving object matters because crossing something means covering that length plus the object's own length.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">km/h → m/s : multiply by 5/18
+m/s → km/h : multiply by 18/5
+Train crossing pole/man = train length / speed
+Train crossing platform = (train length + platform length) / speed
+Two trains crossing each other (opposite dir) = sum of lengths / sum of speeds
+Boat: Downstream speed = B+S, Upstream speed = B−S
+   where B=boat speed in still water, S=stream speed</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Same distance covered at two different speeds → average speed = 2xy/(x+y) (harmonic mean) — NOT the simple average (x+y)/2.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A train 150 m long crosses a platform 250 m long in 20 seconds. Find its speed in km/h.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Total distance = 400 m. Speed = 400/20 = 20 m/s = 20×18/5 = <span class="ans">72 km/h</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">A boat goes 24 km downstream in 4 hours and returns upstream in 6 hours. Find the speed of the boat in still water.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Downstream speed=6 km/h, Upstream=4 km/h. Boat speed = (6+4)/2 = <span class="ans">5 km/h</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="mixture alligation basics">
+  <div class="topic-head"><h2>11. Mixture &amp; Alligation</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Alligation is a shortcut for weighted averages — used when two quantities of different values/concentrations are mixed and you need the mixing ratio to hit a target mean value. The rule works because the "distance" each component is from the mean determines its inverse weight in the mix.</div>
+
+    <div class="label formulal">Rule of Alligation</div>
+    <div class="formula">Cheaper : Dearer = (Dearer value − Mean) : (Mean − Cheaper value)
+
+    Cheap (C)         Dear (D)
+          \\               /
+              Mean (M)
+      (D−M)  :  (M−C)   → this is the ratio C:D</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">In what ratio must tea worth ₹60/kg be mixed with tea worth ₹80/kg so that the mixture is worth ₹65/kg?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Ratio = (80−65):(65−60) = 15:5 = <span class="ans">3:1</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">A vessel contains 40 litres of milk. 4 litres is replaced with water, and the process is repeated once more. Find the milk left.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Milk left = 40×(1−4/40)² = 40×(0.9)² = 40×0.81 = <span class="ans">32.4 litres</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="algebra identities basics">
+  <div class="topic-head"><h2>12. Algebra</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Algebra questions in this exam almost always reduce to recognizing an identity pattern rather than solving equations from scratch. Recognizing the identity instantly (instead of expanding brackets manually) is what separates fast solvers from slow ones here.</div>
+
+    <div class="label formulal">Key Identities</div>
+    <div class="formula">(a+b)² = a²+2ab+b²      (a−b)² = a²−2ab+b²
+a²−b² = (a+b)(a−b)
+a³+b³ = (a+b)(a²−ab+b²)
+a³−b³ = (a−b)(a²+ab+b²)
+(a+b+c)² = a²+b²+c²+2(ab+bc+ca)
+If a+1/a = x → a²+1/a² = x²−2 ; a³+1/a³ = x³−3x
+If a−1/a = x → a²+1/a² = x²+2</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">If x + 1/x = 5, find x² + 1/x².</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">x²+1/x² = (x+1/x)²−2 = 25−2 = <span class="ans">23</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">If a+b=10 and ab=21, find a²+b².</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">a²+b² = (a+b)²−2ab = 100−42 = <span class="ans">58</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="geometry triangles circles polygons basics">
+  <div class="topic-head"><h2>13. Geometry</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Geometry in this exam tests recall of standard properties, not construction/proof. Know the key "centers" of a triangle: <b>Centroid</b> (medians meet, divides each median 2:1), <b>Incenter</b> (angle bisectors meet, center of inscribed circle), <b>Circumcenter</b> (perpendicular bisectors meet, center of circumscribed circle), <b>Orthocenter</b> (altitudes meet).</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Sum of angles of a triangle = 180°
+Exterior angle = sum of the two opposite interior angles
+Sum of interior angles of an n-sided polygon = (n−2)×180°
+Each interior angle of a regular n-gon = (n−2)×180°/n
+Pythagoras: (Hypotenuse)² = (Base)² + (Height)²
+Circle: angle in a semicircle = 90°; tangent ⊥ radius at point of contact</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Each interior angle of a regular polygon is 150°. Find the number of sides.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Exterior angle = 180−150 = 30°. n = 360/30 = <span class="ans">12 sides</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">A right triangle has legs 6 cm and 8 cm. Find the hypotenuse.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">√(6²+8²) = √(36+64) = √100 = <span class="ans">10 cm</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="mensuration area volume 2d 3d basics">
+  <div class="topic-head"><h2>14. Mensuration</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>Area</b> measures the surface a 2D shape covers (units: cm², m²). <b>Perimeter</b> measures the boundary length. For 3D shapes, <b>Volume</b> measures the space enclosed (units: cm³, litres), <b>Total Surface Area (TSA)</b> covers all faces including top/bottom, <b>Curved/Lateral Surface Area (CSA)</b> excludes the flat top/bottom faces.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Rectangle: A=l×b, P=2(l+b)     Square: A=s², P=4s
+Triangle: A=½×b×h                Circle: A=πr², circumference=2πr
+Cube: V=a³, TSA=6a²
+Cuboid: V=lbh, TSA=2(lb+bh+hl)
+Cylinder: V=πr²h, CSA=2πrh, TSA=2πr(r+h)
+Cone: V=⅓πr²h, CSA=πrl  (l = slant height = √(r²+h²))
+Sphere: V=4/3πr³, SA=4πr²
+Hemisphere: V=2/3πr³, CSA=2πr², TSA=3πr²</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the volume of a cone with radius 7 cm and height 24 cm. (π=22/7)</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">V = ⅓ × 22/7 × 7² × 24 = ⅓×22×7×24 = <span class="ans">1232 cm³</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the curved surface area of a cylinder with radius 7 cm and height 10 cm.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">CSA = 2×22/7×7×10 = 2×22×10 = <span class="ans">440 cm²</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="trigonometry values heights distances basics">
+  <div class="topic-head"><h2>15. Trigonometry</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Trigonometric ratios relate the angles of a right-angled triangle to the ratio of its sides. sin θ = Opposite/Hypotenuse, cos θ = Adjacent/Hypotenuse, tan θ = Opposite/Adjacent = sinθ/cosθ. In "Heights &amp; Distances" word problems, angle of elevation is measured upward from the horizontal, angle of depression downward.</div>
+
+    <div class="label formulal">Value Table (pure recall — drill daily)</div>
+    <div class="formula">        0°   30°    45°    60°   90°
+sin   0    1/2   1/√2   √3/2   1
+cos   1    √3/2  1/√2   1/2    0
+tan   0    1/√3   1     √3    ∞</div>
+
+    <div class="label trickl">Identities</div>
+    <div class="trick">sin²θ + cos²θ = 1  |  1+tan²θ = sec²θ  |  1+cot²θ = cosec²θ</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find sin30° × cos60° + sin60° × cos30°.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">This is the sin(A+B) expansion = sin(30+60) = sin90° = <span class="ans">1</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">The angle of elevation of the top of a tower from a point 30 m away is 30°. Find the height of the tower.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">tan30° = height/30 → height = 30×(1/√3) = <span class="ans">10√3 m</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="data interpretation di tips mean median mode statistics">
+  <div class="topic-head"><h2>16. Data Interpretation &amp; Statistics</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>Mean</b> = average of all values. <b>Median</b> = middle value when data is arranged in order (average of two middle values if count is even) — unaffected by extreme outliers. <b>Mode</b> = the most frequently occurring value. DI questions test reading tables/graphs/pie-charts accurately under time pressure, not new maths concepts.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Median (odd n) = value at position (n+1)/2
+Median (even n) = average of values at n/2 and (n/2 + 1)
+Pie chart: total = 360° = 100%, so 1% = 3.6°</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Read the question BEFORE studying the table/graph in detail — you only need the specific rows/columns asked, not the whole dataset.</div>
+    <div class="trick">For "% change" DI questions, use the fraction-equivalent table (Topic 4) instead of long division.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the median of: 12, 5, 9, 18, 21, 7</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Sorted: 5,7,9,12,18,21. Even count(6) → median = (9+12)/2 = <span class="ans">10.5</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="permutation combination probability basics">
+  <div class="topic-head"><h2>17. Permutation, Combination &amp; Probability</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>Permutation</b> = arrangement where ORDER matters (e.g. ranking 3 people 1st/2nd/3rd). <b>Combination</b> = selection where order does NOT matter (e.g. choosing a 3-person committee). <b>Probability</b> of an event = (favourable outcomes)/(total possible outcomes), always between 0 and 1.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">nPr = n!/(n−r)!         nCr = n!/[r!(n−r)!]
+nCr = nC(n−r)           nC0 = 1, nCn = 1
+Probability P(E) = favourable outcomes / total outcomes
+P(not E) = 1 − P(E)</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">In how many ways can 3 letters from the word MOBILE be arranged?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">6 distinct letters, choose &amp; arrange 3 → 6P3 = 6×5×4 = <span class="ans">120</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">A bag has 4 red and 6 blue balls. Find the probability of drawing 1 red ball.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Total balls=10, red=4. P = 4/10 = <span class="ans">2/5</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="ages problems basics">
+  <div class="topic-head"><h2>18. Problems on Ages</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Age problems are algebra word problems in disguise — assign a variable to the present age, express past/future ages by adding or subtracting years from that same variable, then form and solve an equation from the given relationship.</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Always let the SMALLER/simpler unknown = x (e.g. son's age), express the other person's age in terms of x — this usually produces simpler equations.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A father is 3 times as old as his son. After 12 years, he will be twice as old. Find the son's present age.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Let son=x, father=3x. 3x+12=2(x+12) → 3x+12=2x+24 → x=12. Son's age = <span class="ans">12 years</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="partnership basics">
+  <div class="topic-head"><h2>19. Partnership</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">When two or more people invest capital in a business, profit is shared in proportion to their investment. If investments are made for different TIME periods too, profit share is proportional to (capital × time), not just capital.</div>
+
+    <div class="label formulal">Formula</div>
+    <div class="formula">Profit share ratio = (Capital₁ × Time₁) : (Capital₂ × Time₂) : ...</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A invests ₹5000 for 12 months, B invests ₹6000 for 8 months. If profit is ₹4600, find A's share.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Ratio = (5000×12):(6000×8) = 60000:48000 = 5:4. A's share = (5/9)×4600 = <span class="ans">₹2555.56</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="arithmetic progression geometric progression ap gp series sequence">
+  <div class="topic-head"><h2>20. Arithmetic &amp; Geometric Progressions (AP, GP)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">A <b>sequence</b> is just an ordered list of numbers following a rule. In an <b>Arithmetic Progression (AP)</b>, the difference between any two consecutive terms is constant — you get the next term by ADDING a fixed number ("common difference", d) every time: e.g. 2,5,8,11... (d=3). In a <b>Geometric Progression (GP)</b>, the RATIO between consecutive terms is constant — you get the next term by MULTIPLYING by a fixed number ("common ratio", r) every time: e.g. 3,6,12,24... (r=2). Check differences first (AP); if not constant, check ratios (GP).</div>
+
+    <div class="label formulal">AP Formulas</div>
+    <div class="formula">nth term: aₙ = a + (n−1)d
+Sum of n terms: Sₙ = n/2 × [2a + (n−1)d]
+   also: Sₙ = n/2 × (first term + last term)
+Common difference: d = aₙ − aₙ₋₁</div>
+
+    <div class="label formulal">GP Formulas</div>
+    <div class="formula">nth term: aₙ = a × r^(n−1)
+Sum of n terms (r≠1): Sₙ = a(rⁿ−1)/(r−1)   [use when r&gt;1]
+                        Sₙ = a(1−rⁿ)/(1−r)   [use when r&lt;1]
+Sum of infinite GP (|r|&lt;1 only): S∞ = a/(1−r)
+Common ratio: r = aₙ / aₙ₋₁</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Most "series" questions in the Reasoning tab are secretly simple APs — spot the constant difference fast.</div>
+    <div class="trick">Three numbers in AP are conveniently written as (a−d), a, (a+d) — their sum simplifies instantly to 3a. Three numbers in GP: a/r, a, ar — their product simplifies to a³.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the 15th term of the AP: 4, 9, 14, 19, ...</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">a=4, d=5. a₁₅ = 4+(15−1)×5 = 4+70 = <span class="ans">74</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the sum of the first 20 terms of the AP: 3, 7, 11, 15, ...</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">a=3, d=4, n=20. Sₙ = 20/2×[2×3+(20−1)×4] = 10×[6+76] = <span class="ans">820</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the 6th term of the GP: 2, 6, 18, 54, ...</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">a=2, r=3. a₆ = 2×3⁵ = 2×243 = <span class="ans">486</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the sum to infinity of the GP: 8, 4, 2, 1, ...</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">a=8, r=1/2. S∞ = 8/(1−½) = <span class="ans">16</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">The sum of three numbers in AP is 24 and their product is 440. Find the numbers.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Let numbers = a−d, a, a+d. 3a=24→a=8. (8−d)(8)(8+d)=440 → 64−d²=55 → d=3. Numbers = <span class="ans">5, 8, 11</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="unit conversion length weight volume time speed area currency metric imperial">
+  <div class="topic-head"><h2>21. Unit Conversions — Quick Reference</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Conversion questions test whether you can move between metric units without silently gaining/losing a factor of 10, or between speed/time units without a ratio error. Safest method: write the conversion as a fraction equal to 1 (e.g. 1000 m / 1 km = 1) and multiply — units cancel visually so you never have to "just remember" whether to multiply or divide.</div>
+
+    <div class="label formulal">Length</div>
+    <div class="formula">1 km = 1000 m         1 m = 100 cm        1 cm = 10 mm
+1 mile = 1.609 km      1 km = 0.621 mile
+1 inch = 2.54 cm       1 foot = 12 inches = 30.48 cm
+1 yard = 3 feet = 0.9144 m</div>
+
+    <div class="label formulal">Weight / Mass</div>
+    <div class="formula">1 kg = 1000 g          1 quintal = 100 kg
+1 tonne (metric ton) = 1000 kg = 10 quintals
+1 kg ≈ 2.205 pounds (lb)     1 pound = 16 ounces</div>
+
+    <div class="label formulal">Volume / Capacity</div>
+    <div class="formula">1 litre = 1000 ml = 1000 cm³
+1 m³ = 1000 litres
+1 gallon (imperial) ≈ 4.546 litres</div>
+
+    <div class="label formulal">Speed</div>
+    <div class="formula">km/h → m/s : multiply by 5/18
+m/s → km/h : multiply by 18/5
+1 knot ≈ 1.852 km/h</div>
+
+    <div class="label formulal">Time</div>
+    <div class="formula">1 minute = 60 seconds      1 hour = 60 minutes
+1 day = 24 hours           1 week = 7 days
+1 year = 365 days (leap year = 366 days)</div>
+
+    <div class="label formulal">Area</div>
+    <div class="formula">1 m² = 10,000 cm²
+1 hectare = 10,000 m²
+1 acre = 4046.86 m² ≈ 0.4047 hectare
+1 hectare ≈ 2.471 acres</div>
+
+    <div class="label formulal">Data (occasionally tested in computer/general awareness)</div>
+    <div class="formula">1 Byte = 8 bits
+1 KB = 1024 Bytes    1 MB = 1024 KB    1 GB = 1024 MB</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">To convert a compound unit like km/h to m/s, convert numerator and denominator SEPARATELY (km→m: ×1000, h→s: ÷3600) — this derives the 5/18 shortcut yourself in seconds if you ever blank on it.</div>
+    <div class="trick">In mensuration/DI questions mixing units (e.g. length in m, answer wanted in cm), convert everything to the SMALLEST unit given as the very first step — prevents last-step errors.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Convert 90 km/h to m/s.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">90 × 5/18 = <span class="ans">25 m/s</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Convert 2.5 quintals into kilograms.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">1 quintal=100 kg → 2.5×100 = <span class="ans">250 kg</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">A field is 2 hectares in area. Express this in m².</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">1 hectare=10,000 m² → 2×10,000 = <span class="ans">20,000 m²</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="boats and streams downstream upstream current speed">
+  <div class="topic-head"><h2>22. Boats &amp; Streams</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">This is Time-Speed-Distance with a twist: the water itself is moving, so the boat's effective speed changes depending on direction. Going <b>downstream</b> (with the current), the current adds to the boat's speed. Going <b>upstream</b> (against the current), the current subtracts from it. Everything else — Speed = Distance/Time — works exactly as in normal TSD once you've found the correct effective speed.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Let b = speed of boat in still water, s = speed of stream.
+Downstream speed = b + s
+Upstream speed   = b − s
+b = (Downstream + Upstream) / 2
+s = (Downstream − Upstream) / 2
+Avg speed for equal distance up &amp; down = (2 × Downstream × Upstream) / (Downstream + Upstream)</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">If a question gives you downstream and upstream speeds directly, don't re-derive b and s unless asked — plug straight into the average-speed formula, which is just the standard "same distance, two speeds" average-speed formula from TSD applied to this special case.</div>
+    <div class="trick">"Speed of boat in still water" and "speed of stream" being asked together is a strong signal to set up two simple equations (b+s=downstream, b−s=upstream) and solve by elimination — faster than substitution under exam pressure.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A boat covers 24 km downstream in 4 hours and returns upstream in 6 hours. Find the speed of the boat in still water and the speed of the stream.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Downstream speed = 24/4 = 6 km/h. Upstream speed = 24/6 = 4 km/h. b = (6+4)/2 = <span class="ans">5 km/h</span>, s = (6−4)/2 = <span class="ans">1 km/h</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">A man rows at 8 km/h in still water. If the stream flows at 2 km/h, find the time taken to row 30 km upstream.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Upstream speed = 8−2 = 6 km/h. Time = 30/6 = <span class="ans">5 hours</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="surds indices logarithms laws rationalization">
+  <div class="topic-head"><h2>23. Surds, Indices &amp; Logarithms</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">An <b>index/exponent</b> (a^n) is repeated multiplication; the laws of indices let you combine powers without expanding them. A <b>surd</b> is an irrational root like √2 or ∛5 that can't be simplified to a whole number — surd questions test whether you can rationalize (remove the root from the denominator) rather than actually compute the decimal. A <b>logarithm</b> answers "to what power must the base be raised to get this number" — it's the inverse operation of exponentiation, so every log law is really an index law rewritten.</div>
+
+    <div class="label formulal">Laws of Indices</div>
+    <div class="formula">a^m × a^n = a^(m+n)      a^m ÷ a^n = a^(m−n)
+(a^m)^n = a^(mn)         a^0 = 1 (a≠0)
+a^(−n) = 1/a^n           a^(1/n) = ⁿ√a</div>
+
+    <div class="label formulal">Laws of Logarithms</div>
+    <div class="formula">log_a(xy) = log_a x + log_a y
+log_a(x/y) = log_a x − log_a y
+log_a(x^n) = n·log_a x
+log_a a = 1        log_a 1 = 0
+Change of base: log_a x = log_b x / log_b a</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">To rationalize a denominator with a single surd (e.g. 1/√2), multiply top and bottom by that surd. For a binomial surd denominator (e.g. 1/(√5+√3)), multiply by the conjugate (√5−√3) — the surds cancel via (a+b)(a−b)=a²−b².</div>
+    <div class="trick">Memorize log₁₀2 ≈ 0.301 and log₁₀3 ≈ 0.477 — nearly every "find the number of digits in 2^n" or "log-based" NTPC question can be solved by combining just these two values (e.g. log 6 = log2+log3, log 5 = 1−log2).</div>
+    <div class="trick">Number of digits in N = ⌊log₁₀N⌋ + 1 — a fast way to answer "how many digits does 2^50 have" without computing the actual value.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Simplify: 1/(√5 − √3)</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Multiply by conjugate (√5+√3)/(√5+√3): = (√5+√3)/(5−3) = <span class="ans">(√5+√3)/2</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">If log₁₀2 = 0.301, find the number of digits in 2^10.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">log(2^10) = 10×0.301 = 3.01. Digits = ⌊3.01⌋+1 = <span class="ans">4 digits</span> (check: 2^10=1024, indeed 4 digits ✓).</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the value of log₂ 32.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">32 = 2^5, so log₂32 = <span class="ans">5</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="coordinate geometry distance section formula slope area of triangle">
+  <div class="topic-head"><h2>24. Coordinate Geometry — Basics</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Coordinate geometry places geometric objects on the x-y plane so that geometric relationships (distance, midpoint, collinearity, slope) become plain algebra. NTPC rarely goes beyond straight lines — expect direct formula-based questions rather than multi-step derivations.</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Distance between (x₁,y₁) and (x₂,y₂) = √[(x₂−x₁)² + (y₂−y₁)²]
+Midpoint of (x₁,y₁),(x₂,y₂) = ((x₁+x₂)/2, (y₁+y₂)/2)
+Section formula (divides in ratio m:n) = ((mx₂+nx₁)/(m+n), (my₂+ny₁)/(m+n))
+Slope of line through (x₁,y₁),(x₂,y₂) = (y₂−y₁)/(x₂−x₁)
+Area of triangle with vertices (x₁,y₁),(x₂,y₂),(x₃,y₃) =
+  ½ |x₁(y₂−y₃) + x₂(y₃−y₁) + x₃(y₁−y₂)|</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Three points are collinear ⟺ the "area of triangle" formula evaluates to 0 — this is faster than checking if slopes between pairs of points are equal, especially when coordinates involve fractions.</div>
+    <div class="trick">Two lines are parallel if their slopes are equal, and perpendicular if the product of their slopes = −1 — memorize this pair since it's tested directly and often disguised as "does line A cross line B at a right angle."</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the distance between the points (3,4) and (7,1).</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">√[(7−3)²+(1−4)²] = √[16+9] = √25 = <span class="ans">5 units</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Check whether the points (1,1), (2,3), (3,5) are collinear.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Area = ½|1(3−5)+2(5−1)+3(1−3)| = ½|−2+8−6| = ½×0 = 0 → <span class="ans">Collinear</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="data sufficiency quant statements approach">
+  <div class="topic-head"><h2>25. Data Sufficiency (Quant)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Data Sufficiency doesn't ask you to solve the problem — it asks whether the given statement(s) provide ENOUGH information to solve it. The trap is doing the full calculation out of habit; the discipline is to stop the moment you can confirm a unique answer exists (or prove it doesn't), without computing the actual value unless the question demands it.</div>
+
+    <div class="label trickl">Standard approach &amp; answer pattern</div>
+    <div class="trick">Step 1: Read the question and note exactly what needs to be found. Step 2: Check Statement I ALONE — can you get a unique answer? Step 3: Check Statement II ALONE, independently (forget Statement I while doing this). Step 4: Only if neither works alone, check them COMBINED.</div>
+    <div class="trick">Typical options: (a) Statement I alone sufficient, II not; (b) Statement II alone sufficient, I not; (c) Either alone sufficient; (d) Both together sufficient, neither alone; (e) Even both together not sufficient. Match your Step 2–4 findings directly to these.</div>
+    <div class="trick">A statement giving a RATIO or PERCENTAGE alone is rarely sufficient to find an absolute value — watch for this classic insufficiency trap (e.g. "A is twice B" tells you nothing about A's actual value without another anchor).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">What is the value of x? Statement I: x² = 25. Statement II: x is positive.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">I alone: x=±5, not unique — insufficient alone. II alone: only says positive, no value — insufficient alone. Combined: x²=25 and x&gt;0 → x=5 uniquely. <span class="ans">Both together sufficient, neither alone.</span></div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="approximation quick estimation squares cubes tables fraction percentage">
+  <div class="topic-head"><h2>26. Approximation &amp; Quick Estimation</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">NTPC's timer is the real opponent, not the maths. Approximation questions ("find the approximate value of...") reward rounding numbers to the nearest convenient value BEFORE calculating, rather than computing exactly and rounding at the end. This section is also where memorized squares/cubes/fraction tables pay off the most — recognition beats calculation.</div>
+
+    <div class="label formulal">Squares to memorize (1–30)</div>
+    <div class="formula">11²=121 12²=144 13²=169 14²=196 15²=225
+16²=256 17²=289 18²=324 19²=361 20²=400
+21²=441 22²=484 23²=529 24²=576 25²=625
+26²=676 27²=729 28²=784 29²=841 30²=900</div>
+
+    <div class="label formulal">Cubes to memorize (1–15)</div>
+    <div class="formula">1³=1  2³=8  3³=27  4³=64  5³=125
+6³=216  7³=343  8³=512  9³=729  10³=1000
+11³=1331 12³=1728 13³=2197 14³=2744 15³=3375</div>
+
+    <div class="label formulal">Fraction ↔ Percentage table</div>
+    <div class="formula">1/2=50%   1/3=33.33%  1/4=25%   1/5=20%
+1/6=16.67% 1/7=14.28% 1/8=12.5%  1/9=11.11%
+1/10=10%  1/11=9.09%  1/12=8.33%  1/16=6.25%</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">When a question says "approximate value," round every number in the expression to the nearest easy value (nearest 10, 100, or whole number) FIRST — this is explicit permission to trade precision for speed, so don't waste time on exact decimals.</div>
+    <div class="trick">Recognize a fraction from its decimal instantly using the table above instead of doing long division — e.g. seeing "16.67%" should immediately register as 1/6, not require you to compute it.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the approximate value of: 39.8% of 250.6 + 19.9² </div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Round: 40% of 250 + 20² = 100 + 400 = <span class="ans">≈500</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">What fraction is equivalent to 8.33%?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">From the table, 8.33% = <span class="ans">1/12</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+
+</div><!-- end maths -->
+
+<!-- ===================== REASONING ===================== -->
+<div class="section-group" id="reasoning">
+
+<div class="topic" data-name="coding decoding letter shift basics">
+  <div class="topic-head"><h2>1. Coding-Decoding</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Coding-decoding tests your ability to spot a hidden RULE that converts letters/numbers/words into a code — commonly a fixed position shift, reversal, or a substitution pattern. The trick is always to find the rule using the given example, then apply the SAME rule to the new word.</div>
+
+    <div class="label formulal">Alphabet Position Chart (write this first on rough sheet)</div>
+    <div class="formula">A B C D E F G H I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+(Reverse: A=26, B=25, C=24 ... Z=1)</div>
+
+    <div class="label trickl">Shortcuts by code-type</div>
+    <div class="trick"><b>Opposite letter shortcut:</b> to find a letter's mirror from the end (used in reverse-coding), just do 27 − position. E.g. D(4) → 27−4 = 23 = W.</div>
+    <div class="trick"><b>+n / −n shift codes:</b> once you find the shift on ONE letter (e.g. M→N is +1), test it on a second letter before applying to the whole word — some questions shift vowels and consonants differently.</div>
+    <div class="trick"><b>Number-coding (word→number string):</b> check if each number = letter position, or position×2, position+1, or sum of positions of that letter's neighbours — try position-based rules first since they're most common.</div>
+    <div class="trick"><b>Jumbled/reversed word codes:</b> check if the code is simply the word spelled backward, or the word with letters swapped in pairs (1st↔last, 2nd↔2nd-last) before assuming a shift is involved.</div>
+    <div class="trick"><b>Symbol/matrix coding:</b> if letters are coded as coordinate pairs from a grid, write out the grid fully on rough paper first — don't try to compute coordinates mentally mid-question.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">If CAT is coded as 24-1-20, what is the code for DOG?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Pattern: C(3)→24 means (27−3)=24 — reverse position code — but A(1)→1 stays same, T(20)→20 stays same. Actually check: only consonants reversed. D=4→23 (27−4), O=15→15 (vowel, unchanged), G=7→20 (27−7). Code = <span class="ans">23-15-20</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">In a code, MONEY is written as NPOFZ. How is SPACE written in that code?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Each letter shifted +1 (M→N, O→P, N→O, E→F, Y→Z). Apply same to SPACE: S→T, P→Q, A→B, C→D, E→F = <span class="ans">TQBDF</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="blood relations family tree basics">
+  <div class="topic-head"><h2>2. Blood Relations</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">These questions describe a chain of family relationships and ask how two people are related. The core skill is not knowing relationship names — it's drawing a family tree diagram as you read, so the answer becomes visually obvious instead of something you must track in your head.</div>
+
+    <div class="label trickl">Method</div>
+    <div class="trick">Use "+" for male, "−" for female next to each name as you draw. Draw generation by generation (grandparents on top, parents in the middle, children at the bottom).</div>
+    <div class="formula">Mother's/Father's only son = self (if speaker is male)
+Son of my father's/mother's only son = my own son (if I am that son) or nephew
+Mother's brother = maternal uncle (mama) | Father's sister = aunt (bua)
+Father's father = grandfather | Mother's mother = grandmother</div>
+
+    <div class="label trickl">Fast-solve shortcuts</div>
+    <div class="trick"><b>"Single-line" chain trick:</b> when the clue is a straight chain like "A is B's father, B is C's husband, C is D's mother," just draw one horizontal/vertical line of names and connect with relation labels — no branching needed, so don't overcomplicate the diagram.</div>
+    <div class="trick"><b>Gender is often given via pronouns (he/she) or terms (brother/sister)</b> — mark gender the MOMENT a name is introduced, don't wait, or you'll have to re-read the whole passage to figure it out later.</div>
+    <div class="trick"><b>Common compound relations — memorize instantly instead of re-deriving each time:</b> Father's sister's husband = uncle (by marriage) | Mother's sister = aunt (masi) | Spouse's sibling = brother/sister-in-law | Sibling's spouse = brother/sister-in-law | Son's wife = daughter-in-law | Daughter's husband = son-in-law.</div>
+    <div class="trick"><b>"Only" is a keyword</b> — "only son/only daughter/only child" tells you there are NO siblings for that person, which is often the deciding constraint in the question. Underline it when you spot it.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Pointing to a photo, Rahul said, "She is the daughter of my grandfather's only son." How is the girl related to Rahul (assume Rahul is male, not the only son)?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Grandfather's only son = Rahul's father. Daughter of Rahul's father = <span class="ans">Rahul's Sister</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="direction sense distance basics">
+  <div class="topic-head"><h2>3. Direction Sense</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">These questions describe a person walking/turning in various directions, and ask for final direction or distance from the start. Plot the path on an imaginary X-Y grid: North=up(+y), South=down(−y), East=right(+x), West=left(−x). "Left turn" and "right turn" are always relative to the direction the person is CURRENTLY facing, not fixed compass directions.</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Shortest distance from start to end point = straight-line distance, found using the Pythagoras theorem on the final (x,y) coordinates — not the total path walked.</div>
+    <div class="trick"><b>Clock-face shortcut for turns:</b> imagine standing on a clock — North=12, East=3, South=6, West=9. A "90° clockwise" turn moves you one quarter-turn clockwise on this face; a "45°" turn is half that. This avoids confusing left/right with compass points under time pressure.</div>
+    <div class="trick"><b>Shadow direction trick (common GK-style twist):</b> in the morning, the sun is in the East, so shadows fall toward the West; in the evening, the sun is in the West, so shadows fall toward the East. At noon in India (Northern hemisphere), a vertical object's shadow falls roughly toward the North.</div>
+    <div class="trick"><b>Only need final direction, not distance?</b> Skip computing coordinates — just track net rotation in 90° steps (e.g. two rights = 180° = reverse direction, four of any consistent turn = back to start direction). Much faster than plotting when distance isn't asked.</div>
+    <div class="trick"><b>"Opposite direction" pairs to know instantly:</b> N↔S, E↔W, NE↔SW, NW↔SE.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A man walks 3 km North, then 4 km East. How far is he from the starting point?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Right-angle triangle, legs 3 and 4 → hypotenuse = √(3²+4²) = 5. Distance = <span class="ans">5 km</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Facing North, a man turns 90° clockwise, then 180°. Which direction is he facing now?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">North → 90° clockwise = East → 180° more = <span class="ans">West</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="series number alphabet pattern basics">
+  <div class="topic-head"><h2>4. Number &amp; Alphabet Series</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">A series is a sequence following a hidden mathematical or logical rule. The task is to correctly identify that rule from the given terms, then extend it. Always check patterns in a fixed order rather than randomly guessing — this makes solving systematic and fast.</div>
+
+    <div class="label trickl">Checklist (check in this order)</div>
+    <div class="trick">(1) constant difference (2) constant ratio (3) difference-of-differences (2nd order) (4) alternating/interleaved pattern (5) squares/cubes ± constant (6) two separate series merged into one.</div>
+
+    <div class="label trickl">Extra shortcuts</div>
+    <div class="trick"><b>Recognize these instantly without calculating</b> — they appear constantly: squares (1,4,9,16,25...), cubes (1,8,27,64...), n(n+1) products (2,6,12,20,30...), primes (2,3,5,7,11,13...), Fibonacci-style (each term = sum of previous two).</div>
+    <div class="trick"><b>Alphabet series shortcut:</b> convert letters to numbers using the position chart from Topic 1 first — then it becomes a plain number series and all the same difference/ratio checks apply.</div>
+    <div class="trick"><b>Two-interleaved-series test:</b> if the simple difference check fails, split the series into odd-position terms and even-position terms separately and check each sub-series on its own — a huge fraction of "tricky" series are just two easy series merged.</div>
+    <div class="trick"><b>Wrong-number-in-series questions</b> (find which term breaks the pattern): compute differences/ratios for the WHOLE series first, then spot which single gap breaks an otherwise consistent pattern — don't test term-by-term from the start.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the next term: 2, 6, 12, 20, 30, ?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Differences: 4,6,8,10 (increasing by 2) → next diff=12 → 30+12 = <span class="ans">42</span> (pattern: n×(n+1)).</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the next term: B, D, G, K, ?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Gaps: B→D(+2), D→G(+3), G→K(+4), next gap +5 → K(11)+5=16 = <span class="ans">P</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="analogy classification odd one out basics">
+  <div class="topic-head"><h2>5. Analogy &amp; Classification</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>Analogy</b> tests if you can spot the exact relationship between a given pair (synonym, opposite, part-whole, tool-user, cause-effect, degree/intensity) and apply the identical relationship to a new pair. <b>Classification</b> (odd one out) tests grouping — find what property all-but-one items share.</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">For classification, don't just think "meaning" — also check category, spelling pattern, letter count, or numeric property (prime/even/perfect square), since the odd-one-out logic often hides in structure, not meaning.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Pen : Write :: Knife : ?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Tool : Function relationship → Knife : <span class="ans">Cut</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the odd one out: 3, 5, 7, 9, 11</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">All others are prime numbers except <span class="ans">9</span> (3×3, composite).</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="syllogism venn diagram basics">
+  <div class="topic-head"><h2>6. Syllogism</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Syllogism gives two or more statements and asks which conclusions logically MUST follow. It tests pure logic, not real-world truth — even absurd statements ("all cats are dogs") must be treated as true for the purpose of the question. Always solve with Venn diagrams, never with "sounds logical" instinct.</div>
+
+    <div class="label formulal">How each statement type looks as a diagram</div>
+    <div class="formula">All A are B  → circle A drawn fully inside circle B
+No A is B    → circles A and B completely separate
+Some A are B → circles A and B overlap partially
+Some A are not B → circle A has a part clearly outside B</div>
+
+    <div class="label trickl">Method</div>
+    <div class="trick">Draw the MOST restrictive possible diagram consistent with the statements. A conclusion "follows" only if it holds true in EVERY possible valid diagram — if you can draw even one valid diagram where the conclusion fails, it does not follow.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Statements: All cats are dogs. All dogs are birds. Conclusion: All cats are birds.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Cats⊂Dogs⊂Birds (nested circles, ignore real-world meaning). Conclusion <span class="ans">follows</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="seating arrangement puzzle linear circular basics">
+  <div class="topic-head"><h2>7. Seating Arrangement &amp; Puzzles</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">These are constraint-satisfaction puzzles — a set of clues describes positions of people/items, and you must arrange all of them consistently. There is no formula; the skill is systematic diagram-building: read ALL clues once fully before drawing anything, then place the MOST definite/fixed clue first (not necessarily clue #1), and work outward from there.</div>
+
+    <div class="label trickl">Circular arrangement rule</div>
+    <div class="trick">If people face the CENTER: left = anticlockwise neighbor, right = clockwise neighbor. If people face OUTWARD (away from center), this flips — left = clockwise, right = anticlockwise.</div>
+    <div class="trick">In linear arrangements, "immediate left/right" is a fixed single position; "somewhere to the left" allows multiple positions — don't confuse the two while placing clues.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Six friends sit in a row facing North. A is immediate right of B, and C is at one end. If D is between A and E, and B is at the other end, list a valid order (one possibility).</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">One valid order: <span class="ans">C, F, D, A, B... </span> — always cross-check ALL given clues against your final row before finalizing, since puzzles usually have a unique solution once all clues are used.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="calendar odd days leap year basics">
+  <div class="topic-head"><h2>8. Calendar</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Calendar problems use the concept of "odd days" — the number of days extra beyond complete weeks in a given period, since a week always repeats every 7 days. Each ordinary year contributes 1 odd day, each leap year contributes 2, because 365÷7 leaves remainder 1 (366÷7 leaves remainder 2).</div>
+
+    <div class="label formulal">Formulas</div>
+    <div class="formula">Odd days per: ordinary year=1, leap year=2
+Century odd days: 100yrs=5, 200yrs=3, 300yrs=1, 400yrs=0
+Odd day → day code: 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat</div>
+
+    <div class="label trickl">Leap Year Rule</div>
+    <div class="trick">A year is leap if divisible by 4, EXCEPT century years (ending in 00) which must be divisible by 400 to be leap. So 1900 is NOT leap, but 2000 IS leap.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">If 1 January 2024 is a Monday, what day is 1 January 2025? (2024 is a leap year)</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Leap year contributes 2 odd days → Monday + 2 = <span class="ans">Wednesday</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="clock angle problems hands basics">
+  <div class="topic-head"><h2>9. Clock</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">A clock face is 360° divided into 12 hours, so each hour mark is 30° apart. The minute hand completes a full 360° in 60 minutes (6°/min), while the hour hand completes 360° in 12 hours = 720 minutes (0.5°/min). The relative speed between them (6−0.5=5.5°/min) is why they coincide roughly every 65 5/11 minutes instead of every 60.</div>
+
+    <div class="label formulal">Formula</div>
+    <div class="formula">Angle between hands = |30H − 11M/2| degrees
+   (H=hour shown, M=minutes shown)
+Hands coincide/overlap every 65 5/11 minutes</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the angle between the hour and minute hand at 4:20.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">|30×4 − 11×20/2| = |120−110| = <span class="ans">10°</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="mathematical operations symbol substitution basics">
+  <div class="topic-head"><h2>10. Mathematical Operations</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Standard math symbols (+,−,×,÷) are swapped with each other or replaced by codes. The question tests whether you can carefully substitute correctly under pressure, then apply normal BODMAS — it is not a new maths concept, just a discipline/carefulness test.</div>
+
+    <div class="label trickl">Method</div>
+    <div class="trick">Physically rewrite the WHOLE equation with the correct real operators first. Never try to compute mid-substitution in your head — that's where errors happen.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">If '+' means '÷', '−' means '×', '×' means '+', '÷' means '−', find: 8 × 4 ÷ 2 + 4 − 2</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Rewrite: 8+4−2÷4×2 → BODMAS: 2÷4×2=1 → 8+4−1 = <span class="ans">11</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="statement conclusion assumption argument basics">
+  <div class="topic-head"><h2>11. Statement, Conclusion &amp; Assumption</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">A conclusion "follows" only if it is DEFINITELY, logically true given the statement — not just probably or commonly true in real life. An assumption is something implicitly taken for granted for the statement to make sense (unstated but necessary), different from a conclusion (which is derived, stated logically).</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">Don't use outside/general knowledge — judge strictly on the given information only, even if it contradicts common sense.</div>
+    <div class="trick">If two conclusions are an "either/or" pair (complementary, covering all possibilities), usually one of them follows by elimination — check for this pattern.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Statement: "The company announced a 20% price hike from next month." Assumption: Customers will still buy the product despite the hike.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Announcing a price hike implicitly assumes the business will continue, i.e. demand will not vanish entirely. Assumption <span class="ans">holds (is implicit)</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="input output machine basics">
+  <div class="topic-head"><h2>12. Input-Output</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">A word/number "machine" rearranges or shifts an input in steps, and you must identify the rule from the given steps to find any intermediate or final step. It's a mix of series-pattern spotting and careful step-tracking.</div>
+
+    <div class="label trickl">Method</div>
+    <div class="trick">Compare Step 1 to the original input, then Step 2 to Step 1, and so on — find what's CONSISTENT (e.g. "smallest number moves to the front each step," or "each word shifts one position right and its letters reverse"). Once the rule is found, mechanically apply it to reach the asked step.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Input: 25 61 12 48 33 → Step I: 12 25 61 48 33 → Step II: 12 25 33 61 48. If this pattern (smallest number moves to its sorted position from the left, one at a time) continues, what is Step III?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Next smallest unplaced number (48) moves to its correct position from the left → <span class="ans">12 25 33 48 61</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="ranking order position basics">
+  <div class="topic-head"><h2>13. Ranking &amp; Order</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">These questions give a person's rank/position from one end of a line/list and ask for total count, or rank from the other end. The core relationship connects rank-from-left, rank-from-right, and total count.</div>
+
+    <div class="label formulal">Formula</div>
+    <div class="formula">Total items = (Rank from left) + (Rank from right) − 1</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">In a class, Rohan's rank is 15th from the top and 22nd from the bottom. How many students are in the class?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Total = 15+22−1 = <span class="ans">36 students</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="floor puzzle multi story building people live adjacent flats apartment">
+  <div class="topic-head"><h2>14. Floor Puzzle — People Living in a Multi-Storey Building</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">This is a vertical version of linear seating — instead of people sitting in a row, they "live" on different floors of a building, and clues describe who is above/below/adjacent to whom. The building is drawn as a vertical stack, NOT a horizontal row — this single mental switch is where most people go wrong first, so always draw floor boxes stacked top-to-bottom before touching any clue.</div>
+
+    <div class="label formulal">Setting up the grid</div>
+    <div class="formula">Draw n empty boxes stacked vertically. Decide numbering direction FIRST by
+reading the question carefully:
+  "Floor 1 is the lowest/ground floor" → number bottom row = 1, going UP
+  "Floor 1 is the topmost floor"       → number top row = 1, going DOWN
+(Most NTPC puzzles use ground-floor-is-1, increasing upward — but always confirm from the wording, don't assume.)</div>
+
+    <div class="label trickl">Reading the clue vocabulary correctly</div>
+    <div class="trick"><b>"Lives above X"</b> = on any higher floor than X (not necessarily immediately above) — this is a RANGE clue, so don't fix an exact position from it alone.</div>
+    <div class="trick"><b>"Lives immediately above / just above X"</b> = exactly one floor higher (floor number = X's floor + 1). This is a FIXED clue — place it precisely and immediately.</div>
+    <div class="trick"><b>"Lives immediately below / just below X"</b> = exactly one floor lower (floor number = X's floor − 1).</div>
+    <div class="trick"><b>"As many people live above X as below X"</b> → X is exactly in the middle floor of the building (only works when total floors is odd, or tells you X's floor directly from total count).</div>
+    <div class="trick"><b>"There are exactly 2 floors between X and Y"</b> → |floor of X − floor of Y| = 3 (people BETWEEN them = 2, so the floors themselves differ by one more than that count) — this off-by-one trap is the single most common mistake in this puzzle type.</div>
+
+    <div class="label trickl">Solving method</div>
+    <div class="trick">Same discipline as linear seating: read ALL clues fully first, then place the most RESTRICTIVE/exact clue (immediately above/below, or a named fixed floor like "P lives on floor 3") before the vague range clues ("lives above," "lives below"). Range clues are best used at the end to eliminate remaining possibilities, not to place people directly.</div>
+    <div class="trick">Keep a small "remaining people" and "remaining floors" list on the side as you place each person — when only one person and one floor are left, that placement is automatic and needs no clue.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Six people J,K,L,M,N,O live on six different floors of a building — ground floor numbered 1 up to the top floor numbered 6. J lives on the topmost floor. K lives on floor 2. N lives immediately below J. L lives immediately above M. Only one floor lies between M and O. Find each person's floor.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">
+        Step 1 — fix the exact clues first: J=6 (topmost). K=2 (given directly). N immediately below J → N=5.<br>
+        Step 2 — remaining floors {1,3,4} are left for L, M, O.<br>
+        Step 3 — "L immediately above M" means L=M+1. Testing the remaining floors: M=3, L=4 fits (both in {1,3,4}); M=1,L=2 doesn't work since floor 2 is already K's. So M=3, L=4, leaving O=1.<br>
+        Step 4 — check the last clue: "only one floor lies between M and O" → M=3, O=1 → floor 2 is the single floor between them. ✓ Consistent.<br>
+        Final arrangement (bottom→top): <span class="ans">O=1, K=2, M=3, L=4, N=5, J=6</span>.
+      </div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="venn diagrams sets classification all some no">
+  <div class="topic-head"><h2>15. Venn Diagrams</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Venn diagram questions test two different skills, usually confused for each other: (1) picking the diagram that correctly represents the relationship between 2–3 given classes (like Syllogism, but visual), and (2) reading numbers OFF a pre-drawn diagram with overlapping regions to answer "how many people like both X and Y" style questions.</div>
+
+    <div class="label trickl">Type 1 — Choosing the correct diagram</div>
+    <div class="trick"><b>Two unrelated classes</b> (e.g. Pen, Table) → two separate non-touching circles.</div>
+    <div class="trick"><b>One class fully inside another</b> (e.g. Doctors, Men — some overlap is the safe default) vs. <b>one class entirely contained</b> (e.g. Mango, Fruit — every mango IS a fruit) → nested circle, not overlapping.</div>
+    <div class="trick"><b>Partial overlap</b> (e.g. Teachers, Women — some teachers are women, some aren't, and vice versa) → two intersecting circles.</div>
+    <div class="trick">Read the three given classes as nouns and ask: "can an item belong to two of these categories at once, in the real world?" That single question resolves 90% of diagram-selection confusion.</div>
+
+    <div class="label trickl">Type 2 — Reading a drawn diagram</div>
+    <div class="trick">Label each region as you go: the innermost overlap = "belongs to all groups," the parts of a circle NOT shared = "belongs ONLY to that group." Always re-read the question to check if it's asking for "only X," "X and Y (may include all three)," or "X or Y" — these three phrasings give different regions/sums.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Which diagram best represents: Fruits, Mangoes, Chairs?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Mangoes are entirely a subset of Fruits (nested circle), while Chairs share nothing with either — <span class="ans">a small circle fully inside a larger circle (Mango inside Fruit), with a separate non-touching circle for Chair</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">In a survey of 100 people, 60 like Tea, 50 like Coffee, and 30 like both. How many like only Tea?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Only Tea = Total Tea − Both = 60 − 30 = <span class="ans">30 people</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="cube dice opposite faces painting cutting smaller cubes">
+  <div class="topic-head"><h2>16. Cube &amp; Dice</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">Two distinct question families share this name: (1) <b>Dice questions</b>, where you deduce hidden/opposite faces from two or more views of the SAME die; (2) <b>Cube-cutting/painting questions</b>, where a large painted cube is sliced into n×n×n smaller cubes and you count how many small cubes have a given number of painted faces. Don't mix up the two approaches — dice logic doesn't apply to painting problems and vice versa.</div>
+
+    <div class="label trickl">Dice — finding the opposite face</div>
+    <div class="trick">If two different positions of the SAME die show one face in common, that common face's opposite CANNOT be either of the other two visible faces in either position. Systematically eliminate: whatever appears together (adjacent) in any single view can never be opposite each other.</div>
+    <div class="trick">A standard (undamaged) die has opposite faces summing to 7 (1-6, 2-5, 3-4) — but NTPC often uses non-standard dice with given number arrangements, so don't assume this rule unless the question explicitly says "standard die."</div>
+
+    <div class="label formulal">Cube painting — counting formula (n×n×n cube, painted on all outer faces, cut into n³ unit cubes)</div>
+    <div class="formula">3 faces painted (corner cubes)     = 8 (always, for any n≥2)
+2 faces painted (edge cubes)       = 12 × (n−2)
+1 face painted (face-center cubes) = 6 × (n−2)²
+0 faces painted (fully inner cubes) = (n−2)³
+Total check: 8 + 12(n−2) + 6(n−2)² + (n−2)³ = n³</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick">For painting problems, only worry about (n−2) — it represents "how far from any edge" a layer is. If n=2, (n−2)=0, so there are NO edge/face/inner cubes at all — every small cube is a corner cube (all 8 of them), which is a common trick case.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A cube of side 4 cm is painted on all faces and cut into 1 cm cubes. How many small cubes have exactly 2 painted faces?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">n=4, n−2=2. Edge cubes = 12×(4−2) = 12×2 = <span class="ans">24 cubes</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Two positions of a die show: Position 1: top=2, front=3, right=5. Position 2: top=2, front=6, right=3. What is opposite to 5?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">2 and 3 are common to both views and stay adjacent to each other and to 5/6, so 5 and 6 must be the remaining opposite pair (since 2 can't be opposite 3, and both appear with each of 5 and 6 in turn) → <span class="ans">5 is opposite 6</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="mirror image water image reflection alphabets clock">
+  <div class="topic-head"><h2>17. Mirror &amp; Water Images</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>Mirror image</b> = flip left-right, as if a vertical mirror were placed on the right side of the object (like looking at yourself in a wall mirror). <b>Water image</b> = flip top-bottom, as if the object were reflected in a still pool below it (upside down). These are two different transformations — don't apply mirror logic to a water-image question.</div>
+
+    <div class="label formulal">Alphabet reference</div>
+    <div class="formula">Mirror-symmetric letters (look the same in a mirror): A H I M O T U V W X Y
+Water-symmetric letters (look the same upside-down in water): B C D E H I K O X
+Letters symmetric in BOTH: H I O X</div>
+
+    <div class="label trickl">Clock mirror-image trick</div>
+    <div class="trick">To find the mirror image of a clock time, subtract the given time from 11:60 (i.e. 12:00). Example: mirror image of 4:20 = 11:60 − 4:20 = 7:40. This works because a clock face is itself left-right symmetric about the 12–6 axis.</div>
+
+    <div class="label trickl">General approach</div>
+    <div class="trick">For words/numbers, reverse the ORDER of characters left-to-right for a mirror image (each character individually also flips if it isn't mirror-symmetric — but NTPC options usually only test order-reversal plus a few flipped letters/digits, not full letter redrawing).</div>
+    <div class="trick">For numbers on a mirror, digits like 0, 1, 8 look unchanged; 2,3,4,5,6,7,9 look distorted/reversed — but the ORDER-reversal (rightmost digit becomes leftmost) is what's actually tested in nearly all NTPC-level questions.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the mirror image of the time 5:35.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">11:60 − 5:35 = <span class="ans">6:25</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Which of these letters looks the same in both mirror and water image: H, B, T, X?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Check both lists: H and X appear in both the mirror-symmetric and water-symmetric sets. B is only water-symmetric, T is only mirror-symmetric. → <span class="ans">H and X</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="paper folding cutting punching symmetry unfold">
+  <div class="topic-head"><h2>18. Paper Folding &amp; Cutting</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">A paper is folded one or more times, then a hole is punched or a corner is cut through all the folded layers. You must visualize the FULLY UNFOLDED sheet and mark where all the resulting holes/cuts appear. Every fold line acts exactly like a mirror line — whatever happens on one side of the fold gets mirrored onto the other side once unfolded.</div>
+
+    <div class="label trickl">Solving method</div>
+    <div class="trick">Work BACKWARDS from the final (folded + punched) picture: undo the LAST fold first, mirroring the punch across that fold line to get the previous stage. Repeat for each fold in reverse order until you reach the fully flat sheet.</div>
+    <div class="trick">Count folds carefully: each fold doubles the number of layers at that spot, so a hole punched through n folded layers becomes 2ⁿ holes when the paper is fully unflattened — a fast sanity check on how many holes the answer diagram should show.</div>
+    <div class="trick">If the fold is along a diagonal, the mirroring happens across that diagonal line, not horizontally/vertically — always match the mirror direction to the actual fold direction shown in the question.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A square paper is folded in half twice (into a smaller square) and one hole is punched in the center of the folded square. How many holes appear when fully unfolded, and roughly where?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">2 folds → 2² = 4 layers at the punch spot → <span class="ans">4 holes, arranged symmetrically — one in each quadrant of the unfolded square, equidistant from the center</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="non verbal reasoning figure series analogy classification rotation">
+  <div class="topic-head"><h2>19. Non-Verbal Series, Figure Analogy &amp; Classification</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">These are the "figures instead of words/numbers" versions of the Series and Analogy/Classification topics already covered for letters and numbers. The underlying logic is identical — find what changes consistently from one figure to the next — but here the changing property is visual: rotation angle, number of sides, shading, size, or position of an element, rather than a letter/number value.</div>
+
+    <div class="label trickl">What to check, in order, for a figure series</div>
+    <div class="trick">1) Does the whole figure ROTATE by a fixed angle each step (commonly 45°, 90°, or 180°)? 2) Does an element get ADDED or REMOVED at a fixed rate (e.g. one extra dot/line per step)? 3) Does SHADING alternate or shift position (e.g. the shaded portion moves clockwise one segment each step)? 4) Does the SIZE grow/shrink consistently? Check these one at a time rather than trying to spot everything at once.</div>
+    <div class="trick">For figure analogy (figure A : figure B :: figure C : ?), identify the exact transformation from A→B first (e.g. "rotated 90° clockwise and one shape added"), then apply that IDENTICAL transformation to C to predict the answer — don't look at the answer options until you've predicted it yourself, or you'll be pulled toward a plausible-looking wrong option.</div>
+    <div class="trick">For figure classification (odd one out), count concrete properties across all figures — number of sides, number of lines of symmetry, open vs. closed shape, number of intersection points — the odd one usually differs in exactly one countable property while everything else looks superficially similar.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">A series of figures shows a triangle rotating 90° clockwise at each step, and gaining one additional dot inside it each step. Figure 1 has 1 dot, figure 2 has 2 dots (rotated 90°). What does figure 4 look like?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Rotation accumulates: 4 steps × 90° = 360° → back to original orientation. Dots accumulate: <span class="ans">4 dots inside the triangle, in its original (upright) orientation</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="data sufficiency reasoning blood relation direction clues">
+  <div class="topic-head"><h2>20. Data Sufficiency (Reasoning)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">The same "check I alone, then II alone, then combined" discipline from Quant Data Sufficiency applies here — except the statements are logical clues (blood relations, directions, rankings, seating positions) instead of equations. The core skill is recognizing when a clue is too VAGUE to fix a unique answer versus when it pins things down exactly.</div>
+
+    <div class="label trickl">Common insufficiency traps</div>
+    <div class="trick">A relative direction/position clue ("X lives to the north of Y") without a starting reference point or distance is almost always insufficient alone — it tells you relative order but not an exact position.</div>
+    <div class="trick">A blood-relation clue that could describe TWO different relationships depending on gender (e.g. "A is B's parent's child" could be A=B's sibling OR A=B, if not explicitly excluded) is a classic insufficiency trap — check if the statement removes all such ambiguity before calling it sufficient.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">How is P related to Q? Statement I: P is the son of Q's father. Statement II: Q is female.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">I alone: P is Q's brother (son of the same father) — this is already a unique, sufficient relation regardless of Q's gender. II alone: gender of Q alone tells us nothing about P. → <span class="ans">Statement I alone is sufficient, Statement II alone is not.</span></div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="word formation dictionary order alphabetical arrangement">
+  <div class="topic-head"><h2>21. Word Formation &amp; Dictionary Order</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund"><b>Word formation</b> questions ask whether a smaller word can be formed using ONLY the letters available in a given larger word (each letter usable at most as many times as it appears in the original). <b>Dictionary order</b> questions ask you to arrange several words as they'd appear in a dictionary — pure letter-by-letter alphabetical comparison, nothing to do with meaning.</div>
+
+    <div class="label trickl">Word formation — checking method</div>
+    <div class="trick">List out the letters of the source word with their counts (e.g. "MOUNTAIN" → M,O,U,N,N,T,A,I). Then for the candidate word, check every letter it needs is available in that list, WITHOUT exceeding the count available — this catches the common trap of a word needing a letter used twice when the source only has it once.</div>
+
+    <div class="label trickl">Dictionary order — method</div>
+    <div class="trick">Compare words letter by letter, left to right, exactly like sorting — the FIRST point of difference decides the order; a shorter word that's a prefix of a longer one (e.g. "CAT" vs "CATALOG") comes first in dictionary order.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Can the word "TIN" be formed from the letters of "STATION"?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Letters in STATION: S,T,A,T,I,O,N. TIN needs T,I,N — all present at least once. → <span class="ans">Yes</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Arrange in dictionary order: PLANET, PLANE, PLAN, PLANK.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Compare letter by letter — all share "PLAN", then: (nothing) &lt; E &lt; ET &lt; K alphabetically → <span class="ans">PLAN, PLANE, PLANET, PLANK</span>.</div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+
+</div><!-- end reasoning -->
+
+<div class="note">Built for your NTPC CBT-2 sprint · Tap a topic to expand · Fundamentals explain WHY a trick works, so you can rebuild it under pressure even if you forget the shortcut · Progress resets on page reload (screenshot if needed) · All the best 🚂</div>
+
+</main>
+
+<script>
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.section-group').forEach(g=>g.classList.remove('active'));
+      document.getElementById(btn.dataset.group).classList.add('active');
+      buildQuickNav();
+    });
+  });
+
+  // Quick-jump nav — auto-built from topic headings in the active tab
+  function buildQuickNav(){
+    const activeGroup = document.querySelector('.section-group.active');
+    const nav = document.getElementById('quicknav');
+    nav.innerHTML = '';
+    activeGroup.querySelectorAll('.topic').forEach((topic,i)=>{
+      const id = 'qn-' + activeGroup.id + '-' + i;
+      topic.id = id;
+      const fullLabel = topic.querySelector('h2').textContent;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = fullLabel.length > 22 ? fullLabel.slice(0,20) + '…' : fullLabel;
+      btn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        topic.classList.add('open');
+        topic.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+      nav.appendChild(btn);
+    });
+  }
+  buildQuickNav();
+
+  // Accordion
+  document.querySelectorAll('.topic').forEach(topic=>{
+    const head = topic.querySelector('.topic-head');
+    head.addEventListener('click',()=> topic.classList.toggle('open'));
+
+    const doneBtn = topic.querySelector('.done-btn');
+    doneBtn.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      topic.classList.toggle('doneflag');
+      doneBtn.classList.toggle('done');
+      doneBtn.textContent = doneBtn.classList.contains('done') ? '✓ Revised' : 'Mark as revised';
+      updateProgress();
+    });
+  });
+
+  function toggleSol(el){
+    const sol = el.nextElementSibling;
+    sol.classList.toggle('show');
+    el.textContent = sol.classList.contains('show') ? 'Hide solution ▴' : 'Show solution ▾';
+  }
+
+  function updateProgress(){
+    const all = document.querySelectorAll('.topic');
+    const done = document.querySelectorAll('.topic.doneflag');
+    const pct = all.length ? Math.round((done.length/all.length)*100) : 0;
+    document.getElementById('progFill').style.width = pct+'%';
+    document.getElementById('progText').textContent = done.length+'/'+all.length+' topics revised';
+  }
+  updateProgress();
+
+  // Search filter across both tabs
+  document.getElementById('search').addEventListener('input',(e)=>{
+    const q = e.target.value.toLowerCase().trim();
+    document.querySelectorAll('.topic').forEach(topic=>{
+      const name = topic.dataset.name + ' ' + topic.querySelector('h2').textContent.toLowerCase();
+      const match = name.includes(q);
+      topic.classList.toggle('hidden', q.length>0 && !match);
+      if(q.length>0 && match) topic.classList.add('open');
+    });
+  });
+
+  // Countdown
+  const EXAM_DATE = new Date();
+  EXAM_DATE.setDate(EXAM_DATE.getDate()+7);
+  EXAM_DATE.setHours(9,0,0,0);
+  function updateCountdown(){
+    const now = new Date();
+    const diff = EXAM_DATE - now;
+    if(diff<=0){ document.getElementById('countdown').textContent='Exam day — go smash it 🚀'; return; }
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff/(1000*60*60))%24);
+    document.getElementById('countdown').textContent = d+'d '+h+'h left';
+  }
+  updateCountdown();
+  setInterval(updateCountdown,60000);
+</script>
+</body>
+</html>

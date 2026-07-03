@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CURRENTS — Earth's Circulatory System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --thc:#00b4d8; --gyre:#f4a261; --hadley:#e84545; --ferrel:#52b788;
+    --polar:#90e0ef; --jet:#ffd60a; --trade:#ff9f1c; --amoc:#0077b6;
+  }
+  [data-theme="dark"] {
+    --bg:#05101a; --surface:#0d1b2a; --surface2:#132438;
+    --border:rgba(255,255,255,0.07); --text:#e8eaf0; --muted:#6b7280;
+    --nav-bg:rgba(5,16,26,0.94); --table-hover:rgba(255,255,255,0.02);
+    --toggle-bg:#132438; --toggle-border:rgba(255,255,255,0.15);
+    --prose:#c9d1e0;
+  }
+  [data-theme="light"] {
+    --bg:#eef4f9; --surface:#ffffff; --surface2:#ddeaf5;
+    --border:rgba(0,0,0,0.08); --text:#1a202c; --muted:#64748b;
+    --nav-bg:rgba(238,244,249,0.95); --table-hover:rgba(0,0,0,0.02);
+    --toggle-bg:#e2e8f0; --toggle-border:rgba(0,0,0,0.1);
+    --prose:#374151;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;transition:background .3s,color .3s;}
+
+  /* HEADER */
+  header{padding:3rem 2rem 1.5rem;text-align:center;position:relative;border-bottom:1px solid var(--border);}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(0,180,216,.12) 0%,transparent 65%),radial-gradient(ellipse at 20% 90%,rgba(244,162,97,.07) 0%,transparent 50%),radial-gradient(ellipse at 85% 60%,rgba(0,119,182,.08) 0%,transparent 50%);pointer-events:none;}
+  .eyebrow{font-size:.65rem;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:.75rem;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,6rem);letter-spacing:.04em;line-height:1;background:linear-gradient(135deg,#0077b6 0%,#00b4d8 35%,#f4a261 70%,#e84545 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--muted);font-size:1rem;margin-top:.5rem;}
+
+  /* THEME TOGGLE */
+  .theme-toggle{position:absolute;top:1.2rem;right:1.5rem;display:flex;align-items:center;gap:.5rem;cursor:pointer;background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:.35rem .75rem;transition:all .2s;user-select:none;}
+  .theme-toggle:hover{opacity:.8;}
+  .theme-toggle-icon{font-size:.85rem;}
+  .theme-toggle-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+  /* NAV */
+  nav{display:flex;justify-content:center;gap:.4rem;padding:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:100;transition:background .3s;}
+  .tab{padding:.4rem .9rem;border-radius:2px;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace;}
+  .tab:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .tab.active{color:#fff;}
+  .tab[data-panel="thc"].active{background:var(--thc);border-color:var(--thc);}
+  .tab[data-panel="gyres"].active{background:var(--gyre);border-color:var(--gyre);}
+  .tab[data-panel="coupling"].active{background:#7b2d8b;border-color:#7b2d8b;}
+  .tab[data-panel="global"].active{background:#1a5e3a;border-color:#1a5e3a;}
+  .tab[data-panel="cc"].active{background:#7f1d1d;border-color:#7f1d1d;}
+  .tab[data-panel="compare"].active{background:#1e3a5f;border-color:#1e3a5f;}
+
+  /* MAIN */
+  main{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+  .panel{display:none;}
+  .panel.visible{display:block;animation:fadeUp .4s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SECTION HEADER */
+  .section-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .phase-label{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.05em;}
+  .phase-tag{font-size:.75rem;padding:.3rem .7rem;border-radius:2px;letter-spacing:.08em;font-weight:500;}
+  .phase-desc{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--muted);margin-left:auto;font-style:italic;}
+
+  /* BOXES */
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;transition:background .3s,border-color .3s;}
+  .box-title{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+
+  /* SVG canvases */
+  .vis-svg{width:100%;overflow:visible;}
+
+  /* IMPACT CARDS */
+  .impacts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+  .impact-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;transition:border-color .2s,background .3s;}
+  .impact-card:hover{border-color:rgba(128,128,128,.3);}
+  .impact-region{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+  .impact-icon{font-size:1.3rem;margin-bottom:.4rem;display:block;}
+  .impact-text{font-size:.75rem;line-height:1.5;color:var(--text);}
+  .impact-badge{display:inline-block;font-size:.55rem;padding:.15rem .5rem;border-radius:1px;margin-top:.5rem;letter-spacing:.1em;text-transform:uppercase;}
+  .badge-blue{background:rgba(0,180,216,.15);color:#00b4d8;}
+  .badge-orange{background:rgba(244,162,97,.15);color:#f4a261;}
+  .badge-red{background:rgba(232,69,69,.15);color:#e84545;}
+  .badge-green{background:rgba(82,183,136,.15);color:#52b788;}
+  .badge-yellow{background:rgba(255,214,10,.15);color:#b8960a;}
+  .badge-purple{background:rgba(123,45,139,.15);color:#9b59b6;}
+  .badge-muted{background:rgba(120,144,156,.15);color:#78909c;}
+
+  /* PHASE BOTTOM ROW */
+  .phase-bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+  @media(max-width:700px){.phase-bottom-row{grid-template-columns:1fr;}}
+  .mini-map-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;position:relative;}
+  .mini-map-container{position:relative;width:100%;aspect-ratio:2/1;min-height:180px;border-radius:3px;overflow:hidden;background:var(--surface2,var(--surface));margin-top:.75rem;}
+  .mini-map-container svg{width:100%;height:100%;}
+  .mini-map-legend{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:.6rem;font-size:.6rem;color:var(--muted);}
+  .mini-map-legend span{display:flex;align-items:center;gap:.3rem;}
+  .mini-map-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+  /* MECH CALLOUT */
+  .mech-callout-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-callout-box .box-title{margin-bottom:.85rem;}
+  .mech-physics-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.85rem;padding-bottom:.85rem;border-bottom:1px solid var(--border);}
+  .mech-physics-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .mech-physics-icon{font-size:1.2rem;flex-shrink:0;line-height:1.3;}
+  .mech-physics-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;}
+  .mech-physics-text{font-size:.72rem;line-height:1.55;color:var(--prose,var(--text));}
+  .mech-physics-text b{color:var(--text);}
+
+  /* PHASE LINK PILL */
+  .phase-link-pill{display:inline-flex;align-items:center;gap:.35rem;margin-top:1rem;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:2px;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .2s;background:transparent;font-family:'DM Mono',monospace;}
+  .phase-link-pill:hover{color:var(--text);border-color:rgba(128,128,128,.4);}
+
+  /* MECH GRID */
+  .mech-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+  @media(max-width:640px){.mech-grid{grid-template-columns:1fr;}}
+  .mech-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em;margin-bottom:.6rem;}
+  .mech-card-body{font-size:.73rem;color:var(--prose,var(--muted));line-height:1.7;}
+  .mech-card-body b{color:var(--text);font-weight:600;}
+
+  /* CALLOUT */
+  .callout{background:var(--surface2,var(--surface));border-left:3px solid;border-radius:0 3px 3px 0;padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .callout b{color:var(--text);}
+
+  /* INFO SECTION */
+  .info-section{margin-bottom:2rem;}
+  .info-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;margin-bottom:.5rem;}
+  .prose-block{font-size:.75rem;line-height:1.75;color:var(--prose,var(--muted));margin-bottom:1rem;}
+  .prose-block b{color:var(--text);}
+
+  /* STAT CARDS */
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;text-align:center;}
+  .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;margin-bottom:.25rem;}
+  .stat-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+
+  /* OCC GRID */
+  .occ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:1.5rem;}
+  .occ-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;border-top:3px solid;}
+  .occ-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:.2rem;}
+  .occ-card-full{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+  .occ-card-body{font-size:.72rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .occ-card-body b{color:var(--text);}
+  .occ-stat-row{display:flex;gap:1rem;margin-top:.75rem;flex-wrap:wrap;}
+  .occ-stat{font-size:.65rem;color:var(--muted);}
+  .occ-stat b{color:var(--text);display:block;font-size:.8rem;}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;font-size:.72rem;min-width:560px;}
+  th{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--border);}
+  td{padding:.6rem .75rem;border-bottom:1px solid var(--border);line-height:1.4;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--table-hover);}
+  .table-wrap{overflow-x:auto;}
+
+  /* EVENT ITEM */
+  .event-item{display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--border);align-items:start;}
+  .event-item:last-child{border-bottom:none;}
+  .event-year{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;line-height:1;}
+  .event-name{font-size:.7rem;letter-spacing:.08em;margin-bottom:.25rem;font-weight:500;}
+  .event-desc{font-size:.72rem;color:var(--muted);line-height:1.55;}
+  .event-peak{font-size:.6rem;margin-top:.4rem;padding:.2rem .6rem;border-radius:1px;display:inline-block;letter-spacing:.08em;}
+
+  /* CELL DIAGRAM */
+  .cell-diagram-container{width:100%;height:260px;position:relative;overflow:hidden;border-radius:3px;}
+
+  /* COMPARE TABLE */
+  .compare-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:1.5rem;}
+  @media(max-width:700px){.compare-grid{grid-template-columns:1fr 1fr;}}
+  .compare-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1rem;border-top:3px solid;}
+  .compare-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;margin-bottom:.5rem;}
+  .compare-row{display:flex;justify-content:space-between;font-size:.65rem;padding:.2rem 0;border-bottom:1px solid var(--border);}
+  .compare-row:last-child{border-bottom:none;}
+  .compare-key{color:var(--muted);}
+  .compare-val{color:var(--text);text-align:right;}
+
+  /* HIGHLIGHT BOX */
+  .highlight-box{background:var(--surface2,var(--surface));border:1px solid var(--border);border-radius:4px;padding:1.1rem 1.25rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .highlight-box b{color:var(--text);}
+  .highlight-box .hb-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--text);margin-bottom:.4rem;}
+
+  /* STEP LIST */
+  .step-list{list-style:none;margin-top:.5rem;}
+  .step-list li{display:flex;gap:.7rem;margin-bottom:.6rem;font-size:.73rem;line-height:1.5;color:var(--prose,var(--muted));}
+  .step-num{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff;}
+
+  /* ANIMATED FLOW */
+  @keyframes flowR{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
+  @keyframes flowL{from{stroke-dashoffset:-200}to{stroke-dashoffset:0}}
+  @keyframes flowD{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
+  @keyframes flowU{from{stroke-dashoffset:-200}to{stroke-dashoffset:0}}
+  @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+  @keyframes drift{0%,100%{transform:translateX(0);opacity:.5}50%{transform:translateX(5px);opacity:1}}
+  @keyframes driftL{0%,100%{transform:translateX(0);opacity:.5}50%{transform:translateX(-5px);opacity:1}}
+  @keyframes rise{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-4px);opacity:1}}
+  @keyframes sink{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(4px);opacity:1}}
+
+  .flow-r{animation:flowR 3s linear infinite;}
+  .flow-l{animation:flowL 3s linear infinite;}
+  .flow-slow{animation-duration:5s;}
+  .pulse{animation:pulse 2.5s ease-in-out infinite;}
+</style>
+</head>
+<body data-theme="dark">
+
+<header>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+    <span class="theme-toggle-icon" id="themeIcon">☀️</span>
+    <span class="theme-toggle-label" id="themeLabel">Light mode</span>
+  </button>
+  <p class="eyebrow">Earth's Circulatory System</p>
+  <h1>CURRENTS</h1>
+  <p class="subtitle">Thermohaline Circulation · Ocean Gyres · Ocean-Atmosphere Coupling · Climate Change</p>
+</header>
+
+<nav>
+  <button class="tab" data-panel="thc">🌊 Thermohaline</button>
+  <button class="tab" data-panel="gyres">🌀 Ocean Gyres</button>
+  <button class="tab" data-panel="coupling">🔗 Coupling</button>
+  <button class="tab" data-panel="global">🌍 Global Map</button>
+  <button class="tab" data-panel="cc">⚠️ Climate Change</button>
+  <button class="tab" data-panel="compare">📊 Compare</button>
+</nav>
+
+<main>
+
+<!-- ══ THC ══ -->
+<div class="panel" id="panel-thc">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--thc)">Thermohaline</span>
+    <span class="phase-tag" style="background:rgba(0,180,216,.15);color:var(--thc)">~1000-yr cycle</span>
+    <span class="phase-desc">The ocean's great conveyor belt</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Global Thermohaline Circulation — Schematic Cross-Section</p>
+    <svg class="vis-svg" id="thc-svg" viewBox="0 0 800 280" height="280" style="border-radius:3px;"></svg>
+  </div>
+
+  <div class="impacts-grid">
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🌡️</span><div class="impact-region">Northwestern Europe</div><div class="impact-text">AMOC delivers ~17 TW of heat northward. London sits at the latitude of Calgary but has a comparatively mild climate.</div><span class="impact-badge badge-blue">+5–10°C Warming</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🐟</span><div class="impact-region">Upwelling Zones</div><div class="impact-text">Deep, nutrient-laden water rises along coasts (Peru, NW Africa, Benguela). Among the most productive fisheries on Earth.</div><span class="impact-badge badge-green">High Productivity</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🌬️</span><div class="impact-region">Arctic Ventilation</div><div class="impact-text">Sinking of dense water in the Labrador and Nordic seas draws warm surface water northward, ventilating the deep ocean with oxygen.</div><span class="impact-badge badge-blue">Deep Ventilation</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">💨</span><div class="impact-region">Carbon Sequestration</div><div class="impact-text">Downwelling carries dissolved CO₂ into the deep ocean, removing it from the atmosphere for centuries to millennia.</div><span class="impact-badge badge-green">Carbon Sink</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🌊</span><div class="impact-region">Sea-Level Gradient</div><div class="impact-text">AMOC suppresses sea level on the US East Coast by ~30 cm. A weakening AMOC locally raises sea levels faster than the global mean.</div><span class="impact-badge badge-orange">Sea Level Driver</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🌧️</span><div class="impact-region">Sahel / Monsoon</div><div class="impact-text">AMOC strength modulates the ITCZ position, affecting Sahel rainfall and the West African monsoon on multi-decadal timescales.</div><span class="impact-badge badge-purple">Monsoon Link</span></div>
+  </div>
+
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box">
+      <p class="box-title">⚙️ The Physics of Sinking</p>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🧊</span>
+        <div>
+          <div class="mech-physics-label">Density Forcing</div>
+          <div class="mech-physics-text">Water sinks when it becomes dense enough. Cold temperature increases density; <b>high salinity</b> also increases density. In the North Atlantic, both cooling and brine rejection from sea-ice formation drive sinking.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌊</span>
+        <div>
+          <div class="mech-physics-label">North Atlantic Deep Water (NADW)</div>
+          <div class="mech-physics-text">Dense surface water sinks in the Labrador Sea and Nordic Seas, forming NADW. It flows southward at depth, eventually reaching the Southern Ocean where it rises again as <b>Circumpolar Deep Water</b>.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌀</span>
+        <div>
+          <div class="mech-physics-label">AMOC — The Atlantic Limb</div>
+          <div class="mech-physics-text">The Atlantic Meridional Overturning Circulation is the Atlantic branch of the THC. Its upper limb carries warm, salty surface water northward; its deep limb returns cold, dense water southward at 2–4 km depth. <b>Transport: ~17 Sv</b> (Sverdrups).</div>
+        </div>
+      </div>
+      <button class="phase-link-pill" onclick="switchPanel('coupling')">🔗 Ocean-Atmosphere Coupling →</button>
+    </div>
+    <div class="mini-map-box">
+      <p class="box-title">Key Formation Sites & Upwelling Zones</p>
+      <div class="mini-map-container"><svg id="thc-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend">
+        <span><i style="background:#0077b6"></i>Deep water formation</span>
+        <span><i style="background:#00b4d8"></i>Warm surface flow</span>
+        <span><i style="background:#52b788"></i>Upwelling zones</span>
+        <span><i style="background:#f4a261"></i>Antarctic bottom water</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">AMOC Strength — Historical Proxy Estimates & Model Projections</p>
+    <svg class="vis-svg" id="amoc-ts-svg" viewBox="0 0 800 200" height="200"></svg>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Notable THC Events in Earth History</p>
+    <div class="event-item"><div class="event-year" style="color:var(--thc)">~12,900</div><div><div class="event-name">Younger Dryas — AMOC Shutdown</div><div class="event-desc">Meltwater from the Laurentide Ice Sheet freshened the North Atlantic, shutting AMOC within decades. Europe plunged back into near-glacial conditions for ~1,200 years. Temperatures dropped 10–15°C in Greenland.</div><span class="event-peak" style="background:rgba(0,180,216,.12);color:var(--thc)">AMOC: Near-Collapsed</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--thc)">~8,200</div><div><div class="event-name">8.2 ka Event</div><div class="event-desc">Catastrophic drainage of glacial Lakes Agassiz and Ojibway released ~163,000 km³ of freshwater. AMOC briefly weakened; global temperatures dropped ~1–2°C for ~160 years.</div><span class="event-peak" style="background:rgba(0,180,216,.12);color:var(--thc)">Duration: ~160 yr</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--thc)">2004–</div><div><div class="event-name">Modern AMOC Decline (Observed)</div><div class="event-desc">RAPID array data (since 2004) shows AMOC has weakened by ~15% since the mid-20th century. Proxy records suggest AMOC may now be at its weakest in over 1,000 years — consistent with climate model projections.</div><span class="event-peak" style="background:rgba(0,180,216,.12);color:var(--thc)">−15% since 1950s</span></div></div>
+  </div>
+</div>
+
+<!-- ══ GYRES ══ -->
+<div class="panel" id="panel-gyres">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--gyre)">Ocean Gyres</span>
+    <span class="phase-tag" style="background:rgba(244,162,97,.15);color:var(--gyre)">5 Subtropical Gyres</span>
+    <span class="phase-desc">Wind-driven surface circulation</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">The Five Major Subtropical Gyres — Global View</p>
+    <svg class="vis-svg" id="gyres-svg" viewBox="0 0 900 440" height="340" style="border-radius:3px;"></svg>
+  </div>
+
+  <div class="impacts-grid">
+    <div class="impact-card" style="border-color:rgba(244,162,97,.25)"><span class="impact-icon">🌊</span><div class="impact-region">Western Boundary Currents</div><div class="impact-text">Gyres concentrate flow on their western edges (Gulf Stream, Kuroshio). These fast, narrow, warm currents carry immense heat poleward.</div><span class="impact-badge badge-orange">~30 Sv, 1–3 m/s</span></div>
+    <div class="impact-card" style="border-color:rgba(244,162,97,.25)"><span class="impact-icon">🐋</span><div class="impact-region">Eastern Boundary Currents</div><div class="impact-text">Slow, broad, cool eastern flows (California, Canary, Humboldt). Coastal upwelling creates rich marine ecosystems and fog-driven coastal climates.</div><span class="impact-badge badge-blue">Upwelling Rich</span></div>
+    <div class="impact-card" style="border-color:rgba(244,162,97,.25)"><span class="impact-icon">🗑️</span><div class="impact-region">Garbage Patches</div><div class="impact-text">The convergence zones at gyre centers accumulate floating debris. The Great Pacific Garbage Patch spans ~1.6 million km² in the North Pacific gyre.</div><span class="impact-badge badge-red">Plastic Accumulation</span></div>
+    <div class="impact-card" style="border-color:rgba(244,162,97,.25)"><span class="impact-icon">🏜️</span><div class="impact-region">Subtropical Deserts</div><div class="impact-text">Gyre centers are ocean deserts — low nutrients, low productivity, clear blue water. The Sargasso Sea (N. Atlantic gyre center) is an exception, hosting unique floating seaweed.</div><span class="impact-badge badge-muted">Nutrient Desert</span></div>
+    <div class="impact-card" style="border-color:rgba(244,162,97,.25)"><span class="impact-icon">💨</span><div class="impact-region">Wind Driving</div><div class="impact-text">Gyres are ultimately driven by the wind stress curl: trade winds driving equatorward flow, westerlies driving poleward flow. Ekman transport tilts the water surface inward.</div><span class="impact-badge badge-yellow">Sverdrup Balance</span></div>
+    <div class="impact-card" style="border-color:rgba(244,162,97,.25)"><span class="impact-icon">🌡️</span><div class="impact-region">Heat Transport</div><div class="impact-text">Western boundary currents like the Gulf Stream transport ~1.3 PW of heat northward — comparable to AMOC's total. This moderates climate on adjacent continents.</div><span class="impact-badge badge-orange">1.3 PW</span></div>
+  </div>
+
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box">
+      <p class="box-title">⚙️ Ekman Transport & Sverdrup Balance</p>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌀</span>
+        <div>
+          <div class="mech-physics-label">Ekman Transport</div>
+          <div class="mech-physics-text">Wind stress on the ocean surface doesn't push water in the wind direction. Due to the <b>Coriolis effect</b>, net transport is 90° to the right (NH) or left (SH) of the wind. This drives water toward gyre centers, piling it up and creating a pressure gradient.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">⚖️</span>
+        <div>
+          <div class="mech-physics-label">Sverdrup Balance</div>
+          <div class="mech-physics-text">In the ocean interior, the curl of wind stress drives a southward (NH) or northward (SH) Sverdrup transport. The <b>western boundary current compensates</b> by returning that transport northward in a narrow intense jet — explaining gyre asymmetry.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🔁</span>
+        <div>
+          <div class="mech-physics-label">Inertial Recirculation</div>
+          <div class="mech-physics-text">Western boundary currents overshoot their Sverdrup balance, creating strong recirculation gyres that amplify the current beyond simple wind forcing. The Gulf Stream carries <b>~30–150 Sv</b>, far more than Sverdrup theory alone predicts.</div>
+        </div>
+      </div>
+      <button class="phase-link-pill" onclick="switchPanel('coupling')">🔗 Wind-Ocean Coupling →</button>
+    </div>
+    <div class="mini-map-box">
+      <p class="box-title">Gyre Centers & Boundary Currents</p>
+      <div class="mini-map-container"><svg id="gyres-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend">
+        <span><i style="background:#f4a261"></i>Warm boundary currents</span>
+        <span><i style="background:#00b4d8"></i>Cold boundary currents</span>
+        <span><i style="background:#e84545"></i>Gyre centers</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">The Five Major Subtropical Gyres — Summary</p>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>Gyre</th><th>Ocean</th><th>Rotation</th><th>Western Boundary Current</th><th>Eastern Boundary Current</th><th>Area (km²)</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><b>North Atlantic</b></td><td>Atlantic</td><td>Clockwise</td><td>Gulf Stream (~30 Sv)</td><td>Canary Current</td><td>~20 million</td></tr>
+        <tr><td><b>South Atlantic</b></td><td>Atlantic</td><td>Counterclockwise</td><td>Brazil Current</td><td>Benguela Current</td><td>~17 million</td></tr>
+        <tr><td><b>North Pacific</b></td><td>Pacific</td><td>Clockwise</td><td>Kuroshio (~42 Sv)</td><td>California Current</td><td>~34 million</td></tr>
+        <tr><td><b>South Pacific</b></td><td>Pacific</td><td>Counterclockwise</td><td>East Australian Current</td><td>Humboldt (Peru) Current</td><td>~37 million</td></tr>
+        <tr><td><b>Indian Ocean</b></td><td>Indian</td><td>Counterclockwise</td><td>Agulhas Current</td><td>West Australian Current</td><td>~30 million</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ COUPLING ══ -->
+<div class="panel" id="panel-coupling">
+  <div class="section-header">
+    <span class="phase-label" style="color:#9b59b6">Coupling</span>
+    <span class="phase-tag" style="background:rgba(123,45,139,.15);color:#9b59b6">Ocean ↔ Atmosphere</span>
+    <span class="phase-desc">The feedbacks that link sea and sky</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Key Coupling Mechanisms — Schematic</p>
+    <svg class="vis-svg" id="coupling-svg" viewBox="0 0 800 280" height="280" style="border-radius:3px;"></svg>
+  </div>
+
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:var(--thc)">
+      <div class="occ-card-name">SST → Atmosphere</div>
+      <div class="occ-card-full">Sea Surface Temperature Forcing</div>
+      <div class="occ-card-body">Warm SSTs increase evaporation, destabilize the lower atmosphere, and drive convection upward. This generates rainfall, releases latent heat, and shifts circulation patterns. <b>El Niño is the canonical example</b>: warm central Pacific SSTs reorganize the entire global atmosphere within weeks.</div>
+      <div class="occ-stat-row">
+        <div class="occ-stat"><b>~days–weeks</b>Response time</div>
+        <div class="occ-stat"><b>Global</b>Teleconnection reach</div>
+      </div>
+    </div>
+    <div class="occ-card" style="border-top-color:var(--trade)">
+      <div class="occ-card-name">Wind → Ocean</div>
+      <div class="occ-card-full">Wind Stress on the Ocean Surface</div>
+      <div class="occ-card-body">Wind exerts tangential stress on the ocean, driving surface currents. The curl of wind stress drives Ekman pumping — upwelling and downwelling that redistributes heat. <b>Changing winds alter gyre circulation, upwelling zones, and ultimately the thermohaline conveyor's upper limb.</b></div>
+      <div class="occ-stat-row">
+        <div class="occ-stat"><b>Months–years</b>Adjustment time</div>
+        <div class="occ-stat"><b>Basin-scale</b>Reach</div>
+      </div>
+    </div>
+    <div class="occ-card" style="border-top-color:var(--hadley)">
+      <div class="occ-card-name">Heat Flux Exchange</div>
+      <div class="occ-card-full">Sensible & Latent Heat, Longwave Radiation</div>
+      <div class="occ-card-body">The ocean and atmosphere exchange heat through: <b>latent heat</b> (evaporation/condensation), <b>sensible heat</b> (conduction/convection), and <b>longwave radiation</b>. The ocean absorbs ~93% of the excess heat from global warming, acting as the climate system's primary heat buffer.</div>
+      <div class="occ-stat-row">
+        <div class="occ-stat"><b>~93%</b>Warming absorbed by ocean</div>
+        <div class="occ-stat"><b>0–700 m</b>Primary layer</div>
+      </div>
+    </div>
+    <div class="occ-card" style="border-top-color:var(--polar)">
+      <div class="occ-card-name">Freshwater Feedback</div>
+      <div class="occ-card-full">Halocline & THC Stability</div>
+      <div class="occ-card-body">Precipitation adds freshwater; evaporation removes it — altering surface salinity. A <b>freshwater lid</b> can stratify the ocean and suppress deep convection, potentially weakening the AMOC. Ice melt from Greenland currently delivers 300+ Gt/yr of freshwater to the North Atlantic.</div>
+      <div class="occ-stat-row">
+        <div class="occ-stat"><b>300+ Gt/yr</b>Greenland melt</div>
+        <div class="occ-stat"><b>Decades–centuries</b>THC response</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Cross-System Interactions — The Hierarchy of Timescales</p>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>Interaction</th><th>Driver</th><th>Response System</th><th>Timescale</th><th>Example</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><b>Wind → Upwelling</b></td><td>Ekman transport</td><td>Coastal SSTs</td><td>Days–weeks</td><td>California Upwelling spring onset</td></tr>
+        <tr><td><b>SST → Precipitation</b></td><td>Convective instability</td><td>Rainfall patterns</td><td>Days</td><td>ENSO precipitation teleconnections</td></tr>
+        <tr><td><b>ITCZ → Gyres</b></td><td>Trade wind strength</td><td>Gyre intensity</td><td>Months–years</td><td>Strengthened trades → Pacific gyre</td></tr>
+        <tr><td><b>AMOC → European climate</b></td><td>THC heat transport</td><td>Continental temperature</td><td>Decades</td><td>Little Ice Age cooling (AMOC weakening?)</td></tr>
+        <tr><td><b>Arctic sea ice → Jet</b></td><td>Reduced ice albedo</td><td>Polar jet waviness</td><td>Years–decades</td><td>Arctic amplification → wavy jet</td></tr>
+        <tr><td><b>Freshwater → THC</b></td><td>Meltwater input</td><td>AMOC strength</td><td>Decades–centuries</td><td>Greenland melt → AMOC slowdown</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="callout" style="border-color:var(--thc)">
+    <div class="hb-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;margin-bottom:.3rem;">The Ocean as a Climate Flywheel</div>
+    <b>The ocean's enormous heat capacity and slow circulation make it the dominant memory of the climate system.</b> While the atmosphere responds to forcing in days to weeks, the upper ocean adjusts over months to years, and the deep ocean over centuries to millennia. This means the warming we observe today is partly a response to CO₂ emitted decades ago — and <b>committed warming from today's emissions won't fully manifest for centuries</b>.
+  </div>
+</div>
+
+<!-- ══ GLOBAL MAP ══ -->
+<div class="panel" id="panel-global">
+  <div class="section-header">
+    <span class="phase-label" style="color:#2d9e5f">Global View</span>
+    <span class="phase-tag" style="background:rgba(45,158,95,.15);color:#2d9e5f">All Systems</span>
+    <span class="phase-desc">Ocean & atmosphere currents together</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Combined Ocean & Atmospheric Circulation — Global Schematic</p>
+    <svg class="vis-svg" id="global-svg" viewBox="0 0 900 450" height="440" style="border-radius:3px;"></svg>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-value" style="color:var(--thc)">17 Sv</div><div class="stat-label">AMOC Peak Transport</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--gyre)">150 Sv</div><div class="stat-label">Gulf Stream Max Flow</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--hadley)">~30°</div><div class="stat-label">Hadley Cell Width</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--jet)">400 km/h</div><div class="stat-label">Max Jet Speed</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--polar)">~1000 yr</div><div class="stat-label">THC Full Cycle</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--trade)">5 km/h</div><div class="stat-label">Typical Trade Wind</div></div>
+  </div>
+
+  <div class="highlight-box">
+    <div class="hb-title">Why All Currents Are Connected</div>
+    The atmosphere and ocean are a <b>single coupled fluid system</b>. Trade winds (atmospheric) drive the equatorial current systems (oceanic). Those ocean currents set SSTs that force the ITCZ (atmospheric). The ITCZ position modulates rainfall over continents, affecting river runoff into oceans. That freshwater affects salinity and thermohaline sinking. AMOC strength influences heat distribution across the Atlantic, shaping the NAO (atmospheric), which shifts westerlies (atmospheric), which alter North Atlantic gyre intensity (oceanic). There is no natural boundary between the two systems — only timescales separating their responses.
+  </div>
+
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:var(--thc)">
+      <div class="occ-card-name">ACC</div>
+      <div class="occ-card-full">Antarctic Circumpolar Current</div>
+      <div class="occ-card-body">The world's largest current (~137 Sv). The only current that circles the globe unimpeded. Connects all ocean basins and is essential for the global THC — it allows deep water from each basin to upwell and return to the surface. Driven by the powerful Southern Ocean westerlies.</div>
+    </div>
+    <div class="occ-card" style="border-top-color:var(--trade)">
+      <div class="occ-card-name">ITCZ</div>
+      <div class="occ-card-full">Inter-Tropical Convergence Zone</div>
+      <div class="occ-card-body">Where trade winds from NH and SH meet, forcing air upward. The ITCZ is the atmospheric node that links equatorial SSTs to global precipitation patterns. Its position is sensitive to hemispheric temperature asymmetries — and AMOC strength influences which hemisphere is relatively warmer.</div>
+    </div>
+    <div class="occ-card" style="border-top-color:var(--gyre)">
+      <div class="occ-card-name">WBC Intensification</div>
+      <div class="occ-card-full">Western Boundary Current Warming</div>
+      <div class="occ-card-body">Satellite and Argo float data show western boundary currents (Gulf Stream, Kuroshio, Agulhas) are warming 2–3× faster than the global ocean mean. This intensifies air-sea heat exchange in downstream regions and may alter storminess over adjacent continents.</div>
+    </div>
+    <div class="occ-card" style="border-top-color:var(--polar)">
+      <div class="occ-card-name">Polar Amplification</div>
+      <div class="occ-card-full">Arctic Warms 3–4× Global Mean</div>
+      <div class="occ-card-body">The Arctic is warming 3–4× faster than the global average — partly due to ice-albedo feedback, partly due to poleward heat transport changes in both the ocean and atmosphere. This reduces the equator-to-pole temperature gradient, with cascading effects on jet streams and mid-latitude weather.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CLIMATE CHANGE ══ -->
+<div class="panel" id="panel-cc">
+  <div class="section-header">
+    <span class="phase-label" style="color:#dc2626">Climate Change</span>
+    <span class="phase-tag" style="background:rgba(220,38,38,.15);color:#dc2626">Anthropogenic Forcing</span>
+    <span class="phase-desc">How warming alters circulation</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Observed & Projected Changes to Circulation Systems</p>
+    <svg class="vis-svg" id="cc-svg" viewBox="0 0 800 240" height="240"></svg>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title" style="color:#dc2626">AMOC Weakening</div>
+    <div class="prose-block">The Atlantic Meridional Overturning Circulation has weakened by roughly <b>15% since the mid-20th century</b>, according to RAPID array measurements and proxy reconstructions. Freshwater from Greenland ice melt reduces the salinity (and thus density) of surface water in the North Atlantic, inhibiting deep water formation. Models project a further 24–39% weakening by 2100 under high-emission scenarios. A collapse (though unlikely this century) would be <b>catastrophic and irreversible on human timescales</b> — dropping European temperatures by 5–10°C over decades, shifting tropical rainfall belts, and raising sea levels on the US East Coast by 20–30 cm above the global mean.</div>
+    <div class="callout" style="border-color:#dc2626">
+      <b>Tipping Point Risk:</b> AMOC may exhibit a saddle-node bifurcation — multiple stable states exist (strong and collapsed). Once pushed past the tipping point, rapid transition to the collapsed state could occur within decades. Current AMOC state is closest to the threshold in ~1,000 years based on sediment proxy records.
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title" style="color:#dc2626">Hadley Cell Expansion</div>
+    <div class="prose-block">Satellite observations confirm the Hadley cell is <b>expanding poleward at ~0.5–1° latitude per decade</b>. This pushes the subtropical dry zones (deserts) poleward, shifting the Mediterranean climate belt, southern Australia, and parts of the US Southwest toward permanent aridity. The subtropical jet is moving poleward, which affects mid-latitude storm tracks.</div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title" style="color:#dc2626">Jet Stream Changes</div>
+    <div class="prose-block">The <b>Arctic amplification</b> (Arctic warming 3–4× the global mean) is reducing the equator-to-pole temperature gradient that drives the polar jet. A weaker gradient means a weaker, wavier jet — more prone to quasi-stationary Rossby waves. Evidence links this to more persistent extreme weather: heat waves, cold outbreaks, floods, and droughts that linger for weeks rather than days. The debate among atmospheric scientists is active: some models show this connection clearly, others less so.</div>
+  </div>
+
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#dc2626">
+      <div class="occ-card-name">AMOC</div>
+      <div class="occ-card-full">Atlantic Meridional Overturning Circulation</div>
+      <div class="occ-card-body"><b>−15%</b> since 1950s (observed). Projected −24 to −39% by 2100 (RCP8.5). Collapse risk: low but non-zero this century. Main driver: Greenland freshwater forcing. Impact: European cooling, US East Coast sea level rise, monsoon shift.</div>
+    </div>
+    <div class="occ-card" style="border-top-color:#f4a261">
+      <div class="occ-card-name">Gyres</div>
+      <div class="occ-card-full">Subtropical Ocean Gyres</div>
+      <div class="occ-card-body">Western boundary currents warming <b>2–3× faster</b> than global mean. Gyre centers expanding as Hadley cell widens. Garbage patches growing. North Pacific gyre shows poleward shift of ~0.5°/decade. Kuroshio and Gulf Stream showing increased variability.</div>
+    </div>
+    <div class="occ-card" style="border-top-color:#e84545">
+      <div class="occ-card-name">Hadley Cell</div>
+      <div class="occ-card-full">Tropical Atmospheric Cell</div>
+      <div class="occ-card-body">Expanding <b>+0.5–1°/decade</b> poleward. ITCZ shifting northward in NH due to asymmetric hemispheric warming. Tropics drying on their poleward flanks. Mediterranean, SW Australia, and SW US showing long-term drying trend. Tropical rainfall intensifying.</div>
+    </div>
+    <div class="occ-card" style="border-top-color:#ffd60a">
+      <div class="occ-card-name">Jet Streams</div>
+      <div class="occ-card-full">Polar & Subtropical Jets</div>
+      <div class="occ-card-body">Polar jet weakening and shifting poleward. Increased waviness linked to Arctic amplification (evidence: strong but debated). Subtropical jet shifting poleward. More frequent SSW events. Blocking frequency may increase — but model agreement is limited.</div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">The Cascade of Consequences</p>
+    <ul class="step-list">
+      <li><span class="step-num" style="background:#dc2626">1</span>CO₂ rises → global warming → Arctic warms 3–4× faster (polar amplification).</li>
+      <li><span class="step-num" style="background:#dc2626">2</span>Reduced equator-to-pole gradient → weaker, wavier polar jet → more persistent extreme weather events.</li>
+      <li><span class="step-num" style="background:#dc2626">3</span>Greenland melts → freshwater into North Atlantic → AMOC slows → less European warming, more US East Coast sea level rise.</li>
+      <li><span class="step-num" style="background:#dc2626">4</span>Hadley cell expands → subtropical dry zones expand → Mediterranean, SW US, southern Australia dry out.</li>
+      <li><span class="step-num" style="background:#dc2626">5</span>Warmer, more energetic atmosphere holds more moisture → intense rainfall events despite drying interiors (wet gets wetter, dry gets drier).</li>
+      <li><span class="step-num" style="background:#dc2626">6</span>Ocean heat content rises → stronger western boundary currents → more intense hurricanes, typhoons, extra-tropical storms.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ COMPARE ══ -->
+<div class="panel" id="panel-compare">
+  <div class="section-header">
+    <span class="phase-label" style="color:#90e0ef">Compare</span>
+    <span class="phase-tag" style="background:rgba(30,58,95,.4);color:#90e0ef">All Systems</span>
+    <span class="phase-desc">Side-by-side properties of Earth's major currents</span>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card" style="border-top-color:var(--thc)">
+      <div class="compare-card-name" style="color:var(--thc)">Thermohaline (AMOC)</div>
+      <div class="compare-row"><span class="compare-key">Driver</span><span class="compare-val">Density (T + S)</span></div>
+      <div class="compare-row"><span class="compare-key">Speed</span><span class="compare-val">~1 cm/s deep</span></div>
+      <div class="compare-row"><span class="compare-key">Transport</span><span class="compare-val">~17 Sv</span></div>
+      <div class="compare-row"><span class="compare-key">Timescale</span><span class="compare-val">100–1000 yr</span></div>
+      <div class="compare-row"><span class="compare-key">Depth</span><span class="compare-val">0–4 km</span></div>
+      <div class="compare-row"><span class="compare-key">Climate role</span><span class="compare-val">Heat redistribution</span></div>
+    </div>
+    <div class="compare-card" style="border-top-color:var(--gyre)">
+      <div class="compare-card-name" style="color:var(--gyre)">Ocean Gyres (Gulf Stream)</div>
+      <div class="compare-row"><span class="compare-key">Driver</span><span class="compare-val">Wind stress curl</span></div>
+      <div class="compare-row"><span class="compare-key">Speed</span><span class="compare-val">1–3 m/s (WBC)</span></div>
+      <div class="compare-row"><span class="compare-key">Transport</span><span class="compare-val">30–150 Sv</span></div>
+      <div class="compare-row"><span class="compare-key">Timescale</span><span class="compare-val">Months–years</span></div>
+      <div class="compare-row"><span class="compare-key">Depth</span><span class="compare-val">0–1 km</span></div>
+      <div class="compare-row"><span class="compare-key">Climate role</span><span class="compare-val">Heat + nutrients</span></div>
+    </div>
+    <div class="compare-card" style="border-top-color:var(--hadley)">
+      <div class="compare-card-name" style="color:var(--hadley)">Hadley Cell</div>
+      <div class="compare-row"><span class="compare-key">Driver</span><span class="compare-val">Solar differential</span></div>
+      <div class="compare-row"><span class="compare-key">Speed</span><span class="compare-val">~5–10 m/s</span></div>
+      <div class="compare-row"><span class="compare-key">Width</span><span class="compare-val">0–30° latitude</span></div>
+      <div class="compare-row"><span class="compare-key">Timescale</span><span class="compare-val">Seasonal</span></div>
+      <div class="compare-row"><span class="compare-key">Altitude</span><span class="compare-val">0–15 km</span></div>
+      <div class="compare-row"><span class="compare-key">Climate role</span><span class="compare-val">Rainfall / deserts</span></div>
+    </div>
+    <div class="compare-card" style="border-top-color:var(--jet)">
+      <div class="compare-card-name" style="color:#a88a00">Polar Jet Stream</div>
+      <div class="compare-row"><span class="compare-key">Driver</span><span class="compare-val">Thermal wind</span></div>
+      <div class="compare-row"><span class="compare-key">Speed</span><span class="compare-val">100–400 km/h</span></div>
+      <div class="compare-row"><span class="compare-key">Width</span><span class="compare-val">~50–100 km</span></div>
+      <div class="compare-row"><span class="compare-key">Timescale</span><span class="compare-val">Days–weeks</span></div>
+      <div class="compare-row"><span class="compare-key">Altitude</span><span class="compare-val">7–12 km</span></div>
+      <div class="compare-row"><span class="compare-key">Climate role</span><span class="compare-val">Storm steering</span></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Comparative Speed, Scale & Timescales</p>
+    <svg class="vis-svg" id="compare-svg" viewBox="0 0 800 260" height="260"></svg>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Full Comparison Table</p>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>System</th><th>Type</th><th>Driver</th><th>Speed</th><th>Depth/Alt</th><th>Timescale</th><th>CC Trend</th>
+      </tr></thead>
+      <tbody>
+        <tr><td style="color:var(--thc)"><b>AMOC / THC</b></td><td>Ocean, thermohaline</td><td>Density (T, S)</td><td>~1 cm/s</td><td>0–4 km</td><td>100–1000 yr</td><td>Weakening −15%</td></tr>
+        <tr><td style="color:var(--gyre)"><b>Gulf Stream</b></td><td>Ocean, wind-driven</td><td>Wind stress</td><td>1–3 m/s</td><td>0–1 km</td><td>Months–years</td><td>Intensifying</td></tr>
+        <tr><td style="color:var(--gyre)"><b>Kuroshio</b></td><td>Ocean, wind-driven</td><td>Wind stress</td><td>1–2 m/s</td><td>0–800 m</td><td>Months–years</td><td>Poleward shift</td></tr>
+        <tr><td style="color:var(--thc)"><b>ACC</b></td><td>Ocean, wind+THC</td><td>Westerly winds</td><td>~0.5 m/s</td><td>0–4 km</td><td>Decades</td><td>Strengthening</td></tr>
+        <tr><td style="color:var(--hadley)"><b>Hadley Cell</b></td><td>Atmosphere</td><td>Solar gradient</td><td>5–10 m/s</td><td>0–15 km</td><td>Seasonal</td><td>Expanding</td></tr>
+        <tr><td style="color:var(--ferrel)"><b>Ferrel Cell</b></td><td>Atmosphere, indirect</td><td>Eddy-driven</td><td>Diffuse</td><td>0–12 km</td><td>Seasonal</td><td>Shifting poleward</td></tr>
+        <tr><td style="color:var(--polar)"><b>Polar Cell</b></td><td>Atmosphere</td><td>Polar cooling</td><td>3–8 m/s</td><td>0–10 km</td><td>Seasonal</td><td>Weakening</td></tr>
+        <tr><td style="color:#a88a00"><b>Polar Jet</b></td><td>Atmosphere, tropopause</td><td>Thermal wind</td><td>100–400 km/h</td><td>7–12 km</td><td>Days–weeks</td><td>Wavy, poleward</td></tr>
+        <tr><td style="color:var(--jet)"><b>Subtropical Jet</b></td><td>Atmosphere, tropopause</td><td>Hadley outflow</td><td>50–250 km/h</td><td>10–14 km</td><td>Seasonal</td><td>Shifting poleward</td></tr>
+        <tr><td style="color:var(--trade)"><b>Trade Winds</b></td><td>Atmosphere, surface</td><td>Hadley cell</td><td>5–15 m/s</td><td>0–2 km</td><td>Seasonal</td><td>Strengthening (Pacific)</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ═══ THEME ═══
+function toggleTheme(){
+  const body=document.body;
+  const dark=body.dataset.theme==='dark';
+  body.dataset.theme=dark?'light':'dark';
+  document.getElementById('themeIcon').textContent=dark?'🌙':'☀️';
+  document.getElementById('themeLabel').textContent=dark?'Dark mode':'Light mode';
+  redrawAll();
+}
+
+// ═══ PANEL SWITCHING ═══
+function switchPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const panel=document.getElementById('panel-'+name);
+  if(panel) panel.classList.add('visible');
+  const tab=document.querySelector(`.tab[data-panel="${name}"]`);
+  if(tab) tab.classList.add('active');
+  redrawAll();
+}
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>switchPanel(t.dataset.panel));
+});
+
+// ═══ HELPERS ═══
+function dark(){return document.body.dataset.theme==='dark';}
+function tc(){return dark()?'rgba(255,255,255,.72)':'rgba(0,0,0,.68)';}
+function mc(){return dark()?'rgba(255,255,255,.38)':'rgba(0,0,0,.35)';}
+function oceanBg(){return dark()?'#04111e':'#cce4f7';}
+function landFill(){return dark()?'#1a2e40':'#b8cdd8';}
+function surfaceFill(){return dark()?'#0d1b2a':'#ffffff';}
+
+// ═══════════════════════════════════════════════
+//  THC SVG
+// ═══════════════════════════════════════════════
+function drawTHC(){
+  const svg=document.getElementById('thc-svg'); if(!svg)return;
+  const W=800,H=280;
+  const d=dark();
+  const bg=d?'#04111e':'#c9dff0';
+  const lf=landFill();
+  const t=tc(),m=mc();
+  let h='';
+
+  // Ocean background
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${bg}"/>`;
+
+  // Latitude bands faint
+  [0.33,0.67].forEach(f=>{
+    h+=`<line x1="0" y1="${H*f}" x2="${W}" y2="${H*f}" stroke="${d?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)'}" stroke-width="1"/>`;
+  });
+
+  // Simplified continents
+  // North America east
+  h+=`<polygon points="0,0 90,0 95,40 85,80 80,130 60,160 40,180 0,180" fill="${lf}"/>`;
+  // Europe/Africa
+  h+=`<polygon points="330,0 410,0 420,20 415,70 400,120 370,170 350,200 340,220 330,240 320,260 315,280 300,280 295,260 300,200 310,150 315,80" fill="${lf}"/>`;
+  // Asia right side
+  h+=`<polygon points="710,0 800,0 800,100 790,100 780,80 750,70 730,60 715,40" fill="${lf}"/>`;
+  // Antarctica
+  h+=`<polygon points="0,260 200,265 350,268 500,265 650,268 800,265 800,280 0,280" fill="${lf}"/>`;
+
+  // Deep cold return (blue, lower half)
+  const deepY=H*0.62;
+  h+=`<path d="M 760,${deepY} Q 600,${deepY+20} 440,${deepY+10} Q 280,${deepY} 140,${deepY+15} Q 100,${deepY+20} 95,${deepY-10}" fill="none" stroke="#0077b6" stroke-width="4" stroke-dasharray="12 6" opacity=".85"/>`;
+  // Arrow on deep return
+  h+=`<polygon points="97,${deepY-18} 88,${deepY-8} 106,${deepY-8}" fill="#0077b6" opacity=".85"/>`;
+
+  // Warm surface flow (orange-red, upper)
+  const surfY=H*0.3;
+  // Gulf Stream / AMOC surface
+  h+=`<path d="M 95,${surfY+10} Q 200,${surfY-15} 330,${surfY} Q 450,${surfY+10} 550,${surfY-5} Q 640,${surfY-15} 710,${surfY+5} Q 760,${surfY+15} 775,${surfY+30}" fill="none" stroke="#f4a261" stroke-width="5" opacity=".9"/>`;
+  // Arrows on surface flow
+  [250,430,600].forEach(x=>{
+    h+=`<polygon points="${x},${surfY-5} ${x-8},${surfY+5} ${x+8},${surfY+5}" fill="#f4a261" opacity=".85"/>`;
+  });
+
+  // Sinking zone — North Atlantic
+  h+=`<ellipse cx="150" cy="${surfY+20}" rx="35" ry="22" fill="rgba(0,119,182,.3)" stroke="#0077b6" stroke-width="1.5" opacity=".9"/>`;
+  h+=`<text x="150" y="${surfY+14}" fill="#0077b6" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">SINKING</text>`;
+  h+=`<text x="150" y="${surfY+25}" fill="#0077b6" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Dense water</text>`;
+  // Downward arrows from sinking zone
+  for(let i=0;i<3;i++){
+    const x=130+i*12;
+    h+=`<line x1="${x}" y1="${surfY+35}" x2="${x}" y2="${deepY-8}" stroke="#0077b6" stroke-width="1.5" opacity=".6"/>`;
+    h+=`<polygon points="${x},${deepY-4} ${x-4},${deepY-14} ${x+4},${deepY-14}" fill="#0077b6" opacity=".7"/>`;
+  }
+
+  // Southern Ocean upwelling
+  h+=`<ellipse cx="530" cy="${H-38}" rx="50" ry="20" fill="rgba(82,183,136,.25)" stroke="#52b788" stroke-width="1.5" opacity=".8"/>`;
+  h+=`<text x="530" y="${H-44}" fill="#52b788" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">UPWELLING</text>`;
+  // Upward arrows
+  for(let i=0;i<3;i++){
+    const x=510+i*10;
+    h+=`<line x1="${x}" y1="${H-50}" x2="${x}" y2="${deepY+10}" stroke="#52b788" stroke-width="1.5" opacity=".6"/>`;
+    h+=`<polygon points="${x},${deepY+6} ${x-4},${deepY+16} ${x+4},${deepY+16}" fill="#52b788" opacity=".7" transform="rotate(180,${x},${deepY+11})"/>`;
+  }
+
+  // Antarctic Bottom Water sinking (right side)
+  h+=`<ellipse cx="670" cy="${H-32}" rx="40" ry="18" fill="rgba(144,224,239,.2)" stroke="#90e0ef" stroke-width="1.5" opacity=".8"/>`;
+  h+=`<text x="670" y="${H-38}" fill="#90e0ef" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">AABW</text>`;
+  h+=`<text x="670" y="${H-28}" fill="#90e0ef" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Sinking</text>`;
+  // AABW flow arrows along bottom
+  h+=`<path d="M 640,${H-14} Q 450,${H-12} 250,${H-10} Q 150,${H-10} 120,${H-20}" fill="none" stroke="#90e0ef" stroke-width="2.5" stroke-dasharray="8 5" opacity=".7"/>`;
+  h+=`<polygon points="120,${H-28} 112,${H-20} 128,${H-20}" fill="#90e0ef" opacity=".7"/>`;
+
+  // Labels
+  h+=`<text x="150" y="${surfY-22}" fill="${t}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">N. Atlantic</text>`;
+  h+=`<text x="150" y="${surfY-12}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Deep Water</text>`;
+  h+=`<text x="400" y="${surfY-8}" fill="#f4a261" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Warm Surface (AMOC upper limb)</text>`;
+  h+=`<text x="400" y="${deepY-8}" fill="#0077b6" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Cold Deep Return (AMOC lower limb)</text>`;
+
+  // Geo labels
+  h+=`<text x="42" y="15" fill="${m}" font-size="8" font-family="DM Mono,monospace">N. America</text>`;
+  h+=`<text x="345" y="15" fill="${m}" font-size="8" font-family="DM Mono,monospace">Europe/Africa</text>`;
+  h+=`<text x="740" y="15" fill="${m}" font-size="8" font-family="DM Mono,monospace">Asia</text>`;
+  h+=`<text x="200" y="${H-8}" fill="${m}" font-size="8" font-family="DM Mono,monospace">Southern Ocean / Antarctica</text>`;
+
+  // Depth scale
+  h+=`<rect x="${W-60}" y="40" width="4" height="${H-80}" fill="${d?'rgba(255,255,255,.08)':'rgba(0,0,0,.06)'}" rx="2"/>`;
+  h+=`<text x="${W-52}" y="50" fill="${m}" font-size="8" font-family="DM Mono,monospace">0 m</text>`;
+  h+=`<text x="${W-52}" y="${H-40}" fill="${m}" font-size="8" font-family="DM Mono,monospace">4 km</text>`;
+  h+=`<text x="${W-52}" y="${surfY+4}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace">~200 m</text>`;
+
+  // Legend
+  h+=`<line x1="10" y1="${H-48}" x2="40" y2="${H-48}" stroke="#f4a261" stroke-width="4" opacity=".9"/>`;
+  h+=`<text x="46" y="${H-44}" fill="${t}" font-size="8" font-family="DM Mono,monospace">Warm surface flow</text>`;
+  h+=`<line x1="10" y1="${H-32}" x2="40" y2="${H-32}" stroke="#0077b6" stroke-width="3" stroke-dasharray="6 3" opacity=".9"/>`;
+  h+=`<text x="46" y="${H-28}" fill="${t}" font-size="8" font-family="DM Mono,monospace">Cold deep return</text>`;
+  h+=`<line x1="10" y1="${H-16}" x2="40" y2="${H-16}" stroke="#90e0ef" stroke-width="2.5" stroke-dasharray="5 3" opacity=".8"/>`;
+  h+=`<text x="46" y="${H-12}" fill="${t}" font-size="8" font-family="DM Mono,monospace">Antarctic Bottom Water</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  AMOC TIME SERIES
+// ═══════════════════════════════════════════════
+function drawAMOCts(){
+  const svg=document.getElementById('amoc-ts-svg'); if(!svg)return;
+  const W=800,H=200;
+  const d=dark();
+  const t=tc(),m=mc();
+  const padL=50,padR=20,padT=20,padB=35;
+  const cW=W-padL-padR, cH=H-padT-padB;
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${d?'#0d1b2a':'#f0f6fc'}" rx="3"/>`;
+
+  // Proxy + instrumental AMOC strength (schematic, normalized to 17 Sv = 1.0)
+  // Years: 900 to 2100 (schematic)
+  const pts=[
+    [900,1.05],[1000,1.0],[1100,1.08],[1200,1.02],[1300,1.0],[1400,0.98],[1500,0.99],
+    [1600,0.97],[1650,0.93],[1700,0.96],[1750,0.99],[1800,1.0],[1850,1.02],
+    [1900,0.99],[1950,0.97],[1970,0.92],[1990,0.88],[2004,0.87],[2015,0.85],[2024,0.85],
+    // Projections
+    [2050,0.78],[2075,0.72],[2100,0.65]
+  ];
+  const xMin=900,xMax=2100,yMin=0.55,yMax=1.12;
+  const scX=x=>padL+(x-xMin)/(xMax-xMin)*cW;
+  const scY=y=>padT+cH-(y-yMin)/(yMax-yMin)*cH;
+
+  // Grid
+  [0.7,0.8,0.9,1.0,1.1].forEach(v=>{
+    const y=scY(v);
+    h+=`<line x1="${padL}" y1="${y}" x2="${padL+cW}" y2="${y}" stroke="${d?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)'}" stroke-width="1"/>`;
+    h+=`<text x="${padL-6}" y="${y+4}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">${Math.round(v*17)} Sv</text>`;
+  });
+
+  // Projection uncertainty band (after 2024)
+  const projPts=pts.filter(p=>p[0]>=2024);
+  const hiPts=projPts.map((p,i)=>`${scX(p[0])},${scY(p[1]+0.08+i*0.01)}`).join(' ');
+  const loPts=projPts.map((p,i)=>`${scX(p[0])},${scY(p[1]-0.07-i*0.015)}`).reverse().join(' ');
+  h+=`<polygon points="${hiPts} ${loPts}" fill="${d?'rgba(220,38,38,.15)':'rgba(220,38,38,.12)'}" stroke="none"/>`;
+
+  // Historical (proxy) line
+  const histPts=pts.filter(p=>p[0]<2004);
+  const histPath='M '+histPts.map(p=>`${scX(p[0])},${scY(p[1])}`).join(' L ');
+  h+=`<path d="${histPath}" fill="none" stroke="#00b4d8" stroke-width="2" opacity=".8" stroke-dasharray="6 4"/>`;
+
+  // Instrumental (RAPID, since 2004)
+  const instPts=pts.filter(p=>p[0]>=2004&&p[0]<=2024);
+  const instPath='M '+instPts.map(p=>`${scX(p[0])},${scY(p[1])}`).join(' L ');
+  h+=`<path d="${instPath}" fill="none" stroke="#00b4d8" stroke-width="2.5" opacity=".95"/>`;
+
+  // Projection median
+  const projPath='M '+projPts.map(p=>`${scX(p[0])},${scY(p[1])}`).join(' L ');
+  h+=`<path d="${projPath}" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="8 4" opacity=".8"/>`;
+
+  // Now marker
+  const nowX=scX(2024);
+  h+=`<line x1="${nowX}" y1="${padT}" x2="${nowX}" y2="${padT+cH}" stroke="${d?'rgba(255,255,255,.25)':'rgba(0,0,0,.2)'}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  h+=`<text x="${nowX}" y="${padT+10}" fill="${t}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Now</text>`;
+
+  // −15% annotation
+  h+=`<line x1="${scX(1950)}" y1="${scY(0.97)}" x2="${scX(2024)}" y2="${scY(0.85)}" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 3" opacity=".6"/>`;
+  h+=`<text x="${scX(1985)}" y="${scY(0.90)}" fill="#dc2626" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">−15% since 1950s</text>`;
+
+  // X axis labels
+  [1000,1200,1400,1600,1800,2000,2100].forEach(yr=>{
+    h+=`<text x="${scX(yr)}" y="${padT+cH+14}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${yr}</text>`;
+  });
+
+  // Legend
+  h+=`<line x1="${padL}" y1="${padT+4}" x2="${padL+30}" y2="${padT+4}" stroke="#00b4d8" stroke-width="2" stroke-dasharray="6 3"/>`;
+  h+=`<text x="${padL+35}" y="${padT+8}" fill="${t}" font-size="8" font-family="DM Mono,monospace">Proxy reconstruction</text>`;
+  h+=`<line x1="${padL+160}" y1="${padT+4}" x2="${padL+190}" y2="${padT+4}" stroke="#00b4d8" stroke-width="2.5"/>`;
+  h+=`<text x="${padL+195}" y="${padT+8}" fill="${t}" font-size="8" font-family="DM Mono,monospace">RAPID observations (2004–)</text>`;
+  h+=`<line x1="${padL+360}" y1="${padT+4}" x2="${padL+390}" y2="${padT+4}" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 3"/>`;
+  h+=`<text x="${padL+395}" y="${padT+8}" fill="${t}" font-size="8" font-family="DM Mono,monospace">Model projection (RCP8.5)</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  GYRES SVG — with actual current paths
+// ═══════════════════════════════════════════════
+function arrowHead(x,y,angle,color,size=7){
+  const r=angle*Math.PI/180;
+  const tip=[x+Math.cos(r)*size,y+Math.sin(r)*size];
+  const l=[x+Math.cos(r+2.4)*size*0.7,y+Math.sin(r+2.4)*size*0.7];
+  const r2=[x+Math.cos(r-2.4)*size*0.7,y+Math.sin(r-2.4)*size*0.7];
+  return `<polygon points="${tip[0]},${tip[1]} ${l[0]},${l[1]} ${r2[0]},${r2[1]}" fill="${color}" opacity=".9"/>`;
+}
+
+function currentPath(d,pts,color,width,warm,id){
+  const path='M '+pts.map(p=>p.join(',')).join(' Q ');
+  // dashed length for animation
+  const len=300;
+  return `<path id="${id}" d="${path}" fill="none" stroke="${color}" stroke-width="${width}" opacity="${warm?'.85':'.8'}" stroke-linecap="round"/>`;
+}
+
+function drawGyres(){
+  const svg=document.getElementById('gyres-svg'); if(!svg)return;
+  const W=900,H=440;
+  const d=dark();
+  const bg=d?'#04111e':'#c0daf5';
+  const lf=landFill();
+  const t=tc(),m=mc();
+  const warm='#f4a261', cold='#48cae4', deep='#0077b6';
+  let h='';
+
+  // ── Background ──
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${bg}"/>`;
+
+  // ── Continents ──
+  h+=`<polygon points="30,20 180,15 195,60 185,130 165,200 130,240 80,270 40,260 20,210 15,140 20,70" fill="${lf}"/>`;
+  h+=`<polygon points="120,260 185,255 210,290 220,360 200,410 160,430 130,425 110,390 100,330 105,285" fill="${lf}"/>`;
+  h+=`<polygon points="380,10 440,10 450,40 440,100 430,130 450,160 445,200 420,220 400,240 370,260 350,240 340,200 350,150 360,100 370,50" fill="${lf}"/>`;
+  h+=`<polygon points="370,260 450,255 470,290 480,360 460,410 420,430 380,425 360,390 350,330 355,285" fill="${lf}"/>`;
+  h+=`<polygon points="470,10 650,8 720,30 750,70 760,120 740,150 700,160 660,150 640,120 620,90 590,70 560,60 530,50 500,40 480,30" fill="${lf}"/>`;
+  h+=`<polygon points="650,230 730,225 760,260 770,310 740,340 690,345 650,320 630,280" fill="${lf}"/>`;
+  h+=`<polygon points="640,310 720,305 760,340 770,390 740,420 680,430 630,415 610,380 615,340" fill="${lf}"/>`;
+
+  // ── Equator ──
+  const eqY=H*0.47;
+  h+=`<line x1="0" y1="${eqY}" x2="${W}" y2="${eqY}" stroke="${d?'rgba(255,255,255,.13)':'rgba(0,0,0,.13)'}" stroke-width="1" stroke-dasharray="10 6"/>`;
+  h+=`<text x="10" y="${eqY-4}" fill="${m}" font-size="8" font-family="DM Mono,monospace">Equator</text>`;
+
+  // ════════════════════════════════════════
+  //  N. ATLANTIC GYRE (clockwise)
+  //  Gulf Stream (W, warm, fast) → N. Atlantic Drift (top) → Canary (E, cold) → N. Equatorial (bottom)
+  // ════════════════════════════════════════
+
+  // Gulf Stream — western boundary, warm, fast, northward
+  h+=`<path d="M 168,202 Q 178,168 196,140 Q 210,115 228,90 Q 248,65 272,52 Q 300,40 330,42" fill="none" stroke="${warm}" stroke-width="4.5" stroke-linecap="round" opacity=".9"/>`;
+  h+=arrowHead(228,90,-55,warm,8);
+  h+=`<text x="182" y="158" fill="${warm}" font-size="8.5" font-family="DM Mono,monospace" font-weight="600" transform="rotate(-60,182,158)">Gulf Stream</text>`;
+
+  // N. Atlantic Drift — top, warm, eastward
+  h+=`<path d="M 330,42 Q 355,38 375,44 Q 400,52 420,65 Q 440,80 450,100" fill="none" stroke="${warm}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>`;
+  h+=arrowHead(400,52,20,warm,6);
+  h+=`<text x="380" y="35" fill="${warm}" font-size="8" font-family="DM Mono,monospace">N. Atlantic Drift →</text>`;
+
+  // Canary Current — eastern boundary, cold, southward
+  h+=`<path d="M 450,100 Q 455,125 450,155 Q 445,180 440,205 Q 432,225 420,240" fill="none" stroke="${cold}" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>`;
+  h+=arrowHead(444,178,95,cold,6);
+  h+=`<text x="458" y="170" fill="${cold}" font-size="8" font-family="DM Mono,monospace">Canary ↓</text>`;
+
+  // N. Equatorial — bottom, warm, westward
+  h+=`<path d="M 420,240 Q 380,248 340,250 Q 300,252 260,248 Q 220,244 190,238 Q 175,232 168,222" fill="none" stroke="${warm}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>`;
+  h+=arrowHead(295,251,178,warm,6);
+  h+=`<text x="300" y="265" fill="${warm}" font-size="8" font-family="DM Mono,monospace">← N. Equatorial</text>`;
+
+  // Gyre center label
+  h+=`<text x="298" y="150" fill="${d?'rgba(244,162,97,.55)':'rgba(180,100,30,.45)'}" font-size="11" font-family="Bebas Neue,sans-serif" letter-spacing=".05em" text-anchor="middle">N. ATLANTIC</text>`;
+  h+=`<text x="298" y="163" fill="${d?'rgba(244,162,97,.45)':'rgba(180,100,30,.35)'}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">↻ clockwise</text>`;
+
+  // ════════════════════════════════════════
+  //  S. ATLANTIC GYRE (counter-clockwise)
+  //  Brazil (W, warm, S) → S. Atlantic (bottom) → Benguela (E, cold, N) → S. Equatorial (top)
+  // ════════════════════════════════════════
+
+  // Brazil Current — warm, southward
+  h+=`<path d="M 185,262 Q 178,290 168,318 Q 158,345 148,368 Q 140,390 138,408" fill="none" stroke="${warm}" stroke-width="3" stroke-linecap="round" opacity=".85"/>`;
+  h+=arrowHead(160,340,105,warm,7);
+  h+=`<text x="128" y="335" fill="${warm}" font-size="8.5" font-family="DM Mono,monospace" font-weight="600" transform="rotate(90,128,335)">Brazil ↓</text>`;
+
+  // S. Atlantic — bottom, westward (actually connecting along south)
+  h+=`<path d="M 138,408 Q 180,420 220,424 Q 260,426 300,420 Q 330,415 352,405" fill="none" stroke="${warm}" stroke-width="2" stroke-linecap="round" opacity=".65"/>`;
+  h+=arrowHead(222,424,5,warm,5);
+
+  // Benguela Current — cold, northward (eastern boundary)
+  h+=`<path d="M 352,405 Q 358,380 360,352 Q 362,322 358,295 Q 354,272 348,258" fill="none" stroke="${cold}" stroke-width="3" stroke-linecap="round" opacity=".85"/>`;
+  h+=arrowHead(360,348,-85,cold,7);
+  h+=`<text x="368" y="330" fill="${cold}" font-size="8.5" font-family="DM Mono,monospace" font-weight="600">Benguela ↑</text>`;
+
+  // S. Equatorial — top, westward
+  h+=`<path d="M 348,258 Q 305,258 265,260 Q 228,262 195,263" fill="none" stroke="${warm}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>`;
+  h+=arrowHead(265,260,178,warm,6);
+  h+=`<text x="265" y="253" fill="${warm}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">← S. Equatorial</text>`;
+
+  h+=`<text x="255" y="340" fill="${d?'rgba(244,162,97,.5)':'rgba(180,100,30,.4)'}" font-size="11" font-family="Bebas Neue,sans-serif" letter-spacing=".05em" text-anchor="middle">S. ATLANTIC</text>`;
+  h+=`<text x="255" y="353" fill="${d?'rgba(244,162,97,.4)':'rgba(180,100,30,.3)'}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">↺ counter-clockwise</text>`;
+
+  // ════════════════════════════════════════
+  //  N. PACIFIC GYRE (clockwise)
+  //  Kuroshio (W, warm) → N. Pacific Drift (top) → California (E, cold) → N. Equatorial (bottom)
+  // ════════════════════════════════════════
+
+  // Kuroshio — warm, northward, western boundary
+  h+=`<path d="M 660,220 Q 668,195 672,168 Q 675,140 670,112 Q 664,88 652,68 Q 640,50 622,38" fill="none" stroke="${warm}" stroke-width="4.5" stroke-linecap="round" opacity=".9"/>`;
+  h+=arrowHead(672,155,-82,warm,8);
+  h+=`<text x="683" y="140" fill="${warm}" font-size="8.5" font-family="DM Mono,monospace" font-weight="600">Kuroshio ↑</text>`;
+
+  // N. Pacific Drift — top, eastward
+  h+=`<path d="M 622,38 Q 660,28 700,25 Q 740,22 780,28 Q 820,34 855,48" fill="none" stroke="${warm}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>`;
+  h+=arrowHead(740,22,5,warm,6);
+  h+=`<text x="730" y="18" fill="${warm}" font-size="8" font-family="DM Mono,monospace">N. Pacific Drift →</text>`;
+
+  // California Current — cold, southward, eastern boundary
+  h+=`<path d="M 855,48 Q 870,75 872,110 Q 872,145 865,178 Q 855,208 840,230" fill="none" stroke="${cold}" stroke-width="3" stroke-linecap="round" opacity=".85"/>`;
+  h+=arrowHead(869,144,95,cold,7);
+  h+=`<text x="876" y="130" fill="${cold}" font-size="8.5" font-family="DM Mono,monospace">California ↓</text>`;
+
+  // N. Equatorial — bottom, westward
+  h+=`<path d="M 840,230 Q 790,238 740,240 Q 690,242 640,240 Q 600,238 565,232 Q 545,226 530,218" fill="none" stroke="${warm}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>`;
+  h+=arrowHead(692,242,180,warm,6);
+  h+=`<text x="690" y="256" fill="${warm}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">← N. Equatorial (Pacific)</text>`;
+
+  // Alaska Current (continuation of Kuroshio at top-left)
+  h+=`<path d="M 855,48 Q 880,60 895,80" fill="none" stroke="${warm}" stroke-width="2" stroke-linecap="round" opacity=".5" stroke-dasharray="5 4"/>`;
+
+  h+=`<text x="590" y="118" fill="${d?'rgba(244,162,97,.5)':'rgba(180,100,30,.4)'}" font-size="11" font-family="Bebas Neue,sans-serif" letter-spacing=".05em" text-anchor="middle">N. PACIFIC</text>`;
+  h+=`<text x="590" y="131" fill="${d?'rgba(244,162,97,.4)':'rgba(180,100,30,.3)'}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">↻ clockwise</text>`;
+
+  // ════════════════════════════════════════
+  //  S. PACIFIC GYRE (counter-clockwise)
+  //  E. Australian (W, warm, S) → S. Pacific (bottom) → Humboldt/Peru (E, cold, N) → S. Equatorial (top)
+  // ════════════════════════════════════════
+
+  // E. Australian Current — warm, southward
+  h+=`<path d="M 658,262 Q 662,290 665,320 Q 668,348 665,372 Q 660,395 648,412" fill="none" stroke="${warm}" stroke-width="3.5" stroke-linecap="round" opacity=".85"/>`;
+  h+=arrowHead(666,345,95,warm,7);
+  h+=`<text x="672" y="330" fill="${warm}" font-size="8.5" font-family="DM Mono,monospace" font-weight="600">E. Australian ↓</text>`;
+
+  // S. Pacific — bottom, eastward
+  h+=`<path d="M 648,412 Q 620,425 580,430 Q 530,432 480,428 Q 435,422 400,410" fill="none" stroke="${warm}" stroke-width="2" stroke-linecap="round" opacity=".65"/>`;
+  h+=arrowHead(530,432,178,warm,5);
+
+  // Humboldt / Peru Current — cold, northward
+  h+=`<path d="M 400,410 Q 388,382 380,350 Q 372,318 370,285 Q 370,265 374,252" fill="none" stroke="${cold}" stroke-width="3.5" stroke-linecap="round" opacity=".85"/>`;
+  h+=arrowHead(373,318,-85,cold,7);
+  h+=`<text x="348" y="340" fill="${cold}" font-size="8.5" font-family="DM Mono,monospace" font-weight="600">Humboldt ↑</text>`;
+
+  // S. Equatorial — top, westward
+  h+=`<path d="M 374,252 Q 420,250 470,250 Q 520,250 570,252 Q 610,254 645,258" fill="none" stroke="${warm}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>`;
+  h+=arrowHead(470,250,180,warm,6);
+  h+=`<text x="510" y="244" fill="${warm}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">← S. Equatorial</text>`;
+
+  h+=`<text x="518" y="348" fill="${d?'rgba(244,162,97,.5)':'rgba(180,100,30,.4)'}" font-size="11" font-family="Bebas Neue,sans-serif" letter-spacing=".05em" text-anchor="middle">S. PACIFIC</text>`;
+  h+=`<text x="518" y="361" fill="${d?'rgba(244,162,97,.4)':'rgba(180,100,30,.3)'}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">↺ counter-clockwise</text>`;
+
+  // ════════════════════════════════════════
+  //  INDIAN OCEAN GYRE (counter-clockwise, SH)
+  //  Agulhas (W, warm, S→SW) → S. Indian (bottom) → W. Australian (E, cold, N) → S. Equatorial (top)
+  // ════════════════════════════════════════
+
+  // Agulhas Current — warm, southward along Africa
+  h+=`<path d="M 385,262 Q 378,285 372,310 Q 366,332 362,350 Q 358,368 355,385" fill="none" stroke="${warm}" stroke-width="3.5" stroke-linecap="round" opacity=".85"/>`;
+  h+=arrowHead(364,338,100,warm,7);
+  h+=`<text x="330" y="315" fill="${warm}" font-size="8.5" font-family="DM Mono,monospace" font-weight="600">Agulhas ↓</text>`;
+
+  // S. Indian — bottom, eastward
+  h+=`<path d="M 355,385 Q 390,400 430,408 Q 470,414 510,414 Q 545,412 572,405" fill="none" stroke="${warm}" stroke-width="2" stroke-linecap="round" opacity=".65"/>`;
+  h+=arrowHead(432,409,5,warm,5);
+
+  // W. Australian Current — cold, northward
+  h+=`<path d="M 572,405 Q 590,380 598,352 Q 604,322 602,292 Q 598,270 590,255" fill="none" stroke="${cold}" stroke-width="3" stroke-linecap="round" opacity=".8"/>`;
+  h+=arrowHead(601,320,-80,cold,7);
+  h+=`<text x="608" y="320" fill="${cold}" font-size="8" font-family="DM Mono,monospace">W. Australian ↑</text>`;
+
+  // S. Indian Equatorial — top, westward
+  h+=`<path d="M 590,255 Q 558,252 524,252 Q 492,252 462,255 Q 432,258 408,262 Q 396,264 385,264" fill="none" stroke="${warm}" stroke-width="2.5" stroke-linecap="round" opacity=".75"/>`;
+  h+=arrowHead(490,252,180,warm,6);
+
+  h+=`<text x="490" y="328" fill="${d?'rgba(244,162,97,.5)':'rgba(180,100,30,.4)'}" font-size="11" font-family="Bebas Neue,sans-serif" letter-spacing=".05em" text-anchor="middle">INDIAN OCEAN</text>`;
+  h+=`<text x="490" y="341" fill="${d?'rgba(244,162,97,.4)':'rgba(180,100,30,.3)'}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">↺ counter-clockwise</text>`;
+
+  // ════════════════════════════════════════
+  //  ACC — Antarctic Circumpolar Current
+  // ════════════════════════════════════════
+  const accY=H*0.94;
+  h+=`<path d="M 0,${accY} Q 225,${accY-12} 450,${accY} Q 675,${accY+10} 900,${accY}" fill="none" stroke="${deep}" stroke-width="3.5" opacity=".85" stroke-linecap="round"/>`;
+  h+=arrowHead(450,accY-12,5,deep,8);
+  h+=arrowHead(220,accY-8,5,deep,7);
+  h+=arrowHead(700,accY+6,5,deep,7);
+  h+=`<text x="450" y="${accY-17}" fill="${deep}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Antarctic Circumpolar Current (ACC) — ~137 Sv →</text>`;
+
+  // ════════════════════════════════════════
+  //  LEGEND
+  // ════════════════════════════════════════
+  const legY=12;
+  h+=`<rect x="8" y="4" width="340" height="20" rx="2" fill="${d?'rgba(0,0,0,.45)':'rgba(255,255,255,.55)'}"/>`;
+  h+=`<line x1="14" y1="${legY}" x2="38" y2="${legY}" stroke="${warm}" stroke-width="3.5" stroke-linecap="round"/>`;
+  h+=`<text x="43" y="${legY+4}" fill="${t}" font-size="8" font-family="DM Mono,monospace">Warm current</text>`;
+  h+=`<line x1="130" y1="${legY}" x2="154" y2="${legY}" stroke="${cold}" stroke-width="3.5" stroke-linecap="round"/>`;
+  h+=`<text x="159" y="${legY+4}" fill="${t}" font-size="8" font-family="DM Mono,monospace">Cold current</text>`;
+  h+=`<line x1="240" y1="${legY}" x2="264" y2="${legY}" stroke="${deep}" stroke-width="3.5" stroke-linecap="round"/>`;
+  h+=`<text x="269" y="${legY+4}" fill="${t}" font-size="8" font-family="DM Mono,monospace">ACC / Deep</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  COUPLING SVG
+// ═══════════════════════════════════════════════
+function drawCoupling(){
+  const svg=document.getElementById('coupling-svg'); if(!svg)return;
+  const W=800,H=280;
+  const d=dark();
+  const t=tc(),m=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+
+  // Ocean (bottom half), Atmosphere (top half)
+  const split=H*0.5;
+  h+=`<rect x="0" y="${split}" width="${W}" height="${H-split}" fill="${d?'#04111e':'#c0daf5'}" opacity=".5" rx="0"/>`;
+  h+=`<rect x="0" y="0" width="${W}" height="${split}" fill="${d?'#0c1a28':'#e0edf8'}" opacity=".4" rx="0"/>`;
+  h+=`<line x1="0" y1="${split}" x2="${W}" y2="${split}" stroke="${d?'rgba(0,180,216,.3)':'rgba(0,119,182,.25)'}" stroke-width="2"/>`;
+  h+=`<text x="${W-10}" y="${split-6}" fill="${d?'rgba(200,220,240,.4)':'rgba(0,80,140,.3)'}" font-size="10" font-family="Bebas Neue,sans-serif" text-anchor="end" letter-spacing=".05em">ATMOSPHERE</text>`;
+  h+=`<text x="${W-10}" y="${split+16}" fill="${d?'rgba(0,180,216,.3)':'rgba(0,80,140,.3)'}" font-size="10" font-family="Bebas Neue,sans-serif" text-anchor="end" letter-spacing=".05em">OCEAN</text>`;
+
+  // Central coupling node
+  const cx=W/2,cy=split;
+  h+=`<ellipse cx="${cx}" cy="${cy}" rx="60" ry="18" fill="${d?'rgba(155,89,182,.25)':'rgba(120,60,160,.15)'}" stroke="#9b59b6" stroke-width="1.5"/>`;
+  h+=`<text x="${cx}" y="${cy+5}" fill="#9b59b6" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Air-Sea Interface</text>`;
+
+  // Heat flux arrows (downward ocean→atm and upward)
+  for(let i=0;i<5;i++){
+    const x=cx-80+i*40;
+    h+=`<line x1="${x}" y1="${split-22}" x2="${x}" y2="${split-50}" stroke="#e84545" stroke-width="1.5" opacity=".7"/>`;
+    h+=`<polygon points="${x},${split-54} ${x-4},${split-44} ${x+4},${split-44}" fill="#e84545" opacity=".7"/>`;
+  }
+  h+=`<text x="${cx-85}" y="${split-58}" fill="#e84545" font-size="8" font-family="DM Mono,monospace">Latent + Sensible Heat ↑</text>`;
+
+  // Longwave radiation (ocean absorbs SW, emits LW)
+  h+=`<line x1="${cx+120}" y1="${split-22}" x2="${cx+120}" y2="${split-55}" stroke="#ffd60a" stroke-width="1.5" stroke-dasharray="4 3" opacity=".8"/>`;
+  h+=`<polygon points="${cx+120},${split-22} ${cx+116},${split-32} ${cx+124},${split-32}" fill="#ffd60a" opacity=".8" transform="rotate(180,${cx+120},${split-27})"/>`;
+  h+=`<text x="${cx+128}" y="${split-38}" fill="#ffd60a" font-size="7.5" font-family="DM Mono,monospace">SW↓ / LW↑</text>`;
+
+  // Wind stress arrow (atmosphere to ocean)
+  h+=`<path d="M ${cx-200},${split-30} Q ${cx-160},${split-15} ${cx-70},${split+5}" fill="none" stroke="#52b788" stroke-width="2" opacity=".8"/>`;
+  h+=`<polygon points="${cx-66},${split+8} ${cx-76},${split+3} ${cx-74},${split+14}" fill="#52b788" opacity=".8"/>`;
+  h+=`<text x="${cx-200}" y="${split-38}" fill="#52b788" font-size="8" font-family="DM Mono,monospace">Wind Stress →</text>`;
+
+  // Freshwater (rain/evap)
+  for(let i=0;i<4;i++){
+    const x=cx+160+i*20;
+    h+=`<line x1="${x}" y1="${split-55}" x2="${x}" y2="${split-22}" stroke="#00b4d8" stroke-width="1.5" opacity=".7"/>`;
+    h+=`<polygon points="${x},${split-22} ${x-4},${split-32} ${x+4},${split-32}" fill="#00b4d8" opacity=".7"/>`;
+  }
+  h+=`<text x="${cx+150}" y="${split-62}" fill="#00b4d8" font-size="8" font-family="DM Mono,monospace">Evap / Precip ↕</text>`;
+
+  // SST forcing → atmosphere
+  h+=`<path d="M ${cx+70},${split+5} Q ${cx+100},${split-12} ${cx+200},${split-45}" fill="none" stroke="#f4a261" stroke-width="2" opacity=".8"/>`;
+  h+=`<polygon points="${cx+204},${split-48} ${cx+195},${split-52} ${cx+200},${split-40}" fill="#f4a261" opacity=".8"/>`;
+  h+=`<text x="${cx+210}" y="${split-52}" fill="#f4a261" font-size="8" font-family="DM Mono,monospace">SST → Convection</text>`;
+
+  // Ocean heat content node
+  h+=`<ellipse cx="${cx-150}" cy="${split+80}" rx="70" ry="28" fill="${d?'rgba(0,119,182,.2)':'rgba(0,100,160,.1)'}" stroke="#0077b6" stroke-width="1.5"/>`;
+  h+=`<text x="${cx-150}" y="${split+76}" fill="#00b4d8" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Ocean Heat</text>`;
+  h+=`<text x="${cx-150}" y="${split+88}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Content (93% of</text>`;
+  h+=`<text x="${cx-150}" y="${split+98}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">excess warming)</text>`;
+
+  // THC node
+  h+=`<ellipse cx="${cx+150}" cy="${split+75}" rx="65" ry="26" fill="${d?'rgba(0,180,216,.15)':'rgba(0,150,200,.08)'}" stroke="#00b4d8" stroke-width="1.5"/>`;
+  h+=`<text x="${cx+150}" y="${split+72}" fill="#00b4d8" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">THC / AMOC</text>`;
+  h+=`<text x="${cx+150}" y="${split+84}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Salt + temperature</text>`;
+  h+=`<text x="${cx+150}" y="${split+94}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">driven overturning</text>`;
+
+  // Connecting arrows between ocean nodes
+  h+=`<line x1="${cx-80}" y1="${split+75}" x2="${cx+85}" y2="${split+75}" stroke="${d?'rgba(255,255,255,.15)':'rgba(0,0,0,.12)'}" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+
+  // Atmos nodes
+  h+=`<ellipse cx="${cx-160}" cy="${split-100}" rx="65" ry="26" fill="${d?'rgba(232,69,69,.12)':'rgba(200,60,60,.08)'}" stroke="#e84545" stroke-width="1.5"/>`;
+  h+=`<text x="${cx-160}" y="${split-103}" fill="#e84545" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Hadley Cell /</text>`;
+  h+=`<text x="${cx-160}" y="${split-91}" fill="#e84545" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Trade Winds</text>`;
+
+  h+=`<ellipse cx="${cx+160}" cy="${split-100}" rx="65" ry="26" fill="${d?'rgba(255,214,10,.1)':'rgba(180,140,0,.07)'}" stroke="#ffd60a" stroke-width="1.5"/>`;
+  h+=`<text x="${cx+160}" y="${split-103}" fill="#ffd60a" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Jet Stream /</text>`;
+  h+=`<text x="${cx+160}" y="${split-91}" fill="#ffd60a" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Storm Tracks</text>`;
+
+  // Connecting arrows atmos nodes to center
+  h+=`<line x1="${cx-95}" y1="${split-100}" x2="${cx-62}" y2="${split-25}" stroke="${d?'rgba(255,255,255,.12)':'rgba(0,0,0,.1)'}" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  h+=`<line x1="${cx+95}" y1="${split-100}" x2="${cx+62}" y2="${split-25}" stroke="${d?'rgba(255,255,255,.12)':'rgba(0,0,0,.1)'}" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  GLOBAL MAP SVG
+// ═══════════════════════════════════════════════
+function drawGlobal(){
+  const svg=document.getElementById('global-svg'); if(!svg)return;
+  const W=900,H=450;
+  const d=dark();
+  const bg=d?'#04111e':'#c0daf5';
+  const lf=landFill();
+  const t=tc(),m=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${bg}"/>`;
+
+  // Same basic continent shapes as gyres SVG
+  h+=`<polygon points="30,20 180,15 195,60 185,130 165,200 130,240 80,270 40,260 20,210 15,140 20,70" fill="${lf}"/>`;
+  h+=`<polygon points="120,260 185,255 210,290 220,360 200,410 160,430 130,425 110,390 100,330 105,285" fill="${lf}"/>`;
+  h+=`<polygon points="380,10 440,10 450,40 440,100 430,130 450,160 445,200 420,220 400,240 370,260 350,240 340,200 350,150 360,100 370,50" fill="${lf}"/>`;
+  h+=`<polygon points="370,260 450,255 470,290 480,360 460,410 420,430 380,425 360,390 350,330 355,285" fill="${lf}"/>`;
+  h+=`<polygon points="470,10 650,8 720,30 750,70 760,120 740,150 700,160 660,150 640,120 620,90 590,70 560,60 530,50 500,40 480,30" fill="${lf}"/>`;
+  h+=`<polygon points="650,230 730,225 760,260 770,310 740,340 690,345 650,320 630,280" fill="${lf}"/>`;
+  h+=`<polygon points="640,310 720,305 760,340 770,390 740,420 680,430 630,415 610,380 615,340" fill="${lf}"/>`;
+  h+=`<rect x="0" y="430" width="${W}" height="20" fill="${lf}"/>`;
+
+  const eqY=H*0.47;
+  h+=`<line x1="0" y1="${eqY}" x2="${W}" y2="${eqY}" stroke="${d?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)'}" stroke-width="1" stroke-dasharray="8 5"/>`;
+
+  // ── OCEAN CURRENTS ──
+  // Gulf Stream (warm)
+  h+=`<path d="M 135,190 Q 190,150 250,140 Q 310,135 360,155 Q 400,170 420,200" fill="none" stroke="#f4a261" stroke-width="3.5" opacity=".85"/>`;
+  h+=drawArrow(350,158,360,165,'#f4a261');
+
+  // N Atlantic gyre return (Canary, cold)
+  h+=`<path d="M 420,200 Q 430,240 410,260 Q 380,280 360,295" fill="none" stroke="#00b4d8" stroke-width="2.5" opacity=".75"/>`;
+
+  // AMOC deep (dashed, below surface conceptually)
+  h+=`<path d="M 355,160 Q 290,155 220,165 Q 170,175 140,195" fill="none" stroke="#0077b6" stroke-width="2.5" stroke-dasharray="8 5" opacity=".7"/>`;
+  h+=`<text x="240" y="148" fill="#0077b6" font-size="8" font-family="DM Mono,monospace">AMOC</text>`;
+
+  // Kuroshio (warm)
+  h+=`<path d="M 660,280 Q 680,240 700,200 Q 710,170 700,140 Q 690,115 680,90" fill="none" stroke="#f4a261" stroke-width="3.5" opacity=".85"/>`;
+  h+=drawArrow(698,185,700,175,'#f4a261');
+
+  // N Pacific drift
+  h+=`<path d="M 680,90 Q 720,80 760,85 Q 800,90 840,100" fill="none" stroke="#f4a261" stroke-width="2.5" opacity=".7"/>`;
+
+  // California current (cold)
+  h+=`<path d="M 60,150 Q 65,185 70,220 Q 75,255 80,285" fill="none" stroke="#00b4d8" stroke-width="2.5" opacity=".75"/>`;
+  h+=`<text x="22" y="220" fill="#00b4d8" font-size="7.5" font-family="DM Mono,monospace">California</text>`;
+
+  // Equatorial currents
+  h+=`<path d="M 800,${eqY-8} Q 600,${eqY-5} 400,${eqY-8} Q 250,${eqY-5} 100,${eqY-8}" fill="none" stroke="#ff9f1c" stroke-width="2" opacity=".7"/>`;
+  h+=drawArrow(300,eqY-8,290,eqY-8,'#ff9f1c');
+  h+=`<text x="440" y="${eqY-14}" fill="#ff9f1c" font-size="8" font-family="DM Mono,monospace">N. Equatorial Current (W)</text>`;
+
+  // South equatorial
+  h+=`<path d="M 860,${eqY+12} Q 660,${eqY+10} 460,${eqY+12} Q 260,${eqY+10} 100,${eqY+12}" fill="none" stroke="#ff9f1c" stroke-width="2" opacity=".65"/>`;
+  h+=drawArrow(300,eqY+12,290,eqY+12,'#ff9f1c');
+
+  // Humboldt (cold, Peru)
+  h+=`<path d="M 115,380 Q 112,340 110,300 Q 108,275 110,260" fill="none" stroke="#00b4d8" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<text x="75" y="330" fill="#00b4d8" font-size="7.5" font-family="DM Mono,monospace">Humboldt</text>`;
+
+  // Brazil (warm)
+  h+=`<path d="M 155,265 Q 148,295 142,330 Q 138,360 140,390" fill="none" stroke="#f4a261" stroke-width="2.5" opacity=".75"/>`;
+  h+=`<text x="152" y="310" fill="#f4a261" font-size="7.5" font-family="DM Mono,monospace">Brazil</text>`;
+
+  // Benguela (cold)
+  h+=`<path d="M 358,330 Q 356,305 355,280 Q 354,265 355,252" fill="none" stroke="#00b4d8" stroke-width="2.5" opacity=".75"/>`;
+  h+=`<text x="362" y="300" fill="#00b4d8" font-size="7.5" font-family="DM Mono,monospace">Benguela</text>`;
+
+  // Agulhas (warm)
+  h+=`<path d="M 440,255 Q 430,280 410,310 Q 390,340 370,360" fill="none" stroke="#f4a261" stroke-width="2.5" opacity=".75"/>`;
+  h+=`<text x="445" y="310" fill="#f4a261" font-size="7.5" font-family="DM Mono,monospace">Agulhas</text>`;
+
+  // East Australian (warm)
+  h+=`<path d="M 720,280 Q 718,320 715,360 Q 713,390 715,420" fill="none" stroke="#f4a261" stroke-width="2.5" opacity=".7"/>`;
+  h+=`<text x="724" y="355" fill="#f4a261" font-size="7.5" font-family="DM Mono,monospace">E. Aust.</text>`;
+
+  // ACC (bottom)
+  const accY=H-28;
+  h+=`<path d="M 0,${accY} Q 225,${accY-10} 450,${accY} Q 675,${accY+10} 900,${accY}" fill="none" stroke="#0077b6" stroke-width="3" opacity=".8"/>`;
+  h+=drawArrow(450,accY,460,accY,'#0077b6');
+  h+=`<text x="450" y="${accY-13}" fill="#0077b6" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Antarctic Circumpolar Current (ACC)</text>`;
+
+  // ── ATMOSPHERIC FEATURES ──
+  // ITCZ band
+  h+=`<rect x="0" y="${eqY-22}" width="${W}" height="14" fill="${d?'rgba(255,214,10,.07)':'rgba(200,160,0,.07)'}" stroke="none"/>`;
+  h+=`<text x="10" y="${eqY-11}" fill="#ffd60a" font-size="8" font-family="DM Mono,monospace">ITCZ</text>`;
+
+  // Polar jet NH (wavy band)
+  const pjY=H*0.27;
+  const pjPts=[];
+  for(let xi=0;xi<=W;xi+=15){
+    const amp=14*Math.sin(xi/100*Math.PI+0.5);
+    pjPts.push(`${xi},${pjY+amp}`);
+  }
+  h+=`<polyline points="${pjPts.join(' ')}" fill="none" stroke="#ffd60a" stroke-width="2" stroke-dasharray="6 4" opacity=".6"/>`;
+  h+=`<text x="${W-10}" y="${pjY-6}" fill="#ffd60a" font-size="7.5" font-family="DM Mono,monospace" text-anchor="end">Polar Jet ~50–60°N</text>`;
+
+  // Subtropical jet NH
+  const sjY=H*0.38;
+  h+=`<line x1="0" y1="${sjY}" x2="${W}" y2="${sjY}" stroke="#f4a261" stroke-width="1.5" stroke-dasharray="10 6" opacity=".5"/>`;
+  h+=`<text x="${W-10}" y="${sjY-4}" fill="#f4a261" font-size="7.5" font-family="DM Mono,monospace" text-anchor="end">Subtropical Jet ~30°N</text>`;
+
+  // SH polar jet
+  const pjSY=H*0.75;
+  h+=`<line x1="0" y1="${pjSY}" x2="${W}" y2="${pjSY}" stroke="#ffd60a" stroke-width="2" stroke-dasharray="6 4" opacity=".5"/>`;
+  h+=`<text x="10" y="${pjSY-5}" fill="#ffd60a" font-size="7.5" font-family="DM Mono,monospace">Polar Jet ~50–60°S</text>`;
+
+  // Trade wind arrows (surface)
+  for(let xi=80;xi<W;xi+=120){
+    h+=`<text x="${xi}" y="${eqY-32}" fill="#ff9f1c" font-size="14" font-family="monospace" opacity=".5">←</text>`;
+    h+=`<text x="${xi}" y="${eqY+38}" fill="#ff9f1c" font-size="14" font-family="monospace" opacity=".5">←</text>`;
+  }
+
+  // Hadley cell labels (subtle)
+  h+=`<text x="460" y="${eqY-55}" fill="${d?'rgba(232,69,69,.3)':'rgba(200,50,50,.25)'}" font-size="20" font-family="Bebas Neue,sans-serif" letter-spacing=".05em" text-anchor="middle">HADLEY CELL</text>`;
+
+  // Legend
+  const legX=10,legY=15;
+  [{c:'#f4a261',l:'Warm current'},{c:'#00b4d8',l:'Cold current'},{c:'#0077b6',l:'AMOC deep flow',dash:true},{c:'#ffd60a',l:'Polar Jet',dash:true},{c:'#ff9f1c',l:'Trade Winds'}].forEach((e,i)=>{
+    const x=legX+i*160;
+    h+=`<line x1="${x}" y1="${legY}" x2="${x+22}" y2="${legY}" stroke="${e.c}" stroke-width="${e.dash?1.5:2.5}"${e.dash?' stroke-dasharray="5 3"':''}/>`;
+    h+=`<text x="${x+26}" y="${legY+4}" fill="${t}" font-size="7.5" font-family="DM Mono,monospace">${e.l}</text>`;
+  });
+
+  svg.innerHTML=h;
+}
+
+function drawArrow(x1,y1,x2,y2,color){
+  const dx=x2-x1,dy=y2-y1;
+  const len=Math.sqrt(dx*dx+dy*dy)||1;
+  const ux=dx/len,uy=dy/len;
+  const nx=-uy,ny=ux;
+  const tip=[x2+ux*8,y2+uy*8];
+  const b1=[x2-ux*4+nx*5,y2-uy*4+ny*5];
+  const b2=[x2-ux*4-nx*5,y2-uy*4-ny*5];
+  return `<polygon points="${tip[0]},${tip[1]} ${b1[0]},${b1[1]} ${b2[0]},${b2[1]}" fill="${color}" opacity=".85"/>`;
+}
+
+// ═══════════════════════════════════════════════
+//  CC SVG
+// ═══════════════════════════════════════════════
+function drawCC(){
+  const svg=document.getElementById('cc-svg'); if(!svg)return;
+  const W=800,H=240;
+  const d=dark();
+  const t=tc(),m=mc();
+  const padL=50,padR=20,padT=20,padB=35;
+  const cW=W-padL-padR,cH=H-padT-padB;
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${d?'#0d1b2a':'#f0f6fc'}" rx="3"/>`;
+
+  // Systems and their projected change trajectories (normalized −1 to +1, negative = weakening/contracting)
+  const systems=[
+    {name:'AMOC',color:'#00b4d8',pts:[[1950,0],[1980,-0.12],[2010,-0.22],[2024,-0.28],[2050,-0.42],[2075,-0.55],[2100,-0.65]]},
+    {name:'Hadley Width',color:'#e84545',pts:[[1950,0],[1980,0.05],[2010,0.14],[2024,0.2],[2050,0.35],[2075,0.5],[2100,0.65]]},
+    {name:'Polar Jet Speed',color:'#ffd60a',pts:[[1950,0],[1980,-0.04],[2010,-0.1],[2024,-0.14],[2050,-0.22],[2075,-0.30],[2100,-0.40]]},
+    {name:'Ocean Heat',color:'#f4a261',pts:[[1950,0],[1980,0.08],[2010,0.28],[2024,0.42],[2050,0.7],[2075,0.88],[2100,1.0]]},
+    {name:'ACC Transport',color:'#52b788',pts:[[1950,0],[1980,0.03],[2010,0.07],[2024,0.1],[2050,0.16],[2075,0.2],[2100,0.25]]},
+  ];
+
+  const xMin=1950,xMax=2100,yMin=-0.75,yMax=1.05;
+  const scX=x=>padL+(x-xMin)/(xMax-xMin)*cW;
+  const scY=y=>padT+cH-(y-yMin)/(yMax-yMin)*cH;
+
+  // Grid
+  [-0.5,0,0.5,1.0].forEach(v=>{
+    const y=scY(v);
+    h+=`<line x1="${padL}" y1="${y}" x2="${padL+cW}" y2="${y}" stroke="${d?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)'}" stroke-width="1"/>`;
+    h+=`<text x="${padL-6}" y="${y+4}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">${v===0?'Baseline':v>0?'+'+Math.round(v*100)+'%':Math.round(v*100)+'%'}</text>`;
+  });
+
+  // Zero line
+  h+=`<line x1="${padL}" y1="${scY(0)}" x2="${padL+cW}" y2="${scY(0)}" stroke="${d?'rgba(255,255,255,.15)':'rgba(0,0,0,.12)'}" stroke-width="1.5"/>`;
+
+  // Now marker
+  const nowX=scX(2024);
+  h+=`<line x1="${nowX}" y1="${padT}" x2="${nowX}" y2="${padT+cH}" stroke="${d?'rgba(255,255,255,.2)':'rgba(0,0,0,.15)'}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  h+=`<text x="${nowX}" y="${padT+9}" fill="${t}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Now</text>`;
+
+  // Draw each system
+  systems.forEach(s=>{
+    const obs=s.pts.filter(p=>p[0]<=2024);
+    const proj=s.pts.filter(p=>p[0]>=2024);
+    const obsPath='M '+obs.map(p=>`${scX(p[0])},${scY(p[1])}`).join(' L ');
+    h+=`<path d="${obsPath}" fill="none" stroke="${s.color}" stroke-width="2.5" opacity=".9"/>`;
+    const projPath='M '+proj.map(p=>`${scX(p[0])},${scY(p[1])}`).join(' L ');
+    h+=`<path d="${projPath}" fill="none" stroke="${s.color}" stroke-width="2" stroke-dasharray="8 5" opacity=".7"/>`;
+    // End label
+    const last=s.pts[s.pts.length-1];
+    h+=`<text x="${scX(last[0])+4}" y="${scY(last[1])+4}" fill="${s.color}" font-size="8" font-family="DM Mono,monospace">${s.name}</text>`;
+  });
+
+  // X labels
+  [1960,1980,2000,2020,2050,2075,2100].forEach(yr=>{
+    h+=`<text x="${scX(yr)}" y="${padT+cH+14}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${yr}</text>`;
+  });
+
+  h+=`<text x="${W/2}" y="${H-4}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Schematic normalized change from 1950 baseline — solid: observed, dashed: RCP8.5 projection</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  COMPARE SVG — log-scale speed chart
+// ═══════════════════════════════════════════════
+function drawCompare(){
+  const svg=document.getElementById('compare-svg'); if(!svg)return;
+  const W=800,H=260;
+  const d=dark();
+  const t=tc(),m=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${d?'#0d1b2a':'#f0f6fc'}" rx="3"/>`;
+
+  // Horizontal bar chart: log scale speed
+  const items=[
+    {name:'AMOC Deep Flow',speed:0.01,color:'#0077b6',unit:'~1 cm/s'},
+    {name:'THC Surface (AMOC)',speed:0.1,color:'#00b4d8',unit:'~10 cm/s'},
+    {name:'Gulf Stream',speed:2.0,color:'#f4a261',unit:'~2 m/s'},
+    {name:'Kuroshio',speed:1.5,color:'#f4a261',unit:'~1.5 m/s'},
+    {name:'Trade Winds (surface)',speed:8.0,color:'#ff9f1c',unit:'~8 m/s'},
+    {name:'Polar Cell',speed:5.0,color:'#90e0ef',unit:'~5 m/s'},
+    {name:'Hadley Cell updraft',speed:7.0,color:'#e84545',unit:'~7 m/s'},
+    {name:'Polar Jet Stream',speed:100.0,color:'#ffd60a',unit:'~100 m/s'},
+  ];
+
+  const padL=200,padR=80,padT=10,barH=22,gap=8;
+  const totalH=items.length*(barH+gap);
+  const maxLog=Math.log10(200);
+  const scBar=v=>padL+(Math.log10(v)/maxLog)*(W-padL-padR);
+
+  items.forEach((item,i)=>{
+    const y=padT+i*(barH+gap);
+    const bw=scBar(item.speed)-padL;
+    h+=`<rect x="${padL}" y="${y}" width="${bw}" height="${barH}" fill="${item.color}" opacity="${d?0.75:0.7}" rx="2"/>`;
+    h+=`<text x="${padL-6}" y="${y+barH/2+4}" fill="${t}" font-size="9" font-family="DM Mono,monospace" text-anchor="end">${item.name}</text>`;
+    h+=`<text x="${padL+bw+6}" y="${y+barH/2+4}" fill="${item.color}" font-size="9" font-family="DM Mono,monospace">${item.unit}</text>`;
+  });
+
+  // Log scale axis ticks
+  [0.01,0.1,1,10,100].forEach(v=>{
+    const x=scBar(v);
+    h+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT+totalH}" stroke="${d?'rgba(255,255,255,.08)':'rgba(0,0,0,.07)'}" stroke-width="1"/>`;
+    h+=`<text x="${x}" y="${padT+totalH+16}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${v<1?v+' cm/s':v<10?v+' m/s':v+' m/s'}</text>`;
+  });
+
+  h+=`<text x="${W/2}" y="${H-4}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Log scale — typical peak speeds</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  MINI MAPS (shared world base)
+// ═══════════════════════════════════════════════
+function worldBase(d){
+  const lf=d?'#1a2e40':'#b8cdd8';
+  const bg=d?'#04111e':'#c0daf5';
+  let h=`<rect x="0" y="0" width="900" height="450" fill="${bg}"/>`;
+  // continents
+  h+=`<polygon points="30,20 180,15 195,60 185,130 165,200 130,240 80,270 40,260 20,210 15,140 20,70" fill="${lf}"/>`;
+  h+=`<polygon points="120,260 185,255 210,290 220,360 200,410 160,430 130,425 110,390 100,330 105,285" fill="${lf}"/>`;
+  h+=`<polygon points="380,10 440,10 450,40 440,100 430,130 450,160 445,200 420,220 400,240 370,260 350,240 340,200 350,150 360,100 370,50" fill="${lf}"/>`;
+  h+=`<polygon points="370,260 450,255 470,290 480,360 460,410 420,430 380,425 360,390 350,330 355,285" fill="${lf}"/>`;
+  h+=`<polygon points="470,10 650,8 720,30 750,70 760,120 740,150 700,160 660,150 640,120 620,90 590,70 560,60 530,50 500,40 480,30" fill="${lf}"/>`;
+  h+=`<polygon points="650,230 730,225 760,260 770,310 740,340 690,345 650,320 630,280" fill="${lf}"/>`;
+  h+=`<polygon points="640,310 720,305 760,340 770,390 740,420 680,430 630,415 610,380 615,340" fill="${lf}"/>`;
+  h+=`<rect x="0" y="430" width="900" height="20" fill="${lf}"/>`;
+  return h;
+}
+
+function drawTHCmini(){
+  const svg=document.getElementById('thc-mini'); if(!svg)return;
+  const d=dark();
+  const m=mc();
+  let h=worldBase(d);
+
+  // Deep water formation sites
+  [{cx:130,cy:80,r:20,label:'Labrador'},{cx:200,cy:55,r:16,label:'Nordic'},{cx:160,cy:400,r:18,label:'Weddell (AABW)'}].forEach(s=>{
+    h+=`<circle cx="${s.cx}" cy="${s.cy}" r="${s.r}" fill="rgba(0,119,182,.4)" stroke="#0077b6" stroke-width="2"/>`;
+    h+=`<text x="${s.cx}" y="${s.cy+s.r+12}" fill="#0077b6" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${s.label}</text>`;
+  });
+
+  // Warm surface flow
+  h+=`<path d="M 135,190 Q 210,140 310,148 Q 380,155 420,185" fill="none" stroke="#f4a261" stroke-width="3" opacity=".85"/>`;
+
+  // Upwelling zones
+  [{x:75,y:185,r:12},{x:115,y:315,r:14},{x:360,y:315,r:13}].forEach(z=>{
+    h+=`<circle cx="${z.x}" cy="${z.y}" r="${z.r}" fill="rgba(82,183,136,.35)" stroke="#52b788" stroke-width="1.5"/>`;
+  });
+
+  // ACC
+  h+=`<path d="M 0,428 Q 225,418 450,428 Q 675,438 900,428" fill="none" stroke="#f4a261" stroke-width="2.5" opacity=".7"/>`;
+
+  svg.innerHTML=h;
+}
+
+function drawGyresMini(){
+  const svg=document.getElementById('gyres-mini'); if(!svg)return;
+  const d=dark();
+  const m=mc();
+  let h=worldBase(d);
+
+  // Gyre centers (red dots)
+  [{cx:265,cy:125},{cx:255,cy:340},{cx:580,cy:120},{cx:590,cy:355},{cx:555,cy:250}].forEach(g=>{
+    h+=`<circle cx="${g.cx}" cy="${g.cy}" r="6" fill="rgba(232,69,69,.6)" stroke="#e84545" stroke-width="1.5"/>`;
+  });
+
+  // Warm currents
+  h+=`<path d="M 135,190 Q 230,140 310,148" fill="none" stroke="#f4a261" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M 660,280 Q 690,200 695,130 Q 688,80 680,55" fill="none" stroke="#f4a261" stroke-width="2.5" opacity=".8"/>`;
+
+  // Cold currents
+  h+=`<path d="M 65,155 Q 68,200 72,250" fill="none" stroke="#00b4d8" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M 112,350 Q 110,310 110,275" fill="none" stroke="#00b4d8" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M 360,330 Q 358,295 357,268" fill="none" stroke="#00b4d8" stroke-width="2.5" opacity=".8"/>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  MASTER REDRAW
+// ═══════════════════════════════════════════════
+function redrawAll(){
+  drawTHC();
+  drawAMOCts();
+  drawGyres();
+  drawCoupling();
+  drawGlobal();
+  drawCC();
+  drawCompare();
+  drawTHCmini();
+  drawGyresMini();
+}
+
+// ═══ INIT ═══
+switchPanel('thc');
+redrawAll();
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

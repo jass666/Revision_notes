@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENSO — Earth's Climate Heartbeat</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --el:#e84545; --la:#2196f3; --neutral:#78909c;
+    --super-el:#ff6b00; --super-la:#00b4d8; --cool:#4fc3f7;
+  }
+  [data-theme="dark"] {
+    --bg:#0a0e1a; --surface:#111827; --surface2:#1a2235;
+    --border:rgba(255,255,255,0.07); --text:#e8eaf0; --muted:#6b7280;
+    --nav-bg:rgba(10,14,26,0.92); --table-hover:rgba(255,255,255,0.02);
+    --toggle-bg:#1a2235; --toggle-border:rgba(255,255,255,0.15);
+    --prose:#c9d1e0;
+  }
+  [data-theme="light"] {
+    --bg:#f0f4f8; --surface:#ffffff; --surface2:#e8eef6;
+    --border:rgba(0,0,0,0.08); --text:#1a202c; --muted:#64748b;
+    --nav-bg:rgba(240,244,248,0.95); --table-hover:rgba(0,0,0,0.02);
+    --toggle-bg:#e2e8f0; --toggle-border:rgba(0,0,0,0.1);
+    --prose:#374151;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;transition:background .3s,color .3s;}
+
+  /* HEADER */
+  header{padding:3rem 2rem 1.5rem;text-align:center;position:relative;border-bottom:1px solid var(--border);}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(33,150,243,.1) 0%,transparent 65%),radial-gradient(ellipse at 80% 80%,rgba(232,69,69,.07) 0%,transparent 50%);pointer-events:none;}
+  .eyebrow{font-size:.65rem;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:.75rem;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,6rem);letter-spacing:.04em;line-height:1;background:linear-gradient(135deg,#e84545 0%,#c0392b 30%,#4fc3f7 70%,#2196f3 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--muted);font-size:1rem;margin-top:.5rem;}
+
+  /* THEME TOGGLE */
+  .theme-toggle{position:absolute;top:1.2rem;right:1.5rem;display:flex;align-items:center;gap:.5rem;cursor:pointer;background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:.35rem .75rem;transition:all .2s;user-select:none;}
+  .theme-toggle:hover{opacity:.8;}
+  .theme-toggle-icon{font-size:.85rem;}
+  .theme-toggle-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+  /* NAV */
+  nav{display:flex;justify-content:center;gap:.4rem;padding:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:100;transition:background .3s;}
+  .tab{padding:.4rem .9rem;border-radius:2px;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace;}
+  .tab:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .tab.active{color:#fff;}
+  .tab[data-phase="neutral"].active{background:var(--neutral);border-color:var(--neutral);}
+  .tab[data-phase="el"].active{background:var(--el);border-color:var(--el);}
+  .tab[data-phase="la"].active{background:var(--la);border-color:var(--la);}
+  .tab[data-phase="super-el"].active{background:var(--super-el);border-color:var(--super-el);}
+  .tab[data-phase="super-la"].active{background:var(--super-la);border-color:var(--super-la);}
+  .tab[data-phase="map"].active{background:#2d6a4f;border-color:#2d6a4f;}
+  .tab[data-phase="mechanism"].active{background:#5c4a8a;border-color:#5c4a8a;}
+  .tab[data-phase="monsoon"].active{background:#b45309;border-color:#b45309;}
+  .tab[data-phase="climate"].active{background:#7f1d1d;border-color:#7f1d1d;}
+  .tab[data-phase="oscillations"].active{background:#164e63;border-color:#164e63;}
+
+  /* MAIN */
+  main{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+  .phase-panel{display:none;}
+  .phase-panel.visible{display:block;animation:fadeUp .4s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SECTION HEADER */
+  .section-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .phase-label{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.05em;}
+  .phase-oni{font-size:.75rem;padding:.3rem .7rem;border-radius:2px;letter-spacing:.08em;font-weight:500;}
+  .phase-desc{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--muted);margin-left:auto;font-style:italic;}
+
+  /* BOXES */
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;transition:background .3s,border-color .3s;}
+  .box-title{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+
+  /* OCEAN */
+  .ocean-section{position:relative;height:120px;border-radius:3px;overflow:hidden;}
+  .geo-labels{display:flex;justify-content:space-between;font-size:.6rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:.4rem;}
+  .warm-blob{position:absolute;transition:all .6s ease;}
+  .upwelling{position:absolute;bottom:0;width:24px;display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .upwelling-arrow{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid var(--cool);opacity:.8;}
+  .upwelling-line{width:2px;background:linear-gradient(to top,var(--cool),transparent);}
+  .wind-layer{position:absolute;top:8px;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:center;gap:.5rem;pointer-events:none;}
+  .wind-arrow{font-size:1rem;opacity:.7;color:#fff;animation:drift 2s ease-in-out infinite;}
+  .wind-arrow:nth-child(2){animation-delay:.3s}.wind-arrow:nth-child(3){animation-delay:.6s}.wind-arrow:nth-child(4){animation-delay:.9s}
+  @keyframes drift{0%,100%{transform:translateX(0);opacity:.5}50%{transform:translateX(4px);opacity:.9}}
+  .wind-reversed .wind-arrow{animation:driftR 2s ease-in-out infinite;}
+  @keyframes driftR{0%,100%{transform:translateX(0);opacity:.5}50%{transform:translateX(-4px);opacity:.9}}
+  .thermocline{position:absolute;left:0;right:0;height:2px;opacity:.6;}
+  .walker-svg{width:100%;height:200px;}
+  .oni-svg{width:100%;height:220px;}
+
+  /* IMPACT CARDS */
+  .impacts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+  .impact-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;transition:border-color .2s,background .3s;}
+  .impact-card:hover{border-color:rgba(128,128,128,.3);}
+  .impact-region{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+  .impact-icon{font-size:1.3rem;margin-bottom:.4rem;display:block;}
+  .impact-text{font-size:.75rem;line-height:1.5;color:var(--text);}
+  .impact-badge{display:inline-block;font-size:.55rem;padding:.15rem .5rem;border-radius:1px;margin-top:.5rem;letter-spacing:.1em;text-transform:uppercase;}
+  .badge-wet{background:rgba(33,150,243,.15);color:#2196f3;}
+  .badge-dry{background:rgba(232,69,69,.15);color:#e84545;}
+  .badge-warm{background:rgba(255,107,53,.15);color:#ff6b35;}
+  .badge-cool{background:rgba(79,195,247,.15);color:#00b4d8;}
+  .badge-normal{background:rgba(120,144,156,.15);color:#78909c;}
+
+  /* EVENTS */
+  .event-item{display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--border);align-items:start;}
+  .event-item:last-child{border-bottom:none;}
+  .event-year{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;line-height:1;}
+  .event-name{font-size:.7rem;letter-spacing:.08em;margin-bottom:.25rem;font-weight:500;}
+  .event-desc{font-size:.72rem;color:var(--muted);line-height:1.55;}
+  .event-peak{font-size:.6rem;margin-top:.4rem;padding:.2rem .6rem;border-radius:1px;display:inline-block;letter-spacing:.08em;}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;font-size:.72rem;min-width:560px;}
+  th{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--border);}
+  td{padding:.6rem .75rem;border-bottom:1px solid var(--border);line-height:1.4;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--table-hover);}
+  .cell-el{color:var(--el)}.cell-la{color:var(--la)}.cell-sel{color:var(--super-el);font-weight:500}.cell-sla{color:var(--super-la);font-weight:500}.cell-neu{color:var(--neutral)}
+  th.h-el{color:var(--el)}th.h-la{color:var(--la)}th.h-sel{color:var(--super-el)}th.h-sla{color:var(--super-la)}
+
+  /* ══ IMPACT MAP ══ */
+  .map-container{position:relative;width:100%;aspect-ratio:2/1;min-height:340px;border-radius:4px;overflow:hidden;background:var(--surface);border:1px solid var(--border);}
+  .map-svg{width:100%;height:100%;}
+  .phase-selector{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+  .phase-btn{padding:.35rem .9rem;border-radius:2px;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;transition:all .2s;}
+  .phase-btn:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .phase-btn.active{color:#fff;}
+  .phase-btn[data-p="neutral"].active{background:var(--neutral);border-color:var(--neutral);}
+  .phase-btn[data-p="el"].active{background:var(--el);border-color:var(--el);}
+  .phase-btn[data-p="la"].active{background:var(--la);border-color:var(--la);}
+  .phase-btn[data-p="super-el"].active{background:var(--super-el);border-color:var(--super-el);}
+  .phase-btn[data-p="super-la"].active{background:var(--super-la);border-color:var(--super-la);}
+  .map-legend{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:.8rem;font-size:.65rem;}
+  .legend-item{display:flex;align-items:center;gap:.4rem;color:var(--muted);}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .region-tooltip{display:none;position:absolute;background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:.6rem .9rem;font-size:.7rem;pointer-events:none;z-index:10;min-width:160px;max-width:220px;line-height:1.5;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+  .region-tooltip.visible{display:block;}
+  .tooltip-region{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;}
+  .tooltip-effect{color:var(--text);}
+
+  /* ══ MECHANISM ══ */
+  .mech-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+  @media(max-width:640px){.mech-grid{grid-template-columns:1fr;}}
+  .mech-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em;margin-bottom:.6rem;}
+  .mech-card-body{font-size:.73rem;color:var(--prose,var(--muted));line-height:1.7;}
+  .mech-card-body b{color:var(--text);font-weight:600;}
+  .step-list{list-style:none;margin-top:.5rem;}
+  .step-list li{display:flex;gap:.7rem;margin-bottom:.6rem;font-size:.73rem;line-height:1.5;color:var(--prose,var(--muted));}
+  .step-num{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff;}
+  .feedback-svg{width:100%;height:200px;}
+  .callout{background:var(--surface2,var(--surface));border-left:3px solid;border-radius:0 3px 3px 0;padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .callout b{color:var(--text);}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+
+  /* ══ INLINE MINI-MAP (inside phase panels) ══ */
+  .phase-bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+  @media(max-width:700px){.phase-bottom-row{grid-template-columns:1fr;}}
+  .mini-map-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;position:relative;}
+  .mini-map-container{position:relative;width:100%;aspect-ratio:2/1;min-height:180px;border-radius:3px;overflow:hidden;background:var(--surface2,var(--surface));margin-top:.75rem;}
+  .mini-map-container svg{width:100%;height:100%;}
+  .mini-map-legend{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:.6rem;font-size:.6rem;color:var(--muted);}
+  .mini-map-legend span{display:flex;align-items:center;gap:.3rem;}
+  .mini-map-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+  /* ══ INLINE MECHANISM CALLOUT (inside phase panels) ══ */
+  .mech-callout-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-callout-box .box-title{margin-bottom:.85rem;}
+  .mech-physics-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.85rem;padding-bottom:.85rem;border-bottom:1px solid var(--border);}
+  .mech-physics-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .mech-physics-icon{font-size:1.2rem;flex-shrink:0;line-height:1.3;}
+  .mech-physics-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;}
+  .mech-physics-text{font-size:.72rem;line-height:1.55;color:var(--prose,var(--text));}
+  .mech-physics-text b{color:var(--text);}
+  .phase-link-pill{display:inline-flex;align-items:center;gap:.35rem;margin-top:1rem;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:2px;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .2s;background:transparent;font-family:'DM Mono',monospace;}
+  .phase-link-pill:hover{color:var(--text);border-color:rgba(128,128,128,.4);}
+
+  /* ══ ONI TIMELINE STRIP (inside Compare tab, enhanced) ══ */
+  .oni-timeline-strip{display:flex;gap:.5rem;overflow-x:auto;padding:.5rem 0 .75rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+  .oni-event-pill{flex-shrink:0;padding:.45rem .8rem;border-radius:3px;border:1px solid;font-size:.65rem;cursor:default;line-height:1.4;}
+  .oni-event-pill .pill-year{font-family:'Bebas Neue',sans-serif;font-size:1rem;display:block;line-height:1;}
+  .oni-event-pill .pill-tag{font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;opacity:.75;}
+
+  /* ══ MONSOON / CLIMATE / OSCILLATIONS PANELS ══ */
+  .info-section{margin-bottom:2rem;}
+  .info-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;margin-bottom:.5rem;}
+  .prose-block{font-size:.75rem;line-height:1.75;color:var(--prose,var(--muted));margin-bottom:1rem;}
+  .prose-block b{color:var(--text);}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;text-align:center;}
+  .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;margin-bottom:.25rem;}
+  .stat-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+  .timeline-bar{display:flex;height:28px;border-radius:3px;overflow:hidden;margin:.5rem 0;}
+  .timeline-segment{display:flex;align-items:center;justify-content:center;font-size:.6rem;font-family:'DM Mono',monospace;letter-spacing:.06em;transition:opacity .2s;cursor:default;}
+  .timeline-segment:hover{opacity:.85;}
+  .osc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:1.5rem;}
+  .osc-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;border-top:3px solid;}
+  .osc-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:.2rem;}
+  .osc-card-full{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+  .osc-card-body{font-size:.72rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .osc-card-body b{color:var(--text);}
+  .osc-stat-row{display:flex;gap:1rem;margin-top:.75rem;flex-wrap:wrap;}
+  .osc-stat{font-size:.65rem;color:var(--muted);}
+  .osc-stat b{color:var(--text);display:block;font-size:.8rem;}
+  .phase-vs-row{display:grid;grid-template-columns:1fr auto 1fr;gap:.5rem;align-items:center;margin:.5rem 0;}
+  .phase-vs-cell{background:var(--surface2,var(--surface));border-radius:3px;padding:.5rem .75rem;font-size:.7rem;line-height:1.4;}
+  .phase-vs-cell.left{text-align:right;border-right:2px solid var(--border);}
+  .phase-vs-divider{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--muted);text-align:center;}
+  .monsoon-svg{width:100%;height:200px;}
+  .cc-svg{width:100%;height:200px;}
+  .iod-svg{width:100%;height:180px;}
+  .highlight-box{background:var(--surface2,var(--surface));border:1px solid var(--border);border-radius:4px;padding:1.1rem 1.25rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .highlight-box b{color:var(--text);}
+  .highlight-box .hb-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--text);margin-bottom:.4rem;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;}
+  .tag{font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border-radius:1px;border:1px solid;}
+</style>
+</head>
+<body data-theme="dark">
+
+<header>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+    <span class="theme-toggle-icon" id="themeIcon">☀️</span>
+    <span class="theme-toggle-label" id="themeLabel">Light mode</span>
+  </button>
+  <p class="eyebrow">Earth's Dominant Climate Oscillation</p>
+  <h1>ENSO</h1>
+  <p class="subtitle">El Niño · La Niña · Their Super Versions · Explained Graphically</p>
+</header>
+
+<nav>
+  <button class="tab" data-phase="neutral">Neutral</button>
+  <button class="tab" data-phase="el">El Niño</button>
+  <button class="tab" data-phase="la">La Niña</button>
+  <button class="tab" data-phase="super-el">Super El Niño</button>
+  <button class="tab" data-phase="super-la">Super La Niña</button>
+  <button class="tab" data-phase="compare">Compare All</button>
+  <button class="tab" data-phase="map">🌍 Impact Map</button>
+  <button class="tab" data-phase="mechanism">⚙️ Mechanism</button>
+  <button class="tab" data-phase="monsoon">🌧️ Monsoon</button>
+  <button class="tab" data-phase="climate">🌡️ Climate Change</button>
+  <button class="tab" data-phase="oscillations">🌊 Oscillations</button>
+</nav>
+
+<main>
+
+<!-- ══ NEUTRAL ══ -->
+<div class="phase-panel" id="panel-neutral">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--neutral)">Neutral</span>
+    <span class="phase-oni" style="background:rgba(120,144,156,.15);color:var(--neutral)">ONI –0.5 to +0.5°C</span>
+    <span class="phase-desc">The baseline state</span>
+  </div>
+  <div class="box"><p class="box-title">Pacific Ocean Cross-Section — West (Indonesia) → East (Peru)</p>
+    <div class="geo-labels"><span>🌏 West Pacific</span><span>Central Pacific</span><span>East Pacific 🌎</span></div>
+    <div class="ocean-section" id="ocean-neutral"></div>
+  </div>
+  <div class="box"><p class="box-title">Walker Circulation — Balanced</p><svg class="walker-svg" id="walker-neutral" viewBox="0 0 700 200"></svg></div>
+  <div class="impacts-grid">
+    <div class="impact-card"><span class="impact-icon">🇦🇺</span><div class="impact-region">Australia / SE Asia</div><div class="impact-text">Normal monsoon rainfall. Warm western Pacific sustains typical convection.</div><span class="impact-badge badge-normal">Normal</span></div>
+    <div class="impact-card"><span class="impact-icon">🐟</span><div class="impact-region">South America Coast</div><div class="impact-text">Active upwelling brings cold, nutrient-rich water. Fishing is productive.</div><span class="impact-badge badge-cool">Cold Upwelling</span></div>
+    <div class="impact-card"><span class="impact-icon">🌡️</span><div class="impact-region">Global Temperature</div><div class="impact-text">Tracks long-term warming trend without ENSO distortion.</div><span class="impact-badge badge-normal">Baseline</span></div>
+    <div class="impact-card"><span class="impact-icon">💨</span><div class="impact-region">Trade Winds</div><div class="impact-text">Steady westward flow. Maintains warm-west, cool-east Pacific gradient.</div><span class="impact-badge badge-normal">Normal</span></div>
+  </div>
+
+  <div class="phase-bottom-row">
+    <div class="mini-map-box">
+      <p class="box-title">Global Impact Footprint</p>
+      <div class="mini-map-container"><svg id="minimap-neutral" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend">
+        <span><i style="background:#4caf50"></i>Near normal</span>
+        <span><i style="background:#78909c"></i>Mixed / unclear</span>
+      </div>
+    </div>
+    <div class="mech-callout-box">
+      <p class="box-title">⚙️ What's Happening in the Physics</p>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">💨</span>
+        <div>
+          <div class="mech-physics-label">Walker Circulation</div>
+          <div class="mech-physics-text"><b>Balanced state.</b> Trade winds blow steadily west at the surface; upper-level flow returns east. Rising air over the warm western Pacific, sinking over the cool east.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌡️</span>
+        <div>
+          <div class="mech-physics-label">Thermocline</div>
+          <div class="mech-physics-text">Tilted ~200 m deep in the west, ~50 m in the east. <b>Strong upwelling</b> off Peru brings cold nutrient-rich water to the surface — fish populations thrive.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">📊</span>
+        <div>
+          <div class="mech-physics-label">ONI / SOI</div>
+          <div class="mech-physics-text">Oceanic Niño Index between <b>–0.5 and +0.5°C</b>. Southern Oscillation Index near zero. No self-amplifying Bjerknes feedback active.</div>
+        </div>
+      </div>
+      <button class="phase-link-pill" onclick="document.querySelector('.tab[data-phase=&quot;mechanism&quot;]').click()">⚙️ Full Mechanism Deep-Dive →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EL NIÑO ══ -->
+<div class="phase-panel" id="panel-el">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--el)">El Niño</span>
+    <span class="phase-oni" style="background:rgba(232,69,69,.15);color:var(--el)">ONI ≥ +0.5°C</span>
+    <span class="phase-desc">"The Little Boy" — trade winds weaken</span>
+  </div>
+  <div class="box"><p class="box-title">Pacific Ocean — Warm water sloshes east</p>
+    <div class="geo-labels"><span>🌏 West Pacific (drying)</span><span>← Warm Pool Shifts East →</span><span>East Pacific 🌎 (warming)</span></div>
+    <div class="ocean-section" id="ocean-el"></div>
+  </div>
+  <div class="box"><p class="box-title">Walker Circulation — Disrupted / Weakened</p><svg class="walker-svg" id="walker-el" viewBox="0 0 700 200"></svg></div>
+  <div class="impacts-grid">
+    <div class="impact-card"><span class="impact-icon">🌧️</span><div class="impact-region">Peru / Ecuador</div><div class="impact-text">Catastrophic flooding & rains. Upwelling suppressed, fishing collapses.</div><span class="impact-badge badge-wet">Extreme Flooding</span></div>
+    <div class="impact-card"><span class="impact-icon">🔥</span><div class="impact-region">Australia / SE Asia</div><div class="impact-text">Severe drought. Convection zone shifts east. Wildfire risk rises sharply.</div><span class="impact-badge badge-dry">Drought</span></div>
+    <div class="impact-card"><span class="impact-icon">❄️</span><div class="impact-region">North America</div><div class="impact-text">Wet, mild winters in southern US. Warmer, drier winters in the north.</div><span class="impact-badge badge-warm">Warm / Wet South</span></div>
+    <div class="impact-card"><span class="impact-icon">🌍</span><div class="impact-region">East Africa</div><div class="impact-text">Increased rainfall across eastern Africa.</div><span class="impact-badge badge-wet">Wetter</span></div>
+    <div class="impact-card"><span class="impact-icon">🌡️</span><div class="impact-region">Global Temperature</div><div class="impact-text">Stored ocean heat released. El Niño years are consistently the warmest.</div><span class="impact-badge badge-warm">+0.1 to +0.3°C</span></div>
+    <div class="impact-card"><span class="impact-icon">🌧️</span><div class="impact-region">India / South Asia</div><div class="impact-text">Weakened monsoon. Drought risk elevated. Agriculture threatened. <b>~70% of El Niño years produce a deficient monsoon</b> (&lt;90% of long-period average).</div><span class="impact-badge badge-dry">Weak Monsoon</span></div>
+  </div>
+
+  <div class="phase-bottom-row">
+    <div class="mini-map-box">
+      <p class="box-title">Global Impact Footprint</p>
+      <div class="mini-map-container"><svg id="minimap-el" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend">
+        <span><i style="background:#e84545"></i>Drought / hot</span>
+        <span><i style="background:#2196f3"></i>Flood / wet</span>
+        <span><i style="background:#4caf50"></i>Suppressed storms</span>
+        <span><i style="background:#ff9800"></i>Warm anomaly</span>
+      </div>
+      <button class="phase-link-pill" style="margin-top:.75rem" onclick="document.querySelector('.tab[data-phase=&quot;map&quot;]').click();setTimeout(()=>{document.querySelector('.phase-btn[data-p=el]')?.click()},100)">🌍 Full Interactive Map →</button>
+    </div>
+    <div class="mech-callout-box">
+      <p class="box-title">⚙️ What's Happening in the Physics</p>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">💨</span>
+        <div>
+          <div class="mech-physics-label">Bjerknes Feedback (active)</div>
+          <div class="mech-physics-text">Trade winds weaken → warm water moves east → SSTs rise → atmosphere shifts convection east → <b>winds weaken further</b>. Self-amplifying loop accelerates the event.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌡️</span>
+        <div>
+          <div class="mech-physics-label">Thermocline Flattening</div>
+          <div class="mech-physics-text">Without trade winds piling water west, the thermocline tilts less steeply. Cold water can no longer reach the surface off Peru — <b>upwelling fails</b>, SSTs rise.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌊</span>
+        <div>
+          <div class="mech-physics-label">Kelvin Wave Trigger</div>
+          <div class="mech-physics-text">A warm downwelling Kelvin wave propagates east across the Pacific in ~2 months, <b>depressing the thermocline</b> and reinforcing the SST anomaly in the Niño 3.4 region.</div>
+        </div>
+      </div>
+      <button class="phase-link-pill" onclick="document.querySelector('.tab[data-phase=&quot;mechanism&quot;]').click()">⚙️ Full Mechanism Deep-Dive →</button>
+    </div>
+  </div>
+
+  <div class="box"><p class="box-title">Notable El Niño Events</p>
+    <div class="event-item"><div class="event-year" style="color:var(--el)">1997</div><div><div class="event-name">The Benchmark Event</div><div class="event-desc">Central Pacific SSTs 5°C above normal. Indonesian fires choked SE Asia. 2,300+ deaths, $45B damage.</div><span class="event-peak" style="background:rgba(232,69,69,.12);color:var(--el)">Peak ONI: +2.4°C</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--el)">1982</div><div><div class="event-name">The Blindside</div><div class="event-desc">Scientists weren't monitoring. First to reveal ENSO's global reach. ~2,000 deaths, $13B damage.</div><span class="event-peak" style="background:rgba(232,69,69,.12);color:var(--el)">Peak ONI: +2.1°C</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--el)">2023</div><div><div class="event-name">Climate Change Amplified</div><div class="event-desc">Atop a warmer baseline. Pushed 2023 and 2024 to back-to-back warmest years ever recorded.</div><span class="event-peak" style="background:rgba(232,69,69,.12);color:var(--el)">Peak ONI: ~+2.0°C</span></div></div>
+  </div>
+</div>
+
+<!-- ══ LA NIÑA ══ -->
+<div class="phase-panel" id="panel-la">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--la)">La Niña</span>
+    <span class="phase-oni" style="background:rgba(33,150,243,.15);color:var(--la)">ONI ≤ –0.5°C</span>
+    <span class="phase-desc">"The Little Girl" — supercharged trade winds</span>
+  </div>
+  <div class="box"><p class="box-title">Pacific Ocean — Cold tongue intensifies</p>
+    <div class="geo-labels"><span>🌏 West Pacific (flooding)</span><span>← Warm Pool Pushed West</span><span>East Pacific 🌎 (colder)</span></div>
+    <div class="ocean-section" id="ocean-la"></div>
+  </div>
+  <div class="box"><p class="box-title">Walker Circulation — Supercharged</p><svg class="walker-svg" id="walker-la" viewBox="0 0 700 200"></svg></div>
+  <div class="impacts-grid">
+    <div class="impact-card"><span class="impact-icon">🌊</span><div class="impact-region">Australia / SE Asia</div><div class="impact-text">Enhanced monsoon, severe flooding. 2010 Queensland floods: France + Germany-sized area submerged.</div><span class="impact-badge badge-wet">Extreme Flooding</span></div>
+    <div class="impact-card"><span class="impact-icon">🏜️</span><div class="impact-region">Peru / Amazon</div><div class="impact-text">Drought. Upwelling amplified — fishing productive, but inland agriculture suffers.</div><span class="impact-badge badge-dry">Drought</span></div>
+    <div class="impact-card"><span class="impact-icon">🌪️</span><div class="impact-region">Atlantic Hurricanes</div><div class="impact-text">La Niña reduces wind shear over the Atlantic, fueling more intense hurricane seasons.</div><span class="impact-badge badge-warm">More Hurricanes</span></div>
+    <div class="impact-card"><span class="impact-icon">❄️</span><div class="impact-region">US Pacific Northwest</div><div class="impact-text">Cooler, wetter winters. Southern US tends to be warmer and drier.</div><span class="impact-badge badge-cool">Cool / Wet NW</span></div>
+    <div class="impact-card"><span class="impact-icon">🌡️</span><div class="impact-region">Global Temperature</div><div class="impact-text">La Niña years are slightly cooler — temporarily masking long-term warming.</div><span class="impact-badge badge-cool">–0.1 to –0.2°C</span></div>
+    <div class="impact-card"><span class="impact-icon">🌾</span><div class="impact-region">East Africa / Sahel</div><div class="impact-text">Drought and reduced rainfall. Can contribute to food insecurity and famine.</div><span class="impact-badge badge-dry">Drought</span></div>
+    <div class="impact-card"><span class="impact-icon">🌧️</span><div class="impact-region">India / South Asia</div><div class="impact-text">Often strengthens the monsoon — above-average rainfall. Good for agriculture, but can also cause flooding in parts of central and eastern India.</div><span class="impact-badge badge-wet">Strong Monsoon</span></div>
+  </div>
+
+  <div class="phase-bottom-row">
+    <div class="mini-map-box">
+      <p class="box-title">Global Impact Footprint</p>
+      <div class="mini-map-container"><svg id="minimap-la" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend">
+        <span><i style="background:#e84545"></i>Drought / dry</span>
+        <span><i style="background:#2196f3"></i>Flood / wet</span>
+        <span><i style="background:#ff9800"></i>Active hurricanes</span>
+      </div>
+      <button class="phase-link-pill" style="margin-top:.75rem" onclick="document.querySelector('.tab[data-phase=&quot;map&quot;]').click();setTimeout(()=>{document.querySelector('.phase-btn[data-p=la]')?.click()},100)">🌍 Full Interactive Map →</button>
+    </div>
+    <div class="mech-callout-box">
+      <p class="box-title">⚙️ What's Happening in the Physics</p>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">💨</span>
+        <div>
+          <div class="mech-physics-label">Supercharged Trade Winds</div>
+          <div class="mech-physics-text">Stronger-than-normal trades pile warm water further west. The <b>Walker Circulation intensifies</b> — more vigorous rising in the west, stronger subsidence in the east.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌡️</span>
+        <div>
+          <div class="mech-physics-label">Steepened Thermocline</div>
+          <div class="mech-physics-text">The thermocline tilts more steeply than normal. Cold water wells up more vigorously off Peru — excellent fishing, but the <b>cold tongue extends westward</b>, cooling the Niño 3.4 region.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌀</span>
+        <div>
+          <div class="mech-physics-label">Atlantic Wind Shear Drops</div>
+          <div class="mech-physics-text">La Niña's shifted upper-level circulation <b>reduces vertical wind shear</b> over the tropical Atlantic — the main reason hurricane seasons become dramatically more active.</div>
+        </div>
+      </div>
+      <button class="phase-link-pill" onclick="document.querySelector('.tab[data-phase=&quot;mechanism&quot;]').click()">⚙️ Full Mechanism Deep-Dive →</button>
+    </div>
+  </div>
+
+  <div class="box"><p class="box-title">Notable La Niña Events</p>
+    <div class="event-item"><div class="event-year" style="color:var(--la)">2010</div><div><div class="event-name">Triple-Dip La Niña (2010–12)</div><div class="event-desc">Three consecutive La Niña winters. Record Australian flooding. East Africa famine. Pakistan 2022 floods killed 1,700+.</div><span class="event-peak" style="background:rgba(33,150,243,.12);color:var(--la)">Peak ONI: –1.6°C</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--la)">1988</div><div><div class="event-name">The Great Drought</div><div class="event-desc">Severe drought across North America — one of the costliest US disasters at the time. Devastating wildfires.</div><span class="event-peak" style="background:rgba(33,150,243,.12);color:var(--la)">Peak ONI: –2.0°C</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--la)">2020</div><div><div class="event-name">Unprecedented Triple-Dip (2020–23)</div><div class="event-desc">First triple-dip since 1999–2001. Three full years. Pakistan 2022 submerged 1/3 of the country.</div><span class="event-peak" style="background:rgba(33,150,243,.12);color:var(--la)">Peak ONI: –1.5°C</span></div></div>
+  </div>
+</div>
+
+<!-- ══ SUPER EL NIÑO ══ -->
+<div class="phase-panel" id="panel-super-el">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--super-el)">Super El Niño</span>
+    <span class="phase-oni" style="background:rgba(255,107,0,.15);color:var(--super-el)">ONI ≥ +2.0°C</span>
+    <span class="phase-desc">Extreme — nonlinear global cascade</span>
+  </div>
+  <div class="box"><p class="box-title">Pacific Ocean — Warm water floods central Pacific</p>
+    <div class="geo-labels"><span>🌏 West (extreme drought)</span><span>Central Pacific (now warm too)</span><span>East Pacific 🌎 (extreme heat)</span></div>
+    <div class="ocean-section" id="ocean-super-el"></div>
+  </div>
+  <div class="box"><p class="box-title">Walker Circulation — Collapsed / Reversed</p><svg class="walker-svg" id="walker-super-el" viewBox="0 0 700 200"></svg></div>
+  <div class="impacts-grid">
+    <div class="impact-card" style="border-color:rgba(255,107,0,.25)"><span class="impact-icon">🔥</span><div class="impact-region">Australia / Indonesia</div><div class="impact-text">Extreme drought. Mega-fires. 1997–98: Indonesian smoke blanketed all SE Asia for months.</div><span class="impact-badge" style="background:rgba(255,107,0,.15);color:var(--super-el)">Catastrophic Drought</span></div>
+    <div class="impact-card" style="border-color:rgba(255,107,0,.25)"><span class="impact-icon">🌊</span><div class="impact-region">Latin America</div><div class="impact-text">Catastrophic flooding across Ecuador, Peru, Chile. Infrastructure destruction, mass displacement.</div><span class="impact-badge" style="background:rgba(255,107,0,.15);color:var(--super-el)">Catastrophic Flooding</span></div>
+    <div class="impact-card" style="border-color:rgba(255,107,0,.25)"><span class="impact-icon">🪸</span><div class="impact-region">Coral Reefs</div><div class="impact-text">2015–16: ~50% of Great Barrier Reef lost. A 2°C anomaly causes far more than 2× the damage of 1°C.</div><span class="impact-badge" style="background:rgba(255,107,0,.15);color:var(--super-el)">Mass Bleaching</span></div>
+    <div class="impact-card" style="border-color:rgba(255,107,0,.25)"><span class="impact-icon">🌡️</span><div class="impact-region">Global Temperature</div><div class="impact-text">Pushes global mean temp to record highs. 1998 and 2016 were warmest years at the time.</div><span class="impact-badge" style="background:rgba(255,107,0,.15);color:var(--super-el)">Record Temperatures</span></div>
+    <div class="impact-card" style="border-color:rgba(255,107,0,.25)"><span class="impact-icon">🌾</span><div class="impact-region">Global Food Security</div><div class="impact-text">Simultaneous agricultural shocks across continents. Price spikes, tens of millions affected.</div><span class="impact-badge" style="background:rgba(255,107,0,.15);color:var(--super-el)">Global Impact</span></div>
+    <div class="impact-card" style="border-color:rgba(255,107,0,.25)"><span class="impact-icon">⚡</span><div class="impact-region">Why "Super"?</div><div class="impact-text">Warm water extends into central Pacific. Atmospheric response is disproportionate — 2°C anomaly cascades nonlinearly.</div><span class="impact-badge" style="background:rgba(255,107,0,.15);color:var(--super-el)">Nonlinear</span></div>
+  </div>
+
+  <div class="phase-bottom-row">
+    <div class="mini-map-box">
+      <p class="box-title">Global Impact Footprint</p>
+      <div class="mini-map-container"><svg id="minimap-super-el" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend">
+        <span><i style="background:#e84545"></i>Catastrophic drought</span>
+        <span><i style="background:#2196f3"></i>Catastrophic flooding</span>
+        <span><i style="background:#ff9800"></i>Record heat</span>
+      </div>
+      <button class="phase-link-pill" style="margin-top:.75rem" onclick="document.querySelector('.tab[data-phase=&quot;map&quot;]').click();setTimeout(()=>{document.querySelector('.phase-btn[data-p=super-el]')?.click()},100)">🌍 Full Interactive Map →</button>
+    </div>
+    <div class="mech-callout-box">
+      <p class="box-title">⚙️ What Makes It "Super"</p>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🌊</span>
+        <div>
+          <div class="mech-physics-label">Central Pacific Warm Pool</div>
+          <div class="mech-physics-text">Warm water extends across the <b>central Pacific</b>, not just the east. This vastly larger area of warm SST triggers a proportionally larger — and nonlinear — atmospheric response.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🔄</span>
+        <div>
+          <div class="mech-physics-label">Walker Circulation Collapse</div>
+          <div class="mech-physics-text">The normal west-east pressure gradient reverses. Trade winds don't just weaken — they <b>collapse entirely or reverse</b>. The circulation loop that normally organises global weather breaks down.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">📈</span>
+        <div>
+          <div class="mech-physics-label">Nonlinear Damage Scaling</div>
+          <div class="mech-physics-text">A 2°C anomaly does <b>far more than 2× the damage</b> of 1°C. Coral bleaching, ecosystem collapse, and agricultural shocks all have threshold effects — Super events cross them.</div>
+        </div>
+      </div>
+      <button class="phase-link-pill" onclick="document.querySelector('.tab[data-phase=&quot;mechanism&quot;]').click()">⚙️ Full Mechanism Deep-Dive →</button>
+    </div>
+  </div>
+
+  <div class="box"><p class="box-title">The Three Super El Niños</p>
+    <div class="event-item"><div class="event-year" style="color:var(--super-el)">1982</div><div><div class="event-name">The Blindside Super Event</div><div class="event-desc">Scientists weren't monitoring. First to reveal ENSO's true global power. ~2,000 deaths, $13B damage.</div><span class="event-peak" style="background:rgba(255,107,0,.12);color:var(--super-el)">Peak ONI: +2.1°C</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--super-el)">1997</div><div><div class="event-name">The Greatest on Record (at the time)</div><div class="event-desc">Central Pacific 5°C above normal. 1998 became warmest year ever. 2,300+ deaths, $45B damage.</div><span class="event-peak" style="background:rgba(255,107,0,.12);color:var(--super-el)">Peak ONI: +2.4°C</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--super-el)">2015</div><div><div class="event-name">Climate-Amplified Super Event</div><div class="event-desc">Rivaled 1997–98 on a warmer baseline. 2015 & 2016 both set global temp records back-to-back.</div><span class="event-peak" style="background:rgba(255,107,0,.12);color:var(--super-el)">Peak ONI: +2.6–2.9°C</span></div></div>
+  </div>
+</div>
+
+<!-- ══ SUPER LA NIÑA ══ -->
+<div class="phase-panel" id="panel-super-la">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--super-la)">Super La Niña</span>
+    <span class="phase-oni" style="background:rgba(0,180,216,.15);color:var(--super-la)">ONI ≤ –1.5°C + sustained</span>
+    <span class="phase-desc">Extreme cold phase — equally dangerous</span>
+  </div>
+  <div class="box"><p class="box-title">Pacific Ocean — Intensified cold tongue, extreme warm pool west</p>
+    <div class="geo-labels"><span>🌏 West (extreme flooding)</span><span>← Warm Pushed Hard West</span><span>East Pacific 🌎 (extreme cold)</span></div>
+    <div class="ocean-section" id="ocean-super-la"></div>
+  </div>
+  <div class="box"><p class="box-title">Walker Circulation — Supercharged & Extended</p><svg class="walker-svg" id="walker-super-la" viewBox="0 0 700 200"></svg></div>
+  <div class="impacts-grid">
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🌊</span><div class="impact-region">Australia</div><div class="impact-text">Catastrophic multi-year flooding. 2010–11 Queensland: France + Germany-sized area submerged.</div><span class="impact-badge" style="background:rgba(0,180,216,.15);color:var(--super-la)">Catastrophic Flooding</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🌵</span><div class="impact-region">Horn of Africa</div><div class="impact-text">Prolonged multi-season drought. Contributes to famine. Effects can persist 2+ years.</div><span class="impact-badge" style="background:rgba(0,180,216,.15);color:var(--super-la)">Multi-Year Drought</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🇵🇰</span><div class="impact-region">Pakistan (2022)</div><div class="impact-text">Triple-dip La Niña: 2022 Pakistan floods killed 1,700+ and submerged one-third of the country.</div><span class="impact-badge" style="background:rgba(0,180,216,.15);color:var(--super-la)">1/3 Submerged</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🌵</span><div class="impact-region">US West / Southwest</div><div class="impact-text">Prolonged drought. The 1988 drought was one of the costliest US disasters in history.</div><span class="impact-badge" style="background:rgba(0,180,216,.15);color:var(--super-la)">Multi-Year Drought</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">🌀</span><div class="impact-region">Atlantic Hurricanes</div><div class="impact-text">Dramatically reduced wind shear → hyperactive hurricane seasons with multiple major landfalls.</div><span class="impact-badge" style="background:rgba(0,180,216,.15);color:var(--super-la)">Hyperactive Seasons</span></div>
+    <div class="impact-card" style="border-color:rgba(0,180,216,.25)"><span class="impact-icon">📅</span><div class="impact-region">Duration Advantage</div><div class="impact-text">Can last 2–3 years (triple-dip). Cumulative damage can exceed Super El Niño through sheer persistence.</div><span class="impact-badge" style="background:rgba(0,180,216,.15);color:var(--super-la)">1–3 Years</span></div>
+  </div>
+
+  <div class="phase-bottom-row">
+    <div class="mini-map-box">
+      <p class="box-title">Global Impact Footprint</p>
+      <div class="mini-map-container"><svg id="minimap-super-la" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend">
+        <span><i style="background:#e84545"></i>Multi-year drought</span>
+        <span><i style="background:#2196f3"></i>Catastrophic flooding</span>
+        <span><i style="background:#ff9800"></i>Hyperactive storms</span>
+      </div>
+      <button class="phase-link-pill" style="margin-top:.75rem" onclick="document.querySelector('.tab[data-phase=&quot;map&quot;]').click();setTimeout(()=>{document.querySelector('.phase-btn[data-p=super-la]')?.click()},100)">🌍 Full Interactive Map →</button>
+    </div>
+    <div class="mech-callout-box">
+      <p class="box-title">⚙️ What Makes It "Super"</p>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">❄️</span>
+        <div>
+          <div class="mech-physics-label">Extended Cold Tongue</div>
+          <div class="mech-physics-text">The equatorial cold tongue extends unusually far west. Cold SST anomalies persist across a larger area, locking the <b>Walker Circulation into an extreme, persistent state</b>.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">🔁</span>
+        <div>
+          <div class="mech-physics-label">Triple-Dip Persistence</div>
+          <div class="mech-physics-text">Rossby wave reflections may re-excite the cold phase before it fully decays. The 2020–23 event ran <b>three full consecutive years</b> — unprecedented in the modern record, possibly climate-change-linked.</div>
+        </div>
+      </div>
+      <div class="mech-physics-item">
+        <span class="mech-physics-icon">⏱️</span>
+        <div>
+          <div class="mech-physics-label">Cumulative vs. Peak Damage</div>
+          <div class="mech-physics-text">Unlike El Niño's sharp peak, Super La Niña's danger is <b>cumulative persistence</b>. Three years of drought, flooding, and hyperactive hurricane seasons can exceed a single catastrophic El Niño event in total impact.</div>
+        </div>
+      </div>
+      <button class="phase-link-pill" onclick="document.querySelector('.tab[data-phase=&quot;mechanism&quot;]').click()">⚙️ Full Mechanism Deep-Dive →</button>
+    </div>
+  </div>
+
+  <div class="box"><p class="box-title">Notable Super / Extreme La Niña Events</p>
+    <div class="event-item"><div class="event-year" style="color:var(--super-la)">1988</div><div><div class="event-name">The Great North American Drought</div><div class="event-desc">Most costly US disaster at the time. Devastating wildfires. Very active Atlantic hurricane season.</div><span class="event-peak" style="background:rgba(0,180,216,.12);color:var(--super-la)">Peak ONI: –2.0°C</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--super-la)">2010</div><div><div class="event-name">Triple-Dip (2010–12)</div><div class="event-desc">Three consecutive La Niña winters. Queensland floods. East Africa famine. Many classify as "Super La Niña."</div><span class="event-peak" style="background:rgba(0,180,216,.12);color:var(--super-la)">Peak ONI: –1.6°C</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--super-la)">2020</div><div><div class="event-name">Unprecedented Triple-Dip (2020–23)</div><div class="event-desc">First triple-dip since 1999–2001. Three full years. Pakistan 2022 among the worst modern disasters.</div><span class="event-peak" style="background:rgba(0,180,216,.12);color:var(--super-la)">ONI –1.0 to –1.5°C sustained</span></div></div>
+  </div>
+</div>
+
+<!-- ══ COMPARE ══ -->
+<div class="phase-panel" id="panel-compare">
+  <div class="section-header"><span class="phase-label" style="color:var(--text)">Compare All</span></div>
+  <div class="box"><p class="box-title">Oceanic Niño Index (ONI) — Historical Peak Events</p><svg class="oni-svg" id="oni-chart" viewBox="0 0 800 220"></svg></div>
+  <div class="box" style="overflow-x:auto"><p class="box-title">Full Feature Comparison</p>
+    <table>
+      <thead><tr><th>Feature</th><th class="h-sla">Super La Niña</th><th class="h-la">La Niña</th><th>Neutral</th><th class="h-el">El Niño</th><th class="h-sel">Super El Niño</th></tr></thead>
+      <tbody>
+        <tr><td>ONI Anomaly</td><td class="cell-sla">≤ –1.5°C sustained</td><td class="cell-la">≤ –0.5°C</td><td class="cell-neu">–0.5 to +0.5°C</td><td class="cell-el">≥ +0.5°C</td><td class="cell-sel">≥ +2.0°C</td></tr>
+        <tr><td>Trade Winds</td><td class="cell-sla">Very strong</td><td class="cell-la">Stronger than normal</td><td class="cell-neu">Normal</td><td class="cell-el">Weakened</td><td class="cell-sel">Very weak / reversed</td></tr>
+        <tr><td>Eastern Pacific</td><td class="cell-sla">Extreme cold</td><td class="cell-la">Cold</td><td class="cell-neu">Slightly cool</td><td class="cell-el">Warm</td><td class="cell-sel">Very warm (+5°C possible)</td></tr>
+        <tr><td>Western Pacific</td><td class="cell-sla">Extreme warm/wet</td><td class="cell-la">Very warm/wet</td><td class="cell-neu">Warm/wet</td><td class="cell-el">Drying</td><td class="cell-sel">Severely dry</td></tr>
+        <tr><td>Australia</td><td class="cell-sla">Catastrophic flooding</td><td class="cell-la">Flooding risk</td><td class="cell-neu">Normal</td><td class="cell-el">Drought</td><td class="cell-sel">Severe drought + fires</td></tr>
+        <tr><td>South America (west)</td><td class="cell-sla">Drought</td><td class="cell-la">Drought</td><td class="cell-neu">Normal</td><td class="cell-el">Flooding</td><td class="cell-sel">Catastrophic flooding</td></tr>
+        <tr><td>Atlantic Hurricanes</td><td class="cell-sla">Hyperactive</td><td class="cell-la">More active</td><td class="cell-neu">Normal</td><td class="cell-el">Suppressed</td><td class="cell-sel">Suppressed</td></tr>
+        <tr><td>Global Temperature</td><td class="cell-sla">Significantly cooler</td><td class="cell-la">Slightly cooler</td><td class="cell-neu">Baseline</td><td class="cell-el">Warmer</td><td class="cell-sel">Record highs</td></tr>
+        <tr><td>Typical Duration</td><td class="cell-sla">2–3+ years</td><td class="cell-la">1–2 years</td><td class="cell-neu">Variable</td><td class="cell-el">9–18 months</td><td class="cell-sel">12–18 months</td></tr>
+        <tr><td>Recurrence</td><td class="cell-sla">Rare (decades)</td><td class="cell-la">Every 2–7 years</td><td class="cell-neu">Between events</td><td class="cell-el">Every 2–7 years</td><td class="cell-sel">~3 per century</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ IMPACT MAP ══ -->
+<div class="phase-panel" id="panel-map">
+  <div class="section-header">
+    <span class="phase-label" style="color:#2d9b6f">Impact Map</span>
+    <span class="phase-oni" style="background:rgba(45,155,111,.15);color:#2d9b6f">Region-by-region effects</span>
+    <span class="phase-desc">Select a phase to see global teleconnections</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Select Phase to Highlight Impacts</p>
+    <div class="phase-selector">
+      <button class="phase-btn active" data-p="el">El Niño</button>
+      <button class="phase-btn" data-p="la">La Niña</button>
+      <button class="phase-btn" data-p="super-el">Super El Niño</button>
+      <button class="phase-btn" data-p="super-la">Super La Niña</button>
+      <button class="phase-btn" data-p="neutral">Neutral</button>
+    </div>
+    <div class="map-container" id="mapContainer">
+      <svg class="map-svg" id="worldMap" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="region-tooltip" id="mapTooltip">
+        <div class="tooltip-region" id="ttRegion"></div>
+        <div class="tooltip-effect" id="ttEffect"></div>
+      </div>
+    </div>
+    <div class="map-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#e84545"></div>Drought / Dry / Hot</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2196f3"></div>Flooding / Wet / Cold</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff9800"></div>Active Hurricanes / Storms</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4caf50"></div>Near Normal / Mild</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#78909c"></div>Mixed / Uncertain</div>
+    </div>
+  </div>
+
+  <!-- Region detail cards -->
+  <div class="impacts-grid" id="mapRegionCards"></div>
+</div>
+
+<!-- ══ MECHANISM ══ -->
+<div class="phase-panel" id="panel-mechanism">
+  <div class="section-header">
+    <span class="phase-label" style="color:#8b7fd4">Mechanism</span>
+    <span class="phase-oni" style="background:rgba(139,127,212,.15);color:#8b7fd4">Walker Circulation · Bjerknes Feedback · Thermocline</span>
+    <span class="phase-desc">The physics behind ENSO</span>
+  </div>
+
+  <!-- Bjerknes Feedback Loop -->
+  <div class="box">
+    <p class="box-title">The Bjerknes Feedback Loop — Why ENSO Amplifies Itself</p>
+    <svg id="bjerknesSvg" viewBox="0 0 800 300" style="width:100%;height:260px;"></svg>
+    <div class="callout" style="border-color:#8b7fd4;margin-top:1rem;">
+      <b>Jacob Bjerknes (1969)</b> was the first to describe how ENSO is self-reinforcing: a small initial perturbation — say, a slight weakening of trade winds — triggers a chain reaction that amplifies itself. Warm water moves east → less upwelling → warmer SST → weaker winds → more warm water moves east. The system doesn't stabilize; it accelerates until seasonal damping or subsurface cool water (Rossby waves) reverses it.
+    </div>
+  </div>
+
+  <!-- Walker Circulation deep-dive -->
+  <div class="box">
+    <p class="box-title">Walker Circulation — Anatomy</p>
+    <svg id="walkerDeepSvg" viewBox="0 0 900 280" style="width:100%;height:240px;"></svg>
+    <div class="two-col" style="margin-top:1rem;">
+      <div class="callout" style="border-color:#ef9a9a;margin-bottom:0;">
+        <b>Rising limb (west Pacific):</b> Warm ocean surface heats air above it. The air becomes buoyant, rises rapidly, releases latent heat as it condenses into towering cumulonimbus clouds. This is where the region's heavy monsoon rainfall originates.
+      </div>
+      <div class="callout" style="border-color:#90caf9;margin-bottom:0;">
+        <b>Descending limb (east Pacific):</b> Upper-level air flows eastward at ~12 km altitude, cools, and sinks over the eastern Pacific and South America. Descending air suppresses cloud formation, creating the persistent subtropical high-pressure systems that keep Peru's coast arid.
+      </div>
+    </div>
+  </div>
+
+  <!-- Thermocline -->
+  <div class="box">
+    <p class="box-title">The Thermocline — ENSO's Underground Signal</p>
+    <svg id="thermoclineSvg" viewBox="0 0 800 220" style="width:100%;height:200px;"></svg>
+    <div class="callout" style="border-color:#4fc3f7;margin-top:1rem;">
+      <b>The thermocline</b> is the sharp boundary between warm surface water (~28°C) and cold deep water (~8°C), typically 50–200 m deep. Trade winds tilt it: <b>deep in the west (~200 m), shallow in the east (~50 m)</b>. During El Niño, winds relax and the thermocline flattens — shallow cold water no longer wells up easily off Peru, SSTs rise dramatically. During La Niña, the tilt steepens even further.
+    </div>
+  </div>
+
+  <!-- Kelvin & Rossby Waves -->
+  <div class="box">
+    <p class="box-title">Oceanic Waves — How ENSO Resets Itself</p>
+    <svg id="wavesSvg" viewBox="0 0 800 200" style="width:100%;height:180px;"></svg>
+    <div class="two-col" style="margin-top:1rem;">
+      <div class="callout" style="border-color:#ff9800;margin-bottom:0;">
+        <b>Kelvin Waves</b> travel eastward along the equator at ~2–3 m/s — crossing the entire Pacific in ~2 months. A warm Kelvin wave (triggered by weakening winds) deepens the thermocline in the east, suppressing upwelling and triggering El Niño. Cold Kelvin waves do the opposite.
+      </div>
+      <div class="callout" style="border-color:#ab47bc;margin-bottom:0;">
+        <b>Rossby Waves</b> travel westward, about 3× slower. They're reflected at the western boundary and return as Kelvin waves. This round-trip creates a natural delay of ~6–18 months — which is why ENSO events have a characteristic duration and why La Niña often follows El Niño (the reflected wave brings cold water back east).
+      </div>
+    </div>
+  </div>
+
+  <!-- Key concepts grid -->
+  <div class="mech-grid">
+    <div class="mech-card">
+      <div class="mech-card-title" style="color:#ef9a9a">SST Anomaly → Atmosphere</div>
+      <div class="mech-card-body">A <b>+1°C sea surface temperature anomaly</b> dramatically shifts where the atmosphere prefers to convect. The tropical atmosphere is extremely sensitive: even 0.5°C differences in SST can determine whether a region gets monsoon rains or remains bone dry. This is why ENSO's ocean signal gets translated into global weather patterns via "teleconnections" — atmospheric bridges spanning thousands of kilometres.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title" style="color:#90caf9">Southern Oscillation (Atmospheric)</div>
+      <div class="mech-card-body">The <b>Southern Oscillation</b> is the atmospheric half of ENSO — a seesaw in sea-level pressure between Darwin, Australia and Tahiti. When Darwin pressure is high and Tahiti low, trade winds are strong (La Niña). When reversed, they weaken (El Niño). The <b>Southern Oscillation Index (SOI)</b> = standardised pressure difference, used alongside ONI for a complete picture. ENSO = El Niño <i>and</i> Southern Oscillation combined.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title" style="color:#a5d6a7">Delayed Oscillator Theory</div>
+      <div class="mech-card-body">The leading theory explaining ENSO's ~2–7 year cycle. <b>El Niño triggers its own termination:</b> the warm SST anomaly excites Rossby waves that travel west, reflect, and return as cold Kelvin waves — which cool the eastern Pacific ~6–18 months later, ending the event. This <b>negative feedback with a built-in delay</b> is what makes the system oscillate rather than stay permanently warm or cold.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title" style="color:#ffcc80">Predictability Limits</div>
+      <div class="mech-card-body">ENSO is <b>the most predictable seasonal climate signal on Earth</b> — models can forecast it 6–9 months ahead. But the "spring predictability barrier" means forecasts initialized before April are unreliable, because the signal is weakest in boreal spring. Chaos in the atmosphere also limits predictability beyond ~1 year. The 1982–83 Super El Niño was famously missed entirely — a humbling reminder of these limits.</div>
+    </div>
+  </div>
+
+  <!-- Step-by-step El Niño initiation -->
+  <div class="box">
+    <p class="box-title">Step-by-Step: How an El Niño Develops</p>
+    <ul class="step-list">
+      <li><div class="step-num" style="background:#78909c">1</div><div><b>Initial trigger:</b> Trade winds weaken slightly — possibly from random atmospheric "noise," a Madden-Julian Oscillation pulse, or warm Kelvin wave activity from the previous year. The exact trigger is often unpredictable.</div></li>
+      <li><div class="step-num" style="background:#ef9a9a">2</div><div><b>Warm water sloshes east:</b> Without wind pushing water westward, the warm pool relaxes eastward. The sea level in the western Pacific drops; eastern Pacific rises. The thermocline flattens.</div></li>
+      <li><div class="step-num" style="background:#e84545">3</div><div><b>Upwelling suppressed off Peru:</b> With the thermocline deeper, cold water can no longer reach the surface. Sea surface temperatures in the Niño 3.4 region rise. Fishing collapses.</div></li>
+      <li><div class="step-num" style="background:#c0392b">4</div><div><b>Atmosphere responds — Bjerknes kicks in:</b> Warmer SSTs shift convection east. The Walker Circulation weakens. This further reduces trade winds. More warm water moves east. Self-amplifying loop.</div></li>
+      <li><div class="step-num" style="background:#8b0000">5</div><div><b>Global teleconnections activate:</b> The shifted convection reorganises the jet stream globally. South America floods; Australia dries; Indian monsoon weakens; Atlantic hurricane season quietens.</div></li>
+      <li><div class="step-num" style="background:#546e7a">6</div><div><b>Self-termination:</b> Rossby waves reflected at the western boundary return east as cold Kelvin waves. Subsurface cold water reaches the surface. SSTs cool. Trade winds recover. El Niño ends — often overshooting into La Niña.</div></li>
+    </ul>
+  </div>
+
+</div>
+<!-- ══ MONSOON ══ -->
+<div class="phase-panel" id="panel-monsoon">
+  <div class="section-header">
+    <span class="phase-label" style="color:#d97706">Monsoon</span>
+    <span class="phase-oni" style="background:rgba(217,119,6,.15);color:#d97706">ENSO × Indian Summer Monsoon</span>
+    <span class="phase-desc">The world's largest weather system</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Why ENSO Dominates Indian Rainfall</p>
+    <div class="prose-block">
+      The <b>Indian Summer Monsoon (ISM)</b> — June through September — delivers ~80% of India's annual rainfall and directly sustains the livelihoods of over a billion people. ENSO is the single strongest external driver of monsoon variability, exerting its influence through the <b>Walker Circulation</b>: shifts in that giant atmospheric loop alter the pressure gradient between the Indian Ocean and the Asian landmass, which either strengthens or suppresses the monsoon's onshore flow.
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-value" style="color:#d97706">80%</div><div class="stat-label">of India's annual rain falls Jun–Sep</div></div>
+      <div class="stat-card"><div class="stat-value" style="color:#e84545">~70%</div><div class="stat-label">El Niño years produce deficient monsoon (&lt;90% LPA)</div></div>
+      <div class="stat-card"><div class="stat-value" style="color:#2196f3">~55%</div><div class="stat-label">La Niña years produce excess monsoon (&gt;110% LPA)</div></div>
+      <div class="stat-card"><div class="stat-value" style="color:#78909c">±10%</div><div class="stat-label">typical ENSO-induced anomaly in seasonal rainfall</div></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Monsoon Onset — Phase by Phase</p>
+    <svg class="monsoon-svg" id="monsoon-phase-svg" viewBox="0 0 800 200"></svg>
+    <div class="prose-block" style="margin-top:.75rem">
+      The monsoon onset normally reaches Kerala by June 1. During strong El Niño years it can delay by 1–3 weeks; during La Niña years it may arrive early. The <b>withdrawal sequence</b> is equally affected — El Niño years often see an early withdrawal from northwest India, shortening the growing season.
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">El Niño vs La Niña — Monsoon Mechanism</p>
+    <div class="two-col">
+      <div>
+        <div class="highlight-box" style="border-color:rgba(232,69,69,.3)">
+          <div class="hb-title" style="color:#e84545">El Niño → Dry India</div>
+          Warm central/eastern Pacific shifts Walker Circulation east. The rising limb — normally over the Bay of Bengal — weakens. <b>Reduced low-level moisture flux</b> from the Indian Ocean. The subtropical jet strengthens over the Indian subcontinent, suppressing convection. Result: delayed onset, below-normal totals, increased drought risk across peninsular and northwest India.
+          <div class="tag-row">
+            <span class="tag" style="color:#e84545;border-color:rgba(232,69,69,.3)">Weakened Low-Level Jet</span>
+            <span class="tag" style="color:#e84545;border-color:rgba(232,69,69,.3)">Reduced Bay of Bengal Moisture</span>
+            <span class="tag" style="color:#e84545;border-color:rgba(232,69,69,.3)">Enhanced Subsidence</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box" style="border-color:rgba(33,150,243,.3)">
+          <div class="hb-title" style="color:#2196f3">La Niña → Wet India</div>
+          Cool eastern Pacific enhances Walker Circulation — the Indian Ocean branch strengthens. <b>Enhanced cross-equatorial flow</b> and stronger moisture transport from the Arabian Sea and Bay of Bengal. The monsoon trough deepens, active spells lengthen, and break periods shorten. Parts of central India, the Gangetic plain, and northeast receive significantly above-normal rain.
+          <div class="tag-row">
+            <span class="tag" style="color:#2196f3;border-color:rgba(33,150,243,.3)">Stronger Low-Level Jet</span>
+            <span class="tag" style="color:#2196f3;border-color:rgba(33,150,243,.3)">Enhanced Arabian Sea Branch</span>
+            <span class="tag" style="color:#2196f3;border-color:rgba(33,150,243,.3)">Active-Break Asymmetry</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">The IOD Modifier — India's Second Climate Driver</p>
+    <div class="prose-block">
+      ENSO alone doesn't tell the whole story. The <b>Indian Ocean Dipole (IOD)</b> — an east-west SST contrast in the Indian Ocean — acts as a modifier. A <b>positive IOD</b> (warm west, cool east) boosts monsoon rainfall and can partially offset El Niño's suppression. A <b>negative IOD</b> reinforces La Niña's enhancement, or can worsen El Niño droughts. The 1997 Super El Niño produced only a moderate Indian drought partly because the IOD was weakly positive. See the Oscillations tab for IOD deep-dive.
+    </div>
+    <div class="mech-grid" style="margin-bottom:0">
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#d97706">El Niño + Positive IOD</div>
+        <div class="mech-card-body">Competing signals. IOD's warm west Indian Ocean partially counters El Niño's suppression. Monsoon outcome: <b>near-normal to mildly deficient</b>. Example: 1997 — IOD moderated what could have been catastrophic.</div>
+      </div>
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#e84545">El Niño + Negative IOD</div>
+        <div class="mech-card-body">Reinforcing signals. Both suppress Indian Ocean convection and monsoon inflow. <b>Severe drought risk</b>. This combination is the most dangerous configuration for Indian agriculture and water security.</div>
+      </div>
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#2196f3">La Niña + Positive IOD</div>
+        <div class="mech-card-body">Both enhance the monsoon. <b>Excess rainfall</b> likely. Flood risk elevated across central India. Reservoir storage excellent but infrastructure risk high.</div>
+      </div>
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#90caf9">La Niña + Negative IOD</div>
+        <div class="mech-card-body">Competing signals. La Niña's strengthening partially offset. Monsoon outcome: <b>near-normal to slightly above</b>. The IOD's negative phase reduces moisture transport from the western Indian Ocean.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Notable ENSO–Monsoon Years</p>
+    <div class="event-item">
+      <div class="event-year" style="color:#e84545">1877</div>
+      <div><div class="event-name">The Great Famine Drought</div><div class="event-desc">Strong El Niño coincided with one of the worst monsoon failures in recorded history. ~5–10 million deaths in British India. A watershed moment in understanding monsoon–ENSO links.</div><span class="event-peak" style="background:rgba(232,69,69,.12);color:#e84545">Rainfall: ~70% of normal</span></div>
+    </div>
+    <div class="event-item">
+      <div class="event-year" style="color:#e84545">2002</div>
+      <div><div class="event-name">El Niño Drought — Moderate Event, Large Impact</div><div class="event-desc">A moderate El Niño produced an 19% rainfall deficit. 300 million people affected. GDP growth dipped ~1%. Demonstrated that moderate ENSO events still carry severe monsoon risk.</div><span class="event-peak" style="background:rgba(232,69,69,.12);color:#e84545">Deficit: –19% of LPA</span></div>
+    </div>
+    <div class="event-item">
+      <div class="event-year" style="color:#d97706">1997</div>
+      <div><div class="event-name">Super El Niño — Mitigated by IOD</div><div class="event-desc">The strongest El Niño on record at the time, yet India received near-normal rainfall. A positive IOD boosted Indian Ocean SSTs and partially restored the monsoon circulation.</div><span class="event-peak" style="background:rgba(217,119,6,.12);color:#d97706">Rainfall: ~102% of LPA</span></div>
+    </div>
+    <div class="event-item">
+      <div class="event-year" style="color:#2196f3">2020</div>
+      <div><div class="event-name">La Niña — Excellent Monsoon</div><div class="event-desc">First year of the triple-dip La Niña. India received 109% of long-period average rainfall. Kharif crop output hit record highs. Reservoirs filled to capacity across most basins.</div><span class="event-peak" style="background:rgba(33,150,243,.12);color:#2196f3">Surplus: +9% of LPA</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CLIMATE CHANGE ══ -->
+<div class="phase-panel" id="panel-climate">
+  <div class="section-header">
+    <span class="phase-label" style="color:#dc2626">Climate Change</span>
+    <span class="phase-oni" style="background:rgba(220,38,38,.15);color:#dc2626">ENSO × Global Warming</span>
+    <span class="phase-desc">A warming world changes the rules</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">The Baseline Problem</p>
+    <div class="prose-block">
+      Climate change doesn't simply add a fixed increment to ENSO events — it <b>shifts the baseline</b> on which ENSO oscillates. A Super El Niño in 2015 is riding a global mean temperature ~1.2°C above pre-industrial. The same ocean heat anomaly now combines with that warmer ocean to produce higher absolute SSTs, more extreme atmospheric responses, and more severe impacts. The 2023–24 El Niño — not exceptional by historical ONI standards — pushed global temperatures to their highest ever recorded, largely because of this amplified baseline.
+    </div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-value" style="color:#dc2626">+1.2°C</div><div class="stat-label">Global warming above pre-industrial already baked in</div></div>
+      <div class="stat-card"><div class="stat-value" style="color:#ff6b00">2023</div><div class="stat-label">Hottest year ever — moderate El Niño on a hot baseline</div></div>
+      <div class="stat-card"><div class="stat-value" style="color:#ef9a9a">2×</div><div class="stat-label">CMIP6 models project doubling of Super El Niño frequency</div></div>
+      <div class="stat-card"><div class="stat-value" style="color:#90caf9">+40%</div><div class="stat-label">Projected increase in El Niño–driven precipitation extremes</div></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">How Warming Changes ENSO</p>
+    <svg class="cc-svg" id="cc-svg" viewBox="0 0 800 200"></svg>
+    <div class="two-col" style="margin-top:1rem">
+      <div class="callout" style="border-color:#dc2626">
+        <b>Warmer mean state → more extreme peaks.</b> A +2°C El Niño on a +1.5°C baseline world means absolute Pacific SSTs of +3.5°C above pre-industrial. At these temperatures, atmospheric convection, coral bleaching thresholds, and precipitation intensities all enter highly nonlinear regimes. Each additional degree of warming amplifies the damage from a given ENSO magnitude disproportionately.
+      </div>
+      <div class="callout" style="border-color:#ff9800">
+        <b>Stronger El Niño vs. La Niña asymmetry.</b> Most models project that warming will preferentially strengthen El Niño events over La Niña, as the eastern Pacific warm pool expands and the thermocline deepens on average. La Niña events may become shorter and less frequent, while El Niño events become more intense and potentially longer-lasting.
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">What Models Project (CMIP6 Consensus)</p>
+    <div class="osc-grid" style="margin-top:.5rem">
+      <div class="osc-card" style="border-top-color:#dc2626">
+        <div class="osc-card-name" style="color:#dc2626">Frequency</div>
+        <div class="osc-card-full">How often extreme events occur</div>
+        <div class="osc-card-body">Super El Niño events (ONI ≥ +2°C) projected to occur <b>roughly twice as often</b> per century under high-emission scenarios. From ~3 per century to ~5–6. The 1.5°C Paris target may cap this increase; 2°C significantly exceeds it.</div>
+      </div>
+      <div class="osc-card" style="border-top-color:#ff6b00">
+        <div class="osc-card-name" style="color:#ff6b00">Intensity</div>
+        <div class="osc-card-full">Peak ONI anomaly magnitude</div>
+        <div class="osc-card-body">Peak SST anomalies during El Niño events projected to increase by <b>+0.3 to +0.5°C</b> above current magnitudes. Crucially, absolute temperatures during events will rise far more as the baseline warms. Rainfall and drought extremes scale nonlinearly with this.</div>
+      </div>
+      <div class="osc-card" style="border-top-color:#90caf9">
+        <div class="osc-card-name" style="color:#90caf9">Rainfall</div>
+        <div class="osc-card-full">Precipitation extremes</div>
+        <div class="osc-card-body">El Niño–related rainfall extremes over the tropical Pacific and Americas projected to intensify by <b>30–60%</b>. A warmer atmosphere holds more moisture (Clausius-Clapeyron: ~7% more per °C), so the same circulation anomaly delivers more rain — and more drought where subsidence dominates.</div>
+      </div>
+      <div class="osc-card" style="border-top-color:#a78bfa">
+        <div class="osc-card-name" style="color:#a78bfa">Predictability</div>
+        <div class="osc-card-full">Forecast skill</div>
+        <div class="osc-card-body">The <b>spring predictability barrier</b> may worsen in a warmer climate as the signal-to-noise ratio decreases. Non-stationary ENSO behaviour — changing in character as the climate shifts — makes historical model training less reliable. A fundamental challenge for operational forecasting.</div>
+      </div>
+      <div class="osc-card" style="border-top-color:#4ade80">
+        <div class="osc-card-name" style="color:#4ade80">Coral Reefs</div>
+        <div class="osc-card-full">Ecosystem threshold crossings</div>
+        <div class="osc-card-body">Bleaching threshold for corals is ~1°C above summer maximum. With background warming, <b>even moderate El Niños will routinely cross bleaching thresholds</b> by mid-century. The Great Barrier Reef experienced mass bleaching in 2016, 2017, 2020, 2022, and 2024 — five events in nine years.</div>
+      </div>
+      <div class="osc-card" style="border-top-color:#fbbf24">
+        <div class="osc-card-name" style="color:#fbbf24">Uncertainty</div>
+        <div class="osc-card-full">Model spread</div>
+        <div class="osc-card-body">ENSO projections carry <b>high inter-model spread</b>. Some models project little change; others project dramatic intensification. The 2021 IPCC AR6 assessed with medium confidence that El Niño/La Niña SST variability will increase by the late 21st century under high-emission scenarios.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">The Compound Risk Problem</p>
+    <div class="prose-block">
+      The most dangerous aspect of climate change × ENSO is not stronger events alone, but <b>compound and concurrent risks</b>. As the baseline warms:
+    </div>
+    <ul class="step-list">
+      <li><div class="step-num" style="background:#dc2626">1</div><div><b>Simultaneous droughts intensify:</b> El Niño's global drought footprint widens. Australia, SE Asia, India, and the Amazon may all experience severe drought simultaneously — stressing global food systems at once rather than sequentially.</div></li>
+      <li><div class="step-num" style="background:#ff6b00">2</div><div><b>Heat-drought compounds:</b> El Niño's warming effect now adds to an already-warm baseline. Where previous El Niños brought uncomfortable heat, future ones will bring <b>dangerous wet-bulb temperatures</b> in South Asia and the Sahel — approaching human survivability limits.</div></li>
+      <li><div class="step-num" style="background:#a78bfa">3</div><div><b>Ecosystem collapse thresholds:</b> Coral, fisheries, and tropical forest systems have non-linear breaking points. Warming pushes these systems closer to thresholds where a moderate El Niño — not even a Super event — is enough to cause collapse.</div></li>
+      <li><div class="step-num" style="background:#4ade80">4</div><div><b>Economic amplification:</b> Infrastructure, insurance, and food systems priced for historical ENSO risk are increasingly mis-calibrated. Each event now exceeds historical damage models, compounding economic vulnerability in already climate-exposed nations.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ OSCILLATIONS ══ -->
+<div class="phase-panel" id="panel-oscillations">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0891b2">Oscillations</span>
+    <span class="phase-oni" style="background:rgba(8,145,178,.15);color:#0891b2">IOD · AMO · PDO · MJO · NAO</span>
+    <span class="phase-desc">ENSO's siblings — the other climate heartbeats</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Why Other Oscillations Matter</p>
+    <div class="prose-block">
+      ENSO is Earth's dominant interannual climate signal, but it operates within a web of other ocean-atmosphere oscillations that <b>amplify, dampen, or redirect its effects</b>. Understanding ENSO's full global impact requires understanding how it interacts with the Indian Ocean Dipole, the Atlantic Multidecadal Oscillation, the Pacific Decadal Oscillation, and the Madden-Julian Oscillation. These are not independent — they influence each other across timescales from weeks to decades.
+    </div>
+  </div>
+
+  <div class="osc-grid">
+    <!-- IOD -->
+    <div class="osc-card" style="border-top-color:#22c55e">
+      <div class="osc-card-name" style="color:#22c55e">IOD</div>
+      <div class="osc-card-full">Indian Ocean Dipole</div>
+      <div class="osc-card-body">
+        A sea-surface temperature contrast between the <b>western Indian Ocean</b> (near Somalia/Arabia) and the <b>eastern Indian Ocean</b> (near Sumatra). Positive IOD = warm west, cool east. Negative IOD = cool west, warm east.
+        <br><br>
+        <b>Positive IOD effects:</b> Enhances Indian monsoon; East Africa gets more rain; Australia dries. Often co-occurs with El Niño but can occur independently.
+        <br><br>
+        <b>Negative IOD effects:</b> Suppresses Indian monsoon; Australia flooding risk increases. The 2019 positive IOD was record-strength and drove extreme Australian drought ahead of the 2019–20 Black Summer fires — independent of ENSO.
+      </div>
+      <div class="osc-stat-row">
+        <div class="osc-stat"><b>~3–7 yrs</b>Period</div>
+        <div class="osc-stat"><b>Jun–Nov</b>Active season</div>
+        <div class="osc-stat"><b>±1.5°C</b>Typical range</div>
+      </div>
+    </div>
+
+    <!-- AMO -->
+    <div class="osc-card" style="border-top-color:#f97316">
+      <div class="osc-card-name" style="color:#f97316">AMO</div>
+      <div class="osc-card-full">Atlantic Multidecadal Oscillation</div>
+      <div class="osc-card-body">
+        A decades-long oscillation in North Atlantic SSTs, cycling between warm and cool phases over <b>60–80 year periods</b>. Unlike ENSO and IOD, the AMO is a background modulator — it shifts the probabilities of other events rather than creating acute seasonal impacts.
+        <br><br>
+        <b>Warm AMO phase:</b> More Atlantic hurricanes (independent of ENSO effects). Sahel rainfall increases. European summer heatwaves more common.
+        <br><br>
+        <b>ENSO interaction:</b> AMO modulates ENSO's teleconnections to North America and Europe. During a warm AMO, La Niña's hurricane-enhancing effect is compounded. The AMO may also influence ENSO frequency over multi-decadal timescales.
+      </div>
+      <div class="osc-stat-row">
+        <div class="osc-stat"><b>60–80 yrs</b>Period</div>
+        <div class="osc-stat"><b>Multi-decadal</b>Timescale</div>
+        <div class="osc-stat"><b>±0.4°C</b>Basin average</div>
+      </div>
+    </div>
+
+    <!-- PDO -->
+    <div class="osc-card" style="border-top-color:#8b5cf6">
+      <div class="osc-card-name" style="color:#8b5cf6">PDO</div>
+      <div class="osc-card-full">Pacific Decadal Oscillation</div>
+      <div class="osc-card-body">
+        A long-lived pattern of Pacific SST variability, alternating on <b>20–30 year timescales</b>. Positive PDO = warm northeastern Pacific, cool central Pacific. Negative PDO is the opposite. Think of it as a slowly-varying background on which ENSO superimposes its faster swings.
+        <br><br>
+        <b>Key interaction:</b> El Niño events occurring during a positive PDO tend to be <b>stronger and longer-lasting</b>. La Niña events during negative PDO are similarly amplified. The 1977–1998 warm PDO phase coincided with frequent, intense El Niños (1982, 1997). The subsequent cool PDO phase (roughly 1999–2014) saw more La Niñas and a slowdown in global surface warming.
+      </div>
+      <div class="osc-stat-row">
+        <div class="osc-stat"><b>20–30 yrs</b>Period</div>
+        <div class="osc-stat"><b>N. Pacific</b>Core region</div>
+        <div class="osc-stat"><b>Amplifier</b>ENSO role</div>
+      </div>
+    </div>
+
+    <!-- MJO -->
+    <div class="osc-card" style="border-top-color:#06b6d4">
+      <div class="osc-card-name" style="color:#06b6d4">MJO</div>
+      <div class="osc-card-full">Madden-Julian Oscillation</div>
+      <div class="osc-card-body">
+        A pulse of enhanced convection and rainfall that propagates <b>eastward around the tropics</b> over 30–60 days, then dissipates and re-forms. The MJO is the dominant source of tropical weather variability on sub-seasonal timescales.
+        <br><br>
+        <b>ENSO trigger:</b> Strong westerly wind bursts from the MJO can trigger warm Kelvin waves that initiate or accelerate El Niño development. The 1997 Super El Niño was preceded by an exceptional MJO burst in late 1996. Models now track MJO activity as an early warning sign of El Niño initiation.
+        <br><br>
+        <b>Monsoon control:</b> The MJO governs the active/break cycle of the Indian Summer Monsoon — its phase determines whether any given week brings heavy rain or a dry spell.
+      </div>
+      <div class="osc-stat-row">
+        <div class="osc-stat"><b>30–60 days</b>Period</div>
+        <div class="osc-stat"><b>~5 m/s</b>Eastward speed</div>
+        <div class="osc-stat"><b>ENSO trigger</b>Key role</div>
+      </div>
+    </div>
+
+    <!-- NAO -->
+    <div class="osc-card" style="border-top-color:#ec4899">
+      <div class="osc-card-name" style="color:#ec4899">NAO</div>
+      <div class="osc-card-full">North Atlantic Oscillation</div>
+      <div class="osc-card-body">
+        A pressure seesaw between the <b>Icelandic Low</b> and the <b>Azores High</b>, controlling the strength and direction of the westerly winds across the North Atlantic into Europe. Positive NAO = strong westerlies, mild wet winters in northern Europe, dry in southern Europe. Negative NAO = weak westerlies, cold outbreaks.
+        <br><br>
+        <b>ENSO link:</b> El Niño weakly forces a negative NAO tendency — bringing cold, blocked winters to Europe — typically with a 2–3 month lag via Rossby wave propagation into the stratosphere. La Niña has the opposite tendency. However, the ENSO–NAO link is noisy and often dominated by internal Atlantic variability. The AMO modulates whether this teleconnection is active.
+      </div>
+      <div class="osc-stat-row">
+        <div class="osc-stat"><b>Weeks–decades</b>Variability</div>
+        <div class="osc-stat"><b>N. Atlantic</b>Core region</div>
+        <div class="osc-stat"><b>Weak</b>ENSO link</div>
+      </div>
+    </div>
+
+    <!-- QBO -->
+    <div class="osc-card" style="border-top-color:#a78bfa">
+      <div class="osc-card-name" style="color:#a78bfa">QBO</div>
+      <div class="osc-card-full">Quasi-Biennial Oscillation</div>
+      <div class="osc-card-body">
+        A regular oscillation of <b>stratospheric equatorial winds</b> between westerly and easterly phases, cycling every ~28 months. The QBO affects how ENSO's signal propagates into the extratropical stratosphere — and from there into European and North American surface weather.
+        <br><br>
+        <b>Hurricane link:</b> The QBO phase modulates tropical cyclone activity independently of ENSO. An easterly QBO weakens the stratospheric subtropical jet, which in turn reduces wind shear — enhancing hurricane seasons even in El Niño years when Atlantic activity would otherwise be suppressed. This is why 2015 (Super El Niño) still produced some major Atlantic hurricanes.
+      </div>
+      <div class="osc-stat-row">
+        <div class="osc-stat"><b>~28 months</b>Period</div>
+        <div class="osc-stat"><b>Stratosphere</b>Level</div>
+        <div class="osc-stat"><b>Hurricane mod.</b>Key role</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">IOD Deep-Dive — Anatomy of the Indian Ocean Dipole</p>
+    <svg class="iod-svg" id="iod-svg" viewBox="0 0 800 180"></svg>
+    <div class="prose-block" style="margin-top:.75rem">
+      The IOD is measured by the <b>Dipole Mode Index (DMI)</b> — the SST difference between a western box (50–70°E, 10°S–10°N) and an eastern box (90–110°E, 10°S–0°N). A DMI sustained above +0.4°C constitutes a positive IOD event. The IOD peaks in boreal autumn (Sep–Nov) and is suppressed in boreal winter — unlike ENSO which can peak anytime from November to February.
+    </div>
+    <div class="two-col">
+      <div class="callout" style="border-color:#22c55e">
+        <b>Positive IOD (warm west, cool east):</b> Easterly wind anomalies along the equatorial Indian Ocean cool the eastern Indian Ocean thermocline (similar mechanism to La Niña in the Pacific). Warmer western Indian Ocean boosts evaporation and moisture transport toward East Africa and India. <b>Associated with strong Indian monsoon, East Africa rains, Australian drought.</b> Recent extreme events: 1997, 2006, 2012, 2019.
+      </div>
+      <div class="callout" style="border-color:#e84545">
+        <b>Negative IOD (cool west, warm east):</b> Westerly wind anomalies depress the western thermocline. Warm eastern Indian Ocean near Sumatra/Java enhances local convection but reduces Indian Ocean moisture export. <b>Associated with weakened Indian monsoon, reduced East Africa rains, enhanced Australian rainfall.</b> Often co-occurs with La Niña.
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Oscillation Timescale Comparison</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Oscillation</th><th>Timescale</th><th>Ocean Region</th><th>Primary Impact</th><th>ENSO Interaction</th></tr></thead>
+      <tbody>
+        <tr><td><span style="color:#e84545">ENSO</span></td><td>2–7 years</td><td>Tropical Pacific</td><td>Global temperature, rainfall, storms</td><td>—</td></tr>
+        <tr><td><span style="color:#22c55e">IOD</span></td><td>3–7 years</td><td>Indian Ocean</td><td>Indian monsoon, East Africa, Australia</td><td>Strong — often co-varies</td></tr>
+        <tr><td><span style="color:#8b5cf6">PDO</span></td><td>20–30 years</td><td>N. Pacific</td><td>North America rainfall, Pacific fisheries</td><td>Amplifies/suppresses ENSO</td></tr>
+        <tr><td><span style="color:#f97316">AMO</span></td><td>60–80 years</td><td>N. Atlantic</td><td>Atlantic hurricanes, Sahel rain</td><td>Modulates teleconnections</td></tr>
+        <tr><td><span style="color:#06b6d4">MJO</span></td><td>30–60 days</td><td>Tropical (all)</td><td>Tropical weather, monsoon active/break</td><td>Can trigger El Niño onset</td></tr>
+        <tr><td><span style="color:#ec4899">NAO</span></td><td>Weeks–decades</td><td>N. Atlantic</td><td>European winter climate</td><td>Weak — ENSO modulates via stratosphere</td></tr>
+        <tr><td><span style="color:#a78bfa">QBO</span></td><td>~28 months</td><td>Stratosphere</td><td>Hurricane activity, N. hemisphere winter</td><td>Modifies ENSO's extratropical signal</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- end panels -->
+
+</main>
+
+<script>
+// ═══════════════════════════════════════════════
+//  THEME
+// ═══════════════════════════════════════════════
+function toggleTheme(){
+  const b=document.body, dark=b.dataset.theme==='dark';
+  b.dataset.theme=dark?'light':'dark';
+  document.getElementById('themeIcon').textContent=dark?'🌙':'☀️';
+  document.getElementById('themeLabel').textContent=dark?'Dark mode':'Light mode';
+  redrawAll();
+}
+
+// ═══════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.phase-panel').forEach(p=>p.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('panel-'+t.dataset.phase)?.classList.add('visible');
+  t.classList.add('active');
+}));
+document.querySelector('.tab[data-phase="neutral"]').click();
+
+// ═══════════════════════════════════════════════
+//  OCEAN CROSS-SECTION
+// ═══════════════════════════════════════════════
+function buildOcean(id,cfg){
+  const el=document.getElementById(id); if(!el)return;
+  el.innerHTML=''; el.style.background=cfg.bgGradient;
+  const wd=document.createElement('div');
+  wd.className='wind-layer'+(cfg.windDir==='east'?' wind-reversed':'');
+  wd.style.opacity=cfg.windDir==='weak'?0.25:1;
+  const arr=cfg.windDir==='east'?['→','→','→','→']:['←','←','←','←'];
+  wd.innerHTML=arr.map(a=>`<span class="wind-arrow">${a}</span>`).join('');
+  if(cfg.windLabel){const lbl=document.createElement('span');lbl.style.cssText='position:absolute;right:8px;top:10px;font-size:.55rem;letter-spacing:.1em;font-family:"DM Mono",monospace;text-transform:uppercase;opacity:.45;color:inherit;';lbl.textContent=cfg.windLabel;wd.appendChild(lbl);}
+  el.appendChild(wd);
+  const tc=document.createElement('div');tc.className='thermocline';tc.style.top=cfg.thermT+'%';tc.style.background=`linear-gradient(to right,rgba(79,195,247,.7) ${cfg.thermL}%,rgba(79,195,247,.08) ${cfg.thermR}%)`;el.appendChild(tc);
+  const blob=document.createElement('div');blob.className='warm-blob';Object.assign(blob.style,{left:cfg.warmLeft+'%',bottom:(30-cfg.warmHeight/4)+'%',width:cfg.warmWidth+'%',height:cfg.warmHeight+'%',background:cfg.warmColor,filter:'blur(18px)',borderRadius:'40% 60% 60% 40% / 50% 50% 50% 50%'});el.appendChild(blob);
+  if(cfg.upwelling){const uw=document.createElement('div');uw.className='upwelling';uw.style.right='6%';uw.innerHTML=`<div class="upwelling-arrow"></div><div class="upwelling-line" style="height:${20+cfg.upwelling*18}px;"></div>`;el.appendChild(uw);}
+}
+const oceanCfgs={
+  'ocean-neutral': {bgGradient:'linear-gradient(to right,#1a2744,#1c2d55,#122240)',warmLeft:2,warmWidth:38,warmHeight:55,warmColor:'rgba(255,140,80,.35)',upwelling:1,windDir:'west',windLabel:'trade winds ←',thermL:15,thermT:42,thermR:90},
+  'ocean-el':      {bgGradient:'linear-gradient(to right,#1a1f44,#2a1f44,#3a1a1a)',warmLeft:20,warmWidth:65,warmHeight:70,warmColor:'rgba(232,80,80,.4)',upwelling:.2,windDir:'weak',windLabel:'weakened winds',thermL:5,thermT:38,thermR:70},
+  'ocean-la':      {bgGradient:'linear-gradient(to right,#0d2a3d,#0d2040,#081520)',warmLeft:0,warmWidth:25,warmHeight:65,warmColor:'rgba(33,150,243,.4)',upwelling:1.8,windDir:'west',windLabel:'strong trade winds ←',thermL:25,thermT:36,thermR:95},
+  'ocean-super-el':{bgGradient:'linear-gradient(to right,#1a0f0f,#2e1010,#4a1010)',warmLeft:5,warmWidth:88,warmHeight:80,warmColor:'rgba(255,100,30,.5)',upwelling:0,windDir:'east',windLabel:'reversed / very weak',thermL:3,thermT:32,thermR:55},
+  'ocean-super-la':{bgGradient:'linear-gradient(to right,#051e30,#051828,#020d18)',warmLeft:0,warmWidth:18,warmHeight:70,warmColor:'rgba(0,200,255,.35)',upwelling:2.5,windDir:'west',windLabel:'very strong ←',thermL:35,thermT:34,thermR:100},
+};
+Object.entries(oceanCfgs).forEach(([id,cfg])=>buildOcean(id,cfg));
+
+// ═══════════════════════════════════════════════
+//  WALKER SVGs
+// ═══════════════════════════════════════════════
+function drawWalker(svgId,cfg){
+  const svg=document.getElementById(svgId); if(!svg)return;
+  const W=700,H=200,surf=132;
+  const dark=document.body.dataset.theme==='dark';
+  const oceanFill=dark?'rgba(10,30,60,.65)':'rgba(20,60,120,.08)';
+  const surfLine=dark?'rgba(79,195,247,.35)':'rgba(33,120,200,.35)';
+  const geoCol=dark?'rgba(255,255,255,.32)':'rgba(0,0,0,.38)';
+  let h='';
+  h+=`<rect x="0" y="${surf}" width="${W}" height="${H-surf}" fill="${oceanFill}"/>`;
+  h+=`<line x1="0" y1="${surf}" x2="${W}" y2="${surf}" stroke="${surfLine}" stroke-width="1.2"/>`;
+  h+=`<text x="18" y="${H-6}" fill="${geoCol}" font-size="9.5" font-family="DM Mono,monospace">🌏 Indonesia / Australia</text>`;
+  h+=`<text x="${W-18}" y="${H-6}" fill="${geoCol}" font-size="9.5" font-family="DM Mono,monospace" text-anchor="end">Peru / Ecuador 🌎</text>`;
+  if(cfg.windStrip){
+    const {dir,strength,label,arrowColor}=cfg.windStrip;
+    const ac=arrowColor,op=strength==='strong'?.6:strength==='weak'?.22:.42;
+    for(let i=0;i<6;i++){const x=50+i*(W-100)/5;h+=`<text x="${x}" y="${surf+14}" fill="${ac}" font-size="11" font-family="DM Mono,monospace" text-anchor="middle" opacity="${op}">${dir==='left'?'←':'→'}</text>`;}
+    h+=`<text x="${W/2}" y="${surf+26}" fill="${ac}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle" opacity=".4" letter-spacing="1">${label}</text>`;
+  }
+  cfg.cells.forEach(cell=>{
+    const{x1,x2,yTop,yBot,color,dir}=cell;
+    const cx=(x1+x2)/2,cy=(yTop+yBot)/2,rx=(x2-x1)/2,ry=(yBot-yTop)/2;
+    h+=`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="${color}" stroke-width="1.6" stroke-dasharray="5 3" opacity=".55"/>`;
+    const ax=cx+rx,ay=cy;
+    h+= dir==='cw'
+      ?`<polygon points="${ax},${ay-7} ${ax-5},${ay+4} ${ax+5},${ay+4}" fill="${color}" opacity=".75"/>`
+      :`<polygon points="${ax},${ay+7} ${ax-5},${ay-4} ${ax+5},${ay-4}" fill="${color}" opacity=".75"/>`;
+  });
+  cfg.rising?.forEach(r=>{
+    for(let i=-1;i<=1;i++)h+=`<line x1="${r.x+i*5}" y1="${surf}" x2="${r.x+i*5}" y2="${r.yTop+8}" stroke="${r.color}" stroke-width="1.5" stroke-dasharray="3 4" opacity="${.28+Math.abs(i)*.04}"/>`;
+  });
+  cfg.labels?.forEach(l=>{
+    h+=`<text x="${l.x}" y="${l.y}" fill="${l.color||geoCol}" font-size="${l.size||8.5}" font-family="DM Mono,monospace" text-anchor="${l.anchor||'middle'}" opacity="${l.opacity||.75}"${l.bold?' font-weight="600"':''}>${l.text}</text>`;
+  });
+  svg.innerHTML=h;
+}
+const walkerDefs={
+  'walker-neutral':{windStrip:{dir:'left',strength:'normal',label:'TRADE WINDS',arrowColor:'#90caf9'},cells:[{x1:50,x2:280,yTop:22,yBot:128,color:'#ef9a9a',dir:'cw'},{x1:420,x2:660,yTop:32,yBot:128,color:'#90caf9',dir:'ccw'}],rising:[{x:90,yTop:22,color:'#ef9a9a'}],labels:[{x:165,y:14,text:'↑ Rising warm air',color:'#ef9a9a'},{x:540,y:24,text:'↓ Sinking cool air',color:'#90caf9'},{x:350,y:74,text:'→ Upper return flow →',color:'rgba(200,200,200,.35)',size:8}]},
+  'walker-el':{windStrip:{dir:'right',strength:'weak',label:'WEAKENED / REVERSED WINDS',arrowColor:'#ef9a9a'},cells:[{x1:260,x2:580,yTop:18,yBot:128,color:'#ef9a9a',dir:'cw'}],rising:[{x:300,yTop:18,color:'#ef9a9a'}],labels:[{x:420,y:12,text:'↑ Convection zone shifted east',color:'#ef9a9a'},{x:100,y:55,text:'← Dry subsiding air',color:'rgba(150,150,150,.6)',size:8},{x:100,y:68,text:'(Australia / Indonesia)',color:'rgba(150,150,150,.42)',size:7.5}]},
+  'walker-la':{windStrip:{dir:'left',strength:'strong',label:'STRONG TRADE WINDS',arrowColor:'#64b5f6'},cells:[{x1:30,x2:290,yTop:16,yBot:128,color:'#42a5f5',dir:'cw'},{x1:430,x2:670,yTop:30,yBot:128,color:'#78909c',dir:'ccw'}],rising:[{x:65,yTop:16,color:'#42a5f5'}],labels:[{x:160,y:10,text:'↑↑ Enhanced convection (west)',color:'#42a5f5'},{x:550,y:22,text:'↓ Dry sinking air (east)',color:'#90a4ae'}]},
+  'walker-super-el':{windStrip:{dir:'right',strength:'weak',label:'WINDS COLLAPSED / REVERSED',arrowColor:'#ff8a50'},cells:[{x1:140,x2:650,yTop:14,yBot:128,color:'#ff8a50',dir:'cw'}],rising:[{x:500,yTop:14,color:'#ff8a50'}],labels:[{x:580,y:8,text:'↑ Convection far east',color:'#ff8a50'},{x:100,y:44,text:'Extreme drought',color:'#ff8a50',opacity:.6},{x:100,y:57,text:'(Australia / Indonesia)',color:'rgba(200,120,80,.48)',size:7.5},{x:390,y:76,text:'← Weakest Walker Circulation →',color:'rgba(200,200,200,.28)',size:8}]},
+  'walker-super-la':{windStrip:{dir:'left',strength:'strong',label:'VERY STRONG TRADE WINDS',arrowColor:'#26c6da'},cells:[{x1:20,x2:240,yTop:12,yBot:128,color:'#26c6da',dir:'cw'},{x1:430,x2:680,yTop:34,yBot:128,color:'#546e7a',dir:'ccw'}],rising:[{x:50,yTop:12,color:'#26c6da'}],labels:[{x:130,y:6,text:'↑↑↑ Extreme western convection',color:'#26c6da'},{x:555,y:24,text:'↓ Strong subsidence (east)',color:'#80cbc4'},{x:555,y:38,text:'(prolonged cold tongue)',color:'rgba(100,200,200,.42)',size:7.5}]},
+};
+function redrawWalkers(){Object.entries(walkerDefs).forEach(([id,cfg])=>drawWalker(id,cfg));}
+
+// ═══════════════════════════════════════════════
+//  ONI CHART
+// ═══════════════════════════════════════════════
+function drawONI(){
+  const svg=document.getElementById('oni-chart'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const W=800,H=220,padL=52,padR=22,padT=18,padB=42;
+  const cW=W-padL-padR,cH=H-padT-padB;
+  const sy=v=>padT+cH*(1-(v+3)/6.5);
+  const y0=sy(0);
+  const tl=dark?'rgba(255,255,255,.42)':'rgba(0,0,0,.45)';
+  const bl=dark?'rgba(255,255,255,.48)':'rgba(0,0,0,.5)';
+  const gl=dark?'rgba(255,255,255,.08)':'rgba(0,0,0,.08)';
+  const gz=dark?'rgba(255,255,255,.22)':'rgba(0,0,0,.25)';
+  const zones=[{min:2,max:3.5,fill:'rgba(255,107,0,.1)',label:'Super El Niño',lc:'#ff6b00'},{min:.5,max:2,fill:'rgba(232,69,69,.07)',label:'El Niño',lc:'#e84545'},{min:-.5,max:.5,fill:'rgba(120,144,156,.07)',label:'Neutral',lc:'#78909c'},{min:-1.5,max:-.5,fill:'rgba(33,150,243,.07)',label:'La Niña',lc:'#2196f3'},{min:-3,max:-1.5,fill:'rgba(0,180,216,.1)',label:'Super La Niña',lc:'#00b4d8'}];
+  let h='';
+  zones.forEach(z=>{const y1=sy(z.max),y2=sy(z.min);h+=`<rect x="${padL}" y="${y1}" width="${cW}" height="${y2-y1}" fill="${z.fill}"/>`;h+=`<text x="${padL-4}" y="${(y1+y2)/2+3.5}" fill="${z.lc}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="end" opacity=".75">${z.label}</text>`;});
+  [-2.5,-2,-1.5,-.5,0,.5,2,2.5].forEach(v=>{const y=sy(v),z=v===0;h+=`<line x1="${padL}" y1="${y}" x2="${padL+cW}" y2="${y}" stroke="${z?gz:gl}" stroke-width="${z?1.2:.7}" stroke-dasharray="${z?'':'4 5'}"/>`;h+=`<text x="${padL+cW+5}" y="${y+3.5}" fill="${tl}" font-size="7.5" font-family="DM Mono,monospace">${v>0?'+':''}${v}</text>`;});
+  const evts=[{yr:'1972',tag:'El Niño',oni:+1.8,color:'#e84545'},{yr:'1982',tag:'Super EN',oni:+2.1,color:'#ff6b00'},{yr:'1988',tag:'Super LN',oni:-2.0,color:'#00b4d8'},{yr:'1997',tag:'Super EN',oni:+2.4,color:'#ff6b00'},{yr:'1999',tag:'La Niña',oni:-1.6,color:'#2196f3'},{yr:'2010',tag:'La Niña',oni:-1.6,color:'#2196f3'},{yr:'2015',tag:'Super EN',oni:+2.8,color:'#ff6b00'},{yr:'2020',tag:'Triple LN',oni:-1.5,color:'#00b4d8'},{yr:'2023',tag:'El Niño',oni:+2.0,color:'#e84545'}];
+  const bw=Math.min(36,cW/(evts.length+1)*.65),sp=cW/(evts.length+1);
+  evts.forEach((ev,i)=>{
+    const bx=padL+sp*(i+1)-bw/2,bh=Math.abs(sy(ev.oni)-y0),barY=ev.oni>=0?sy(ev.oni):y0;
+    h+=`<rect x="${bx}" y="${barY}" width="${bw}" height="${bh}" fill="${ev.color}" opacity=".78" rx="1.5"/>`;
+    if(ev.oni>=0)h+=`<text x="${bx+bw/2}" y="${sy(ev.oni)-5}" fill="${ev.color}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">+${ev.oni}</text>`;
+    else h+=`<text x="${bx+bw/2}" y="${sy(ev.oni)+13}" fill="${ev.color}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">${ev.oni}</text>`;
+    h+=`<text x="${bx+bw/2}" y="${padT+cH+14}" fill="${bl}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${ev.yr}</text>`;
+    h+=`<text x="${bx+bw/2}" y="${padT+cH+26}" fill="${ev.color}" font-size="7" font-family="DM Mono,monospace" text-anchor="middle" opacity=".75">${ev.tag}</text>`;
+  });
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  IMPACT MAP
+// ═══════════════════════════════════════════════
+
+// Region data: each region has {label, cx,cy, effects per phase, shape (ellipse r)}
+const regions=[
+  {id:'aus',   label:'Australia',         cx:770,cy:300, rx:55,ry:38,
+   el:{color:'#e84545',text:'Severe drought, wildfire risk elevated. Convection zone shifts away eastward.'},
+   la:{color:'#2196f3',text:'Enhanced monsoon, severe flooding. 2010–11: France+Germany-sized area submerged.'},
+   'super-el':{color:'#e84545',text:'Catastrophic drought. Mega-fires. 1997–98 smoke choked all of SE Asia.'},
+   'super-la':{color:'#2196f3',text:'Catastrophic multi-year flooding. Repeated seasons of extreme rainfall.'},
+   neutral:{color:'#4caf50',text:'Near-normal monsoon rainfall.'}},
+  {id:'seasia', label:'SE Asia / Indonesia', cx:700,cy:240, rx:48,ry:32,
+   el:{color:'#e84545',text:'Drought. Crop failures. Indonesian fires 1997 caused regional air quality emergency.'},
+   la:{color:'#2196f3',text:'Above-normal rainfall. Enhanced convection over warm western Pacific.'},
+   'super-el':{color:'#e84545',text:'Extreme drought. Catastrophic wildfires. Region-wide smoke haze.'},
+   'super-la':{color:'#2196f3',text:'Extreme flooding across Philippines, Vietnam, Indonesia.'},
+   neutral:{color:'#4caf50',text:'Normal rainfall, typical convection.'}},
+  {id:'india',  label:'India / South Asia',  cx:600,cy:210, rx:42,ry:30,
+   el:{color:'#e84545',text:'Weakened monsoon. Drought risk elevated. Agricultural output threatened.'},
+   la:{color:'#2196f3',text:'Stronger monsoon. Above-average rainfall in many years.'},
+   'super-el':{color:'#e84545',text:'Significantly weakened monsoon. Major drought risk.'},
+   'super-la':{color:'#2196f3',text:'Enhanced monsoon, flooding risk in river valleys.'},
+   neutral:{color:'#4caf50',text:'Near-normal monsoon.'}},
+  {id:'eafrica', label:'East Africa',         cx:530,cy:275, rx:36,ry:42,
+   el:{color:'#2196f3',text:'Increased rainfall, flooding. El Niño-driven rains can cause disease outbreaks.'},
+   la:{color:'#e84545',text:'Drought, reduced rainfall. Contributes to food insecurity and famine.'},
+   'super-el':{color:'#2196f3',text:'Heavy flooding. Infrastructure damage. Rift Valley Fever outbreaks.'},
+   'super-la':{color:'#e84545',text:'Prolonged multi-year drought. Severe famine risk in Horn of Africa.'},
+   neutral:{color:'#4caf50',text:'Near-normal seasonal rains.'}},
+  {id:'sahel',  label:'Sahel / W. Africa',    cx:450,cy:240, rx:48,ry:28,
+   el:{color:'#78909c',text:'Mixed signal. Some years wetter, some drier depending on event magnitude.'},
+   la:{color:'#e84545',text:'Drought conditions, reduced rainfall across the Sahel.'},
+   'super-el':{color:'#78909c',text:'Variable; regional patterns complex.'},
+   'super-la':{color:'#e84545',text:'Severe multi-year drought across the Sahel.'},
+   neutral:{color:'#4caf50',text:'Near-normal.'}},
+  {id:'europe', label:'Europe',               cx:470,cy:155, rx:55,ry:32,
+   el:{color:'#78909c',text:'Mild signal. Northern Europe slightly wetter, southern Europe drier in some events.'},
+   la:{color:'#78909c',text:'Mild signal. Some studies link La Niña to cooler, stormier winters.'},
+   'super-el':{color:'#78909c',text:'Mild but detectable: enhanced Atlantic storminess possible.'},
+   'super-la':{color:'#78909c',text:'Weak signal; complex interaction with NAO.'},
+   neutral:{color:'#4caf50',text:'Near-normal.'}},
+  {id:'wusa',   label:'Western USA',           cx:130,cy:190, rx:36,ry:30,
+   el:{color:'#2196f3',text:'Wet, stormy winters in California and the Southwest. Fewer wildfire conditions.'},
+   la:{color:'#e84545',text:'Drought. Extended dry spells — major driver of western US water crises.'},
+   'super-el':{color:'#2196f3',text:'Extreme California rainfall, atmospheric rivers. Flooding and mudslides.'},
+   'super-la':{color:'#e84545',text:'Multi-year drought. Critical water reservoir depletion.'},
+   neutral:{color:'#4caf50',text:'Near-normal precipitation.'}},
+  {id:'seus',   label:'Southern USA',          cx:175,cy:210, rx:42,ry:26,
+   el:{color:'#2196f3',text:'Wet, mild winters. Above-average rainfall across Texas, Gulf Coast.'},
+   la:{color:'#e84545',text:'Warm, dry winters. Drought risk elevated in Texas and the South.'},
+   'super-el':{color:'#2196f3',text:'Significant flooding. Gulf Coast storms enhanced.'},
+   'super-la':{color:'#e84545',text:'Severe drought. Texas 2011 drought (linked to La Niña) devastated agriculture.'},
+   neutral:{color:'#4caf50',text:'Near-normal.'}},
+  {id:'neus',   label:'Northern USA / Canada', cx:170,cy:165, rx:48,ry:28,
+   el:{color:'#ff9800',text:'Warmer, drier winters. Less snowpack. Reduced heating demand.'},
+   la:{color:'#2196f3',text:'Cooler, wetter winters in Pacific Northwest and Canada. More snowpack.'},
+   'super-el':{color:'#ff9800',text:'Strongly anomalous warm winters. Ski industry and water supply disrupted.'},
+   'super-la':{color:'#2196f3',text:'Very cold winters in Canada. Enhanced Pacific Northwest precipitation.'},
+   neutral:{color:'#4caf50',text:'Near-normal.'}},
+  {id:'latam',  label:'N. South America / Peru',cx:195,cy:290, rx:36,ry:40,
+   el:{color:'#2196f3',text:'Catastrophic flooding along coast. Upwelling suppressed — fishing collapses. GDP impacts.'},
+   la:{color:'#e84545',text:'Drought. Inland agriculture suffers. Coastal fishing excellent (upwelling active).'},
+   'super-el':{color:'#2196f3',text:'Catastrophic coastal flooding. Extreme rainfall. Major infrastructure damage.'},
+   'super-la':{color:'#e84545',text:'Severe inland drought. Fishing productive but agriculture devastated.'},
+   neutral:{color:'#4caf50',text:'Near-normal conditions. Productive upwelling.'}},
+  {id:'brazil', label:'Brazil / Amazon',       cx:230,cy:330, rx:40,ry:32,
+   el:{color:'#e84545',text:'Drought in northeast Brazil, reduced Amazon rainfall. Fire risk elevated.'},
+   la:{color:'#2196f3',text:'Above-average rainfall in parts of southern Brazil and Amazon basin.'},
+   'super-el':{color:'#e84545',text:'Severe Amazon drought. Record low river levels. Massive forest fire risk.'},
+   'super-la':{color:'#2196f3',text:'Flooding in southern Brazil. Amazon rainfall above normal.'},
+   neutral:{color:'#4caf50',text:'Near-normal.'}},
+  {id:'atlantic',label:'Atlantic Hurricanes',  cx:230,cy:240, rx:32,ry:22,
+   el:{color:'#4caf50',text:'Suppressed. El Niño increases upper-level wind shear, tearing apart hurricanes.'},
+   la:{color:'#ff9800',text:'Active season. La Niña reduces shear, allowing storms to intensify.'},
+   'super-el':{color:'#4caf50',text:'Very suppressed. Quiet Atlantic hurricane seasons during Super El Niño.'},
+   'super-la':{color:'#ff9800',text:'Hyperactive seasons. Multiple intense landfalling storms possible.'},
+   neutral:{color:'#4caf50',text:'Near-normal activity.'}},
+];
+
+// Simple SVG world map paths (very simplified continents)
+const landPaths = [
+  // North America
+  {d:'M 80 130 L 230 120 L 250 170 L 240 240 L 200 270 L 170 260 L 140 230 L 100 200 Z', id:'na'},
+  // South America
+  {d:'M 170 270 L 230 260 L 260 310 L 250 380 L 220 420 L 185 400 L 160 350 L 155 300 Z', id:'sa'},
+  // Europe
+  {d:'M 420 100 L 510 100 L 530 140 L 510 175 L 450 180 L 420 160 L 410 140 Z', id:'eu'},
+  // Africa
+  {d:'M 440 180 L 540 175 L 560 210 L 565 280 L 545 350 L 510 390 L 480 390 L 455 350 L 435 280 L 430 220 Z', id:'af'},
+  // Russia / N Asia
+  {d:'M 510 80 L 760 70 L 790 110 L 760 145 L 700 155 L 620 150 L 540 155 L 510 140 Z', id:'ru'},
+  // Asia (south)
+  {d:'M 560 140 L 720 140 L 740 170 L 730 210 L 690 235 L 640 240 L 590 220 L 560 190 Z', id:'as'},
+  // Australia
+  {d:'M 710 275 L 810 265 L 840 295 L 835 335 L 800 355 L 750 350 L 715 325 Z', id:'au'},
+  // Japan / Korea
+  {d:'M 750 145 L 780 140 L 790 160 L 770 170 L 750 162 Z', id:'jp'},
+  // Greenland
+  {d:'M 280 60 L 340 55 L 360 85 L 340 110 L 295 115 L 275 90 Z', id:'gl'},
+  // UK/Ireland approx
+  {d:'M 415 115 L 430 110 L 440 130 L 425 140 L 412 130 Z', id:'uk'},
+];
+
+let currentMapPhase='el';
+
+const regionCardData = {
+  el: [
+    {icon:'🌧️',region:'Peru / Ecuador',text:'Catastrophic flooding. Upwelling suppressed, fishing collapses.',badge:'Extreme Flooding',bc:'badge-wet'},
+    {icon:'🔥',region:'Australia',text:'Severe drought and wildfire risk. Convection zone displaced east.',badge:'Drought',bc:'badge-dry'},
+    {icon:'🌧️',region:'India',text:'Weakened monsoon. Drought risk elevated across the subcontinent.',badge:'Weak Monsoon',bc:'badge-dry'},
+    {icon:'🌊',region:'East Africa',text:'Above-normal rainfall. Can trigger flooding and disease outbreaks.',badge:'Wetter',bc:'badge-wet'},
+    {icon:'❄️',region:'Southern USA',text:'Wet, mild winters. Above-average Gulf Coast rainfall.',badge:'Mild & Wet',bc:'badge-wet'},
+    {icon:'⛵',region:'Atlantic Hurricanes',text:'Suppressed season. Upper-level shear tears apart forming storms.',badge:'Quiet Season',bc:'badge-normal'},
+  ],
+  la: [
+    {icon:'🌊',region:'Australia / SE Asia',text:'Enhanced monsoon. Severe and repeated flooding events.',badge:'Extreme Flooding',bc:'badge-wet'},
+    {icon:'🏜️',region:'East Africa / Sahel',text:'Drought and reduced rainfall. Famine risk elevated.',badge:'Drought',bc:'badge-dry'},
+    {icon:'❄️',region:'US Pacific NW',text:'Cooler, wetter winters. Good snowpack and reservoir replenishment.',badge:'Cool & Wet',bc:'badge-cool'},
+    {icon:'🔥',region:'Southern USA',text:'Warm and dry winters. Drought risk in Texas and the South.',badge:'Drought Risk',bc:'badge-dry'},
+    {icon:'🌀',region:'Atlantic Hurricanes',text:'Hyperactive season. La Niña reduces wind shear dramatically.',badge:'Active Season',bc:'badge-warm'},
+    {icon:'🐟',region:'Peru Coast',text:'Excellent fishing — strong upwelling brings rich cold water up.',badge:'Productive',bc:'badge-cool'},
+  ],
+  'super-el': [
+    {icon:'🔥',region:'Australia / Indonesia',text:'Catastrophic drought. Mega-fires. Regional smoke emergency.',badge:'Catastrophic',bc:'badge-dry'},
+    {icon:'🌊',region:'Latin America',text:'Catastrophic coastal flooding. Infrastructure destroyed.',badge:'Catastrophic',bc:'badge-wet'},
+    {icon:'🪸',region:'Coral Reefs (global)',text:'Mass bleaching. 2015–16: ~50% Great Barrier Reef lost.',badge:'Mass Bleaching',bc:'badge-dry'},
+    {icon:'🌡️',region:'Global Temperature',text:'Record global temperatures. 1998 and 2016 were warmest years.',badge:'Record Highs',bc:'badge-warm'},
+    {icon:'🌾',region:'Global Food Security',text:'Simultaneous agricultural shocks across continents.',badge:'Global Crisis',bc:'badge-dry'},
+    {icon:'☔',region:'Western USA',text:'Extreme atmospheric rivers. Flooding, mudslides, infrastructure damage.',badge:'Extreme Wet',bc:'badge-wet'},
+  ],
+  'super-la': [
+    {icon:'🌊',region:'Australia',text:'Catastrophic multi-year flooding. Queensland 2010: France+Germany submerged.',badge:'Catastrophic',bc:'badge-wet'},
+    {icon:'🌵',region:'Horn of Africa',text:'Multi-year drought. Severe famine risk across the region.',badge:'Famine Risk',bc:'badge-dry'},
+    {icon:'🇵🇰',region:'Pakistan',text:'2022 floods (triple-dip La Niña) killed 1,700+, submerged 1/3 of country.',badge:'Catastrophic',bc:'badge-wet'},
+    {icon:'🌵',region:'US West',text:'Multi-year drought. Critical water reservoir depletion.',badge:'Multi-Year Drought',bc:'badge-dry'},
+    {icon:'🌀',region:'Atlantic Hurricanes',text:'Dramatically hyperactive seasons. Multiple major landfalling storms.',badge:'Hyperactive',bc:'badge-warm'},
+    {icon:'📅',region:'Duration',text:'Persists 2–3 years. Cumulative damage can exceed Super El Niño.',badge:'1–3 Years',bc:'badge-normal'},
+  ],
+  neutral: [
+    {icon:'🌤️',region:'Australia',text:'Near-normal monsoon rainfall. Typical wet/dry season cycle.',badge:'Normal',bc:'badge-normal'},
+    {icon:'🐟',region:'Peru Coast',text:'Active upwelling. Productive fisheries. Normal cold tongue.',badge:'Normal',bc:'badge-normal'},
+    {icon:'🌡️',region:'Global Temperature',text:'Temperature tracks long-term baseline trend without ENSO distortion.',badge:'Baseline',bc:'badge-normal'},
+    {icon:'💨',region:'Trade Winds',text:'Steady westward flow. Balanced Walker Circulation.',badge:'Normal',bc:'badge-normal'},
+  ],
+};
+
+function drawMap(phase){
+  const svg=document.getElementById('worldMap'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const landFill=dark?'#1e2d45':'#c8d8e8';
+  const landStroke=dark?'rgba(255,255,255,.08)':'rgba(0,0,50,.12)';
+  const oceanBg=dark?'#0a1628':'#d0e8f8';
+  svg.style.background=oceanBg;
+  let h='';
+  // Land
+  landPaths.forEach(p=>h+=`<path d="${p.d}" fill="${landFill}" stroke="${landStroke}" stroke-width=".8"/>`);
+  // Region blobs
+  regions.forEach(r=>{
+    const pd=r[phase]||r['neutral'];
+    const col=pd.color;
+    const alpha=dark?.38:.3;
+    const strokeAlpha=dark?.7:.6;
+    // glow ellipse
+    h+=`<ellipse cx="${r.cx}" cy="${r.cy}" rx="${r.rx+8}" ry="${r.ry+6}" fill="${col}" opacity="${alpha*.4}" data-rid="${r.id}"/>`;
+    // main ellipse
+    h+=`<ellipse cx="${r.cx}" cy="${r.cy}" rx="${r.rx}" ry="${r.ry}" fill="${col}" opacity="${alpha}" stroke="${col}" stroke-width="1.5" stroke-opacity="${strokeAlpha}" style="cursor:pointer" data-rid="${r.id}"/>`;
+    // label
+    const textCol=dark?'rgba(255,255,255,.8)':'rgba(0,0,0,.7)';
+    const fs=r.rx>40?8:7;
+    h+=`<text x="${r.cx}" y="${r.cy+3}" fill="${textCol}" font-size="${fs}" font-family="DM Mono,monospace" text-anchor="middle" pointer-events="none">${r.label}</text>`;
+  });
+  svg.innerHTML=h;
+
+  // Tooltip interaction
+  svg.querySelectorAll('ellipse[data-rid]').forEach(el=>{
+    el.addEventListener('mouseenter',e=>{
+      const rid=el.dataset.rid;
+      const r=regions.find(x=>x.id===rid);
+      if(!r)return;
+      const pd=r[phase]||r['neutral'];
+      const tt=document.getElementById('mapTooltip');
+      document.getElementById('ttRegion').textContent=r.label;
+      document.getElementById('ttEffect').textContent=pd.text;
+      tt.style.left=Math.min(e.offsetX+14,380)+'px';
+      tt.style.top=Math.max(e.offsetY-60,4)+'px';
+      tt.classList.add('visible');
+    });
+    el.addEventListener('mouseleave',()=>document.getElementById('mapTooltip').classList.remove('visible'));
+  });
+
+  // Update region cards
+  const grid=document.getElementById('mapRegionCards');
+  const cards=regionCardData[phase]||[];
+  grid.innerHTML=cards.map(c=>`
+    <div class="impact-card">
+      <span class="impact-icon">${c.icon}</span>
+      <div class="impact-region">${c.region}</div>
+      <div class="impact-text">${c.text}</div>
+      <span class="impact-badge ${c.bc}">${c.badge}</span>
+    </div>`).join('');
+}
+
+// Phase selector buttons for map
+document.querySelectorAll('.phase-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.phase-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMapPhase=btn.dataset.p;
+    drawMap(currentMapPhase);
+  });
+});
+
+// ═══════════════════════════════════════════════
+//  MECHANISM SVGs
+// ═══════════════════════════════════════════════
+
+function drawBjerknes(){
+  const svg=document.getElementById('bjerknesSvg'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const tc=dark?'rgba(255,255,255,.75)':'rgba(0,0,0,.75)';
+  const sc=dark?'rgba(255,255,255,.38)':'rgba(0,0,0,.38)';
+  const W=800,H=300;
+
+  // Nodes
+  const nodes=[
+    {id:'wind',  x:400,y:50,  w:200,h:44, color:'#90caf9', label:'Trade winds weaken'},
+    {id:'warm',  x:90, y:150, w:180,h:44, color:'#ef9a9a', label:'Warm water moves east'},
+    {id:'up',    x:90, y:240, w:180,h:44, color:'#4fc3f7', label:'Upwelling suppressed'},
+    {id:'sst',   x:400,y:240, w:180,h:44, color:'#e84545', label:'Eastern SST rises'},
+    {id:'conv',  x:620,y:150, w:180,h:44, color:'#ff8a50', label:'Convection shifts east'},
+  ];
+
+  const arrows=[
+    {from:'wind',to:'warm', label:'', color:'#90caf9'},
+    {from:'warm',to:'up',   label:'thermocline flattens', color:'#4fc3f7'},
+    {from:'up',  to:'sst',  label:'cold water no longer reaches surface', color:'#e84545'},
+    {from:'sst', to:'conv', label:'atmosphere responds', color:'#ff8a50'},
+    {from:'conv',to:'wind', label:'Bjerknes feedback ↺', color:'#8b7fd4'},
+  ];
+
+  let h='';
+
+  // Draw boxes
+  nodes.forEach(n=>{
+    h+=`<rect x="${n.x-n.w/2}" y="${n.y-n.h/2}" width="${n.w}" height="${n.h}" rx="4" fill="${n.color}" opacity=".18" stroke="${n.color}" stroke-width="1.5"/>`;
+    h+=`<text x="${n.x}" y="${n.y+5}" fill="${n.color}" font-size="10" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">${n.label}</text>`;
+  });
+
+  // Draw arrows with labels — manually placed to avoid overlap
+  const arrowData=[
+    {x1:300,y1:50,  x2:180,y2:128, mx:220, my:80,  label:'warm pool shifts east',       color:'#90caf9'},
+    {x1:90, y1:172, x2:90, y2:218, mx:140, my:198,  label:'thermocline flattens',         color:'#4fc3f7'},
+    {x1:180,y1:240, x2:310,y2:240, mx:245, my:228,  label:'no cold upwelling',            color:'#e84545'},
+    {x1:490,y1:240, x2:620,y2:172, mx:575, my:215,  label:'warm SST → atmosphere',        color:'#ff8a50'},
+    {x1:710,y1:150, x2:500,y2:72,  mx:620, my:95,   label:'↺ weakens winds further',       color:'#8b7fd4', bold:true},
+  ];
+
+  arrowData.forEach(a=>{
+    h+=`<line x1="${a.x1}" y1="${a.y1}" x2="${a.x2}" y2="${a.y2}" stroke="${a.color}" stroke-width="1.8" marker-end="url(#arr${a.color.replace('#','')})"/>`;
+    h+=`<text x="${a.mx}" y="${a.my}" fill="${a.color}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" opacity=".75"${a.bold?' font-weight="700"':''}>${a.label}</text>`;
+  });
+
+  // Arrowhead markers
+  const markerColors=['#90caf9','#4fc3f7','#e84545','#ff8a50','#8b7fd4'];
+  let defs='<defs>';
+  markerColors.forEach(c=>{
+    defs+=`<marker id="arr${c.replace('#','')}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="${c}"/></marker>`;
+  });
+  defs+='</defs>';
+
+  svg.innerHTML=defs+h;
+}
+
+function drawWalkerDeep(){
+  const svg=document.getElementById('walkerDeepSvg'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const W=900,H=280,surf=185;
+  const oceanFill=dark?'rgba(8,24,52,.8)':'rgba(20,60,130,.09)';
+  const surfLine=dark?'rgba(79,195,247,.4)':'rgba(33,120,200,.35)';
+  const textC=dark?'rgba(255,255,255,.7)':'rgba(0,0,0,.65)';
+  const mutedC=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.38)';
+
+  let h='';
+  // Sky gradient
+  h+=`<defs><linearGradient id="skyG" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="${dark?'#0d1b3e':'#c8d8f0'}"/><stop offset="100%" stop-color="${dark?'#162040':'#d8e8f8'}"/></linearGradient></defs>`;
+  h+=`<rect x="0" y="0" width="${W}" height="${surf}" fill="url(#skyG)"/>`;
+  h+=`<rect x="0" y="${surf}" width="${W}" height="${H-surf}" fill="${oceanFill}"/>`;
+  h+=`<line x1="0" y1="${surf}" x2="${W}" y2="${surf}" stroke="${surfLine}" stroke-width="1.5"/>`;
+
+  // Thermocline (tilted)
+  h+=`<line x1="0" y1="${surf+18}" x2="${W}" y2="${surf+55}" stroke="rgba(79,195,247,.55)" stroke-width="1.5" stroke-dasharray="8 5"/>`;
+  h+=`<text x="120" y="${surf+38}" fill="rgba(79,195,247,.65)" font-size="8.5" font-family="DM Mono,monospace">— thermocline (tilted by trade winds)</text>`;
+
+  // Temperature gradient in ocean
+  h+=`<text x="30" y="${surf+22}" fill="rgba(255,160,80,.6)" font-size="8" font-family="DM Mono,monospace">~28°C warm</text>`;
+  h+=`<text x="${W-90}" y="${surf+15}" fill="rgba(100,180,255,.65)" font-size="8" font-family="DM Mono,monospace">~20°C</text>`;
+  h+=`<text x="${W-90}" y="${surf+50}" fill="rgba(79,195,247,.65)" font-size="8" font-family="DM Mono,monospace">~8°C cold</text>`;
+
+  // Walker cell (rising left, descending right)
+  // Rising columns
+  for(let i=0;i<4;i++){
+    const x=90+i*18;
+    h+=`<line x1="${x}" y1="${surf}" x2="${x-i*8}" y2="30" stroke="rgba(255,160,80,.35)" stroke-width="${2-i*.3}" stroke-dasharray="4 4"/>`;
+  }
+  // Cumulonimbus cloud (simplified)
+  h+=`<ellipse cx="100" cy="25" rx="55" ry="22" fill="${dark?'rgba(255,255,255,.08)':'rgba(150,180,220,.4)'}"/>`;
+  h+=`<ellipse cx="80"  cy="35" rx="35" ry="16" fill="${dark?'rgba(255,255,255,.06)':'rgba(150,180,220,.35)'}"/>`;
+  h+=`<text x="100" y="28" fill="${textC}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Cumulonimbus</text>`;
+
+  // Upper-level eastward flow arrow
+  h+=`<line x1="155" y1="42" x2="${W-80}" y2="42" stroke="${dark?'rgba(255,255,255,.25)':'rgba(0,0,0,.2)'}" stroke-width="2" marker-end="url(#wArr)"/>`;
+  h+=`<text x="${W/2}" y="35" fill="${mutedC}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">Upper-level return flow (~12 km altitude)</text>`;
+
+  // Descending air right
+  for(let i=0;i<3;i++){
+    const x=(W-60)+i*15;
+    h+=`<line x1="${x}" y1="55" x2="${x+i*5}" y2="${surf-5}" stroke="${dark?'rgba(150,170,200,.3)':'rgba(100,130,180,.25)'}" stroke-width="1.5" stroke-dasharray="4 5"/>`;
+  }
+  h+=`<text x="${W-70}" y="80" fill="${mutedC}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">↓ Sinking dry air</text>`;
+  h+=`<text x="${W-70}" y="95" fill="${mutedC}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">(suppresses clouds)</text>`;
+
+  // Surface trade winds arrow (low level westward)
+  h+=`<line x1="${W-100}" y1="${surf-18}" x2="150" y2="${surf-18}" stroke="rgba(79,195,247,.5)" stroke-width="2.5" marker-end="url(#wArrB)"/>`;
+  h+=`<text x="${W/2}" y="${surf-22}" fill="rgba(79,195,247,.7)" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">Surface trade winds</text>`;
+
+  // Upwelling arrows (right side)
+  for(let i=0;i<2;i++){h+=`<line x1="${W-60+i*12}" y1="${H-5}" x2="${W-60+i*12}" y2="${surf+5}" stroke="rgba(79,195,247,.55)" stroke-width="2" stroke-dasharray="3 4"/>`;}
+  h+=`<text x="${W-52}" y="${surf+68}" fill="rgba(79,195,247,.65)" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Upwelling</text>`;
+
+  // Geo labels
+  h+=`<text x="20" y="${H-6}" fill="${mutedC}" font-size="9" font-family="DM Mono,monospace">🌏 West Pacific (Indonesia)</text>`;
+  h+=`<text x="${W-20}" y="${H-6}" fill="${mutedC}" font-size="9" font-family="DM Mono,monospace" text-anchor="end">East Pacific (Peru) 🌎</text>`;
+
+  // Arrowhead markers
+  h=`<defs><marker id="wArr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${dark?'rgba(255,255,255,.35)':'rgba(0,0,0,.3)'}" /></marker><marker id="wArrB" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="rgba(79,195,247,.6)"/></marker></defs>`+h;
+
+  svg.innerHTML=h;
+}
+
+function drawThermocline(){
+  const svg=document.getElementById('thermoclineSvg'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const W=800,H=220;
+  const textC=dark?'rgba(255,255,255,.75)':'rgba(0,0,0,.7)';
+  const mutedC=dark?'rgba(255,255,255,.42)':'rgba(0,0,0,.4)';
+  let h='';
+  const phases=[
+    {label:'La Niña',         tcL:150,tcR:110, warmColor:'rgba(33,150,243,.35)',  coldColor:'rgba(20,60,150,.55)',  col:'#90caf9'},
+    {label:'Neutral',         tcL:170,tcR:130, warmColor:'rgba(200,120,60,.3)',   coldColor:'rgba(20,60,150,.45)',  col:'#90a4ae'},
+    {label:'El Niño',         tcL:190,tcR:150, warmColor:'rgba(232,80,60,.4)',    coldColor:'rgba(20,60,150,.4)',   col:'#ef9a9a'},
+  ];
+  const panelW=W/3;
+  phases.forEach((p,i)=>{
+    const px=i*panelW;
+    // ocean box
+    h+=`<rect x="${px+4}" y="30" width="${panelW-8}" height="${H-50}" rx="3" fill="${dark?'rgba(8,22,55,.7)':'rgba(210,230,255,.4)'}"/>`;
+    // warm layer
+    h+=`<rect x="${px+4}" y="30" width="${panelW-8}" height="${p.tcL}" rx="3 3 0 0" fill="${p.warmColor}"/>`;
+    // cold layer
+    h+=`<rect x="${px+4}" y="${30+p.tcL}" width="${panelW-8}" height="${H-80-p.tcL}" fill="${p.coldColor}" opacity=".7"/>`;
+    // thermocline line
+    h+=`<line x1="${px+4}" y1="${30+p.tcL}" x2="${px+panelW-4}" y2="${30+p.tcR}" stroke="${p.col}" stroke-width="2.5" opacity=".8"/>`;
+    // depth labels
+    h+=`<text x="${px+panelW/2}" y="${25}" fill="${p.col}" font-size="9.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">${p.label}</text>`;
+    h+=`<text x="${px+12}" y="${30+p.tcL-5}" fill="${mutedC}" font-size="7.5" font-family="DM Mono,monospace">${p.tcL}–${p.tcL+15}m depth</text>`;
+    // warm/cold markers
+    h+=`<text x="${px+panelW/2}" y="${30+p.tcL/2+4}" fill="${textC}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">~28°C warm</text>`;
+    h+=`<text x="${px+panelW/2}" y="${30+p.tcL+28}" fill="${textC}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">~8°C cold</text>`;
+    // dividers
+    if(i<2)h+=`<line x1="${px+panelW}" y1="25" x2="${px+panelW}" y2="${H-20}" stroke="${dark?'rgba(255,255,255,.08)':'rgba(0,0,0,.08)'}" stroke-width="1"/>`;
+  });
+  // bottom label
+  h+=`<text x="${W/2}" y="${H-5}" fill="${mutedC}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Trade winds tilt the thermocline — deeper west, shallower east. This controls upwelling intensity.</text>`;
+  svg.innerHTML=h;
+}
+
+function drawWaves(){
+  const svg=document.getElementById('wavesSvg'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const W=800,H=200,mid=100;
+  const textC=dark?'rgba(255,255,255,.72)':'rgba(0,0,0,.65)';
+  const mutedC=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.38)';
+  let h='';
+  // Ocean strip
+  h+=`<rect x="0" y="${mid-10}" width="${W}" height="20" fill="${dark?'rgba(10,40,100,.5)':'rgba(150,200,255,.25)'}"/>`;
+  h+=`<text x="${W/2}" y="${mid+5}" fill="${mutedC}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">equatorial Pacific ocean</text>`;
+
+  // Kelvin wave (eastward)
+  const kColor='#ff9800';
+  h+=`<path d="M 60 ${mid-50} Q 200 ${mid-80} 400 ${mid-55} Q 600 ${mid-30} 740 ${mid-55}" fill="none" stroke="${kColor}" stroke-width="2.5" stroke-dasharray="8 4" opacity=".8"/>`;
+  const kArrowX=720;
+  h+=`<polygon points="${kArrowX},${mid-55} ${kArrowX-10},${mid-62} ${kArrowX-10},${mid-48}" fill="${kColor}" opacity=".85"/>`;
+  h+=`<text x="400" y="${mid-88}" fill="${kColor}" font-size="9.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Kelvin Wave (eastward, ~2 m/s)</text>`;
+  h+=`<text x="400" y="${mid-72}" fill="${kColor}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" opacity=".7">crosses Pacific in ~2 months · deepens thermocline in east</text>`;
+
+  // Rossby wave (westward)
+  const rColor='#ab47bc';
+  h+=`<path d="M 740 ${mid+50} Q 600 ${mid+80} 400 ${mid+55} Q 200 ${mid+30} 60 ${mid+52}" fill="none" stroke="${rColor}" stroke-width="2.5" stroke-dasharray="8 4" opacity=".8"/>`;
+  const rArrowX=80;
+  h+=`<polygon points="${rArrowX},${mid+52} ${rArrowX+10},${mid+45} ${rArrowX+10},${mid+59}" fill="${rColor}" opacity=".85"/>`;
+  h+=`<text x="400" y="${mid+95}" fill="${rColor}" font-size="9.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Rossby Wave (westward, ~3× slower)</text>`;
+  h+=`<text x="400" y="${mid+110}" fill="${rColor}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" opacity=".7">reflects at western boundary → returns as Kelvin wave → ENSO reset</text>`;
+
+  // West / East labels
+  h+=`<text x="18" y="${mid}" fill="${mutedC}" font-size="9" font-family="DM Mono,monospace">🌏 West</text>`;
+  h+=`<text x="${W-18}" y="${mid}" fill="${mutedC}" font-size="9" font-family="DM Mono,monospace" text-anchor="end">East 🌎</text>`;
+
+  // Delay annotation
+  h+=`<rect x="290" y="${H-28}" width="220" height="22" rx="3" fill="${dark?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)'}"/>`;
+  h+=`<text x="400" y="${H-14}" fill="${mutedC}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Round-trip delay: ~6–18 months → natural ENSO period</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  REDRAW ALL
+// ═══════════════════════════════════════════════
+function redrawAll(){
+  redrawWalkers();
+  drawONI();
+  drawMap(currentMapPhase);
+  drawBjerknes();
+  drawWalkerDeep();
+  drawThermocline();
+  drawWaves();
+  drawAllMiniMaps();
+}
+
+// ═══════════════════════════════════════════════
+//  MINI-MAPS (inline in each phase panel)
+// ═══════════════════════════════════════════════
+function drawMiniMap(svgId, phase) {
+  const svg = document.getElementById(svgId);
+  if (!svg) return;
+  const dark = document.body.dataset.theme === 'dark';
+  const landFill = dark ? '#1e2d45' : '#c8d8e8';
+  const landStroke = dark ? 'rgba(255,255,255,.07)' : 'rgba(0,0,50,.1)';
+  const oceanBg = dark ? '#0a1628' : '#d0e8f8';
+  svg.style.background = oceanBg;
+
+  let h = '';
+  // Land paths (same as main map, scaled to fit smaller viewBox 900×450)
+  landPaths.forEach(p => h += `<path d="${p.d}" fill="${landFill}" stroke="${landStroke}" stroke-width=".8"/>`);
+
+  // Draw region blobs for this phase (smaller, simpler — no labels, no tooltips)
+  regions.forEach(r => {
+    const pd = r[phase] || r['neutral'];
+    const col = pd.color;
+    const alpha = dark ? .42 : .32;
+    h += `<ellipse cx="${r.cx}" cy="${r.cy}" rx="${r.rx+4}" ry="${r.ry+3}" fill="${col}" opacity="${alpha * .5}"/>`;
+    h += `<ellipse cx="${r.cx}" cy="${r.cy}" rx="${r.rx}" ry="${r.ry}" fill="${col}" opacity="${alpha}" stroke="${col}" stroke-width="1.2" stroke-opacity=".65"/>`;
+  });
+
+  svg.innerHTML = h;
+}
+
+function drawAllMiniMaps() {
+  drawMiniMap('minimap-neutral',  'neutral');
+  drawMiniMap('minimap-el',       'el');
+  drawMiniMap('minimap-la',       'la');
+  drawMiniMap('minimap-super-el', 'super-el');
+  drawMiniMap('minimap-super-la', 'super-la');
+}
+
+drawAllMiniMaps();
+
+// ═══════════════════════════════════════════════
+//  MONSOON PHASE SVG
+// ═══════════════════════════════════════════════
+function drawMonsoonPhase(){
+  const svg=document.getElementById('monsoon-phase-svg'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const W=800,H=200,padL=60,padR=20,padT=28,padB=50;
+  const cW=W-padL-padR,cH=H-padT-padB;
+  const tc=dark?'rgba(255,255,255,.72)':'rgba(0,0,0,.68)';
+  const mc=dark?'rgba(255,255,255,.35)':'rgba(0,0,0,.32)';
+  const phases=[
+    {label:'Neutral',   onset:0,   peak:55,  withdraw:100, color:'#78909c'},
+    {label:'El Niño',   onset:20,  peak:40,  withdraw:85,  color:'#e84545'},
+    {label:'La Niña',   onset:-15, peak:70,  withdraw:110, color:'#2196f3'},
+  ];
+  const months=['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'];
+  const mx=i=>(padL + i/7*cW);
+  let h='';
+  // Grid
+  months.forEach((m,i)=>{
+    const x=mx(i);
+    h+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT+cH}" stroke="${dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)'}" stroke-width="1"/>`;
+    h+=`<text x="${x}" y="${padT+cH+16}" fill="${mc}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">${m}</text>`;
+  });
+  // Normal rainfall band (Jun 1 = i≈2, Sep 30 = i≈6)
+  const bandX1=mx(2),bandX2=mx(6);
+  h+=`<rect x="${bandX1}" y="${padT}" width="${bandX2-bandX1}" height="${cH}" fill="${dark?'rgba(255,255,255,.03)':'rgba(0,0,0,.03)'}" stroke="${dark?'rgba(255,255,255,.07)':'rgba(0,0,0,.06)'}" stroke-width="1" rx="2"/>`;
+  h+=`<text x="${(bandX1+bandX2)/2}" y="${padT+cH+30}" fill="${mc}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Normal monsoon season</text>`;
+  // Phase bars
+  phases.forEach((p,pi)=>{
+    const barH=22;
+    const y=padT+15+pi*(barH+10);
+    // onset = days from Jun 1; map: -30d=May1, 0=Jun1, +30=Jul1 → proportion of cW
+    // scale: -30..150 days over Apr..Nov (7 months=~210 days)
+    const scaleX=v=> mx(2) + v/210*cW;
+    const x1=scaleX(p.onset);
+    const x2=scaleX(p.withdraw);
+    // bar
+    h+=`<rect x="${x1}" y="${y}" width="${x2-x1}" height="${barH}" fill="${p.color}" opacity=".18" rx="2"/>`;
+    h+=`<rect x="${x1}" y="${y}" width="${x2-x1}" height="${barH}" fill="none" stroke="${p.color}" stroke-width="1.4" opacity=".55" rx="2"/>`;
+    // peak marker
+    const px=scaleX(p.peak);
+    h+=`<line x1="${px}" y1="${y+2}" x2="${px}" y2="${y+barH-2}" stroke="${p.color}" stroke-width="2.5" opacity=".8"/>`;
+    h+=`<text x="${px}" y="${y-5}" fill="${p.color}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle" opacity=".8">peak</text>`;
+    // label
+    h+=`<text x="${padL-5}" y="${y+barH/2+4}" fill="${p.color}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="end" font-weight="600">${p.label}</text>`;
+  });
+  h+=`<text x="${W/2}" y="${H-4}" fill="${mc}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Schematic onset/peak/withdrawal timing — actual years vary; not all El Niño/La Niña years follow this pattern</text>`;
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  CLIMATE CHANGE SVG
+// ═══════════════════════════════════════════════
+function drawCCSvg(){
+  const svg=document.getElementById('cc-svg'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const W=800,H=200,padL=50,padR=30,padT=20,padB=44;
+  const cW=W-padL-padR,cH=H-padT-padB;
+  const tc=dark?'rgba(255,255,255,.72)':'rgba(0,0,0,.68)';
+  const mc=dark?'rgba(255,255,255,.38)':'rgba(0,0,0,.35)';
+  // Baseline warming trend
+  const years=[1950,1975,2000,2015,2025,2050,2075,2100];
+  const baseline=[0,.1,.3,.5,.65,1.2,1.8,2.4]; // °C above 1950
+  const scX=i=>padL+i/7*cW;
+  const scY=v=>padT+cH-(v/2.8)*cH;
+  let h='';
+  // Zero line
+  h+=`<line x1="${padL}" y1="${padT+cH}" x2="${padL+cW}" y2="${padT+cH}" stroke="${mc}" stroke-width="1"/>`;
+  // +1.5 and +2.0 target lines
+  [1.5,2.0].forEach(v=>{
+    const y=scY(v);
+    h+=`<line x1="${padL}" y1="${y}" x2="${padL+cW}" y2="${y}" stroke="${v===1.5?'#fbbf24':'#ef4444'}" stroke-width="1" stroke-dasharray="6 4" opacity=".55"/>`;
+    h+=`<text x="${padL+cW+4}" y="${y+4}" fill="${v===1.5?'#fbbf24':'#ef4444'}" font-size="8" font-family="DM Mono,monospace" opacity=".75">${v==='1.5'?'+1.5°C':v+'°C'}</text>`;
+    h+=`<text x="${padL+cW+4}" y="${y+4}" fill="${v===1.5?'#fbbf24':'#ef4444'}" font-size="8" font-family="DM Mono,monospace" opacity=".75">+${v}°C</text>`;
+  });
+  // ENSO amplitude envelope (grows with warming)
+  const ampPath=years.map((yr,i)=>{
+    const amp=0.15+baseline[i]*0.18;
+    return `${scX(i)},${scY(baseline[i]+amp)}`;
+  }).join(' ');
+  const ampPathLow=years.map((yr,i)=>{
+    const amp=0.15+baseline[i]*0.18;
+    return `${scX(i)},${scY(baseline[i]-amp)}`;
+  }).reverse().join(' ');
+  h+=`<polygon points="${ampPath} ${ampPathLow}" fill="${dark?'rgba(232,69,69,.12)':'rgba(232,69,69,.1)'}" stroke="none"/>`;
+  // Baseline trend
+  const trendPath='M '+years.map((_,i)=>`${scX(i)},${scY(baseline[i])}`).join(' L ');
+  h+=`<path d="${trendPath}" fill="none" stroke="#dc2626" stroke-width="2.5" opacity=".85"/>`;
+  // La Niña troughs
+  const laNinaY=years.map((yr,i)=>scY(baseline[i]-0.15-baseline[i]*0.1));
+  // Year labels
+  [0,2,4,6,7].forEach(i=>{
+    h+=`<text x="${scX(i)}" y="${padT+cH+14}" fill="${mc}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${years[i]}</text>`;
+  });
+  // Now marker
+  const nowX=scX(4.5);
+  h+=`<line x1="${nowX}" y1="${padT}" x2="${nowX}" y2="${padT+cH}" stroke="${dark?'rgba(255,255,255,.25)':'rgba(0,0,0,.2)'}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  h+=`<text x="${nowX}" y="${padT+10}" fill="${tc}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Now</text>`;
+  // Labels
+  h+=`<text x="${padL-8}" y="${scY(0)+4}" fill="${mc}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">0°C</text>`;
+  h+=`<text x="${padL-8}" y="${scY(1)+4}" fill="${mc}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">+1</text>`;
+  h+=`<text x="${padL-8}" y="${scY(2)+4}" fill="${mc}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">+2</text>`;
+  // Legend
+  h+=`<rect x="${padL}" y="${padT+2}" width="12" height="4" fill="#dc2626" opacity=".8" rx="1"/>`;
+  h+=`<text x="${padL+16}" y="${padT+8}" fill="${tc}" font-size="8" font-family="DM Mono,monospace">Global mean temperature trend</text>`;
+  h+=`<rect x="${padL+200}" y="${padT+2}" width="16" height="4" fill="${dark?'rgba(232,69,69,.35)':'rgba(232,69,69,.3)'}" rx="1"/>`;
+  h+=`<text x="${padL+220}" y="${padT+8}" fill="${tc}" font-size="8" font-family="DM Mono,monospace">ENSO amplitude envelope (widening)</text>`;
+  h+=`<text x="${W/2}" y="${H-4}" fill="${mc}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Schematic illustration — actual projections have wide model spread; RCP8.5 scenario shown</text>`;
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  IOD SVG
+// ═══════════════════════════════════════════════
+function drawIODSvg(){
+  const svg=document.getElementById('iod-svg'); if(!svg)return;
+  const dark=document.body.dataset.theme==='dark';
+  const W=800,H=180;
+  const tc=dark?'rgba(255,255,255,.72)':'rgba(0,0,0,.68)';
+  const mc=dark?'rgba(255,255,255,.38)':'rgba(0,0,0,.35)';
+  const oceanBg=dark?'#081628':'#d0e8f8';
+  const landFill=dark?'#1e2d45':'#c8d8e8';
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${oceanBg}"/>`;
+  // Africa east coast (simplified)
+  h+=`<polygon points="60,20 110,18 120,60 115,100 110,140 90,145 70,130 60,90" fill="${landFill}"/>`;
+  // Indian subcontinent (simplified)
+  h+=`<polygon points="340,20 420,22 445,55 440,110 410,140 370,155 340,130 325,80" fill="${landFill}"/>`;
+  // Southeast Asia / Sumatra
+  h+=`<polygon points="600,30 680,25 720,45 730,80 700,100 650,95 610,75 590,50" fill="${landFill}"/>`;
+  h+=`<polygon points="620,105 680,100 710,130 700,155 650,158 620,140" fill="${landFill}"/>`;
+  // Australia top
+  h+=`<polygon points="580,155 720,150 750,170 740,180 580,180" fill="${landFill}"/>`;
+
+  // Positive IOD: warm west (red), cool east (blue)
+  h+=`<ellipse cx="200" cy="100" rx="110" ry="60" fill="rgba(232,69,69,.28)" stroke="#e84545" stroke-width="1.5" opacity=".8"/>`;
+  h+=`<text x="200" y="95" fill="#e84545" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Warm</text>`;
+  h+=`<text x="200" y="110" fill="#e84545" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Western box (+IOD)</text>`;
+
+  h+=`<ellipse cx="560" cy="105" rx="90" ry="55" fill="rgba(33,150,243,.28)" stroke="#2196f3" stroke-width="1.5" opacity=".8"/>`;
+  h+=`<text x="560" y="100" fill="#2196f3" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Cool</text>`;
+  h+=`<text x="560" y="115" fill="#2196f3" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Eastern box (+IOD)</text>`;
+
+  // Easterly anomaly arrow
+  h+=`<line x1="520" y1="95" x2="280" y2="95" stroke="rgba(255,255,255,.5)" stroke-width="2" marker-end="url(#iodArr)"/>`;
+  h+=`<text x="400" y="85" fill="${mc}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Easterly wind anomaly →</text>`;
+
+  // DMI label
+  h+=`<rect x="330" y="140" width="140" height="30" rx="3" fill="${dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)'}"/>`;
+  h+=`<text x="400" y="151" fill="${tc}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">DMI = W box SST − E box SST</text>`;
+  h+=`<text x="400" y="163" fill="${tc}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Positive IOD: DMI &gt; +0.4°C</text>`;
+
+  // Geo labels
+  h+=`<text x="80" y="165" fill="${mc}" font-size="8" font-family="DM Mono,monospace">E. Africa</text>`;
+  h+=`<text x="360" y="168" fill="${mc}" font-size="8" font-family="DM Mono,monospace">India</text>`;
+  h+=`<text x="640" y="130" fill="${mc}" font-size="8" font-family="DM Mono,monospace">Sumatra</text>`;
+
+  h=`<defs><marker id="iodArr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="rgba(255,255,255,.5)"/></marker></defs>`+h;
+  svg.innerHTML=h;
+}
+
+function redrawAll(){
+  redrawWalkers();
+  drawONI();
+  drawMap(currentMapPhase);
+  drawBjerknes();
+  drawWalkerDeep();
+  drawThermocline();
+  drawWaves();
+  drawAllMiniMaps();
+  drawMonsoonPhase();
+  drawCCSvg();
+  drawIODSvg();
+}
+
+// ═══ INITIALISE EVERYTHING ═══
+redrawWalkers();
+drawONI();
+drawMap('el');
+drawBjerknes();
+drawWalkerDeep();
+drawThermocline();
+drawWaves();
+drawMonsoonPhase();
+drawCCSvg();
+drawIODSvg();
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

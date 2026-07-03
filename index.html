@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revision Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root{ --saffron:#d97706; }
+[data-subject="Geography"]   { --cat:#0891b2 }
+[data-subject="History"]     { --cat:#b45309 }
+[data-subject="Polity"]      { --cat:#7c3aed }
+[data-subject="Economy"]     { --cat:#16a34a }
+[data-subject="Environment"] { --cat:#0d9488 }
+[data-subject="Science"]     { --cat:#db2777 }
+[data-subject="Ethics"]      { --cat:#dc2626 }
+[data-subject="IR"]          { --cat:#0369a1 }
+[data-subject="Aptitude"]    { --cat:#ea580c }
+
+[data-theme="dark"]{
+  --bg:#08070a;--surface:#110f16;--surface2:#1a1724;
+  --border:#26223a;--text:#eee8f8;--muted:#5c5478;--prose:#a89fc0;
+}
+[data-theme="light"]{
+  --bg:#f8f7fc;--surface:#ffffff;--surface2:#f0eef8;
+  --border:#ddd8f0;--text:#1a1530;--muted:#8078a8;--prose:#4a4270;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;font-size:14px;line-height:1.7;transition:background .3s,color .3s}
+
+/* ── NAV ── */
+.nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);backdrop-filter:blur(16px)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;padding:.65rem 2rem;gap:1rem}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.12em;color:var(--text);flex-shrink:0}
+.nav-brand span{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--saffron);margin:0 .4rem .1rem;vertical-align:middle}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+.nav-stat{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.nav-stat em{color:var(--saffron);font-style:normal}
+.theme-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:.3rem .65rem;border-radius:999px;font-family:'DM Mono',monospace;font-size:.68rem;cursor:pointer;transition:all .2s}
+.theme-btn:hover{border-color:var(--saffron);color:var(--saffron)}
+
+/* ── HERO ── */
+.hero{max-width:1200px;margin:0 auto;padding:4rem 2rem 1.5rem}
+.hero-eyebrow{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:.8rem;opacity:.85}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,5.5rem);letter-spacing:.05em;line-height:.92;color:var(--text);margin-bottom:.8rem}
+.hero h1 .dim{color:var(--muted)}
+.hero-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--prose);max-width:460px;margin-bottom:2rem}
+
+/* ── SEARCH ZONE ── */
+.search-zone{max-width:1200px;margin:0 auto;padding:0 2rem 2.5rem}
+.search-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .25s,box-shadow .25s}
+.search-card:focus-within{border-color:color-mix(in srgb,var(--saffron) 60%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--saffron) 12%,transparent)}
+
+.search-top{display:flex;align-items:center;gap:.7rem;padding:.75rem 1.1rem;border-bottom:1px solid var(--border)}
+.search-icon{font-size:1.1rem;color:var(--saffron);flex-shrink:0}
+#globalSearch{flex:1;background:none;border:none;outline:none;font-family:'DM Mono',monospace;font-size:.95rem;color:var(--text);caret-color:var(--saffron)}
+#globalSearch::placeholder{color:var(--muted)}
+.search-kbd{font-size:.6rem;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.15rem .4rem;letter-spacing:.05em;white-space:nowrap}
+
+.search-modes{display:flex;gap:.4rem;padding:.6rem 1rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.mode-btn{background:none;border:1px solid var(--border);border-radius:999px;padding:.28rem .75rem;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:.35rem}
+.mode-btn:hover{border-color:var(--saffron);color:var(--text)}
+.mode-btn.active{border-color:var(--saffron);color:var(--saffron);background:color-mix(in srgb,var(--saffron) 10%,transparent)}
+.mode-btn .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+.search-results-wrap{min-height:0;max-height:0;overflow:hidden;transition:max-height .3s ease}
+.search-results-wrap.open{max-height:600px;overflow-y:auto}
+
+/* Topic result cards */
+.sr-section{padding:.5rem .6rem .3rem}
+.sr-section-label{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .5rem;margin-bottom:.3rem}
+.sr-item{display:flex;align-items:center;gap:.75rem;padding:.6rem .8rem;border-radius:8px;cursor:pointer;transition:background .15s;text-decoration:none;color:inherit;border:1px solid transparent}
+.sr-item:hover{background:color-mix(in srgb,var(--saffron) 8%,transparent);border-color:color-mix(in srgb,var(--saffron) 20%,transparent)}
+.sr-icon{font-size:1.2rem;flex-shrink:0}
+.sr-body{flex:1;min-width:0}
+.sr-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.06em;color:var(--text)}
+.sr-desc{font-size:.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.2rem}
+.sr-tag{font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.1rem .35rem;border-radius:3px;background:color-mix(in srgb,var(--cat,var(--saffron)) 10%,transparent);color:var(--cat,var(--saffron));border:1px solid color-mix(in srgb,var(--cat,var(--saffron)) 22%,transparent)}
+.sr-badge{margin-left:auto;font-size:.6rem;padding:.15rem .45rem;border-radius:999px;border:1px solid;white-space:nowrap;flex-shrink:0}
+.badge-live{color:var(--cat,var(--saffron));border-color:var(--cat,var(--saffron))}
+.badge-soon{color:var(--muted);border-color:var(--muted)}
+.sr-empty{padding:2rem;text-align:center;color:var(--muted);font-size:.78rem}
+
+/* AI mode item */
+.sr-ai-item{display:flex;align-items:center;gap:.75rem;padding:.7rem .8rem;margin:.3rem .5rem;border-radius:8px;cursor:pointer;background:color-mix(in srgb,#4285f4 8%,transparent);border:1px solid color-mix(in srgb,#4285f4 25%,transparent);transition:all .18s}
+.sr-ai-item:hover{background:color-mix(in srgb,#4285f4 14%,transparent);border-color:color-mix(in srgb,#4285f4 45%,transparent)}
+.sr-ai-label{font-size:.68rem;color:#6ba3f5;letter-spacing:.06em}
+.sr-ai-query{font-size:.82rem;color:#eee8f8;font-family:'Playfair Display',serif;font-style:italic}
+.sr-ai-badge{margin-left:auto;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#4285f4;background:color-mix(in srgb,#4285f4 12%,transparent);border:1px solid color-mix(in srgb,#4285f4 30%,transparent);padding:.15rem .5rem;border-radius:999px;white-space:nowrap;flex-shrink:0}
+
+/* highlight in titles */
+.hl{background:color-mix(in srgb,var(--saffron) 28%,transparent);color:var(--saffron);border-radius:2px;padding:0 1px}
+
+/* filter chips */
+.filter-row{display:flex;gap:.5rem;flex-wrap:wrap;padding:.6rem 1rem;border-bottom:1px solid var(--border);align-items:center}
+.filter-label{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);flex-shrink:0;margin-right:.3rem}
+.filter-chip{background:none;border:1px solid var(--border);border-radius:999px;padding:.22rem .65rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .18s}
+.filter-chip:hover,.filter-chip.on{border-color:var(--saffron);color:var(--saffron);background:color-mix(in srgb,var(--saffron) 10%,transparent)}
+
+/* ── CONTENT AREA ── */
+.wrap{max-width:1200px;margin:0 auto;padding:0 2rem 5rem}
+.subject-block{margin-bottom:3rem}
+.subject-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;padding-bottom:.65rem;border-bottom:1px solid var(--border)}
+.subject-pip{width:9px;height:9px;border-radius:2px;background:var(--cat,var(--saffron));flex-shrink:0}
+.subject-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.1em;color:var(--text)}
+.subject-count{margin-left:auto;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cat,var(--saffron));background:color-mix(in srgb,var(--cat,var(--saffron)) 12%,transparent);border:1px solid color-mix(in srgb,var(--cat,var(--saffron)) 25%,transparent);padding:.16rem .5rem;border-radius:999px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.site-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:.6rem;transition:border-color .2s,box-shadow .2s,transform .18s;position:relative;overflow:hidden}
+.site-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--cat,var(--saffron));transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.site-card:hover{border-color:color-mix(in srgb,var(--cat,var(--saffron)) 55%,transparent);box-shadow:0 6px 28px rgba(0,0,0,.4);transform:translateY(-2px)}
+.site-card:hover::after{transform:scaleX(1)}
+.card-top{display:flex;align-items:center;justify-content:space-between}
+.card-icon{font-size:1.3rem;line-height:1}
+.card-badge{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.16rem .48rem;border-radius:999px;border:1px solid currentColor}
+.badge-live-c{color:var(--cat,var(--saffron))}
+.badge-soon-c{color:var(--muted)}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.06em;color:var(--text);line-height:1}
+.card-desc{font-family:'Playfair Display',serif;font-style:italic;font-size:.78rem;color:var(--prose);line-height:1.4}
+.card-tags{display:flex;flex-wrap:wrap;gap:.28rem}
+.card-tag{font-size:.57rem;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .42rem;border-radius:3px;background:color-mix(in srgb,var(--cat,var(--saffron)) 10%,transparent);color:var(--cat,var(--saffron));border:1px solid color-mix(in srgb,var(--cat,var(--saffron)) 22%,transparent)}
+.card-foot{margin-top:auto;padding-top:.55rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.site-card:hover .card-foot{color:var(--cat,var(--saffron))}
+.card-arrow{transition:transform .2s}
+.site-card:hover .card-arrow{transform:translateX(4px)}
+
+.no-results{padding:3rem 1rem;text-align:center;color:var(--muted);font-family:'Playfair Display',serif;font-style:italic}
+
+.footer{border-top:1px solid var(--border);max-width:1200px;margin:0 auto;padding:1.2rem 2rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.footer-note{font-size:.6rem;letter-spacing:.08em;color:var(--muted)}
+.footer-note em{color:var(--saffron);font-style:normal}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.site-card{animation:fadeUp .35s ease both}
+
+@media(max-width:640px){
+  .nav-inner{padding:.6rem 1rem}
+  .hero{padding:2.5rem 1rem 1rem}
+  .search-zone{padding:0 1rem 2rem}
+  .wrap{padding:0 1rem 4rem}
+  .search-modes{gap:.3rem}
+  .filter-row{gap:.3rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">REVISION<span></span>HUB</div>
+    <div class="nav-right">
+      <span class="nav-stat" id="navStat"></span>
+      <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀ Light</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">UPSC · GS I · II · III · Interactive</div>
+  <h1>YOUR<br><span class="dim">REVISION</span><br>LIBRARY</h1>
+  <p class="hero-sub">Visual, interactive explainers — built to make concepts stick, not just memorised.</p>
+</header>
+
+<!-- ══ SEARCH ZONE ══ -->
+<div class="search-zone">
+  <div class="search-card" id="searchCard">
+    <div class="search-top">
+      <span class="search-icon">⌕</span>
+      <input id="globalSearch" type="text" placeholder="Search all topics, subjects, tags…" autocomplete="off" spellcheck="false">
+      <span class="search-kbd" id="kbdHint">/ or Ctrl+K</span>
+    </div>
+    <div class="search-modes" id="searchModes">
+      <button class="mode-btn active" data-mode="topics" onclick="setMode('topics',this)"><span class="dot"></span>Topics</button>
+      <button class="mode-btn" data-mode="ai" onclick="setMode('ai',this)"><span class="dot" style="background:#4285f4"></span>AI Search</button>
+    </div>
+    <div class="filter-row" id="filterRow">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-chip on" data-subj="all" onclick="setFilter('all',this)">All</button>
+      <button class="filter-chip" data-subj="Geography" onclick="setFilter('Geography',this)">Geography</button>
+      <button class="filter-chip" data-subj="History" onclick="setFilter('History',this)">History</button>
+      <button class="filter-chip" data-subj="Environment" onclick="setFilter('Environment',this)">Environment</button>
+      <button class="filter-chip" data-subj="Polity" onclick="setFilter('Polity',this)">Polity</button>
+      <button class="filter-chip" data-subj="Economy" onclick="setFilter('Economy',this)">Economy</button>
+    </div>
+    <div class="search-results-wrap" id="searchResultsWrap">
+      <div id="searchResults"></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="wrap"></div>
+
+<footer class="footer">
+  <div class="footer-note">Revision Hub · <em>UPSC GS</em></div>
+  <div class="footer-note">To add a site → edit <em>sites.json</em> → git push</div>
+</footer>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+const COLORS = {
+  'Geography':   '#0891b2',
+  'History':     '#b45309',
+  'Polity':      '#7c3aed',
+  'Economy':     '#16a34a',
+  'Environment': '#0d9488',
+  'Science':     '#db2777',
+  'Ethics':      '#dc2626',
+  'IR':          '#0369a1',
+  'Aptitude':    '#ea580c',
+};
+function color(subject){ return COLORS[subject] || '#d97706' }
+
+let allSites = [];
+let currentMode = 'topics';
+let activeFilter = 'all';
+let searchOpen = false;
+
+// ── RENDER CARDS ─────────────────────────────────────────────────────────────
+function render(sites) {
+  const wrap = document.getElementById('wrap');
+  const groups = {};
+  sites.forEach(s => {
+    if (!groups[s.subject]) groups[s.subject] = [];
+    groups[s.subject].push(s);
+  });
+
+  if (!sites.length) {
+    wrap.innerHTML = `<div class="no-results">No topics match your filters.</div>`;
+    updateStat(0, allSites.length);
+    return;
+  }
+
+  wrap.innerHTML = Object.entries(groups).map(([subject, cards]) => {
+    const c = color(subject);
+    const liveCount = cards.filter(c => c.status === 'live').length;
+    return `
+    <div class="subject-block" data-subject="${subject}" style="--cat:${c}">
+      <div class="subject-head">
+        <div class="subject-pip"></div>
+        <div class="subject-name">${subject}</div>
+        <span class="subject-count">${liveCount} of ${cards.length} live</span>
+      </div>
+      <div class="card-grid">
+        ${cards.map((s, i) => {
+          const disabled = s.status !== 'live';
+          return `<a class="site-card" href="${disabled ? '#' : s.file}"
+               style="--cat:${c};animation-delay:${i * 0.07}s${disabled ? ';opacity:.42;pointer-events:none' : ''}"
+               ${disabled ? 'tabindex="-1" aria-disabled="true"' : ''}>
+            <div class="card-top">
+              <div class="card-icon">${s.icon}</div>
+              <span class="card-badge ${disabled ? 'badge-soon-c' : 'badge-live-c'}">${disabled ? 'Soon' : 'Live'}</span>
+            </div>
+            <div class="card-title">${s.title}</div>
+            <div class="card-desc">${s.desc}</div>
+            <div class="card-tags">${(s.tags||[]).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+            <div class="card-foot"><span>Open site</span><span class="card-arrow">→</span></div>
+          </a>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  const live = sites.filter(s => s.status === 'live').length;
+  updateStat(live, sites.length);
+}
+
+function updateStat(live, total) {
+  document.getElementById('navStat').innerHTML = `<em>${live}</em> live · <em>${total}</em> total`;
+}
+
+// ── FILTER ───────────────────────────────────────────────────────────────────
+function setFilter(subj, btn) {
+  activeFilter = subj;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('on'));
+  btn.classList.add('on');
+  doTopicSearch(document.getElementById('globalSearch').value.trim());
+}
+
+// ── SEARCH MODE ──────────────────────────────────────────────────────────────
+function setMode(mode, btn) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // show/hide filter row
+  document.getElementById('filterRow').style.display = mode === 'topics' ? '' : 'none';
+  doSearch(document.getElementById('globalSearch').value.trim());
+}
+
+// ── MAIN SEARCH DISPATCHER ───────────────────────────────────────────────────
+function doSearch(q) {
+  if (currentMode === 'ai') {
+    doAISearch(q);
+  } else {
+    // doTopicSearch handles render() in all code paths — no second call needed
+    doTopicSearch(q);
+  }
+}
+
+// ── TOPIC SEARCH ─────────────────────────────────────────────────────────────
+function hl(text, q) {
+  if (!q) return text;
+  const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(re, '<span class="hl">$1</span>');
+}
+
+function doTopicSearch(q) {
+  const wrap = document.getElementById('searchResultsWrap');
+  const resultsEl = document.getElementById('searchResults');
+
+  let pool = activeFilter === 'all' ? allSites : allSites.filter(s => s.subject === activeFilter);
+
+  if (!q || q.length < 2) {
+    wrap.classList.remove('open');
+    render(pool);
+    return;
+  }
+
+  const lower = q.toLowerCase();
+  const matches = pool.filter(s =>
+    (s.title + ' ' + s.desc + ' ' + s.subject + ' ' + (s.tags||[]).join(' ')).toLowerCase().includes(lower)
+  );
+
+  // group by subject
+  const groups = {};
+  matches.forEach(s => {
+    if (!groups[s.subject]) groups[s.subject] = [];
+    groups[s.subject].push(s);
+  });
+
+  if (!matches.length) {
+    resultsEl.innerHTML = `<div class="sr-empty">No topics matching "<strong>${q}</strong>"<br><span style="font-size:.7rem;color:var(--muted)">Try switching to AI Search for a deeper answer →</span></div>`;
+    wrap.classList.add('open');
+    render([]);
+    return;
+  }
+
+  resultsEl.innerHTML = Object.entries(groups).map(([subject, cards]) => {
+    const c = color(subject);
+    return `<div class="sr-section">
+      <div class="sr-section-label" style="color:${c}">${subject}</div>
+      ${cards.map(s => `
+        <a class="sr-item" href="${s.status === 'live' ? s.file : '#'}"
+           style="--cat:${c}" ${s.status !== 'live' ? 'onclick="return false"' : ''}>
+          <span class="sr-icon">${s.icon}</span>
+          <div class="sr-body">
+            <div class="sr-title">${hl(s.title, q)}</div>
+            <div class="sr-desc">${hl(s.desc.slice(0,80), q)}${s.desc.length>80?'…':''}</div>
+            <div class="sr-tags">${(s.tags||[]).map(t=>`<span class="sr-tag">${t}</span>`).join('')}</div>
+          </div>
+          <span class="sr-badge ${s.status==='live'?'badge-live':'badge-soon'}">${s.status==='live'?'Live':'Soon'}</span>
+        </a>`).join('')}
+    </div>`;
+  }).join('');
+
+  wrap.classList.add('open');
+
+  // also filter card grid to matching
+  render(matches);
+}
+
+// ── AI SEARCH ────────────────────────────────────────────────────────────────
+function doAISearch(q) {
+  const wrap = document.getElementById('searchResultsWrap');
+  const resultsEl = document.getElementById('searchResults');
+
+  if (!q || q.length < 2) {
+    wrap.classList.remove('open');
+    render(allSites);
+    return;
+  }
+
+  // Build topic matches for context links
+  const lower = q.toLowerCase();
+  const topicMatches = allSites.filter(s =>
+    (s.title + s.desc + s.subject + (s.tags||[]).join(' ')).toLowerCase().includes(lower)
+  );
+
+  const googleAIUrl = `https://www.google.com/search?q=${encodeURIComponent(q + ' UPSC')}&udm=50`;
+  const googleUrl   = `https://www.google.com/search?q=${encodeURIComponent(q + ' UPSC site:revision OR notes OR explained')}`;
+
+  // FIX: don't embed raw URL with & into onclick HTML attribute — use data-attr + JS listener
+  let html = `
+    <div class="sr-ai-item" id="sr-ai-launch" role="button" tabindex="0" data-url="${googleAIUrl.replace(/"/g,'&quot;')}">
+      <div style="font-size:1.4rem;flex-shrink:0">✦</div>
+      <div style="flex:1;min-width:0">
+        <div class="sr-ai-label">Google AI Mode · UPSC context</div>
+        <div class="sr-ai-query">${q}</div>
+      </div>
+      <div class="sr-ai-badge">Open AI ↗</div>
+    </div>`;
+
+  if (topicMatches.length) {
+    html += `<div class="sr-section">
+      <div class="sr-section-label">Related in this hub</div>
+      ${topicMatches.slice(0,5).map(s => {
+        const c = color(s.subject);
+        return `<a class="sr-item" href="${s.status==='live'?s.file:'#'}"
+             style="--cat:${c}" ${s.status!=='live'?'onclick="return false"':''}>
+          <span class="sr-icon">${s.icon}</span>
+          <div class="sr-body">
+            <div class="sr-title">${hl(s.title,q)}</div>
+            <div class="sr-desc">${s.subject} · ${(s.tags||[]).join(', ')}</div>
+          </div>
+          <span class="sr-badge ${s.status==='live'?'badge-live':'badge-soon'}">${s.status==='live'?'Live':'Soon'}</span>
+        </a>`;
+      }).join('')}
+    </div>`;
+  }
+
+  html += `<div style="padding:.5rem 1.3rem .8rem;display:flex;gap:.6rem;flex-wrap:wrap">
+    <a href="${googleUrl}" target="_blank" rel="noopener"
+       style="font-size:.64rem;color:var(--muted);text-decoration:none;letter-spacing:.07em;transition:color .15s"
+       onmouseover="this.style.color='var(--saffron)'" onmouseout="this.style.color='var(--muted)'">
+      ↗ Classic Google search
+    </a>
+    <a href="https://www.google.com/search?q=${encodeURIComponent(q+' UPSC')}" target="_blank" rel="noopener"
+       style="font-size:.64rem;color:var(--muted);text-decoration:none;letter-spacing:.07em;transition:color .15s"
+       onmouseover="this.style.color='var(--saffron)'" onmouseout="this.style.color='var(--muted)'">
+      ↗ Google (no filter)
+    </a>
+  </div>`;
+
+  resultsEl.innerHTML = html;
+  // Wire AI launch button after DOM insertion (avoids & in HTML attribute)
+  const aiBtn = document.getElementById('sr-ai-launch');
+  if (aiBtn) {
+    const url = aiBtn.dataset.url;
+    aiBtn.addEventListener('click', () => window.open(url, '_blank'));
+    aiBtn.addEventListener('keydown', e => { if (e.key === 'Enter') window.open(url, '_blank'); });
+  }
+  wrap.classList.add('open');
+}
+
+// ── KEYBOARD SHORTCUT ────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  const inp = document.getElementById('globalSearch');
+  if (e.key === '/' && document.activeElement !== inp) {
+    e.preventDefault(); inp.focus(); inp.select();
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault(); inp.focus(); inp.select();
+  }
+  if (e.key === 'Escape') {
+    inp.blur();
+    document.getElementById('searchResultsWrap').classList.remove('open');
+    render(activeFilter==='all'?allSites:allSites.filter(s=>s.subject===activeFilter));
+    inp.value = '';
+  }
+});
+
+document.getElementById('globalSearch').addEventListener('input', e => {
+  doSearch(e.target.value.trim());
+});
+
+// close results on outside click
+document.addEventListener('click', e => {
+  const card = document.getElementById('searchCard');
+  if (!card.contains(e.target)) {
+    document.getElementById('searchResultsWrap').classList.remove('open');
+  }
+});
+
+// ── THEME ────────────────────────────────────────────────────────────────────
+function toggleTheme(){
+  const html = document.documentElement;
+  const dark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', dark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = dark ? '🌙 Dark' : '☀ Light';
+  localStorage.setItem('hub-theme', dark ? 'light' : 'dark');
+}
+(function(){
+  const saved = localStorage.getItem('hub-theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('themeBtn').textContent = saved === 'light' ? '🌙 Dark' : '☀ Light';
+  }
+})();
+
+// ── LOAD ─────────────────────────────────────────────────────────────────────
+fetch('sites.json')
+  .then(r => r.json())
+  .then(data => {
+    allSites = data;
+    render(allSites);
+  })
+  .catch(() => {
+    document.getElementById('wrap').innerHTML =
+      '<p style="color:var(--muted);padding:2rem;font-size:.8rem">Could not load sites.json — make sure it\'s in the same folder.</p>';
+  });
+</script>
+</body>
+</html>

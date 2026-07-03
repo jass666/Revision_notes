@@ -1,0 +1,2320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India's Wild Realms — National Parks, Sanctuaries & Biosphere Reserves</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --tiger:#c2410c; --elephant:#0369a1; --rhino:#15803d; --leopard:#7c3aed;
+    --bird:#0e7490; --marine:#0284c7; --herb:#16a34a; --dry:#d97706;
+    --critical:#dc2626; --protected:#059669; --endangered:#b45309;
+    --w-green:#14532d; --w-amber:#92400e; --w-blue:#1e3a5f; --w-earth:#5c3d11;
+  }
+  [data-theme="dark"] {
+    --bg:#060d08; --surface:#0d1a10; --surface2:#111f14;
+    --border:rgba(255,255,255,0.07); --text:#e2ede6; --muted:#6b7c6e;
+    --nav-bg:rgba(6,13,8,0.95); --table-hover:rgba(255,255,255,0.02);
+    --toggle-bg:#111f14; --toggle-border:rgba(255,255,255,0.13);
+    --prose:#a8c4ae;
+  }
+  [data-theme="light"] {
+    --bg:#f2f7f3; --surface:#ffffff; --surface2:#e6f0e8;
+    --border:rgba(0,0,0,0.08); --text:#0d1a10; --muted:#4f6b55;
+    --nav-bg:rgba(242,247,243,0.97); --table-hover:rgba(0,0,0,0.02);
+    --toggle-bg:#d4e8d8; --toggle-border:rgba(0,0,0,0.1);
+    --prose:#2a4430;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;transition:background .3s,color .3s;}
+
+  /* HEADER */
+  header{padding:3rem 2rem 1.75rem;text-align:center;position:relative;border-bottom:1px solid var(--border);}
+  header::before{content:'';position:absolute;inset:0;background:
+    radial-gradient(ellipse at 20% 0%,rgba(20,83,45,.18) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 0%,rgba(194,65,12,.1) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 100%,rgba(2,132,199,.09) 0%,transparent 50%);
+    pointer-events:none;}
+  .eyebrow{font-size:.62rem;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:.75rem;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,8vw,5.2rem);letter-spacing:.05em;line-height:1;
+    background:linear-gradient(135deg,#14532d 0%,#16a34a 28%,#c2410c 55%,#0369a1 80%,#14532d 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--muted);font-size:.97rem;margin-top:.5rem;}
+  .header-stats{display:flex;justify-content:center;gap:2rem;margin-top:1.4rem;flex-wrap:wrap;}
+  .hstat{text-align:center;}
+  .hstat-val{font-family:'Bebas Neue',sans-serif;font-size:1.65rem;letter-spacing:.04em;}
+  .hstat-lbl{font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+
+  /* THEME TOGGLE */
+  .theme-toggle{position:absolute;top:1.2rem;right:1.5rem;display:flex;align-items:center;gap:.5rem;cursor:pointer;
+    background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:.35rem .75rem;transition:all .2s;user-select:none;}
+  .theme-toggle:hover{opacity:.8;}
+  .theme-toggle-icon{font-size:.85rem;}
+  .theme-toggle-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+  /* NAV */
+  nav{display:flex;justify-content:center;gap:.4rem;padding:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);
+    position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:100;transition:background .3s;}
+  .tab{padding:.4rem .9rem;border-radius:2px;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace;}
+  .tab:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .tab.active{color:#fff;}
+  .tab[data-section="overview"].active{background:#15803d;border-color:#15803d;}
+  .tab[data-section="national-parks"].active{background:#c2410c;border-color:#c2410c;}
+  .tab[data-section="sanctuaries"].active{background:#7c3aed;border-color:#7c3aed;}
+  .tab[data-section="biosphere"].active{background:#0369a1;border-color:#0369a1;}
+  .tab[data-section="seasonal"].active{background:#0e7490;border-color:#0e7490;}
+  .tab[data-section="migration"].active{background:#b45309;border-color:#b45309;}
+  .tab[data-section="threats"].active{background:#dc2626;border-color:#dc2626;}
+  .tab[data-section="initiatives"].active{background:#059669;border-color:#059569;}
+  .tab[data-section="map"].active{background:#1e3a5f;border-color:#1e3a5f;}
+  .tab[data-section="wetlands"].active{background:#0891b2;border-color:#0891b2;}
+
+  /* MAIN */
+  main{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+  .phase-panel{display:none;}
+  .phase-panel.visible{display:block;animation:fadeUp .4s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SECTION HEADER */
+  .section-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .phase-label{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.05em;}
+  .phase-tag{font-size:.7rem;padding:.3rem .7rem;border-radius:2px;letter-spacing:.08em;font-weight:500;}
+  .phase-desc{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--muted);margin-left:auto;font-style:italic;}
+
+  /* BOXES */
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;transition:background .3s,border-color .3s;}
+  .box-title{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+
+  /* PARK CARDS */
+  .park-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;}
+  .park-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;transition:border-color .25s,transform .2s;position:relative;overflow:hidden;}
+  .park-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+  .park-card:hover{transform:translateY(-2px);}
+  .park-card.tiger::before{background:linear-gradient(90deg,#c2410c,#f97316);}
+  .park-card.elephant::before{background:linear-gradient(90deg,#0369a1,#38bdf8);}
+  .park-card.rhino::before{background:linear-gradient(90deg,#15803d,#4ade80);}
+  .park-card.leopard::before{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+  .park-card.bird::before{background:linear-gradient(90deg,#0e7490,#67e8f9);}
+  .park-card.marine::before{background:linear-gradient(90deg,#0284c7,#38bdf8);}
+  .park-card.tiger:hover{border-color:rgba(194,65,12,.4);}
+  .park-card.elephant:hover{border-color:rgba(3,105,161,.4);}
+  .park-card.rhino:hover{border-color:rgba(21,128,61,.4);}
+  .park-card.leopard:hover{border-color:rgba(124,58,237,.4);}
+  .park-card.bird:hover{border-color:rgba(14,116,144,.4);}
+  .park-card.marine:hover{border-color:rgba(2,132,199,.4);}
+  .park-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;margin-bottom:.2rem;}
+  .park-state{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem;}
+  .park-meta{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:.75rem;}
+  .park-meta-item{font-size:.6rem;color:var(--muted);}
+  .park-meta-item b{color:var(--text);font-weight:500;}
+  .park-body{font-size:.72rem;line-height:1.65;color:var(--prose,var(--muted));margin-bottom:.75rem;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem;}
+  .tag{font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .5rem;border-radius:1px;border:1px solid;}
+  .tag-tiger{border-color:rgba(194,65,12,.5);color:#c2410c;background:rgba(194,65,12,.08);}
+  .tag-elephant{border-color:rgba(3,105,161,.5);color:#0369a1;background:rgba(3,105,161,.08);}
+  .tag-rhino{border-color:rgba(21,128,61,.5);color:#15803d;background:rgba(21,128,61,.08);}
+  .tag-leopard{border-color:rgba(124,58,237,.5);color:#7c3aed;background:rgba(124,58,237,.08);}
+  .tag-bird{border-color:rgba(14,116,144,.5);color:#0e7490;background:rgba(14,116,144,.08);}
+  .tag-marine{border-color:rgba(2,132,199,.5);color:#0284c7;background:rgba(2,132,199,.08);}
+  .tag-herb{border-color:rgba(22,163,74,.5);color:#16a34a;background:rgba(22,163,74,.08);}
+  .tag-heritage{border-color:rgba(217,119,6,.5);color:#d97706;background:rgba(217,119,6,.08);}
+
+  /* MECH CARDS */
+  .mech-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+  @media(max-width:640px){.mech-grid{grid-template-columns:1fr;}}
+  .mech-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em;margin-bottom:.6rem;}
+  .mech-card-body{font-size:.73rem;color:var(--prose,var(--muted));line-height:1.7;}
+  .mech-card-body b{color:var(--text);font-weight:600;}
+
+  /* CALLOUT */
+  .callout{background:var(--surface2,var(--surface));border-left:3px solid;border-radius:0 3px 3px 0;padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .callout b{color:var(--text);}
+
+  /* TWO-COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+  @media(max-width:700px){.three-col{grid-template-columns:1fr;}}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;font-size:.72rem;}
+  th{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--border);}
+  td{padding:.6rem .75rem;border-bottom:1px solid var(--border);line-height:1.4;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--table-hover);}
+
+  /* STAT ROW */
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin:1rem 0;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;text-align:center;}
+  .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;margin-bottom:.25rem;}
+  .stat-label{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+
+  /* PROSE */
+  .prose-block{font-size:.75rem;line-height:1.75;color:var(--prose,var(--muted));margin-bottom:1rem;}
+  .prose-block b{color:var(--text);}
+
+  /* INFO SECTION */
+  .info-section{margin-bottom:2rem;}
+  .info-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.04em;margin-bottom:.5rem;}
+
+  /* SEASON CARDS */
+  .season-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.5rem;}
+  @media(max-width:700px){.season-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:400px){.season-grid{grid-template-columns:1fr;}}
+  .season-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1rem;position:relative;overflow:hidden;}
+  .season-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;}
+  .season-card.summer::after{background:linear-gradient(90deg,#d97706,#f59e0b);}
+  .season-card.monsoon::after{background:linear-gradient(90deg,#0369a1,#38bdf8);}
+  .season-card.post::after{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+  .season-card.winter::after{background:linear-gradient(90deg,#0e7490,#67e8f9);}
+  .season-name{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.04em;margin-bottom:.2rem;}
+  .season-months{font-size:.58rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:.6rem;}
+  .season-body{font-size:.7rem;line-height:1.6;color:var(--prose,var(--muted));}
+  .season-body b{color:var(--text);}
+
+  /* MIGRATION ARROW SECTION */
+  .migration-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.9rem;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
+  .migration-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .migration-icon{font-size:1.3rem;flex-shrink:0;line-height:1.3;}
+  .migration-species{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;}
+  .migration-route{font-size:.73rem;line-height:1.55;color:var(--prose,var(--text));}
+  .migration-route b{color:var(--text);}
+  .migration-season{font-size:.58rem;padding:.15rem .5rem;border-radius:1px;display:inline-block;letter-spacing:.08em;margin-top:.35rem;}
+
+  /* HIGHLIGHT BOX */
+  .highlight-box{background:var(--surface2,var(--surface));border:1px solid var(--border);border-radius:4px;padding:1.1rem 1.25rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .highlight-box b{color:var(--text);}
+  .highlight-box .hb-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--text);margin-bottom:.4rem;}
+
+  /* INITIATIVE CARDS */
+  .initiative-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;margin-bottom:.9rem;}
+  .initiative-name{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.04em;margin-bottom:.2rem;}
+  .initiative-year{font-size:.6rem;letter-spacing:.1em;color:var(--muted);margin-bottom:.6rem;}
+  .initiative-body{font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .initiative-body b{color:var(--text);}
+  .initiative-status{font-size:.58rem;padding:.18rem .55rem;border-radius:1px;letter-spacing:.1em;text-transform:uppercase;display:inline-block;margin-top:.5rem;}
+  .status-active{background:rgba(5,150,105,.15);color:#059669;}
+  .status-expanded{background:rgba(3,105,161,.15);color:#0369a1;}
+  .status-proposed{background:rgba(217,119,6,.15);color:#d97706;}
+
+  /* THREAT METER */
+  .threat-item{display:grid;grid-template-columns:180px 1fr 50px;gap:.75rem;align-items:center;margin-bottom:.6rem;}
+  @media(max-width:600px){.threat-item{grid-template-columns:1fr;gap:.3rem;}}
+  .threat-name{font-size:.7rem;color:var(--text);}
+  .threat-bar-wrap{background:var(--surface2,var(--surface));border-radius:2px;height:8px;overflow:hidden;}
+  .threat-bar{height:100%;border-radius:2px;transition:width .6s ease;}
+  .threat-pct{font-family:'Bebas Neue',sans-serif;font-size:1rem;text-align:right;}
+
+  /* BIOSPHERE ACCORDION */
+  .bio-item{border:1px solid var(--border);border-radius:3px;margin-bottom:.5rem;overflow:hidden;}
+  .bio-header{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1rem;cursor:pointer;transition:background .2s;}
+  .bio-header:hover{background:var(--surface2,rgba(128,128,128,.05));}
+  .bio-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;}
+  .bio-sub{font-size:.62rem;color:var(--muted);letter-spacing:.08em;}
+  .bio-arrow{font-size:.8rem;transition:transform .25s;color:var(--muted);}
+  .bio-body{display:none;padding:0 1rem 1rem;border-top:1px solid var(--border);font-size:.72rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .bio-body b{color:var(--text);}
+  .bio-body.open{display:block;}
+
+  /* OVERVIEW SVG */
+  .map-container{position:relative;width:100%;border-radius:4px;overflow:hidden;background:var(--surface);border:1px solid var(--border);}
+
+  @media(max-width:500px){
+    .season-grid{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:1fr 1fr;}
+  }
+
+  /* ── INTERACTIVE MAP ── */
+  #map-wrap{position:relative;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;user-select:none;}
+  #india-canvas{display:block;width:100%;cursor:grab;}
+  #india-canvas:active{cursor:grabbing;}
+  #map-tooltip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:.65rem .9rem;font-size:.72rem;line-height:1.55;z-index:20;max-width:260px;box-shadow:0 4px 20px rgba(0,0,0,.4);display:none;}
+  #map-tooltip .tt-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;margin-bottom:.15rem;}
+  #map-tooltip .tt-type{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
+  #map-tooltip .tt-body{font-size:.7rem;color:var(--prose,var(--muted));}
+  .map-controls{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem;align-items:center;}
+  .map-filter-btn{padding:.35rem .8rem;border-radius:2px;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace;}
+  .map-filter-btn:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .map-filter-btn.active{color:#fff;}
+  .map-zoom-btns{display:flex;gap:.3rem;margin-left:auto;}
+  .map-zoom-btn{width:30px;height:30px;border-radius:2px;font-size:1rem;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  .map-zoom-btn:hover{background:var(--surface2);}
+  .map-legend{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.75rem;font-size:.62rem;color:var(--muted);}
+  .map-legend-item{display:flex;align-items:center;gap:.35rem;}
+  .map-legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .map-legend-line{width:18px;height:3px;flex-shrink:0;border-radius:1px;}
+  .mig-toggle-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+  .mig-btn{padding:.35rem .8rem;border-radius:2px;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace;}
+  .mig-btn.on{color:#fff;}
+
+  /* ── WETLANDS ── */
+  .wetland-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem;margin-bottom:1.5rem;}
+  .wetland-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;position:relative;overflow:hidden;transition:border-color .2s;}
+  .wetland-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0891b2,#38bdf8);}
+  .wetland-card.ramsar::before{background:linear-gradient(90deg,#0369a1,#38bdf8);}
+  .wetland-card.river::before{background:linear-gradient(90deg,#15803d,#4ade80);}
+  .wetland-card.coastal::before{background:linear-gradient(90deg,#0284c7,#7dd3fc);}
+  .wetland-card.lake::before{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+  .wetland-card.mangrove::before{background:linear-gradient(90deg,#14532d,#4ade80);}
+  .wetland-card:hover{border-color:rgba(8,145,178,.4);}
+  .wetland-name{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.04em;margin-bottom:.2rem;}
+  .wetland-state{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem;}
+  .wetland-body{font-size:.72rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .wetland-body b{color:var(--text);}
+  .wetland-badges{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.65rem;}
+  .wbadge{font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .5rem;border-radius:1px;border:1px solid;border-color:rgba(8,145,178,.45);color:#0891b2;background:rgba(8,145,178,.08);}
+</style>
+</head>
+<body data-theme="dark">
+
+<header>
+  <div class="eyebrow">India's Protected Natural Heritage</div>
+  <h1>Wild Realms of India</h1>
+  <div class="subtitle">National Parks · Wildlife Sanctuaries · Biosphere Reserves · Tiger Reserves · Wetlands</div>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-val" style="color:#c2410c">55</div><div class="hstat-lbl">Tiger Reserves</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#15803d">106</div><div class="hstat-lbl">National Parks</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#0369a1">567</div><div class="hstat-lbl">Wildlife Sanctuaries</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#7c3aed">18</div><div class="hstat-lbl">Biosphere Reserves</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#0e7490">5.26%</div><div class="hstat-lbl">Protected Area of India</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#d97706">3,695</div><div class="hstat-lbl">Wild Tigers (2023)</div></div>
+  </div>
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <span class="theme-toggle-icon" id="theme-icon">🌙</span>
+    <span class="theme-toggle-label" id="theme-label">Dark</span>
+  </div>
+</header>
+
+<nav>
+  <button class="tab active" data-section="overview" onclick="switchTab('overview')">Overview</button>
+  <button class="tab" data-section="national-parks" onclick="switchTab('national-parks')">National Parks</button>
+  <button class="tab" data-section="sanctuaries" onclick="switchTab('sanctuaries')">Sanctuaries</button>
+  <button class="tab" data-section="biosphere" onclick="switchTab('biosphere')">Biospheres</button>
+  <button class="tab" data-section="seasonal" onclick="switchTab('seasonal')">Seasonal Guide</button>
+  <button class="tab" data-section="migration" onclick="switchTab('migration')">Migration Paths</button>
+  <button class="tab" data-section="threats" onclick="switchTab('threats')">Threats & Climate</button>
+  <button class="tab" data-section="initiatives" onclick="switchTab('initiatives')">Gov. Initiatives</button>
+  <button class="tab" data-section="map" onclick="switchTab('map')">🗺 Interactive Map</button>
+  <button class="tab" data-section="wetlands" onclick="switchTab('wetlands')">Wetlands</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════
+     OVERVIEW
+══════════════════════════════════════ -->
+<div class="phase-panel visible" id="panel-overview">
+  <div class="section-header">
+    <span class="phase-label" style="color:#15803d">Overview</span>
+    <span class="phase-tag" style="background:rgba(21,128,61,.15);color:#15803d">India's Biodiversity · Protected Area Network · Flagship Species</span>
+    <span class="phase-desc">One of 17 megadiverse nations on Earth</span>
+  </div>
+
+  <div class="callout" style="border-color:#15803d">
+    <b>India's Ecological Significance:</b> India covers just 2.4% of Earth's land area but hosts over 7–8% of the world's recorded species — 91,000 animal species and 45,500 plant species. It lies at the convergence of four biogeographic realms and contains 4 of the world's 36 biodiversity hotspots: the Himalaya, Indo-Burma, Western Ghats–Sri Lanka, and Sundaland.
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-value" style="color:#c2410c">3,695</div><div class="stat-label">Wild Tiger Population (2023 Census)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#0369a1">30,000+</div><div class="stat-label">Asian Elephants in India</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#15803d">4,014</div><div class="stat-label">Indian One-Horned Rhinos (Assam)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#7c3aed">1,300</div><div class="stat-label">Snow Leopards (est.)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#0e7490">1,300+</div><div class="stat-label">Bird Species</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#d97706">500+</div><div class="stat-label">Reptile Species</div></div>
+  </div>
+
+  <div class="mech-grid" style="margin-top:1.5rem;">
+    <div class="mech-card">
+      <div class="mech-card-title">Four Biodiversity Hotspots</div>
+      <div class="mech-card-body">
+        <b>1. Himalaya:</b> The world's youngest and tallest mountain range — alpine meadows, glacial lakes, coniferous & temperate broadleaf forests. Home to snow leopard, red panda, Himalayan black bear, and 10,000+ plant species.<br><br>
+        <b>2. Western Ghats–Sri Lanka:</b> One of the world's richest centres of endemism. Over 5,000 species of flowering plants, 139 mammal species, 508 birds. Ghats receive 2,000–7,000 mm monsoon rainfall annually.<br><br>
+        <b>3. Indo-Burma:</b> Includes Northeast India (Arunachal, Assam, Meghalaya). Hotspot for freshwater fish, chelonians, and orchids. Over 430 bird species in Eaglenest alone.<br><br>
+        <b>4. Sundaland (Nicobar):</b> Nicobar Islands. Home to endemic species like Nicobar treeshrew and diverse marine ecosystems including mangroves and coral reefs.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Protected Area Categories</div>
+      <div class="mech-card-body">
+        <b>National Parks:</b> Highest protection under Wildlife Protection Act 1972. No human habitation or resource use. Boundaries fixed by Parliament (e.g., Corbett, Kaziranga, Gir).<br><br>
+        <b>Wildlife Sanctuaries:</b> Some human activity permitted (minor forest produce). Boundaries alterable by state government. Often form the buffer zone of national parks.<br><br>
+        <b>Biosphere Reserves:</b> UNESCO designation. Three concentric zones — Core (strict), Buffer, and Transition. Conservation + sustainable human use.<br><br>
+        <b>Tiger Reserves:</b> Notified under Project Tiger (1973). Critical tiger habitat (Core) + buffer zones. 55 reserves spread across 18 states. Managed by NTCA.<br><br>
+        <b>Conservation Reserves & Community Reserves:</b> Newer categories (2002 WPA Amendment) with local community involvement.
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">India's Protected Area Network — Biogeographic Zones</p>
+    <svg id="overview-map-svg" viewBox="0 0 800 420" style="width:100%;height:420px;display:block;"></svg>
+  </div>
+
+  <div class="two-col" style="margin-top:1.5rem;">
+    <div class="box" style="margin-bottom:0;">
+      <p class="box-title">Flagship & Umbrella Species</p>
+      <table>
+        <thead><tr><th>Species</th><th>Status (IUCN)</th><th>Key Habitat</th><th>Est. Population</th></tr></thead>
+        <tbody>
+          <tr><td>Bengal Tiger</td><td style="color:#d97706">Endangered</td><td>Deciduous / moist forests</td><td style="color:#16a34a">3,695</td></tr>
+          <tr><td>Asian Elephant</td><td style="color:#d97706">Endangered</td><td>Tropical forests, grasslands</td><td style="color:#16a34a">30,000+</td></tr>
+          <tr><td>Indian One-Horned Rhino</td><td style="color:#d97706">Vulnerable</td><td>Alluvial floodplains (Assam)</td><td style="color:#16a34a">4,014</td></tr>
+          <tr><td>Snow Leopard</td><td style="color:#d97706">Vulnerable</td><td>Alpine Himalaya (2,500–5,000m)</td><td style="color:#d97706">~450–500</td></tr>
+          <tr><td>Asiatic Lion</td><td style="color:#dc2626">Critically End.</td><td>Gir Forest (Gujarat only)</td><td style="color:#d97706">674</td></tr>
+          <tr><td>Indian Gharial</td><td style="color:#dc2626">Critically End.</td><td>Chambal, Ganga rivers</td><td style="color:#dc2626">~650</td></tr>
+          <tr><td>Great Indian Bustard</td><td style="color:#dc2626">Critically End.</td><td>Rajasthan grasslands</td><td style="color:#dc2626">~100–150</td></tr>
+          <tr><td>Indian Wild Ass</td><td style="color:#d97706">Near Threatened</td><td>Rann of Kutch (Gujarat)</td><td style="color:#16a34a">6,000+</td></tr>
+          <tr><td>Nilgiri Tahr</td><td style="color:#d97706">Endangered</td><td>Western Ghats shola-grassland</td><td style="color:#d97706">~3,000</td></tr>
+          <tr><td>Gangetic Dolphin</td><td style="color:#dc2626">Endangered</td><td>Ganga–Brahmaputra rivers</td><td style="color:#d97706">~2,500</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box" style="margin-bottom:0;">
+      <p class="box-title">Forest Type Distribution</p>
+      <svg id="forest-pie-svg" viewBox="0 0 340 300" style="width:100%;height:300px;display:block;"></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     NATIONAL PARKS
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-national-parks">
+  <div class="section-header">
+    <span class="phase-label" style="color:#c2410c">National Parks</span>
+    <span class="phase-tag" style="background:rgba(194,65,12,.15);color:#c2410c">106 Parks · 44,378 km² · Strictest Protection</span>
+    <span class="phase-desc">India's crown jewels of wilderness</span>
+  </div>
+
+  <div class="callout" style="border-color:#c2410c">
+    <b>Legal Status:</b> Under the Wildlife Protection Act, 1972, a National Park is the highest protective category. No grazing, no forest produce collection, no human habitation. Boundaries can only be altered by the state legislature. India's first national park was Jim Corbett (established 1936, then called Hailey National Park).
+  </div>
+
+  <div class="park-grid">
+
+    <div class="park-card tiger">
+      <div class="park-name">Jim Corbett NP</div>
+      <div class="park-state">Uttarakhand · 520 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1936</span>
+        <span class="park-meta-item"><b>Zone:</b> Terai Arc</span>
+        <span class="park-meta-item"><b>Biome:</b> Sal Forest</span>
+      </div>
+      <div class="park-body">India's oldest national park and first Tiger Reserve (1973). Divided into 5 zones: Dhikala, Bijrani, Jhirna, Dhela, Sitabani. The Ramganga river is its lifeline. <b>Flora:</b> Sal (Shorea robusta), Shisham, Rohini. Dense grasslands (chaurs) interspersed with river-edge forest.<br><br>
+      <b>Fauna:</b> Bengal tiger (over 260), leopard, Asiatic elephant (~600), sloth bear, gharial, mugger crocodile. Over 600 bird species incl. Pallas's fish eagle, crested serpent eagle.</div>
+      <div class="tag-row">
+        <span class="tag tag-tiger">Tiger Reserve</span>
+        <span class="tag tag-elephant">Elephants</span>
+        <span class="tag tag-bird">600+ Birds</span>
+        <span class="tag tag-heritage">UNESCO WHS Buffer</span>
+      </div>
+    </div>
+
+    <div class="park-card rhino">
+      <div class="park-name">Kaziranga NP</div>
+      <div class="park-state">Assam · 858 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1974</span>
+        <span class="park-meta-item"><b>UNESCO:</b> 1985</span>
+        <span class="park-meta-item"><b>Biome:</b> Alluvial floodplain</span>
+      </div>
+      <div class="park-body">UNESCO World Heritage Site and globally the most important single habitat for the Indian one-horned rhinoceros. Hosts <b>2,613 rhinos</b> — about 70% of the world's total. Located on the southern bank of the Brahmaputra. Characterised by tall elephant grass, marshlands, and dense tropical moist broadleaf forest.<br><br>
+      <b>Fauna:</b> Rhino, tiger (highest density in any Indian NP ~104/100 km²), wild buffalo, elephant, swamp deer, hoolock gibbon. Over 480 bird species. Major flood events (July–August monsoon) force animal movement south along migration corridors.</div>
+      <div class="tag-row">
+        <span class="tag tag-rhino">Rhino Stronghold</span>
+        <span class="tag tag-tiger">Tiger Reserve</span>
+        <span class="tag tag-heritage">UNESCO WHS</span>
+        <span class="tag tag-bird">480+ Birds</span>
+      </div>
+    </div>
+
+    <div class="park-card elephant">
+      <div class="park-name">Periyar NP</div>
+      <div class="park-state">Kerala · 350 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1982</span>
+        <span class="park-meta-item"><b>Zone:</b> Western Ghats</span>
+        <span class="park-meta-item"><b>Biome:</b> Tropical moist forest</span>
+      </div>
+      <div class="park-body">Centred on the Periyar Lake reservoir in the Cardamom Hills. Famous for wild elephants gathering at the lakeshores, especially in summer. <b>Flora:</b> Dense evergreen and semi-evergreen forests — rich in orchids, ferns, and medicinal plants. Teak, rosewood, and eucalyptus plantations form the periphery.<br><br>
+      <b>Fauna:</b> Asian elephants (>900 in sanctuary zone), tiger, leopard, sambar, gaur, Nilgiri langur, lion-tailed macaque. Part of the Western Ghats biodiversity hotspot.</div>
+      <div class="tag-row">
+        <span class="tag tag-elephant">Elephant Sanctuary</span>
+        <span class="tag tag-tiger">Tiger Reserve</span>
+        <span class="tag tag-herb">Medicinal Plants</span>
+      </div>
+    </div>
+
+    <div class="park-card leopard">
+      <div class="park-name">Gir NP & Sanctuary</div>
+      <div class="park-state">Gujarat · 1,412 km² (total)</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1965</span>
+        <span class="park-meta-item"><b>NP Core:</b> 258 km²</span>
+        <span class="park-meta-item"><b>Biome:</b> Dry deciduous</span>
+      </div>
+      <div class="park-body">The last refuge of the Asiatic lion in the world. Current population: <b>674 lions</b> (2020 census). The forest is dry deciduous — teak, dhak (Butea monosperma), and khair dominant. Rivers Hiran, Shetrunji, and Shingoda provide year-round water.<br><br>
+      <b>Fauna:</b> Asiatic lion, leopard, hyena, Chinkara, nilgai, four-horned antelope, marsh crocodile. 300+ bird species including Bonelli's eagle and Indian eagle-owl. The maldharis (pastoral community) coexist within the sanctuary zone.</div>
+      <div class="tag-row">
+        <span class="tag tag-leopard">Asiatic Lion</span>
+        <span class="tag tag-bird">300+ Birds</span>
+        <span class="tag tag-heritage">Ramsar Wetland</span>
+      </div>
+    </div>
+
+    <div class="park-card tiger">
+      <div class="park-name">Ranthambore NP</div>
+      <div class="park-state">Rajasthan · 392 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1980</span>
+        <span class="park-meta-item"><b>Tiger Reserve:</b> 1973</span>
+        <span class="park-meta-item"><b>Biome:</b> Dry deciduous</span>
+      </div>
+      <div class="park-body">One of India's most celebrated tiger parks — famous for tigers seen in daylight hunting near water bodies. Dominated by dhok (Anogeissus pendula), which turns crimson in autumn. Three ancient lakes — Padam, Malik, and Raj Bagh — attract mega-fauna during summer heat.<br><br>
+      <b>Fauna:</b> Bengal tiger (~70), leopard, sloth bear, sambar, nilgai, chital, marsh crocodile. The 10th century Ranthambore Fort UNESCO heritage site stands within the park boundary.</div>
+      <div class="tag-row">
+        <span class="tag tag-tiger">Tiger Reserve</span>
+        <span class="tag tag-heritage">Fort Heritage</span>
+        <span class="tag tag-bird">300+ Birds</span>
+      </div>
+    </div>
+
+    <div class="park-card bird">
+      <div class="park-name">Bharatpur (Keoladeo) NP</div>
+      <div class="park-state">Rajasthan · 29 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1982</span>
+        <span class="park-meta-item"><b>UNESCO:</b> 1985</span>
+        <span class="park-meta-item"><b>Type:</b> Wetland / Avifauna</span>
+      </div>
+      <div class="park-body">One of the world's greatest bird sanctuaries. A mosaic of wetlands, grasslands, scrublands, and woodlands that hosts up to <b>370+ bird species</b>. Previously famous for the now-extinct-from-here Siberian crane. Today hosts bars-headed goose, painted stork, sarus crane (world's tallest flying bird), spot-billed pelican.<br><br>
+      <b>Flora:</b> Kadam, jamun, babul. Wetland vegetation dominated by Paspalum grass and Nymphaea waterlilies. Winter (Oct–Feb) is peak migratory season.</div>
+      <div class="tag-row">
+        <span class="tag tag-bird">Migratory Birds</span>
+        <span class="tag tag-heritage">UNESCO WHS</span>
+        <span class="tag tag-marine">Ramsar Wetland</span>
+      </div>
+    </div>
+
+    <div class="park-card elephant">
+      <div class="park-name">Nagarhole NP</div>
+      <div class="park-state">Karnataka · 643 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1988</span>
+        <span class="park-meta-item"><b>Zone:</b> Nilgiri Biosphere</span>
+        <span class="park-meta-item"><b>Biome:</b> Moist deciduous</span>
+      </div>
+      <div class="park-body">Part of the Nilgiri Biosphere Reserve — the Nagarhole–Bandipur–Mudumalai–Wayanad complex forms the largest continuous tiger reserve in Asia. The Kabini reservoir forms its southern boundary. Nagarhole has the highest density of gaur (Indian bison) in India.<br><br>
+      <b>Fauna:</b> Tiger, leopard, wild dog (Dhole), gaur (~4,000+), Asian elephant, sambar, chital, barking deer. The Kabini backwaters are India's best spot for seeing large herbivore congregations during summer.</div>
+      <div class="tag-row">
+        <span class="tag tag-tiger">Tiger Reserve</span>
+        <span class="tag tag-elephant">Elephants</span>
+        <span class="tag tag-rhino">Gaur Density</span>
+      </div>
+    </div>
+
+    <div class="park-card tiger">
+      <div class="park-name">Bandhavgarh NP</div>
+      <div class="park-state">Madhya Pradesh · 448 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1968</span>
+        <span class="park-meta-item"><b>Tiger Density:</b> Highest in India</span>
+        <span class="park-meta-item"><b>Biome:</b> Sal-forest</span>
+      </div>
+      <div class="park-body">Believed to have India's highest density of Bengal tigers. The ancient Bandhavgarh fort (2,000+ years) stands at the park's centre. Medhi (tall grass) meadows and Sal forests alternate with rocky ridges.<br><br>
+      <b>Fauna:</b> Bengal tiger (~100+), leopard, sloth bear, langur, chital, sambar, nilgai. 250+ bird species. <b>Flora:</b> Sal, bija (Indian laurel), dhaura, shisham, bamboo thickets. Best visited Oct–June; park closed July–October.</div>
+      <div class="tag-row">
+        <span class="tag tag-tiger">Highest Tiger Density</span>
+        <span class="tag tag-leopard">Leopards</span>
+        <span class="tag tag-bird">250+ Birds</span>
+      </div>
+    </div>
+
+    <div class="park-card marine">
+      <div class="park-name">Sundarbans NP</div>
+      <div class="park-state">West Bengal · 1,330 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1984</span>
+        <span class="park-meta-item"><b>UNESCO:</b> 1987</span>
+        <span class="park-meta-item"><b>Biome:</b> Mangrove Delta</span>
+      </div>
+      <div class="park-body">The world's largest mangrove forest and one of the largest tiger reserves. Located in the Ganges–Brahmaputra delta where the river meets the Bay of Bengal. Tigers here are unique — they swim between islands and have reportedly developed salt-water tolerance.<br><br>
+      <b>Flora:</b> Sundari (Heritiera fomes) — the dominant tree giving the forest its name — goran, gewa, keora. 334 plant species. <b>Fauna:</b> Bengal tiger (~100), Irrawaddy dolphin, estuarine crocodile, olive ridley sea turtle, water monitor, spotted deer.</div>
+      <div class="tag-row">
+        <span class="tag tag-tiger">Swimming Tigers</span>
+        <span class="tag tag-marine">Mangrove Delta</span>
+        <span class="tag tag-heritage">UNESCO WHS</span>
+      </div>
+    </div>
+
+    <div class="park-card bird">
+      <div class="park-name">Valley of Flowers NP</div>
+      <div class="park-state">Uttarakhand · 88 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1982</span>
+        <span class="park-meta-item"><b>UNESCO:</b> 2005</span>
+        <span class="park-meta-item"><b>Altitude:</b> 3,200–6,675m</span>
+      </div>
+      <div class="park-body">A glacial valley renowned for its meadows of endemic alpine flowers. UNESCO World Heritage Site (combined with Nanda Devi NP). Open only July–October due to snow; peak bloom is August. <b>Flora:</b> 500+ flowering species incl. Brahma kamal (Saussurea obvallata — State flower of Uttarakhand), Himalayan blue poppy, primulas, cobra lily.<br><br>
+      <b>Fauna:</b> Snow leopard, Himalayan black bear, red fox, blue sheep (bharal), musk deer, Himalayan monal (State bird of Uttarakhand).</div>
+      <div class="tag-row">
+        <span class="tag tag-herb">500+ Alpine Flowers</span>
+        <span class="tag tag-heritage">UNESCO WHS</span>
+        <span class="tag tag-leopard">Snow Leopard</span>
+      </div>
+    </div>
+
+    <div class="park-card elephant">
+      <div class="park-name">Manas NP</div>
+      <div class="park-state">Assam · 500 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1990</span>
+        <span class="park-meta-item"><b>UNESCO:</b> 1985</span>
+        <span class="park-meta-item"><b>Biome:</b> Sub-Himalayan Forest</span>
+      </div>
+      <div class="park-body">A UNESCO World Heritage Site, Biosphere Reserve, Tiger Reserve, and Elephant Reserve — one of the most multiply-designated parks globally. At the foothills of the Bhutan Himalaya, the Manas river divides India and Bhutan. <b>Flora:</b> Tropical semi-evergreen, mixed moist deciduous, alluvial grasslands.<br><br>
+      <b>Fauna:</b> Tiger, rhino (reintroduced post-2008), golden langur (endemic to this region), pygmy hog (world's smallest wild pig), hispid hare, wild water buffalo, elephant. 449 bird species.</div>
+      <div class="tag-row">
+        <span class="tag tag-rhino">Rhino Reintroduction</span>
+        <span class="tag tag-elephant">Project Elephant</span>
+        <span class="tag tag-heritage">UNESCO WHS</span>
+      </div>
+    </div>
+
+    <div class="park-card tiger">
+      <div class="park-name">Pench NP</div>
+      <div class="park-state">Madhya Pradesh / Maharashtra · 758 km²</div>
+      <div class="park-meta">
+        <span class="park-meta-item"><b>Est.</b> 1975</span>
+        <span class="park-meta-item"><b>Inspiration:</b> Jungle Book</span>
+        <span class="park-meta-item"><b>Biome:</b> Teak forest</span>
+      </div>
+      <div class="park-body">The inspiration for Rudyard Kipling's Jungle Book. Divided between two states by the Pench river. Teak-dominated dry deciduous forest with dense shrub undergrowth.<br><br>
+      <b>Fauna:</b> Bengal tiger, leopard, wild dog (dhole), sloth bear, wolf, gaur, nilgai, chital, sambar, wild boar. 285 bird species. The park is famous for its habituated tigers and exceptional game viewing in the dry season.</div>
+      <div class="tag-row">
+        <span class="tag tag-tiger">Tiger Reserve</span>
+        <span class="tag tag-leopard">Wild Dogs</span>
+        <span class="tag tag-bird">285 Birds</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SANCTUARIES
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-sanctuaries">
+  <div class="section-header">
+    <span class="phase-label" style="color:#7c3aed">Sanctuaries</span>
+    <span class="phase-tag" style="background:rgba(124,58,237,.15);color:#7c3aed">567 Sanctuaries · Elephant Reserves · Wetland Sanctuaries</span>
+    <span class="phase-desc">Buffers of biodiversity</span>
+  </div>
+
+  <div class="callout" style="border-color:#7c3aed">
+    <b>Wildlife Sanctuaries vs. National Parks:</b> Sanctuaries allow limited human activities such as collection of minor forest produce, grazing, and even habitation with government permission — unlike National Parks. Many sanctuaries surround national parks as buffer zones, forming wildlife corridors essential for animal movement and gene flow.
+  </div>
+
+  <div class="box">
+    <p class="box-title">Notable Wildlife Sanctuaries — India-wide</p>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr><th>Sanctuary</th><th>State</th><th>Area km²</th><th>Key Species</th><th>Ecosystem Type</th><th>Best Season</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Sariska WLS</b></td><td>Rajasthan</td><td>866</td><td>Tiger (reintroduced 2005), leopard, nilgai, sambar, langur</td><td>Dry deciduous (dhok forest)</td><td>Oct–Jun</td></tr>
+          <tr><td><b>Kanha WLS</b> (+ NP)</td><td>Madhya Pradesh</td><td>1,945</td><td>Barasingha (hard-ground swamp deer — saved from extinction), tiger, leopard</td><td>Sal & bamboo forest</td><td>Oct–Jun</td></tr>
+          <tr><td><b>Chilika WLS</b></td><td>Odisha</td><td>1,100</td><td>Irrawaddy dolphin, 160+ migratory birds, flamingo, bar-headed goose</td><td>Asia's largest lagoon wetland</td><td>Nov–Feb</td></tr>
+          <tr><td><b>Vedanthangal WLS</b></td><td>Tamil Nadu</td><td>0.3</td><td>Open-billed stork, painted stork, night heron, egrets (40,000+ birds)</td><td>Tank wetland</td><td>Nov–Feb</td></tr>
+          <tr><td><b>Chinnar WLS</b></td><td>Kerala</td><td>90</td><td>Grizzled giant squirrel, star tortoise, gaur, leopard, elephant</td><td>Dry deciduous / riparian</td><td>Oct–May</td></tr>
+          <tr><td><b>Bhitarkanika WLS</b></td><td>Odisha</td><td>672</td><td>Mugger crocodile, saltwater crocodile, olive ridley turtle (mass nesting), water monitor</td><td>Mangrove</td><td>Nov–Mar</td></tr>
+          <tr><td><b>Great Himalayan NP Buffer</b></td><td>Himachal Pradesh</td><td>905</td><td>Snow leopard, Himalayan brown bear, western tragopan, musk deer</td><td>Alpine / subalpine</td><td>Jun–Sep</td></tr>
+          <tr><td><b>Ranganthittu WLS</b></td><td>Karnataka</td><td>0.67</td><td>Painted stork (breeding colony), spot-billed pelican, little cormorant, mugger crocodile</td><td>River island wetland</td><td>Jun–Nov (breeding)</td></tr>
+          <tr><td><b>Mahananda WLS</b></td><td>West Bengal</td><td>158</td><td>Elephant, tiger, leopard, clouded leopard, pangolin</td><td>Moist subtropical forest</td><td>Nov–May</td></tr>
+          <tr><td><b>Kawal WLS</b></td><td>Telangana</td><td>892</td><td>Tiger (recently returning), leopard, wild dog, sloth bear</td><td>Mixed deciduous</td><td>Oct–May</td></tr>
+          <tr><td><b>Sultanpur WLS</b></td><td>Haryana</td><td>1.43</td><td>130+ migratory birds — northern shoveler, greater flamingo, common teal</td><td>Seasonal wetland</td><td>Oct–Mar</td></tr>
+          <tr><td><b>Abohar WLS</b></td><td>Punjab</td><td>186</td><td>Indian blackbuck (only place in Punjab), peacock, nilgai</td><td>Scrubland</td><td>Oct–Mar</td></tr>
+          <tr><td><b>Rollapadu WLS</b></td><td>Andhra Pradesh</td><td>6.14</td><td>Great Indian Bustard (last surviving population in AP), blackbuck</td><td>Dry grassland</td><td>Oct–Mar</td></tr>
+          <tr><td><b>Point Calimere WLS</b></td><td>Tamil Nadu</td><td>21</td><td>Flamingo (100,000+), dunlin, knot, blackbuck</td><td>Coastal wetland & scrub</td><td>Nov–Jan</td></tr>
+          <tr><td><b>Tetulia WLS</b></td><td>Tripura</td><td>4.09</td><td>Golden cat, clouded leopard, hoolock gibbon, sambar</td><td>Moist semi-evergreen</td><td>Oct–Apr</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="mech-grid">
+    <div class="mech-card">
+      <div class="mech-card-title">Project Elephant Reserves</div>
+      <div class="mech-card-body">
+        India has <b>33 Elephant Reserves</b> covering ~76,000 km² across 14 states, managed under <b>Project Elephant (1992)</b>. Key reserves:<br><br>
+        <b>Nilgiri ER (Karnataka/TN/Kerala):</b> Largest — ~10,480 km². Houses ~8,000 elephants — the largest contiguous population in Asia.<br><br>
+        <b>Eastern Dooars ER (West Bengal):</b> Part of the terai–Dooars corridor. Connects Buxa Tiger Reserve with Bhutan forests.<br><br>
+        <b>Mayurbhanj ER (Odisha):</b> ~3,700 km². Connects Simlipal with Hadgarh and Kuldiha sanctuaries.<br><br>
+        <b>Byrnihat–Garo Hills ER (Assam/Meghalaya):</b> Critical for elephant movement between Garo Hills and Brahmaputra plains.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Marine Protected Areas</div>
+      <div class="mech-card-body">
+        <b>Gulf of Mannar MNP (Tamil Nadu):</b> India's first marine national park. 21 islands, 3,600 km². Coral reefs (covering ~6,000 hectares), seagrass beds, mangroves. Over 3,600 species of marine flora and fauna.<br><br>
+        <b>Mahatma Gandhi Marine NP (Andaman):</b> 281 km². Healthy coral reefs, sea turtles, dugong. 15 islands including Jolly Buoy and Red Skin.<br><br>
+        <b>Gulf of Kutch MNP (Gujarat):</b> India's first MNP. Flamingo feeding grounds, Indo-Pacific humpback dolphin, sea turtle nesting.<br><br>
+        <b>Lakshadweep Marine Sanctuary:</b> India's only coral atoll system. Spinner dolphin, whale shark, manta ray, Napoleon wrasse.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     BIOSPHERE RESERVES
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-biosphere">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0369a1">Biospheres</span>
+    <span class="phase-tag" style="background:rgba(3,105,161,.15);color:#0369a1">18 Reserves · 12 UNESCO MAB · 11 UNESCO World Network</span>
+    <span class="phase-desc">Conservation + sustainable development in harmony</span>
+  </div>
+
+  <div class="callout" style="border-color:#0369a1">
+    <b>UNESCO Man and the Biosphere (MAB) Programme:</b> Biosphere reserves have three zones — (1) <b>Core Zone</b>: strictly protected, no human interference; (2) <b>Buffer Zone</b>: limited research and monitoring; (3) <b>Transition/Cooperation Zone</b>: sustainable land use, local communities, eco-tourism. India has 12 MAB-designated reserves, of which 11 are in UNESCO's World Network of Biosphere Reserves.
+  </div>
+
+  <div id="bio-accordion">
+
+    <div class="bio-item">
+      <div class="bio-header" onclick="toggleBio(this)">
+        <div><div class="bio-title">Nilgiri Biosphere Reserve</div><div class="bio-sub">Tamil Nadu / Karnataka / Kerala · 5,520 km²</div></div>
+        <span class="bio-arrow">▼</span>
+      </div>
+      <div class="bio-body open">
+        <b>Designation:</b> India's first Biosphere Reserve (1986). UNESCO MAB since 2000.<br><br>
+        <b>Core Areas:</b> Mudumalai NP, Nagarhole NP, Bandipur NP, Mukurthi NP, Silent Valley NP, Wayanad WLS.<br><br>
+        <b>Flora:</b> Shola forests (montane subtropical dense forests unique to Western Ghats), grasslands, tropical dry deciduous, moist deciduous. Shola trees — Michelia nilagirica, Rhododendron arboreum. 3,300+ plant species; 132 endemic.<br><br>
+        <b>Fauna:</b> Largest elephant population in Asia (~5,000), tiger, leopard, gaur, Nilgiri tahr (~2,000), lion-tailed macaque, Nilgiri langur, stripe-necked mongoose, Malabar giant squirrel. 300+ birds including Nilgiri wood-pigeon, Malabar trogon, Nilgiri flycatcher.<br><br>
+        <b>Indigenous Communities:</b> Toda, Kota, Badaga, Irula, Kurumba, Paniyan — over 100,000 tribal people in the transition zone.
+      </div>
+    </div>
+
+    <div class="bio-item">
+      <div class="bio-header" onclick="toggleBio(this)">
+        <div><div class="bio-title">Nanda Devi Biosphere Reserve</div><div class="bio-sub">Uttarakhand · 5,860 km²</div></div>
+        <span class="bio-arrow">▼</span>
+      </div>
+      <div class="bio-body">
+        <b>Designation:</b> 1988. UNESCO World Network since 2004. UNESCO World Heritage Site.<br><br>
+        <b>Core:</b> Nanda Devi NP (630 km²) + Valley of Flowers NP (88 km²).<br><br>
+        <b>Flora:</b> Subtropical pine forests, temperate oak-rhododendron, subalpine birch-juniper, alpine meadows, perpetual snow. Over 500 flowering species in the Valley of Flowers, including Brahma kamal, Himalayan blue poppy, and 31 species of primulas.<br><br>
+        <b>Fauna:</b> Snow leopard (key), Himalayan black bear, brown bear, musk deer, bharal (blue sheep), serow. Birds: Himalayan monal, bearded vulture, snow partridge, golden eagle, bar-tailed godwit (migratory).<br><br>
+        <b>Significance:</b> Valley of Flowers open only July–September. Nanda Devi inner sanctuary closed to tourists since 1982 to allow ecological recovery.
+      </div>
+    </div>
+
+    <div class="bio-item">
+      <div class="bio-header" onclick="toggleBio(this)">
+        <div><div class="bio-title">Sundarbans Biosphere Reserve</div><div class="bio-sub">West Bengal · 9,630 km² (India side)</div></div>
+        <span class="bio-arrow">▼</span>
+      </div>
+      <div class="bio-body">
+        <b>Designation:</b> 1989. UNESCO World Network since 2001. UNESCO World Heritage Site (1987).<br><br>
+        <b>Core:</b> Sundarbans National Park (1,330 km²).<br><br>
+        <b>Flora:</b> World's largest mangrove forest. Sundari (Heritiera fomes), goran (Ceriops decandra), gewa (Excoecaria agallocha), keora (Sonneratia apetala). Trees show pneumatophores (aerial roots) as adaptations to anoxic tidal soil.<br><br>
+        <b>Fauna:</b> Bengal tiger (~100 in India), estuarine crocodile, Irrawaddy dolphin, gangetic dolphin, water monitor lizard, olive ridley turtle, hawksbill turtle, horseshoe crab. 260+ bird species — kingfishers, herons, fish eagles. <b>Sea-level Rise Threat:</b> The Sundarbans are highly vulnerable to climate change — tidal flooding, salinity ingress, and cyclone intensification (Amphan 2020, Yaas 2021) threaten both the ecosystem and 4.5 million human inhabitants.
+      </div>
+    </div>
+
+    <div class="bio-item">
+      <div class="bio-header" onclick="toggleBio(this)">
+        <div><div class="bio-title">Gulf of Mannar Biosphere Reserve</div><div class="bio-sub">Tamil Nadu · 10,500 km²</div></div>
+        <span class="bio-arrow">▼</span>
+      </div>
+      <div class="bio-body">
+        <b>Designation:</b> 1989. UNESCO World Network since 2001.<br><br>
+        <b>Core:</b> Gulf of Mannar Marine NP (560 km²).<br><br>
+        <b>Flora:</b> 21 coral reef systems across 21 islands; seagrass meadows (Dugong dugon habitat); mangroves. 117 coral species; 150+ seaweed species.<br><br>
+        <b>Fauna:</b> Dugong (India's most important dugong habitat — ~150 individuals), five sea turtle species (Olive ridley, Green, Leatherback, Hawksbill, Loggerhead), sea horse, puffer fish, whale shark, bottle-nose dolphin, humpback whale (seasonal). <b>Climate Threat:</b> Bleaching events (2016, 2020) severely affected coral cover. Temperature rise of 1°C above summer maximum causes mass bleaching.
+      </div>
+    </div>
+
+    <div class="bio-item">
+      <div class="bio-header" onclick="toggleBio(this)">
+        <div><div class="bio-title">Great Nicobar Biosphere Reserve</div><div class="bio-sub">Andaman & Nicobar Islands · 885 km²</div></div>
+        <span class="bio-arrow">▼</span>
+      </div>
+      <div class="bio-body">
+        <b>Designation:</b> 1989. UNESCO World Network since 2013.<br><br>
+        <b>Flora:</b> Tropical evergreen rainforest — among the most biodiverse in India. Many species found nowhere else on Earth. Giant leatherwood (Tetrameles nudiflora), Nicobar breadfruit. Shores have coral reefs, seagrass, and mangroves.<br><br>
+        <b>Fauna:</b> Leatherback turtle (largest nesting colony in India at Galathea Bay), Nicobar megapode, Nicobar treeshrew, coconut crab (largest land invertebrate), reticulated python, saltwater crocodile. <b>Status:</b> Currently under planning pressure — a major development project (trans-shipment port + township) has been approved for the southern area, raising serious conservation concerns.
+      </div>
+    </div>
+
+    <div class="bio-item">
+      <div class="bio-header" onclick="toggleBio(this)">
+        <div><div class="bio-title">Manas Biosphere Reserve</div><div class="bio-sub">Assam · 2,837 km²</div></div>
+        <span class="bio-arrow">▼</span>
+      </div>
+      <div class="bio-body">
+        <b>Designation:</b> 1989. UNESCO World Network since 2001. WHS 1985. UNESCO Heritage in Danger List (1992–2011) due to ethnic insurgency and poaching — one of the rare examples of a site removed from the Danger List after recovery.<br><br>
+        <b>Flora:</b> Alluvial tall grasslands (terai), tropical moist deciduous, semi-evergreen forests. Khagra cane brakes, Bombax ceiba (silk cotton tree).<br><br>
+        <b>Fauna:</b> Tiger, Indian one-horned rhino (reintroduced), pygmy hog (world's smallest, ~30 cm, endemic to this region), hispid hare, golden langur (restricted to Assam–Bhutan border area), wild water buffalo, elephant, clouded leopard. 449 bird species.<br><br>
+        <b>Trans-boundary:</b> Contiguous with Royal Manas NP in Bhutan — allowing seasonal migration of elephant herds between the two countries.
+      </div>
+    </div>
+
+    <div class="bio-item">
+      <div class="bio-header" onclick="toggleBio(this)">
+        <div><div class="bio-title">Dibru-Saikhowa Biosphere Reserve</div><div class="bio-sub">Assam · 765 km²</div></div>
+        <span class="bio-arrow">▼</span>
+      </div>
+      <div class="bio-body">
+        <b>Designation:</b> 1986.<br><br>
+        <b>Unique Feature:</b> Home to <b>feral horses</b> — descendants of British army horses, now wild on the river islands. One of India's most unusual wildlife sightings.<br><br>
+        <b>Flora:</b> Semi-evergreen, grasslands, nalas (streams), and flood-prone river islands. Saikhowa Charali grassland is prime habitat for Gangetic dolphins in the Brahmaputra.<br><br>
+        <b>Fauna:</b> Wild water buffalo (most genetically pure population), tiger, elephant, hoolock gibbon, capped langur, Gangetic river dolphin, Irrawaddy dolphin. Over 350 bird species including Bengal florican (globally vulnerable).
+      </div>
+    </div>
+
+    <div class="bio-item">
+      <div class="bio-header" onclick="toggleBio(this)">
+        <div><div class="bio-title">Cold Desert Biosphere Reserve</div><div class="bio-sub">Himachal Pradesh (Spiti, Pin Valley) · 7,770 km²</div></div>
+        <span class="bio-arrow">▼</span>
+      </div>
+      <div class="bio-body">
+        <b>Designation:</b> 1992.<br><br>
+        <b>Core:</b> Pin Valley National Park (675 km²).<br><br>
+        <b>Ecosystem:</b> Trans-Himalayan cold desert — rain shadow of the Greater Himalayas. Annual rainfall less than 200 mm. Resembles Tibetan Plateau.<br><br>
+        <b>Flora:</b> Sparse — alpine cushion plants, Caragana shrubs, Ephedra, Juniperus. No tree cover. 1,008 plant species identified.<br><br>
+        <b>Fauna:</b> Snow leopard (Pin Valley has one of the highest densities in India), Tibetan wolf, Himalayan ibex, bharal, yak, Tibetan gazelle, red fox, Pallas's cat, Himalayan snowcock. Snow leopard predation events (killing livestock) are common human-wildlife conflict here.<br><br>
+        <b>Climate:</b> Snowbound October–April. Temperatures reach −30°C. Accessible only July–September fully.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="box" style="margin-top:1.5rem;">
+    <p class="box-title">All 18 Biosphere Reserves — Quick Reference</p>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Reserve</th><th>State(s)</th><th>Year</th><th>Area km²</th><th>UNESCO MAB</th><th>Key Ecosystem</th></tr></thead>
+        <tbody>
+          <tr><td>Nilgiri</td><td>TN/KA/KL</td><td>1986</td><td>5,520</td><td style="color:#059669">✓ 2000</td><td>Western Ghats shola-forest</td></tr>
+          <tr><td>Nanda Devi</td><td>UK</td><td>1988</td><td>5,860</td><td style="color:#059669">✓ 2004</td><td>Alpine Himalayan</td></tr>
+          <tr><td>Nokrek</td><td>Meghalaya</td><td>1988</td><td>820</td><td style="color:#059669">✓ 2009</td><td>Subtropical semi-evergreen</td></tr>
+          <tr><td>Manas</td><td>Assam</td><td>1989</td><td>2,837</td><td style="color:#059669">✓ 2001</td><td>Sub-Himalayan grassland</td></tr>
+          <tr><td>Sundarbans</td><td>WB</td><td>1989</td><td>9,630</td><td style="color:#059669">✓ 2001</td><td>Mangrove delta</td></tr>
+          <tr><td>Gulf of Mannar</td><td>TN</td><td>1989</td><td>10,500</td><td style="color:#059669">✓ 2001</td><td>Coral reef / Marine</td></tr>
+          <tr><td>Great Nicobar</td><td>A&N</td><td>1989</td><td>885</td><td style="color:#059669">✓ 2013</td><td>Tropical rainforest / Marine</td></tr>
+          <tr><td>Simlipal</td><td>Odisha</td><td>1994</td><td>4,374</td><td style="color:#059669">✓ 2009</td><td>Sal forest / Tiger</td></tr>
+          <tr><td>Dibru-Saikhowa</td><td>Assam</td><td>1986</td><td>765</td><td style="color:#dc2626">—</td><td>Riverine grassland</td></tr>
+          <tr><td>Dehang-Debang</td><td>Arunachal</td><td>1998</td><td>5,112</td><td style="color:#dc2626">—</td><td>Eastern Himalayan</td></tr>
+          <tr><td>Pachmarhi</td><td>MP</td><td>1999</td><td>4,926</td><td style="color:#059669">✓ 2009</td><td>Central Indian highland</td></tr>
+          <tr><td>Khangchendzonga</td><td>Sikkim</td><td>2000</td><td>2,620</td><td style="color:#059669">✓ 2018</td><td>Eastern Himalayan</td></tr>
+          <tr><td>Agasthyamalai</td><td>KL/TN</td><td>2001</td><td>3,500</td><td style="color:#059669">✓ 2016</td><td>Southern Western Ghats</td></tr>
+          <tr><td>Achanakmar-Amarkantak</td><td>CG/MP</td><td>2005</td><td>3,835</td><td style="color:#059669">✓ 2012</td><td>Sal-Teak transition</td></tr>
+          <tr><td>Cold Desert</td><td>HP</td><td>1992</td><td>7,770</td><td style="color:#dc2626">—</td><td>Trans-Himalayan cold desert</td></tr>
+          <tr><td>Seshachalam Hills</td><td>AP</td><td>2010</td><td>4,756</td><td style="color:#dc2626">—</td><td>Eastern Ghats dry forest</td></tr>
+          <tr><td>Panna</td><td>MP</td><td>2011</td><td>2,998</td><td style="color:#dc2626">—</td><td>Vindhyan plateau</td></tr>
+          <tr><td>Kutch</td><td>Gujarat</td><td>2008</td><td>12,454</td><td style="color:#dc2626">—</td><td>Desert / Rann wetland</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SEASONAL GUIDE
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-seasonal">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0e7490">Seasonal Guide</span>
+    <span class="phase-tag" style="background:rgba(14,116,144,.15);color:#0e7490">Flora · Fauna · Climate by Season and Habitat</span>
+    <span class="phase-desc">When to see what — across India's wild landscapes</span>
+  </div>
+
+  <div class="season-grid">
+    <div class="season-card summer">
+      <div class="season-name">Summer</div>
+      <div class="season-months">March – May</div>
+      <div class="season-body">
+        <b>Best for wildlife:</b> Peak game viewing — animals concentrate near water. Vegetation is sparse; sightings easiest.<br><br>
+        <b>Tiger parks:</b> Corbett, Bandhavgarh, Pench, Ranthambore, Kanha — excellent. Tigers visible at water holes all day.<br><br>
+        <b>Elephant corridors:</b> Kabini (Karnataka) — spectacular elephant gatherings at reservoir banks as water bodies dry up.<br><br>
+        <b>Birds:</b> Resident species active; migrants have departed. Breeding for raptors — vultures, eagles nest March–May.<br><br>
+        <b>Rhino belt:</b> Kaziranga and Manas — before monsoon floods. March–May accessible.<br><br>
+        <b>Himalayan parks:</b> Still snowbound below 3,000m. Great Himalayan NP, Valley of Flowers inaccessible.
+      </div>
+    </div>
+    <div class="season-card monsoon">
+      <div class="season-name">Monsoon</div>
+      <div class="season-months">June – September</div>
+      <div class="season-body">
+        <b>Most parks closed</b> Jun–Sep (landslides, leeches, flooding). Exceptions:<br><br>
+        <b>Open:</b> Gir NP (Gujarat — rain shadow), Rajasthan parks, Kaziranga (partly until July). Rann of Kutch wetland fills.<br><br>
+        <b>Kaziranga floods:</b> Brahmaputra floods annually displace thousands of animals — rhinos, tigers, hog deer move south to Karbi Anglong hills. Critical wildlife corridors must remain open.<br><br>
+        <b>Western Ghats:</b> Park entry restricted, but forests transform — lush canopy, river frogs breed, pit vipers active, king cobra nesting.<br><br>
+        <b>Coastal & Marine:</b> Olive ridley turtle mass nesting (Arribada) at Gahirmatha (Odisha) and Rushikulya — May to August.<br><br>
+        <b>Valley of Flowers:</b> Opens July 1 — peak bloom in August. Only 88 km² but 500+ flowering alpine species.
+      </div>
+    </div>
+    <div class="season-card post">
+      <div class="season-name">Post-Monsoon</div>
+      <div class="season-months">October – November</div>
+      <div class="season-body">
+        <b>Parks reopen.</b> Vegetation lush — photography excellent with green backgrounds.<br><br>
+        <b>Migratory birds arrive:</b> Bharatpur/Keoladeo opens to tens of thousands of waterbirds from Central Asia. Bar-headed geese, pochards, teals from September.<br><br>
+        <b>Chilika lagoon fills</b> — Irrawaddy dolphins visible, flamingos arrive.<br><br>
+        <b>Siberian cranes</b> were historically recorded at Bharatpur in October (now functionally extinct from India).<br><br>
+        <b>Ranthambore, Pench, Bandhavgarh</b> — October marks park reopening after monsoon closure. Tiger sightings resume. Grass is still high, so walking trails useful.<br><br>
+        <b>Himalayan region:</b> Post-monsoon is excellent — October/November. Snow leopard activity increases as snow comes down. Hemis NP (Ladakh) — leopard sightings near villages.
+      </div>
+    </div>
+    <div class="season-card winter">
+      <div class="season-name">Winter</div>
+      <div class="season-months">December – February</div>
+      <div class="season-body">
+        <b>Best for migratory birds</b> across India. Peak months for wetland birding.<br><br>
+        <b>Bharatpur:</b> 200,000+ birds at peak. Sultanpur (Haryana), Chilika (Odisha), Vedanthangal (TN) — flamingos, geese, ducks from Russia, Mongolia, Central Asia.<br><br>
+        <b>Hemis NP (Ladakh):</b> January–February — best snow leopard tracking. Animals move below snowline following their prey (bharal). World's most accessible snow leopard park in winter.<br><br>
+        <b>Tiger reserves:</b> Excellent visibility in dry winter — Corbett, Bandhavgarh, Kanha, Pench. Cold drives tigers to sun in open areas; late morning sightings common.<br><br>
+        <b>Gir NP:</b> November–February — Asiatic lions most visible. Cool weather = lions active longer each day.<br><br>
+        <b>Andaman Islands:</b> November–April peak season — Mahatma Gandhi Marine NP. Coral reefs, sea turtles, whale sharks.
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Park Accessibility Calendar — Open / Closed / Best Season</p>
+    <svg id="park-calendar-svg" viewBox="0 0 800 320" style="width:100%;height:320px;display:block;"></svg>
+  </div>
+
+  <div class="two-col" style="margin-top:1.5rem;">
+    <div class="box" style="margin-bottom:0;">
+      <p class="box-title">Flora by Season — Key Events</p>
+      <table>
+        <thead><tr><th>Event</th><th>Season</th><th>Location</th></tr></thead>
+        <tbody>
+          <tr><td>Brahma kamal bloom</td><td style="color:#0369a1">July–Aug</td><td>Valley of Flowers, Uttarakhand</td></tr>
+          <tr><td>Dhak (Flame of Forest) flowers</td><td style="color:#d97706">Feb–Apr</td><td>Ranthambore, Central India</td></tr>
+          <tr><td>Sal forest new leaf flush</td><td style="color:#d97706">March</td><td>Corbett, Kanha, Bandhavgarh</td></tr>
+          <tr><td>Semal (silk cotton) blooms</td><td style="color:#d97706">Feb–Mar</td><td>All deciduous forests</td></tr>
+          <tr><td>Western Ghats mushroom flush</td><td style="color:#0369a1">June–Sept</td><td>Coorg, Shola forests, Ooty</td></tr>
+          <tr><td>Mangrove propagule release</td><td style="color:#0369a1">July–Sept</td><td>Sundarbans, Bhitarkanika</td></tr>
+          <tr><td>Rhododendron bloom</td><td style="color:#d97706">March–Apr</td><td>Himalaya (Chopta, Tungnath)</td></tr>
+          <tr><td>Alpine meadow wildflowers</td><td style="color:#0369a1">Jul–Sept</td><td>Rohtang, Hemis, Dzukou</td></tr>
+          <tr><td>Khejri (Prosopis cineraria)</td><td style="color:#d97706">Feb–Mar</td><td>Thar Desert, Rajasthan</td></tr>
+          <tr><td>Water lily (Nymphaea) bloom</td><td style="color:#0369a1">Jul–Sept</td><td>Bharatpur, Chilika, Loktak</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box" style="margin-bottom:0;">
+      <p class="box-title">Climatic Zones & Their Dominant Ecosystems</p>
+      <table>
+        <thead><tr><th>Zone</th><th>Rainfall</th><th>Ecosystem</th><th>Key Parks</th></tr></thead>
+        <tbody>
+          <tr><td>Western Ghats windward</td><td>2,000–7,000 mm</td><td>Tropical wet evergreen</td><td>Silent Valley, Periyar, Kudremukh</td></tr>
+          <tr><td>Indo-Gangetic Plain</td><td>600–1,200 mm</td><td>Tropical moist deciduous</td><td>Corbett, Dudhwa, Pilibhit</td></tr>
+          <tr><td>Central India Plateau</td><td>800–1,400 mm</td><td>Tropical dry deciduous</td><td>Kanha, Pench, Bandhavgarh</td></tr>
+          <tr><td>Rajasthan semi-arid</td><td>100–500 mm</td><td>Scrub / Thorny forest</td><td>Ranthambore, Sariska, Desert NP</td></tr>
+          <tr><td>Trans-Himalayan</td><td><200 mm</td><td>Cold desert</td><td>Hemis, Pin Valley, Cold Desert BR</td></tr>
+          <tr><td>Northeast India</td><td>2,000–12,000 mm</td><td>Sub-tropical broadleaf</td><td>Kaziranga, Manas, Eaglenest</td></tr>
+          <tr><td>Coastal / Island</td><td>1,500–3,000 mm</td><td>Mangrove / Coral</td><td>Sundarbans, Gulf of Mannar</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MIGRATION PATHS
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-migration">
+  <div class="section-header">
+    <span class="phase-label" style="color:#b45309">Migration Paths</span>
+    <span class="phase-tag" style="background:rgba(180,83,9,.15);color:#b45309">Birds · Mammals · Marine · Flyways</span>
+    <span class="phase-desc">Ancient journeys across sky, land, and ocean</span>
+  </div>
+
+  <div class="callout" style="border-color:#b45309">
+    <b>India's Flyways:</b> India lies under two major bird migratory flyways — the <b>Central Asian Flyway (CAF)</b> and the <b>East Asian–Australasian Flyway (EAAF)</b>. Over 500 of India's 1,300 bird species are migratory — arriving from breeding grounds in Siberia, Central Asia, Mongolia, Europe, and the Arctic.
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <p class="box-title">Avian Migration — Central Asian Flyway</p>
+      <div id="migration-birds">
+        <div class="migration-item">
+          <div class="migration-icon">🦢</div>
+          <div>
+            <div class="migration-species">Bar-Headed Goose</div>
+            <div class="migration-route">Breeds in Central Asia (Mongolia, China, Tibet) at 4,000–5,000m altitude. Winters in Indian wetlands — <b>Bharatpur, Chilika, Loktak Lake (Manipur), Gujarat wetlands</b>. Flies over the Himalaya — one of the world's highest migratory routes (6,000–7,000m altitude). Uses nocturnal thermals and takes advantage of jet streams in Himalayan passes.</div>
+            <span class="migration-season" style="background:rgba(14,116,144,.15);color:#0e7490;">Oct → Feb / Mar → Apr</span>
+          </div>
+        </div>
+        <div class="migration-item">
+          <div class="migration-icon">🦩</div>
+          <div>
+            <div class="migration-species">Greater & Lesser Flamingo</div>
+            <div class="migration-route">Breeds in the <b>Rann of Kutch (Gujarat)</b> — India's only breeding colony (~1.5 million birds at Flamingo City near Bhachau). Disperses to coastal wetlands post-monsoon — <b>Chilika, Pulicat Lake, Point Calimere, Sewri (Mumbai)</b>. Some individuals ringed in India have been traced to Iran and Pakistan in summer.</div>
+            <span class="migration-season" style="background:rgba(3,105,161,.15);color:#0369a1;">Breeds Mar–May · Disperses Aug–Mar</span>
+          </div>
+        </div>
+        <div class="migration-item">
+          <div class="migration-icon">🦅</div>
+          <div>
+            <div class="migration-species">Amur Falcon</div>
+            <div class="migration-route">Travels from breeding grounds in Siberia/NE China to wintering grounds in Southern Africa — longest migration of any raptor (22,000 km round trip). Staging stopover at <b>Doyang reservoir (Nagaland)</b> — millions stop in October–November, making it the world's largest known falcon roosting site. Previously hunted; now protected under community conservation.</div>
+            <span class="migration-season" style="background:rgba(180,83,9,.15);color:#b45309;">Staging: Oct–Nov</span>
+          </div>
+        </div>
+        <div class="migration-item">
+          <div class="migration-icon">🦆</div>
+          <div>
+            <div class="migration-species">Ferruginous Duck, Garganey, Northern Pintail</div>
+            <div class="migration-route">From breeding grounds in Russia, Kazakhstan, and Central Asia. Winter in Indian wetlands — <b>Bharatpur, Sultanpur, Loktak, Wular Lake (J&K)</b>. Pintail and common teal are among India's most abundant winter waterbirds. Wular Lake (largest freshwater lake in India) hosts 400,000+ waterfowl at peak winter.</div>
+            <span class="migration-season" style="background:rgba(14,116,144,.15);color:#0e7490;">Oct–Feb</span>
+          </div>
+        </div>
+        <div class="migration-item">
+          <div class="migration-icon">🐦</div>
+          <div>
+            <div class="migration-species">European Roller, Montagu's Harrier, Steppe Eagle</div>
+            <div class="migration-route">Passage migrants through India en route to Africa. <b>Montagu's harrier</b> winters in Indian grasslands (Nannaj, Gujarat). <b>Steppe eagle</b> — enormous flocks funnel through Peninsular India in October. Counted at <b>Hadagarh plateau (Odisha)</b> and Himalayan passes. Over 50,000 raptors counted at Ambala in a single October day.</div>
+            <span class="migration-season" style="background:rgba(180,83,9,.15);color:#b45309;">Sept–Nov (southward) / Feb–Apr (northward)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <p class="box-title">Mammal & Marine Migration</p>
+      <div>
+        <div class="migration-item">
+          <div class="migration-icon">🐘</div>
+          <div>
+            <div class="migration-species">Asian Elephant — Seasonal Movement</div>
+            <div class="migration-route"><b>Kaziranga→Karbi Anglong:</b> Annual monsoon displacement — as Brahmaputra floods, ~1,200 elephants move south across NH 37 (Kaziranga–Karbi corridor). Highway crossings are extremely dangerous — 18 underpasses constructed. Movement continues until floods recede (September).<br><b>Nilgiri Elephant Corridor:</b> Seasonal movement between Nagarhole, Bandipur, Mudumalai, and Wayanad following fruiting seasons. Elephant herds travel 50–80 km during summer.<br><b>Singhbhum Elephant Reserve (Jharkhand–West Bengal):</b> Elephants follow seasonal fodder availability between forests and agricultural areas, causing conflict.</div>
+            <span class="migration-season" style="background:rgba(21,128,61,.15);color:#15803d;">Year-round; peak movement Jun–Sep (floods)</span>
+          </div>
+        </div>
+        <div class="migration-item">
+          <div class="migration-icon">🦁</div>
+          <div>
+            <div class="migration-species">Asiatic Lion — Dispersal</div>
+            <div class="migration-route">Gir lions have begun dispersing beyond the forest — young males establishing ranges in Girnar, Savarkundla, Mitiyala, and Ratanmahal WLS areas (all within 100 km of Gir). Population pressure (674 lions in Gir) driving dispersal. A second population was proposed at Kuno NP (MP) — one of the longest-running wildlife disputes in India, finally resolved with cheetah translocation at Kuno instead.</div>
+            <span class="migration-season" style="background:rgba(194,65,12,.15);color:#c2410c;">Dispersal ongoing</span>
+          </div>
+        </div>
+        <div class="migration-item">
+          <div class="migration-icon">🐋</div>
+          <div>
+            <div class="migration-species">Humpback Whale & Blue Whale</div>
+            <div class="migration-route">Humpback whales (Arabian Sea humpback — genetically isolated population, only ~250 individuals) resident year-round in Oman Gulf / West Indian Ocean. Seen seasonally off <b>Lakshadweep, Goa, Kerala</b> coast. Blue whales feed in Sri Lanka–India channel (Trincomalee Canyon) during April–May. Both species highly threatened by ship strikes and noise.</div>
+            <span class="migration-season" style="background:rgba(2,132,199,.15);color:#0284c7;">Dec–Apr (peak, Indian coast)</span>
+          </div>
+        </div>
+        <div class="migration-item">
+          <div class="migration-icon">🐢</div>
+          <div>
+            <div class="migration-species">Olive Ridley Turtle — Arribada Mass Nesting</div>
+            <div class="migration-route">Largest known single-species marine aggregation on Earth. <b>Gahirmatha (Odisha):</b> Up to 800,000 turtles nest in a single night (Arribada). <b>Rushikulya beach:</b> Secondary colony. Also nests at <b>Versova (Mumbai, urban)</b> and Agatti Island. Turtles migrate from feeding grounds across Bay of Bengal and Indian Ocean — tracked individuals travel 2,000+ km to return to natal beach.</div>
+            <span class="migration-season" style="background:rgba(3,105,161,.15);color:#0369a1;">Nesting: Jan–May (peak Feb–Mar)</span>
+          </div>
+        </div>
+        <div class="migration-item">
+          <div class="migration-icon">🐆</div>
+          <div>
+            <div class="migration-species">Snow Leopard — Altitudinal Migration</div>
+            <div class="migration-route">Moves to lower elevations (2,500–3,500m) in winter following prey (bharal/blue sheep). Returns to high-altitude zones (4,000–5,500m) in summer. <b>Hemis NP (Ladakh)</b> tracks reveal 4–6 km daily movement ranges in winter. Individuals may travel 100+ km between seasonal ranges. Conflicts with herders increase in winter when leopards attack livestock near villages.</div>
+            <span class="migration-season" style="background:rgba(124,58,237,.15);color:#7c3aed;">Descends Oct–Mar; Ascends Apr–Jun</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Wildlife Corridors — Connectivity Between Protected Areas</p>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Corridor</th><th>States</th><th>Connects</th><th>Key Species</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><b>Terai Arc Landscape</b></td><td>UK, UP</td><td>Corbett ↔ Dudhwa via 9 PAs</td><td>Tiger, Elephant, Rhinoceros</td><td style="color:#d97706">Partially degraded — highway & rail threats</td></tr>
+          <tr><td><b>Nilgiri Biosphere Corridor</b></td><td>KA, TN, KL</td><td>Nagarhole–Bandipur–Mudumalai–Wayanad</td><td>Tiger, Elephant, Leopard</td><td style="color:#16a34a">Largely intact — India's largest tiger landscape</td></tr>
+          <tr><td><b>Kaziranga–Karbi Anglong</b></td><td>Assam</td><td>Kaziranga NP ↔ Karbi Hills</td><td>Rhino, Elephant, Tiger</td><td style="color:#dc2626">Critical — NH 37 bisects; 18 underpasses built</td></tr>
+          <tr><td><b>Central Indian Corridor</b></td><td>MP, CG, MH</td><td>Panna ↔ Kanha ↔ Tadoba ↔ Pench</td><td>Tiger, Leopard, Wild dog</td><td style="color:#d97706">Fragmented — villages, mines, agriculture</td></tr>
+          <tr><td><b>Eastern Ghats Corridor</b></td><td>TG, AP, OD</td><td>Papikonda ↔ Nagarjunasagar ↔ Simlipal</td><td>Tiger, Elephant</td><td style="color:#dc2626">Highly fragmented — lowest connectivity</td></tr>
+          <tr><td><b>Indo-Bhutan Elephant Corridor</b></td><td>Assam, WB</td><td>Manas ↔ Royal Manas (Bhutan)</td><td>Elephant, Tiger, Clouded leopard</td><td style="color:#16a34a">Trans-national — relatively intact</td></tr>
+          <tr><td><b>Shivalik–Gangetic Corridor</b></td><td>UK, UP, Bihar</td><td>Rajaji ↔ Corbett ↔ Pilibhit</td><td>Elephant, Tiger</td><td style="color:#d97706">Railway & canal barriers</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     THREATS & CLIMATE IMPACTS
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-threats">
+  <div class="section-header">
+    <span class="phase-label" style="color:#dc2626">Threats & Climate</span>
+    <span class="phase-tag" style="background:rgba(220,38,38,.15);color:#dc2626">Habitat Loss · Climate Change · Human-Wildlife Conflict · Pollution</span>
+    <span class="phase-desc">Pressures on India's wild heritage</span>
+  </div>
+
+  <div class="callout" style="border-color:#dc2626">
+    <b>Critical Context:</b> India's protected areas face unprecedented pressure from a rapidly growing economy and population. The country has pledged to achieve 30% land under conservation by 2030 (30×30 global target), but currently stands at ~5.26%. Linear infrastructure (roads, railways, power lines, pipelines) bisects wildlife corridors, threatening connectivity essential for long-term species survival.
+  </div>
+
+  <div class="box">
+    <p class="box-title">Threat Severity Index — India's Wildlife</p>
+    <div style="padding:.5rem 0;">
+      <div class="threat-item">
+        <div class="threat-name">Habitat Loss & Fragmentation</div>
+        <div class="threat-bar-wrap"><div class="threat-bar" style="width:92%;background:linear-gradient(90deg,#dc2626,#f87171);"></div></div>
+        <div class="threat-pct" style="color:#dc2626">92%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-name">Human-Wildlife Conflict</div>
+        <div class="threat-bar-wrap"><div class="threat-bar" style="width:85%;background:linear-gradient(90deg,#dc2626,#f87171);"></div></div>
+        <div class="threat-pct" style="color:#dc2626">85%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-name">Poaching & Illegal Trade</div>
+        <div class="threat-bar-wrap"><div class="threat-bar" style="width:78%;background:linear-gradient(90deg,#c2410c,#f97316);"></div></div>
+        <div class="threat-pct" style="color:#c2410c">78%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-name">Climate Change (shifting habitats)</div>
+        <div class="threat-bar-wrap"><div class="threat-bar" style="width:74%;background:linear-gradient(90deg,#c2410c,#f97316);"></div></div>
+        <div class="threat-pct" style="color:#c2410c">74%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-name">Invasive Species</div>
+        <div class="threat-bar-wrap"><div class="threat-bar" style="width:65%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+        <div class="threat-pct" style="color:#d97706">65%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-name">Pollution (water, plastic, noise)</div>
+        <div class="threat-bar-wrap"><div class="threat-bar" style="width:60%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+        <div class="threat-pct" style="color:#d97706">60%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-name">Linear Infrastructure (roads, rails)</div>
+        <div class="threat-bar-wrap"><div class="threat-bar" style="width:55%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+        <div class="threat-pct" style="color:#d97706">55%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-name">Tourism Pressure</div>
+        <div class="threat-bar-wrap"><div class="threat-bar" style="width:40%;background:linear-gradient(90deg,#059669,#34d399);"></div></div>
+        <div class="threat-pct" style="color:#059669">40%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mech-grid">
+    <div class="mech-card">
+      <div class="mech-card-title">Climate Change Impacts</div>
+      <div class="mech-card-body">
+        <b>Glacial retreat:</b> Himalayan glaciers retreating at 15–25m/year. Threatens long-term river flow — Ganga, Brahmaputra, Indus — and wetland ecosystems downstream. Snow leopard habitat is shifting upward (nowhere left to go at 6,000m).<br><br>
+        <b>Phenological mismatch:</b> Flowers blooming earlier, while insect pollinators emerge later. Tiger prey breeding cycles shifting with temperature. Migratory birds arriving before/after food peaks.<br><br>
+        <b>Coral bleaching:</b> Gulf of Mannar corals bleach when SST exceeds 31°C — events in 2016, 2020, 2023. Lakshadweep reefs severely affected. Acidification reduces coral calcification rates.<br><br>
+        <b>Sea level rise:</b> Sundarbans losing 20–25 islands per decade. Salinity ingress kills freshwater mangroves. The iconic Sundari tree (Heritiera fomes) dying due to salinity — changing forest composition.<br><br>
+        <b>Monsoon intensification:</b> Extreme floods in Kaziranga more frequent. 2022 floods submerged 90% of the park — 212 animals died including 18 rhinos.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Human-Wildlife Conflict (HWC)</div>
+      <div class="mech-card-body">
+        <b>Scale:</b> India loses ~500 people per year to human-wildlife conflict (primarily elephant, tiger, leopard, crocodile, snake). Compensation paid by state governments for crop damage, livestock loss, and human casualties.<br><br>
+        <b>Elephant conflict:</b> Most severe in Assam, West Bengal, Jharkhand, Odisha, and Chhattisgarh. Elephants raid crops in narrow agricultural corridors between forests. Over 500 human deaths/year attributed to elephants nationally.<br><br>
+        <b>Tiger conflict:</b> Corbett, Dudhwa, Sundarbans, and Central India reserves see regular tiger attacks. Sundarbans honey collectors especially vulnerable (100+ deaths/decade).<br><br>
+        <b>Leopard conflict:</b> Expanding into peri-urban areas near Mumbai (Sanjay Gandhi NP), Nashik, Uttarakhand towns. Leopards proven to suppress dog and pig populations in cities — both pest species. Complex urban coexistence debate.<br><br>
+        <b>Solutions:</b> Bee-hive fences (elephants), GPS collaring, early warning SMS systems (HaathiApp), Coexistence Grants, community bio-guards.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Invasive Species Crisis</div>
+      <div class="mech-card-body">
+        <b>Lantana camara:</b> Most invasive plant in Indian forests. Covers millions of hectares in tiger reserves. Forms impenetrable thickets that outcompete native grass and shrubs, reducing ungulate habitat and prey density for tigers.<br><br>
+        <b>Parthenium hysterophorus (Congress grass):</b> Grassland invader. Destroys habitat of Great Indian Bustard, Florican, and grassland birds in Rajasthan, Gujarat, Maharashtra.<br><br>
+        <b>Eichhornia crassipes (Water hyacinth):</b> Covers Loktak Lake (Manipur), Chilika, Kerala backwaters — reducing open water habitat for waterbirds and fish.<br><br>
+        <b>African catfish (Clarias gariepinus):</b> Invasive in Ganga, Yamuna — severely impacts native fish populations on which Gangetic dolphin and gharial depend.<br><br>
+        <b>Burmese python:</b> Escaped exotic pets breeding in Andaman forests — threat to endemic fauna.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Poaching & Illegal Wildlife Trade</div>
+      <div class="mech-card-body">
+        <b>Tiger:</b> Despite Project Tiger's success, poaching for bones, skin, and organs remains a threat. TRAFFIC India estimates one tiger killed every 4 days in India's peak poaching years (1990s). Now much reduced — 2022 poaching confirmed: 26 tigers.<br><br>
+        <b>Rhino:</b> Horn worth more than gold by weight. Kaziranga deployed over 600 armed forest guards; shoot-at-sight for poachers since 2015. Poaching reduced dramatically (from 30+/year to single digits).<br><br>
+        <b>Pangolin:</b> Most trafficked mammal globally. India has both the Indian and Chinese pangolin. Scales used in traditional Chinese medicine. All 8 pangolin species are CITES Appendix I listed.<br><br>
+        <b>Star Tortoise, Monitor Lizard, Tokay Gecko:</b> Supplied to international pet and traditional medicine trade. Major seizures at Indian airports (Chennai, Delhi, Mumbai) routinely.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     GOVERNMENT INITIATIVES
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-initiatives">
+  <div class="section-header">
+    <span class="phase-label" style="color:#059669">Initiatives</span>
+    <span class="phase-tag" style="background:rgba(5,150,105,.15);color:#059669">Project Tiger · Project Elephant · Wetlands · International Treaties</span>
+    <span class="phase-desc">India's conservation policy architecture</span>
+  </div>
+
+  <div class="callout" style="border-color:#059669">
+    <b>Legal Framework:</b> India's wildlife is protected under the <b>Wildlife (Protection) Act, 1972</b> (amended 2002, 2022), <b>Environment (Protection) Act, 1986</b>, and <b>Forest (Conservation) Act, 1980</b>. India is signatory to CITES, Ramsar Convention, Convention on Biological Diversity (CBD), and the Paris Climate Agreement with NDC commitments relevant to forest cover.
+  </div>
+
+  <div class="initiative-card">
+    <div class="initiative-name">Project Tiger</div>
+    <div class="initiative-year">Launched: 1973 | NTCA established: 2005</div>
+    <div class="initiative-body">
+      India's most successful conservation programme. Launched by PM Indira Gandhi in 1973 with 9 reserves and ~1,800 tigers. Today: <b>55 Tiger Reserves</b> across 18 states covering 78,135 km². Tiger population — <b>1,827 (1972) → 3,695 (2022)</b> — a 100% increase.<br><br>
+      <b>National Tiger Conservation Authority (NTCA)</b> oversees all tiger reserves. Mandated tiger census every 4 years using camera traps, pug marks, and individual identification (stripe patterns). India accounts for <b>75% of world's wild tigers</b>.<br><br>
+      <b>M-STRIPES:</b> Monitoring System for Tigers — Intensive Protection and Ecological Status. App-based field data collection by forest guards. Used in all 55 tiger reserves.<br><br>
+      <b>Recent success stories:</b> Panna (MP) — tigers went locally extinct in 2009, reintroduced, now has 70+. Satkosia (Odisha) — recent successful establishment. Dudhwa — rhinos reintroduced alongside tigers.
+    </div>
+    <span class="initiative-status status-active">Active — Flagship programme</span>
+  </div>
+
+  <div class="initiative-card">
+    <div class="initiative-name">Project Elephant</div>
+    <div class="initiative-year">Launched: 1992</div>
+    <div class="initiative-body">
+      Centrally Sponsored Scheme to protect elephants, their habitat, and corridors. <b>33 Elephant Reserves</b> notified. India has ~27,000–30,000 wild Asian elephants — <b>60% of Asia's total</b>. Key activities: corridor protection, anti-poaching, veterinary support for conflict-injured elephants, HWC mitigation.<br><br>
+      <b>Gaj Yatra:</b> 2017–18 campaign raising awareness for elephant corridors. <b>Haathi App:</b> GPS tracking of GPS-collared wild elephants with alert system for villages. <b>Elephant Task Force Report (2010):</b> Landmark document recommending 88 elephant corridors — 22 identified as priority.
+    </div>
+    <span class="initiative-status status-active">Active</span>
+  </div>
+
+  <div class="initiative-card">
+    <div class="initiative-name">Project Cheetah — Reintroduction</div>
+    <div class="initiative-year">Launched: September 17, 2022</div>
+    <div class="initiative-body">
+      World's first inter-continental cheetah translocation. <b>8 cheetahs from Namibia</b> released at Kuno National Park (MP) in September 2022, followed by <b>12 from South Africa</b> in February 2023. Total: 20 cheetahs, of which 8 have died as of 2024 (disease, radio collar injuries, territory fights). Surviving animals have produced cubs.<br><br>
+      Asiatic cheetahs were declared extinct in India in 1952. African cheetahs (Acinonyx jubatus) are a closely related subspecies selected due to genetic compatibility of habitat. Long-term goal: restore grassland ecology by re-establishing an apex predator in Kuno, Gandisagar (MP), Mukundra (Rajasthan), and Gandhi Sagar ecosystems.
+    </div>
+    <span class="initiative-status status-expanded">Ongoing — Results mixed</span>
+  </div>
+
+  <div class="initiative-card">
+    <div class="initiative-name">Project Crocodile / Gharial Conservation</div>
+    <div class="initiative-year">Launched: 1975</div>
+    <div class="initiative-body">
+      India had three native crocodilian species — mugger, saltwater crocodile, and gharial. Gharial (<i>Gavialis gangeticus</i>) was critically endangered (population ~250 in 1970s) due to hunting and river modification. <b>National Chambal Sanctuary</b> (UP/MP/Rajasthan) is the last stronghold — a shared tri-state protected river stretch.<br><br>
+      <b>Captive breeding at Kukrail (Lucknow), Deori, and Tikarpada</b> — over 4,000 released into Chambal. Current wild population: ~650–900. Threats remain: sand mining, fishing nets, river dams. <b>Project Mugger and Saltwater Crocodile</b> (Bhitarkanika) — saltwater croc recovered from 96 individuals (1975) to 1,700+ today.
+    </div>
+    <span class="initiative-status status-active">Active</span>
+  </div>
+
+  <div class="initiative-card">
+    <div class="initiative-name">Sea Turtle Conservation Programme</div>
+    <div class="initiative-year">Ongoing since 1980s</div>
+    <div class="initiative-body">
+      <b>Gahirmatha Marine Sanctuary (Odisha):</b> World's largest olive ridley rookery. Declared Marine Sanctuary in 1997. Fishing trawlers banned within 20 km during nesting season. <b>Odisha Marine Fisheries Regulation Act</b> mandates Turtle Excluder Devices (TEDs) in trawl nets.<br><br>
+      <b>Forest Department Hatcheries:</b> Eggs relocated from vulnerable beaches to hatcheries at Rushikulya, Devi, and Gahirmatha. 200,000+ hatchlings released annually. Satellite tagging programme reveals migratory routes — tagged turtles traced to Thailand, Sri Lanka, and Andaman.
+    </div>
+    <span class="initiative-status status-active">Active</span>
+  </div>
+
+  <div class="initiative-card">
+    <div class="initiative-name">Wetland Conservation — Ramsar Sites</div>
+    <div class="initiative-year">India has 82 Ramsar Sites (2024) — World's 3rd largest</div>
+    <div class="initiative-body">
+      India became the country with the most Ramsar-designated wetlands in the world (by number) in 2022. <b>Key sites:</b> Chilika Lake (Odisha) — 1,100 km², largest coastal wetland in Asia; Keoladeo Ghana NP (Rajasthan); Loktak Lake (Manipur) — only floating national park (Keibul Lamjao, home of sangai — Manipur's state animal, the brow-antlered deer).<br><br>
+      <b>National Plan for Conservation of Aquatic Ecosystems (NPCA):</b> Restoration of 150+ lakes and wetlands. <b>Wetlands (Conservation and Management) Rules, 2017</b> — legal framework for regulation of activities in wetland buffers.
+    </div>
+    <span class="initiative-status status-expanded">Expanded — 82 Ramsar sites</span>
+  </div>
+
+  <div class="initiative-card">
+    <div class="initiative-name">CAMPA — Compensatory Afforestation</div>
+    <div class="initiative-year">CAMPA Act 2016</div>
+    <div class="initiative-body">
+      When forest land is diverted for development (mines, roads, projects), the project developer must pay into the <b>Compensatory Afforestation Fund</b> and plant double the area in non-forest land or degrade forest area. CAMPA has accumulated over ₹65,000 crore (2024). Critics argue compensatory plantation doesn't replace old-growth forest biodiversity. However, CAMPA funds are now being directed to wildlife habitat improvement, anti-poaching, and soil & water conservation.
+    </div>
+    <span class="initiative-status status-expanded">Active</span>
+  </div>
+
+  <div class="initiative-card">
+    <div class="initiative-name">Snow Leopard Conservation — SECURE Himalaya</div>
+    <div class="initiative-year">UNDP-GEF Project: 2019–2024</div>
+    <div class="initiative-body">
+      <b>SECURE Himalaya</b> (Snow Leopard Ecosystem Conservation and Recovery) — implemented across Jammu & Kashmir, Ladakh, Himachal Pradesh, Uttarakhand, Sikkim, and Arunachal Pradesh. India became the first country to release a <b>National Action Plan for Snow Leopard (NAPSL) in 2019</b>. Camera trap census in 2023 estimated India's snow leopard population at <b>718</b> — higher than earlier estimates.<br><br>
+      Community-based livestock insurance schemes (Himachal, Uttarakhand) to reduce retaliatory killing. Predator-proof corrals provided to herder communities. Rangers trained in camera trap deployment.
+    </div>
+    <span class="initiative-status status-active">Active</span>
+  </div>
+
+  <div class="box" style="margin-top:1.5rem;">
+    <p class="box-title">International Conservation Commitments</p>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Treaty / Programme</th><th>Year Joined</th><th>India's Key Obligations</th></tr></thead>
+        <tbody>
+          <tr><td><b>CITES</b> (Convention on Int'l Trade in Endangered Species)</td><td>1976</td><td>Prohibit international trade in 1,800+ species. Annual reports to Secretariat. India: strong enforcement record post-2000.</td></tr>
+          <tr><td><b>Ramsar Convention</b> (Wetlands)</td><td>1982</td><td>Wise use of wetlands. 82 sites notified. National Wetland Inventory completed 2022.</td></tr>
+          <tr><td><b>CBD</b> (Convention on Biological Diversity)</td><td>1994</td><td>Kunming–Montreal GBF targets (30×30 by 2030). India's National Biodiversity Authority (NBA) administers. Biological Diversity Act 2002.</td></tr>
+          <tr><td><b>Paris Agreement</b></td><td>2015 (ratified 2016)</td><td>NDC includes creating/maintaining carbon sink of 2.5–3 bn tonne CO₂ equivalent through additional forest & tree cover by 2030.</td></tr>
+          <tr><td><b>CMS</b> (Migratory Species)</td><td>1983</td><td>Protection of migratory birds, marine turtles, sharks, and marine mammals across their range. Central Asian Flyway Partnership.</td></tr>
+          <tr><td><b>Global Tiger Forum</b></td><td>1994</td><td>Multilateral platform for tiger range countries. India leads with highest tiger count globally.</td></tr>
+          <tr><td><b>ISA</b> International Solar Alliance</td><td>2015 (Founder)</td><td>Indirectly relevant — decarbonising energy reduces pressure to open forests for mining / power projects.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     INTERACTIVE MAP
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-map">
+  <div class="section-header">
+    <span class="phase-label" style="color:#1e3a5f">Interactive Map</span>
+    <span class="phase-tag" style="background:rgba(30,58,95,.2);color:#60a5fa">Pan · Zoom · Filter by Category · Migration Lines</span>
+    <span class="phase-desc">Click any marker for details · Scroll or pinch to zoom</span>
+  </div>
+
+  <div class="map-controls">
+    <button class="map-filter-btn active" id="fb-all" onclick="setFilter('all')" style="border-color:#60a5fa;color:#60a5fa;">All</button>
+    <button class="map-filter-btn" id="fb-tiger" onclick="setFilter('tiger')">🐯 Tiger Reserves</button>
+    <button class="map-filter-btn" id="fb-np" onclick="setFilter('np')">🌿 National Parks</button>
+    <button class="map-filter-btn" id="fb-sanctuary" onclick="setFilter('sanctuary')">🦋 Sanctuaries</button>
+    <button class="map-filter-btn" id="fb-biosphere" onclick="setFilter('biosphere')">🌍 Biospheres</button>
+    <button class="map-filter-btn" id="fb-wetland" onclick="setFilter('wetland')">💧 Wetlands</button>
+    <button class="map-filter-btn" id="fb-marine" onclick="setFilter('marine')">🐬 Marine</button>
+    <div class="map-zoom-btns">
+      <button class="map-zoom-btn" onclick="mapZoom(1.3)" title="Zoom In">+</button>
+      <button class="map-zoom-btn" onclick="mapZoom(0.77)" title="Zoom Out">−</button>
+      <button class="map-zoom-btn" onclick="mapReset()" title="Reset" style="font-size:.65rem;width:46px;letter-spacing:.05em;">RESET</button>
+    </div>
+  </div>
+
+  <div class="mig-toggle-row">
+    <span style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.35rem 0;">Migration Paths:</span>
+    <button class="mig-btn on" id="mb-bird" onclick="toggleMig('bird')" style="background:#b45309;border-color:#b45309;">🦅 Bird Flyways</button>
+    <button class="mig-btn on" id="mb-elephant" onclick="toggleMig('elephant')" style="background:#0369a1;border-color:#0369a1;">🐘 Elephant Corridors</button>
+    <button class="mig-btn on" id="mb-turtle" onclick="toggleMig('turtle')" style="background:#0891b2;border-color:#0891b2;">🐢 Sea Turtle Routes</button>
+    <button class="mig-btn on" id="mb-leopard" onclick="toggleMig('leopard')" style="background:#7c3aed;border-color:#7c3aed;">🐆 Snow Leopard Altitudinal</button>
+  </div>
+
+  <div id="map-wrap">
+    <canvas id="india-canvas" height="680"></canvas>
+    <div id="map-tooltip">
+      <div class="tt-name" id="tt-name"></div>
+      <div class="tt-type" id="tt-type"></div>
+      <div class="tt-body" id="tt-body"></div>
+    </div>
+  </div>
+
+  <div class="map-legend">
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#c2410c;"></div>Tiger Reserve / NP</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#15803d;"></div>National Park</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#7c3aed;"></div>Wildlife Sanctuary</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#0369a1;"></div>Biosphere Reserve</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#0891b2;"></div>Wetland / Ramsar</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#0284c7;"></div>Marine PA</div>
+    <div class="map-legend-item" style="margin-left:.5rem;"><div class="map-legend-line" style="background:#f59e0b;opacity:.8;"></div>Bird Flyway</div>
+    <div class="map-legend-item"><div class="map-legend-line" style="background:#0369a1;opacity:.8;"></div>Elephant Corridor</div>
+    <div class="map-legend-item"><div class="map-legend-line" style="background:#0891b2;opacity:.8;"></div>Sea Turtle Route</div>
+    <div class="map-legend-item"><div class="map-legend-line" style="background:#7c3aed;opacity:.8;"></div>Snow Leopard</div>
+  </div>
+  <p style="font-size:.62rem;color:var(--muted);margin-top:.75rem;">Drag to pan · Scroll wheel or pinch to zoom · Click markers for details · Toggle layers above</p>
+</div>
+
+<!-- ══════════════════════════════════════
+     WETLANDS
+══════════════════════════════════════ -->
+<div class="phase-panel" id="panel-wetlands">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0891b2">Wetlands</span>
+    <span class="phase-tag" style="background:rgba(8,145,178,.15);color:#0891b2">82 Ramsar Sites · Lakes · Rivers · Coastal Lagoons · Mangroves</span>
+    <span class="phase-desc">India's blue carbon and biodiversity lifelines</span>
+  </div>
+
+  <div class="callout" style="border-color:#0891b2">
+    <b>India & Wetlands:</b> India added 26 new Ramsar Sites in a single year (2022) — the most by any country in one year — taking the total to 75, and now 82 (2024). Wetlands cover ~4.63% of India's geographic area (15.26 million hectares). They support 5,000+ species of plants, fish, birds and mammals, provide water to 600 million people, and store more carbon per hectare than tropical forests.
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-value" style="color:#0891b2">82</div><div class="stat-label">Ramsar Sites (2024)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#0369a1">15.26M</div><div class="stat-label">Hectares of Wetland</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#15803d">4,500+</div><div class="stat-label">Wetland Bird Species</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#7c3aed">2,403</div><div class="stat-label">Freshwater Fish Species</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#0284c7">4,975</div><div class="stat-label">km Coastline (Wetlands)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#d97706">~150</div><div class="stat-label">Dugong in Gulf of Mannar</div></div>
+  </div>
+
+  <div class="wetland-grid">
+
+    <div class="wetland-card coastal">
+      <div class="wetland-name">Chilika Lake</div>
+      <div class="wetland-state">Odisha · 1,165 km² · Asia's Largest Coastal Lagoon</div>
+      <div class="wetland-body">India's first Ramsar Site (1981). A shallow brackish-water lagoon separated from the Bay of Bengal by a sand bar. Fed by 52 rivers and rivulets. Hosts <b>160+ bird species</b> in winter — flamingo, pelican, bar-headed goose. Habitat for the endangered <b>Irrawaddy dolphin</b> (India's only population in a lagoon). <b>Chilika Development Authority</b> restored the lake's ecology after severe hyacinth growth and silting — one of Asia's great wetland restoration stories.<br><br><b>Threats:</b> Prawn aquaculture encroachment, siltation from Mahanadi, tourism pressure.</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 1981</span><span class="wbadge">Irrawaddy Dolphin</span><span class="wbadge">Flamingo Staging</span></div>
+    </div>
+
+    <div class="wetland-card lake">
+      <div class="wetland-name">Loktak Lake</div>
+      <div class="wetland-state">Manipur · 287 km² · World's Only Floating National Park</div>
+      <div class="wetland-body">The largest freshwater lake in Northeast India. Famous for <b>phumdis</b> — heterogeneous masses of vegetation, soil, and organic matter floating on the lake surface. The <b>Keibul Lamjao National Park</b> (40 km²) sits on the largest phumdi — the only floating national park in the world, home to the <b>Sangai</b> (brow-antlered deer, Manipur's state animal — only ~260 individuals survive).<br><br>The lake supports 100,000+ people through fisheries. <b>Ramsar 1990</b>. Threatened by the Ithai barrage (1983) which stabilised water levels and degraded phumdi dynamics.</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 1990</span><span class="wbadge">Floating NP</span><span class="wbadge">Sangai Habitat</span></div>
+    </div>
+
+    <div class="wetland-card ramsar">
+      <div class="wetland-name">Keoladeo Ghana NP (Bharatpur)</div>
+      <div class="wetland-state">Rajasthan · 29 km² · UNESCO World Heritage Site</div>
+      <div class="wetland-body">Originally a royal duck-hunting reserve (19th century), converted to a protected wetland. A mosaic of marshes, woodlands, and grasslands. Ramsar 1981 and UNESCO WHS 1985. Peak winter brings <b>200,000+ birds</b> — bar-headed geese, pochards, shovelers, teals. Breeding colony of painted storks, open-billed storks, herons, cormorants active June–November.<br><br>The <b>Siberian Crane</b> (Grus leucogeranus) used Bharatpur as its primary wintering site until the 2000s — functionally extinct from India now, classified as a conservation tragedy of global significance.</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 1981</span><span class="wbadge">UNESCO WHS</span><span class="wbadge">200,000+ Birds</span></div>
+    </div>
+
+    <div class="wetland-card mangrove">
+      <div class="wetland-name">Sundarbans</div>
+      <div class="wetland-state">West Bengal · ~9,630 km² India side</div>
+      <div class="wetland-body">World's largest mangrove wetland and delta. Formed by Ganga–Brahmaputra–Meghna confluence. Ramsar 2001, UNESCO WHS 1987. The ecosystem provides <b>storm buffering</b> (reduced Cyclone Amphan's impact on Kolkata, 2020), <b>carbon sequestration</b> (mangroves store 4x more carbon than terrestrial forests per hectare), and <b>fish nursery</b> (80% of Bengal's coastal fish breed in Sundarbans).<br><br>Climate change causes 20–25 island losses per decade due to sea level rise. The iconic Sundari tree (Heritiera fomes) dying due to salinity increase.</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 2001</span><span class="wbadge">UNESCO WHS</span><span class="wbadge">Carbon Sink</span><span class="wbadge">Tiger Habitat</span></div>
+    </div>
+
+    <div class="wetland-card lake">
+      <div class="wetland-name">Wular Lake</div>
+      <div class="wetland-state">Jammu & Kashmir · 189 km² · Largest Freshwater Lake in India</div>
+      <div class="wetland-body">India's largest natural freshwater lake — formed by tectonic activity in the Kashmir valley. Fed by the Jhelum river. <b>Ramsar 1990</b>. Hosts <b>400,000+ waterbirds</b> at peak winter — common teal, northern pintail, mallard, gadwall, Eurasian wigeon. The lake also supports a massive fishery for 800,000+ people in the Kashmir valley.<br><br><b>Threats:</b> Siltation (5 million tonnes/year from Jhelum), encroachment by willows and lotus cultivation, aquatic weed (water chestnut — Trapa natans) invasion. Lake has shrunk from 217 km² historically.</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 1990</span><span class="wbadge">400,000+ Ducks</span><span class="wbadge">Freshwater Fishery</span></div>
+    </div>
+
+    <div class="wetland-card coastal">
+      <div class="wetland-name">Pulicat Lake</div>
+      <div class="wetland-state">Andhra Pradesh / Tamil Nadu · 759 km² · India's 2nd Largest Brackish Lagoon</div>
+      <div class="wetland-body">A shallow brackish coastal lagoon between the AP–TN border, separated from the Bay of Bengal by a sand barrier (Sriharikota Island — home of ISRO's rocket launch centre). Critical wintering ground for <b>Greater Flamingo and Lesser Flamingo</b> (50,000–100,000 birds). Also hosts bar-headed goose, spot-billed pelican, painted stork.<br><br>The Pulicat Bird Sanctuary (481 km²) encompasses the northern part. The lagoon supports 3,000+ fishing families. Threatened by prawn farming, fertiliser runoff, and proposed port expansion.</div>
+      <div class="wetland-badges"><span class="wbadge">Flamingo Staging</span><span class="wbadge">Sriharikota Adjacent</span><span class="wbadge">Brackish Lagoon</span></div>
+    </div>
+
+    <div class="wetland-card river">
+      <div class="wetland-name">National Chambal Sanctuary</div>
+      <div class="wetland-state">MP / UP / Rajasthan · 435 km river stretch</div>
+      <div class="wetland-body">The last stronghold of the <b>Indian Gharial</b> (Gavialis gangeticus — critically endangered), <b>Red-crowned Roofed Turtle</b> (critically endangered), and <b>Gangetic River Dolphin</b> in a clean river stretch. The Chambal is one of India's least polluted major rivers — flows through a ravine landscape (beehads) that historically discouraged human settlement. Over 350 gharials in the river; multiple captive-bred individuals released since 1975.<br><br>Supports 330+ bird species including Indian skimmer, river tern, bar-headed goose, black-bellied tern.</div>
+      <div class="wetland-badges"><span class="wbadge">Gharial Refuge</span><span class="wbadge">Gangetic Dolphin</span><span class="wbadge">Tri-state PA</span></div>
+    </div>
+
+    <div class="wetland-card lake">
+      <div class="wetland-name">Sambhar Salt Lake</div>
+      <div class="wetland-state">Rajasthan · 240 km² · India's Largest Inland Saline Lake</div>
+      <div class="wetland-body">India's largest inland salt lake — a Ramsar site (1990) and the largest flamingo breeding/staging site in Northwest India. During monsoon and post-monsoon, hosts <b>flamingo flocks of 1–3 lakh birds</b>. Also supports bar-headed goose, dunlin, little stint, rufous-tailed lark. The lake produces 0.2 million tonnes of salt annually — one of India's principal salt sources.<br><br><b>2019 tragedy:</b> Over 18,000 migratory birds (flamingo, teal, godwit) died due to avian botulism linked to lake pollution — India's largest bird die-off in recent history.</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 1990</span><span class="wbadge">Flamingo 1–3 Lakh</span><span class="wbadge">Salt Production</span></div>
+    </div>
+
+    <div class="wetland-card coastal">
+      <div class="wetland-name">Bhitarkanika</div>
+      <div class="wetland-state">Odisha · 672 km² Sanctuary + 145 km² NP</div>
+      <div class="wetland-body">India's second-largest mangrove ecosystem (after Sundarbans) and a globally important nesting site for the <b>saltwater crocodile</b> (Crocodylus porosus). Ramsar 2002. The national park is notified as a crocodile sanctuary — over 1,700 saltwater crocs (up from 96 in 1975 due to Project Crocodile). Also hosts <b>Olive Ridley turtles</b>, water monitor, king cobra, smooth-coated otter.<br><br>The Gahirmatha Beach adjacent to Bhitarkanika is the world's largest olive ridley turtle rookery (Arribada nesting of 800,000 turtles in a single event).</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 2002</span><span class="wbadge">Saltwater Croc</span><span class="wbadge">Olive Ridley</span></div>
+    </div>
+
+    <div class="wetland-card lake">
+      <div class="wetland-name">Deepor Beel</div>
+      <div class="wetland-state">Assam · 4.14 km² · Guwahati's Wildlife Refuge</div>
+      <div class="wetland-body">The only Ramsar site in Assam (2002) — a permanent freshwater lake on the southern edge of Guwahati. Critically important as an elephant corridor — wild elephant herds from Rani–Garbhanga Reserved Forest cross through the beel seasonally. 219 bird species including the spot-billed pelican, open-billed stork, lesser adjutant stork, bar-headed goose.<br><br>Under severe threat — urban encroachment from India's fastest-growing city (Guwahati), illegal dumping, a garbage landfill adjacent to the beel, rail line and highway through the corridor blocking elephant movement.</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 2002</span><span class="wbadge">Urban Elephant</span><span class="wbadge">219 Bird Species</span></div>
+    </div>
+
+    <div class="wetland-card river">
+      <div class="wetland-name">Harike Wetland</div>
+      <div class="wetland-state">Punjab · 86 km² · Northern India's Largest Wetland</div>
+      <div class="wetland-body">Formed by the headworks dam where Beas joins Sutlej. Ramsar 1990. Northern India's largest wetland and one of the most important staging and wintering grounds along the Central Asian Flyway. Hosts <b>350+ bird species</b> — critically important for Pallas's fish eagle, sarus crane, black-necked stork. Winter brings bar-headed geese and Brahminy ducks from Tibet and Central Asia.<br><br>The <b>Indus River dolphin</b> (a subspecies of Gangetic dolphin) inhabits the Beas river near Harike — around 10 individuals, one of the most critically endangered cetacean populations in the world.</div>
+      <div class="wetland-badges"><span class="wbadge">Ramsar 1990</span><span class="wbadge">Indus Dolphin</span><span class="wbadge">Central Asian Flyway</span></div>
+    </div>
+
+    <div class="wetland-card mangrove">
+      <div class="wetland-name">Coringa Wildlife Sanctuary</div>
+      <div class="wetland-state">Andhra Pradesh · 235 km² · 2nd Largest Mangrove in India</div>
+      <div class="wetland-body">Located at the mouth of the Godavari River, Coringa is India's second-largest mangrove (after Sundarbans) and one of the most biodiverse. Over 24 species of true mangroves. Critical nesting habitat for <b>fishing cat</b>, smooth-coated otter, estuarine crocodile. 120+ bird species including the endangered lesser adjutant stork and mangrove pitta.<br><br>The region is a significant nursery ground for prawns and fish supporting 50,000+ fishing families. Community-based mangrove protection programmes with local fisherfolk have been successful here.</div>
+      <div class="wetland-badges"><span class="wbadge">Godavari Delta</span><span class="wbadge">Fishing Cat</span><span class="wbadge">Mangrove Pitta</span></div>
+    </div>
+
+  </div>
+
+  <div class="box">
+    <p class="box-title">India's Ramsar Sites — Regional Distribution</p>
+    <svg id="ramsar-bar-svg" viewBox="0 0 760 220" style="width:100%;height:220px;display:block;"></svg>
+  </div>
+
+  <div class="two-col">
+    <div class="mech-card">
+      <div class="mech-card-title">Wetland Threats</div>
+      <div class="mech-card-body">
+        <b>Encroachment:</b> Over 33% of India's wetlands have been lost since 1970 to agriculture, urbanisation, and aquaculture. Urban wetlands (Delhi's Bhalswa, Mumbai's Bhandup) shrink every decade despite legal protection.<br><br>
+        <b>Pollution:</b> Industrial effluents, agricultural runoff (fertilisers, pesticides), and untreated sewage are the primary killers of freshwater wetland biodiversity. The Ganga, Yamuna, and Sabarmati carry some of the highest biochemical oxygen demand (BOD) loads in the world.<br><br>
+        <b>Invasive species:</b> Water hyacinth (Eichhornia crassipes) covers millions of hectares of Indian lakes — Loktak, Chilika (before restoration), Kerala backwaters. Blocks sunlight, depletes oxygen, destroys fish habitats.<br><br>
+        <b>Sand and gravel mining:</b> Riverbed mining destroys nesting banks of gharials, river terns, skimmers and habitat of freshwater dolphins in Chambal, Ganga, Ken, Betwa rivers.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Wetland Conservation Programmes</div>
+      <div class="mech-card-body">
+        <b>NPCA (National Plan for Conservation of Aquatic Ecosystems):</b> Centrally sponsored scheme for integrated conservation and management of wetlands including lakes. 150+ wetlands under active restoration (e.g., Dal Lake, Loktak, Chilika).<br><br>
+        <b>Wetlands (Conservation & Management) Rules 2017:</b> Prohibit draining, reclaiming, construction, or solid waste dumping within wetland boundaries. District-level Wetland Authority for each state.<br><br>
+        <b>Namami Gange Mission:</b> ₹20,000 crore programme for Ganga river rejuvenation — sewage treatment plants, riverfront development, afforestation. Gangetic dolphin numbers recovering in treated stretches.<br><br>
+        <b>Project Dolphin (2020):</b> Analogous to Project Tiger — dedicated programme for Gangetic and Oceanic dolphins. Census, anti-poaching, river corridor protection. National Dolphin Research Centre at Patna University.
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ═══════════════════════════════════════════
+//  THEME TOGGLE
+// ═══════════════════════════════════════════
+function isDark(){return document.body.getAttribute('data-theme')==='dark';}
+function toggleTheme(){
+  const d=!isDark();
+  document.body.setAttribute('data-theme',d?'dark':'light');
+  document.getElementById('theme-icon').textContent=d?'🌙':'☀️';
+  document.getElementById('theme-label').textContent=d?'Dark':'Light';
+  redrawAll();
+}
+function tc(){return isDark()?'#e2ede6':'#0d1a10';}
+function mc(){return isDark()?'#6b7c6e':'#4f6b55';}
+
+// ═══════════════════════════════════════════
+//  TAB SWITCHING
+// ═══════════════════════════════════════════
+function switchTab(section){
+  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');});
+  document.querySelectorAll('.phase-panel').forEach(p=>{p.classList.remove('visible');});
+  const tab=document.querySelector(`.tab[data-section="${section}"]`);
+  if(tab)tab.classList.add('active');
+  const panel=document.getElementById(`panel-${section}`);
+  if(panel)panel.classList.add('visible');
+}
+
+// ═══════════════════════════════════════════
+//  BIOSPHERE ACCORDION
+// ═══════════════════════════════════════════
+function toggleBio(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('.bio-arrow');
+  const open=body.classList.contains('open');
+  // Close all first
+  document.querySelectorAll('.bio-body').forEach(b=>{b.classList.remove('open');});
+  document.querySelectorAll('.bio-arrow').forEach(a=>{a.style.transform='rotate(0deg)';});
+  if(!open){
+    body.classList.add('open');
+    arrow.style.transform='rotate(180deg)';
+  }
+}
+// Set first arrow open
+document.addEventListener('DOMContentLoaded',()=>{
+  const firstArrow=document.querySelector('.bio-arrow');
+  if(firstArrow)firstArrow.style.transform='rotate(180deg)';
+});
+
+// ═══════════════════════════════════════════
+//  OVERVIEW MAP SVG — India with biogeographic zones
+// ═══════════════════════════════════════════
+function drawOverviewSvg(){
+  const svg=document.getElementById('overview-map-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=420;
+  const txt=tc(); const muted=mc();
+  const sur=dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)';
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  // Title
+  h+=`<text x="${W/2}" y="22" fill="${txt}" font-size="11" font-family="Bebas Neue,monospace" text-anchor="middle" letter-spacing=".06em">INDIA'S BIOGEOGRAPHIC ZONES &amp; PROTECTED AREA DISTRIBUTION</text>`;
+
+  // Zone blocks (simplified visual zones)
+  const zones=[
+    {x:60,y:35,w:180,h:120,col:'#7c3aed',label:'Trans-Himalayan',sub:'Snow Leopard · Ibex · Tibetan Wolf',count:'Pin Valley · Hemis · Cold Desert BR'},
+    {x:60,y:170,w:180,h:100,col:'#0369a1',label:'Himalayan',sub:'Red Panda · Monal · Brown Bear',count:'Corbett · Valley of Flowers · Nanda Devi'},
+    {x:60,y:285,w:180,h:100,col:'#15803d',label:'Indo-Gangetic Plain',sub:'Tiger · Elephant · Gharial',count:'Dudhwa · Pilibhit · Katarniaghat'},
+    {x:260,y:35,w:180,h:130,col:'#0e7490',label:'Northeast India',sub:'Hoolock Gibbon · Pygmy Hog · Rhino',count:'Kaziranga · Manas · Eaglenest'},
+    {x:260,y:180,w:180,h:100,col:'#d97706',label:'Central India',sub:'Tiger · Leopard · Wild Dog',count:'Kanha · Pench · Bandhavgarh · Panna'},
+    {x:260,y:295,w:180,h:90,col:'#c2410c',label:'Deccan Plateau',sub:'Sloth Bear · Chinkara · Bustard',count:'Nagarjunasagar · Rollapadu · Kawal'},
+    {x:460,y:35,w:150,h:110,col:'#b45309',label:'Thar & Aravalli',sub:'Blackbuck · Chinkara · Houbara',count:'Ranthambore · Sariska · Desert NP'},
+    {x:460,y:160,w:150,h:120,col:'#c2410c',label:'Gujarat & Kutch',sub:'Asiatic Lion · Wild Ass · Flamingo',count:'Gir · Velavadar · Wild Ass Sanctuary'},
+    {x:460,y:295,w:150,h:90,col:'#0284c7',label:'West Coast &amp; Ghats',sub:'Lion-tailed Macaque · Nilgiri Tahr',count:'Periyar · Kudremukh · Nagarhole'},
+    {x:630,y:35,w:150,h:110,col:'#16a34a',label:'Andaman &amp; Nicobar',sub:'Nicobar Megapode · Leatherback',count:'MG Marine NP · Great Nicobar BR'},
+    {x:630,y:160,w:150,h:120,col:'#059669',label:'Eastern Coast &amp; Delta',sub:'Olive Ridley · Irrawaddy Dolphin',count:'Chilika · Bhitarkanika · Pulicat'},
+    {x:630,y:295,w:150,h:90,col:'#0e7490',label:'Marine &amp; Lakshadweep',sub:'Dugong · Coral · Whale Shark',count:'Gulf of Mannar · Lakshadweep'},
+  ];
+
+  zones.forEach(z=>{
+    h+=`<rect x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" rx="4" fill="${sur}" stroke="${z.col}" stroke-width="1.5" stroke-opacity=".6"/>`;
+    h+=`<rect x="${z.x}" y="${z.y}" width="${z.w}" height="3" rx="0" fill="${z.col}" opacity=".7"/>`;
+    h+=`<text x="${z.x+10}" y="${z.y+20}" fill="${z.col}" font-size="10.5" font-family="Bebas Neue,monospace" letter-spacing=".04em">${z.label}</text>`;
+    h+=`<text x="${z.x+10}" y="${z.y+36}" fill="${txt}" font-size="7.5" font-family="DM Mono,monospace">${z.sub}</text>`;
+    const subLines=z.count.split(' · ');
+    subLines.forEach((l,i)=>{
+      h+=`<text x="${z.x+10}" y="${z.y+52+i*13}" fill="${muted}" font-size="7" font-family="DM Mono,monospace">${l}</text>`;
+    });
+  });
+
+  h+=`<text x="${W/2}" y="${H-5}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">India spans 10 biogeographic zones — each with distinct flora, fauna, and conservation challenges</text>`;
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════
+//  FOREST PIE SVG
+// ═══════════════════════════════════════════
+function drawForestPie(){
+  const svg=document.getElementById('forest-pie-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=340,H=300;
+  const txt=tc(); const muted=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  const segments=[
+    {pct:0.34,col:'#15803d',label:'Tropical Moist Deciduous'},
+    {pct:0.22,col:'#c2410c',label:'Tropical Dry Deciduous'},
+    {pct:0.14,col:'#0369a1',label:'Subtropical & Temperate'},
+    {pct:0.10,col:'#7c3aed',label:'Tropical Wet Evergreen'},
+    {pct:0.09,col:'#d97706',label:'Thorn & Scrub Forest'},
+    {pct:0.07,col:'#0e7490',label:'Mangrove & Littoral'},
+    {pct:0.04,col:'#b45309',label:'Alpine & Sub-alpine'},
+  ];
+
+  const cx=120,cy=148,r=95;
+  let startAngle=-Math.PI/2;
+  segments.forEach(seg=>{
+    const end=startAngle+seg.pct*2*Math.PI;
+    const x1=cx+r*Math.cos(startAngle),y1=cy+r*Math.sin(startAngle);
+    const x2=cx+r*Math.cos(end),y2=cy+r*Math.sin(end);
+    const large=seg.pct>0.5?1:0;
+    h+=`<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${seg.col}" opacity=".82"/>`;
+    startAngle=end;
+  });
+
+  // Center
+  h+=`<circle cx="${cx}" cy="${cy}" r="38" fill="${dark?'#0d1a10':'#ffffff'}"/>`;
+  h+=`<text x="${cx}" y="${cy-5}" fill="${txt}" font-size="9" font-family="Bebas Neue,monospace" text-anchor="middle" letter-spacing=".03em">INDIA</text>`;
+  h+=`<text x="${cx}" y="${cy+9}" fill="${muted}" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">Forest Types</text>`;
+
+  // Legend
+  segments.forEach((seg,i)=>{
+    const lx=245,ly=35+i*34;
+    h+=`<rect x="${lx}" y="${ly}" width="12" height="12" fill="${seg.col}" rx="2" opacity=".85"/>`;
+    h+=`<text x="${lx+17}" y="${ly+9.5}" fill="${txt}" font-size="8" font-family="DM Mono,monospace">${seg.label}</text>`;
+    h+=`<text x="${lx+17}" y="${ly+20}" fill="${muted}" font-size="7" font-family="DM Mono,monospace">${Math.round(seg.pct*100)}% of forest area</text>`;
+  });
+
+  h+=`<text x="${W/2}" y="${H-5}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Source: FSI State of Forest Report 2023</text>`;
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════
+//  PARK CALENDAR SVG
+// ═══════════════════════════════════════════
+function drawCalendarSvg(){
+  const svg=document.getElementById('park-calendar-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=320;
+  const txt=tc(); const muted=mc();
+  const padL=180,padT=35,cW=W-padL-20,cH=H-padT-30;
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  const parks=[
+    {name:'Jim Corbett NP',closed:[],best:[11,0,1,2,3,4]},
+    {name:'Kaziranga NP',closed:[5,6,7],best:[10,11,0,1,2,3]},
+    {name:'Ranthambore NP',closed:[5,6,7,8],best:[10,11,0,1,2,3]},
+    {name:'Bandhavgarh NP',closed:[6,7,8],best:[10,11,0,1,2,3,4]},
+    {name:'Bharatpur / Keoladeo',closed:[],best:[9,10,11,0,1,2]},
+    {name:'Gir NP',closed:[],best:[11,0,1,2,3]},
+    {name:'Periyar NP',closed:[5,6,7,8],best:[11,0,1,2,9,10]},
+    {name:'Valley of Flowers',closed:[0,1,2,3,4,5,9,10,11],best:[6,7,8]},
+    {name:'Hemis NP (Snow Leopard)',closed:[],best:[0,1,11]},
+    {name:'Nagarhole NP',closed:[5,6,7],best:[10,11,0,1,2,3]},
+  ];
+
+  const colW=cW/12;
+  // Month headers
+  months.forEach((m,i)=>{
+    h+=`<text x="${padL+i*colW+colW/2}" y="${padT-8}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${m}</text>`;
+    h+=`<line x1="${padL+i*colW}" y1="${padT-2}" x2="${padL+i*colW}" y2="${padT+cH}" stroke="${muted}" stroke-width=".4" stroke-opacity=".4"/>`;
+  });
+
+  const rowH=cH/parks.length;
+  parks.forEach((park,pi)=>{
+    const y=padT+pi*rowH;
+    h+=`<text x="${padL-6}" y="${y+rowH/2+4}" fill="${txt}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="end">${park.name}</text>`;
+    months.forEach((_,mi)=>{
+      const rx=padL+mi*colW+1;
+      const ry=y+2;
+      const rw=colW-2;
+      const rh=rowH-4;
+      let fill,opacity;
+      if(park.closed.includes(mi)){
+        fill=dark?'rgba(220,38,38,.2)':'rgba(220,38,38,.15)';
+        opacity=1;
+        h+=`<rect x="${rx}" y="${ry}" width="${rw}" height="${rh}" fill="${fill}" rx="2"/>`;
+        h+=`<text x="${rx+rw/2}" y="${ry+rh/2+3}" fill="#dc2626" font-size="6.5" font-family="DM Mono,monospace" text-anchor="middle">CLOSED</text>`;
+      } else if(park.best.includes(mi)){
+        fill=dark?'rgba(21,128,61,.35)':'rgba(21,128,61,.25)';
+        h+=`<rect x="${rx}" y="${ry}" width="${rw}" height="${rh}" fill="${fill}" rx="2"/>`;
+        h+=`<text x="${rx+rw/2}" y="${ry+rh/2+3}" fill="#15803d" font-size="6.5" font-family="DM Mono,monospace" text-anchor="middle">BEST</text>`;
+      } else {
+        fill=dark?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)';
+        h+=`<rect x="${rx}" y="${ry}" width="${rw}" height="${rh}" fill="${fill}" rx="2"/>`;
+        h+=`<text x="${rx+rw/2}" y="${ry+rh/2+3}" fill="${muted}" font-size="6.5" font-family="DM Mono,monospace" text-anchor="middle">OPEN</text>`;
+      }
+    });
+  });
+
+  // Legend
+  const lx=padL,ly=H-18;
+  h+=`<rect x="${lx}" y="${ly}" width="10" height="10" fill="rgba(21,128,61,.35)" rx="2"/>`;
+  h+=`<text x="${lx+14}" y="${ly+8}" fill="${txt}" font-size="8" font-family="DM Mono,monospace">Best Season</text>`;
+  h+=`<rect x="${lx+120}" y="${ly}" width="10" height="10" fill="rgba(220,38,38,.2)" rx="2"/>`;
+  h+=`<text x="${lx+134}" y="${ly+8}" fill="${txt}" font-size="8" font-family="DM Mono,monospace">Closed (Monsoon)</text>`;
+  h+=`<rect x="${lx+280}" y="${ly}" width="10" height="10" fill="rgba(255,255,255,.04)" rx="2" stroke="${muted}" stroke-width=".5"/>`;
+  h+=`<text x="${lx+294}" y="${ly+8}" fill="${txt}" font-size="8" font-family="DM Mono,monospace">Open (Shoulder Season)</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════
+//  RAMSAR BAR CHART
+// ═══════════════════════════════════════════
+function drawRamsarBar(){
+  const svg=document.getElementById('ramsar-bar-svg'); if(!svg)return;
+  const dark=isDark(); const txt=tc(); const muted=mc();
+  const W=760,H=220,padL=110,padB=38,padT=20,padR=20;
+  const cW=W-padL-padR, cH=H-padB-padT;
+  const regions=[
+    {label:'North India',count:18,col:'#0369a1'},
+    {label:'South India',count:17,col:'#15803d'},
+    {label:'East India',count:16,col:'#c2410c'},
+    {label:'West India',count:14,col:'#d97706'},
+    {label:'NE India',count:9,col:'#0e7490'},
+    {label:'Central India',count:8,col:'#7c3aed'},
+  ];
+  const max=Math.max(...regions.map(r=>r.count));
+  const bW=Math.floor(cW/regions.length);
+  let h=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+  h+=`<text x="${padL}" y="13" fill="${txt}" font-size="9" font-family="Bebas Neue,monospace" letter-spacing=".06em">RAMSAR SITES BY REGION</text>`;
+  // grid lines
+  [5,10,15,20].forEach(v=>{
+    if(v>max)return;
+    const y=padT+cH-(v/max*cH);
+    h+=`<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="${muted}" stroke-width=".4" stroke-opacity=".4"/>`;
+    h+=`<text x="${padL-5}" y="${y+4}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">${v}</text>`;
+  });
+  regions.forEach((r,i)=>{
+    const bH=Math.floor((r.count/max)*cH);
+    const x=padL+i*bW+bW*0.15;
+    const bw=bW*0.7;
+    const y=padT+cH-bH;
+    h+=`<rect x="${x}" y="${y}" width="${bw}" height="${bH}" fill="${r.col}" opacity=".75" rx="2"/>`;
+    h+=`<text x="${x+bw/2}" y="${y-5}" fill="${r.col}" font-size="11" font-family="Bebas Neue,monospace" text-anchor="middle">${r.count}</text>`;
+    const words=r.label.split(' ');
+    words.forEach((w,wi)=>{
+      h+=`<text x="${x+bw/2}" y="${padT+cH+14+wi*12}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${w}</text>`;
+    });
+  });
+  h+=`<text x="${W/2}" y="${H-2}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Total 82 Ramsar Sites — India has most sites in Asia (2024)</text>`;
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════
+//  INTERACTIVE MAP ENGINE
+// ═══════════════════════════════════════════
+
+// --- Data: locations [name, lat, lon, type, info]
+// type: tiger|np|sanctuary|biosphere|wetland|marine
+// lat/lon: approximate real-world coords for India
+const MAP_PLACES=[
+  // Tiger Reserves / NPs (Tiger)
+  {n:'Jim Corbett NP',la:29.53,lo:78.77,t:'tiger',sub:'Tiger Reserve · Uttarakhand',info:'India\'s oldest NP (1936). 520 km². Sal forest, Ramganga river. 260+ tigers, 600+ elephant. 600 bird species.'},
+  {n:'Ranthambore NP',la:26.02,lo:76.50,t:'tiger',sub:'Tiger Reserve · Rajasthan',info:'392 km². Famous for daylight tiger sightings near lakes. Dhok forest. ~70 tigers. Ancient Ranthambore Fort inside park.'},
+  {n:'Bandhavgarh NP',la:23.72,lo:80.92,t:'tiger',sub:'Tiger Reserve · Madhya Pradesh',info:'448 km². India\'s highest tiger density. Sal & bamboo forest. Ancient fort. 250+ birds.'},
+  {n:'Kanha NP',la:22.32,lo:80.61,t:'tiger',sub:'Tiger Reserve · Madhya Pradesh',info:'940 km² (core). Saved the Barasingha from extinction. Sal & bamboo. Tigers, leopards, dholes.'},
+  {n:'Pench NP',la:21.72,lo:79.30,t:'tiger',sub:'Tiger Reserve · MP/Maharashtra',info:'758 km². Inspiration for Jungle Book. Teak forest. Tiger, leopard, wild dog, gaur. 285 birds.'},
+  {n:'Panna NP',la:24.72,lo:80.17,t:'tiger',sub:'Tiger Reserve · Madhya Pradesh',info:'543 km². Tiger locally extinct 2009, successfully reintroduced. Ken river gorge. Vulture colonies.'},
+  {n:'Tadoba NP',la:20.22,lo:79.35,t:'tiger',sub:'Tiger Reserve · Maharashtra',info:'625 km². Maharashtra\'s oldest NP. Highest tiger density in MH. Teak forest. Sloth bear, gaur.'},
+  {n:'Nagarhole NP',la:12.02,lo:76.12,t:'tiger',sub:'Tiger Reserve · Karnataka',info:'643 km². Part of Nilgiri Biosphere. Highest gaur density in India. Kabini reservoir. Tiger, elephant, dhole.'},
+  {n:'Bandipur NP',la:11.67,lo:76.63,t:'tiger',sub:'Tiger Reserve · Karnataka',info:'874 km². Nilgiri Biosphere. Core of largest tiger landscape in Asia. Connected to Mudumalai & Wayanad.'},
+  {n:'Kaziranga NP',la:26.58,lo:93.17,t:'tiger',sub:'Tiger Reserve + UNESCO · Assam',info:'858 km². 2,613 rhinos (70% of world). Highest tiger density of any NP. Brahmaputra floodplain. UNESCO WHS.'},
+  {n:'Manas NP',la:26.65,lo:91.00,t:'tiger',sub:'Tiger Reserve + UNESCO · Assam',info:'500 km². UNESCO WHS. Pygmy hog, golden langur, rhino (reintroduced), tiger. 449 birds. Indo-Bhutan border.'},
+  {n:'Dudhwa NP',la:28.52,lo:80.71,t:'tiger',sub:'Tiger Reserve · Uttar Pradesh',info:'490 km². Terai sal forest. Rhino (reintroduced), tiger, swamp deer, hispid hare. Connected to Nepal.'},
+  // National Parks (np)
+  {n:'Gir NP',la:21.13,lo:70.79,t:'np',sub:'National Park · Gujarat',info:'1,412 km² total. Last Asiatic lions (674). Dry deciduous forest. 300+ birds. Maldhari community.'},
+  {n:'Sundarbans NP',la:21.95,lo:88.88,t:'np',sub:'Tiger Reserve + UNESCO · West Bengal',info:'1,330 km². World\'s largest mangrove. Swimming tigers. Estuarine croc, Irrawaddy dolphin. UNESCO WHS.'},
+  {n:'Periyar NP',la:9.47,lo:77.22,t:'np',sub:'Tiger Reserve · Kerala',info:'350 km². Western Ghats. 900+ elephants. Cardamom Hills. Nilgiri langur, lion-tailed macaque.'},
+  {n:'Valley of Flowers NP',la:30.72,lo:79.61,t:'np',sub:'UNESCO · Uttarakhand',info:'88 km². Open Jul-Oct only. 500+ alpine flowers incl. Brahma Kamal. Snow leopard, bharal. UNESCO WHS.'},
+  {n:'Hemis NP',la:33.92,lo:77.60,t:'np',sub:'National Park · Ladakh',info:'4,400 km². Largest NP in India. Best for snow leopard (Jan-Feb). Tibetan wolf, ibex, bharal.'},
+  {n:'Keoladeo NP',la:27.17,lo:77.52,t:'np',sub:'UNESCO Wetland NP · Rajasthan',info:'29 km². Bharatpur Bird Sanctuary. 200,000+ migratory birds. UNESCO WHS. Painted stork breeding colony.'},
+  {n:'Simlipal NP',la:21.83,lo:86.47,t:'np',sub:'Biosphere Reserve · Odisha',info:'2,750 km². Sal forest. Tiger, elephant, melanistic (black) tiger recorded here. Waterfalls. Tribal communities.'},
+  {n:'Mudumalai NP',la:11.57,lo:76.57,t:'np',sub:'Tiger Reserve · Tamil Nadu',info:'321 km². Nilgiri Biosphere. Elephants, gaur, dhole. Connects Bandipur-Nagarhole. Bamboo & teak.'},
+  {n:'Eravikulam NP',la:10.17,lo:77.07,t:'np',sub:'National Park · Kerala',info:'97 km². Western Ghats. Nilgiri Tahr stronghold (~750). Rolling grasslands. Neelakurinji blooms every 12 years.'},
+  // Sanctuaries
+  {n:'Sariska WLS',la:27.35,lo:76.36,t:'sanctuary',sub:'Tiger Reserve · Rajasthan',info:'866 km². Tiger reintroduced 2005. Dhok forest. Leopard, nilgai, sambar. Neelkanth temple inside.'},
+  {n:'Chilika WLS',la:19.72,lo:85.38,t:'wetland',sub:'Ramsar · Wetland · Odisha',info:'1,165 km². Asia\'s largest coastal lagoon. Irrawaddy dolphin. 160+ migratory birds. Flamingo. Ramsar 1981.'},
+  {n:'Vedanthangal WLS',la:12.53,lo:79.86,t:'sanctuary',sub:'Bird Sanctuary · Tamil Nadu',info:'0.3 km². 40,000+ waterbirds. Painted stork, night heron, egret. One of India\'s oldest bird sanctuaries.'},
+  {n:'Bharatpur Wetland',la:27.17,lo:77.53,t:'wetland',sub:'Ramsar · Rajasthan',info:'Keoladeo Ghana. UNESCO WHS. 370+ birds. 200,000+ winter waterbirds. Sarus crane. Bar-headed goose.'},
+  {n:'Bhitarkanika WLS',la:20.75,lo:86.87,t:'marine',sub:'Mangrove · Odisha',info:'672 km². 1,700+ saltwater crocs. Olive ridley nesting. Gahirmatha — world\'s largest turtle rookery adjacent.'},
+  {n:'Ranganthittu WLS',la:12.42,lo:76.62,t:'sanctuary',sub:'Bird Sanctuary · Karnataka',info:'0.67 km². River islands. Painted stork breeding. Spot-billed pelican. Mugger crocodile. Jun-Nov breeding.'},
+  {n:'Rollapadu WLS',la:15.82,lo:79.32,t:'sanctuary',sub:'Grassland · Andhra Pradesh',info:'6 km². Great Indian Bustard (last AP population). Blackbuck. Dry grassland. Critically endangered bustard.'},
+  // Biosphere Reserves
+  {n:'Nilgiri BR',la:11.40,lo:76.50,t:'biosphere',sub:'Biosphere Reserve (UNESCO) · TN/KA/KL',info:'5,520 km². India\'s first BR (1986). UNESCO MAB. Largest elephant population in Asia. Nilgiri Tahr, lion-tailed macaque.'},
+  {n:'Nanda Devi BR',la:30.57,lo:79.93,t:'biosphere',sub:'Biosphere Reserve (UNESCO) · Uttarakhand',info:'5,860 km². UNESCO WHS+MAB. Valley of Flowers. Snow leopard, bharal, musk deer. Alpine meadows.'},
+  {n:'Agasthyamalai BR',la:8.62,lo:77.22,t:'biosphere',sub:'Biosphere Reserve (UNESCO) · KL/TN',info:'3,500 km². Southern Western Ghats. Highest endemism in India. Lion-tailed macaque, Nilgiri tahr, 2,000+ plant species.'},
+  {n:'Nokrek BR',la:25.47,lo:90.42,t:'biosphere',sub:'Biosphere Reserve (UNESCO) · Meghalaya',info:'820 km². UNESCO MAB. Primary gene pool of wild citrus. Hoolock gibbon, red panda, clouded leopard.'},
+  {n:'Manas BR',la:26.65,lo:91.00,t:'biosphere',sub:'Biosphere Reserve · Assam',info:'2,837 km². UNESCO MAB+WHS. Pygmy hog, golden langur, hispid hare. Trans-boundary with Bhutan.'},
+  {n:'Sundarbans BR',la:21.95,lo:88.88,t:'biosphere',sub:'Biosphere Reserve (UNESCO) · WB',info:'9,630 km². UNESCO MAB+WHS. Mangrove. Swimming tigers, Irrawaddy dolphin, estuarine crocodile.'},
+  {n:'Cold Desert BR',la:32.10,lo:77.60,t:'biosphere',sub:'Biosphere Reserve · Himachal Pradesh',info:'7,770 km². Trans-Himalayan cold desert. Snow leopard (high density), Tibetan wolf, Pallas\'s cat. Spiti valley.'},
+  {n:'Khangchendzonga BR',la:27.60,lo:88.17,t:'biosphere',sub:'Biosphere Reserve (UNESCO) · Sikkim',info:'2,620 km². UNESCO MAB. Eastern Himalaya. Red panda, snow leopard, Himalayan black bear. 3rd highest peak.'},
+  // Wetlands
+  {n:'Loktak Lake',la:24.45,lo:93.80,t:'wetland',sub:'Ramsar Wetland · Manipur',info:'287 km². Floating NP (Keibul Lamjao). Phumdis. Sangai deer (~260). Ramsar 1990. Freshwater fishery.'},
+  {n:'Wular Lake',la:34.37,lo:74.62,t:'wetland',sub:'Ramsar Wetland · J&K',info:'189 km². India\'s largest freshwater lake. 400,000+ winter waterbirds. Ramsar 1990. Jhelum river fed.'},
+  {n:'Sambhar Salt Lake',la:26.90,lo:75.08,t:'wetland',sub:'Ramsar Wetland · Rajasthan',info:'240 km². India\'s largest inland saline lake. 1-3 lakh flamingos. Ramsar 1990. Salt production site.'},
+  {n:'Harike Wetland',la:31.17,lo:74.93,t:'wetland',sub:'Ramsar Wetland · Punjab',info:'86 km². Northern India\'s largest wetland. Indus river dolphin (10 individuals). 350+ birds. CAF staging ground.'},
+  {n:'Deepor Beel',la:26.08,lo:91.62,t:'wetland',sub:'Ramsar Wetland · Assam',info:'4 km². Ramsar 2002. Guwahati edge. Elephant corridor. 219 bird species. Under severe urban threat.'},
+  {n:'Chambal Sanctuary',la:26.40,lo:77.60,t:'wetland',sub:'River Sanctuary · MP/UP/Rajasthan',info:'435 km river. Gharial last stronghold. Gangetic dolphin. River tern, Indian skimmer. Clean river — no industry.'},
+  {n:'Pulicat Lake',la:13.65,lo:80.23,t:'wetland',sub:'Coastal Lagoon · AP/TN',info:'759 km². 2nd largest brackish lagoon. 50,000-100,000 flamingos. Sriharikota adjacent. Painted stork.'},
+  // Marine
+  {n:'Gulf of Mannar MNP',la:9.13,lo:79.17,t:'marine',sub:'Marine NP · Biosphere · Tamil Nadu',info:'10,500 km² BR. 21 islands. 117 coral species. Dugong (~150). Sea turtles. UNESCO MAB. Ramsar 2001.'},
+  {n:'Mahatma Gandhi MNP',la:12.02,lo:92.78,t:'marine',sub:'Marine NP · Andaman & Nicobar',info:'281 km². Jolly Buoy island. Coral reefs, sea turtles, whale shark, dugong. Glass-bottom boats for visitors.'},
+  {n:'Gulf of Kutch MNP',la:22.60,lo:69.80,t:'marine',sub:'India\'s First MNP · Gujarat',info:'Flamingo feeding grounds. Indo-Pacific humpback dolphin. Sea turtle nesting. Coral reefs. Mangroves.'},
+  {n:'Great Nicobar BR',la:7.10,lo:93.85,t:'marine',sub:'Biosphere Reserve (UNESCO) · A&N',info:'885 km². Leatherback turtle nesting (Galathea Bay). Nicobar megapode. Coconut crab. Saltwater crocodile.'},
+  {n:'Lakshadweep MPA',la:10.57,lo:72.63,t:'marine',sub:'Marine Protected Area · Lakshadweep',info:'Coral atoll system. Spinner dolphin, whale shark, manta ray. Only coral atolls in India.'},
+];
+
+// Migration path data — arrays of [lat,lon] waypoints
+const MIGRATION_PATHS={
+  bird:[
+    // Central Asian Flyway — Bar-headed goose: Central Asia -> India
+    {label:'Bar-Headed Goose (CAF)',col:'#f59e0b',dash:[8,4],pts:[
+      [42,75],[38,72],[34.5,69],[32,77],[29,78],[26.5,76],[27.17,77.52],[24.45,93.80],[19.72,85.38]
+    ]},
+    // Amur Falcon: Siberia -> Nagaland staging -> Africa
+    {label:'Amur Falcon Staging',col:'#f97316',dash:[6,5],pts:[
+      [52,115],[45,105],[35,100],[30,95],[25.67,94.12],[20,90],[15,80]
+    ]},
+    // Flamingo dispersal: Rann of Kutch -> Chilika, Pulicat
+    {label:'Flamingo Dispersal',col:'#f472b6',dash:[5,5],pts:[
+      [23.7,70.2],[22,72],[19.7,85.4],[13.65,80.23],[10,80]
+    ]},
+    // Siberian birds: Russia -> Bharatpur/Wular
+    {label:'Winter Waterfowl (Russia→India)',col:'#fbbf24',dash:[10,4],pts:[
+      [55,65],[47,63],[38,65],[34.4,74.6],[31.2,74.9],[27.17,77.52],[26.9,75.1]
+    ]},
+  ],
+  elephant:[
+    // Kaziranga flood corridor
+    {label:'Kaziranga→Karbi Anglong (Flood)',col:'#0369a1',dash:[7,4],pts:[
+      [26.58,93.17],[26.3,93.0],[25.9,92.8],[25.5,92.5]
+    ]},
+    // Nilgiri corridor
+    {label:'Nilgiri Elephant Corridor',col:'#38bdf8',dash:[6,4],pts:[
+      [12.02,76.12],[11.67,76.63],[11.57,76.57],[11.40,76.50],[11.0,76.2]
+    ]},
+    // Indo-Bhutan corridor
+    {label:'Indo-Bhutan Elephant Corridor',col:'#7dd3fc',dash:[8,4],pts:[
+      [26.65,91.00],[27.1,91.2],[27.5,91.0],[27.8,90.5]
+    ]},
+    // Singhbhum corridor
+    {label:'Singhbhum ER Movement',col:'#0284c7',dash:[5,5],pts:[
+      [22.5,85.5],[22.0,86.0],[21.83,86.47],[21.5,86.8]
+    ]},
+  ],
+  turtle:[
+    // Olive ridley: Bay of Bengal -> Gahirmatha/Rushikulya nesting
+    {label:'Olive Ridley — Bay of Bengal',col:'#0891b2',dash:[8,5],pts:[
+      [15,90],[16,88],[17,87],[18,86.5],[20.75,86.87],[19.5,84.9]
+    ]},
+    // Sea turtle: Sri Lanka channel -> Gulf of Mannar
+    {label:'Sea Turtle — Sri Lanka Channel',col:'#22d3ee',dash:[6,5],pts:[
+      [7.5,82],[8,80],[8.5,79.5],[9.13,79.17]
+    ]},
+    // Leatherback: Great Nicobar
+    {label:'Leatherback Route',col:'#67e8f9',dash:[5,5],pts:[
+      [5,90],[6,92],[7.1,93.85],[8,95]
+    ]},
+  ],
+  leopard:[
+    // Snow leopard altitudinal migration: summer high -> winter low
+    {label:'Snow Leopard — Hemis (Seasonal)',col:'#a78bfa',dash:[6,6],pts:[
+      [34.5,77.8],[34.2,77.7],[33.92,77.60],[33.6,77.5],[33.3,77.4]
+    ]},
+    // Pin Valley
+    {label:'Snow Leopard — Pin Valley',col:'#c4b5fd',dash:[5,6],pts:[
+      [32.3,78.1],[32.1,77.9],[32.0,77.7],[31.8,77.5]
+    ]},
+    // Cold desert BR
+    {label:'Snow Leopard — Spiti',col:'#8b5cf6',dash:[7,5],pts:[
+      [32.5,78.3],[32.2,77.8],[32.1,77.6],[31.9,77.4]
+    ]},
+  ],
+};
+
+// State: current filter & migration toggles
+let mapFilter='all';
+let migState={bird:true,elephant:true,turtle:true,leopard:true};
+
+// Projection: map lat/lon to canvas px
+// India bounding box: lat 6.5-37.5, lon 68-98
+const LAT_MIN=6.0,LAT_MAX=38.5,LON_MIN=66.5,LON_MAX=99.0;
+
+function project(lat,lon,W,H){
+  const x=((lon-LON_MIN)/(LON_MAX-LON_MIN))*W;
+  const y=((LAT_MAX-lat)/(LAT_MAX-LAT_MIN))*H;
+  return[x,y];
+}
+
+// India outline polygon (simplified, ~60 points, real coordinates)
+const INDIA_POLY=[
+  [35.5,77.8],[35.0,76.5],[34.0,74.0],[33.0,73.5],[32.5,74.5],
+  [31.0,75.5],[30.0,74.0],[28.5,71.0],[27.0,69.5],[24.5,68.0],
+  [23.0,68.5],[22.5,69.5],[22.0,70.5],[21.5,72.0],[21.0,72.5],
+  [20.5,71.5],[20.0,70.5],[19.5,71.0],[18.5,72.5],[17.5,73.5],
+  [16.0,73.8],[15.0,74.0],[13.5,74.7],[12.5,75.0],[11.0,76.0],
+  [10.0,76.5],[9.0,77.2],[8.5,77.5],[8.0,77.8],[8.0,78.5],
+  [8.5,79.5],[9.0,80.0],[9.5,80.5],[10.5,80.3],[11.5,79.8],
+  [12.5,80.2],[13.0,80.5],[13.5,80.3],[14.0,80.2],[15.0,80.5],
+  [16.0,81.0],[17.0,82.5],[18.0,83.5],[19.0,84.0],[20.0,85.0],
+  [20.5,86.5],[21.0,87.0],[22.0,88.0],[22.5,88.5],[21.5,90.0],
+  [21.0,92.0],[22.0,92.5],[23.0,92.0],[24.0,91.5],[24.5,92.5],
+  [25.0,93.5],[26.0,94.0],[27.0,95.0],[27.5,96.0],[28.0,97.5],
+  [28.5,97.2],[29.0,96.5],[29.5,95.5],[30.0,97.0],[29.5,98.5],
+  [29.0,97.5],[28.5,95.0],[27.0,92.0],[27.0,90.0],[27.5,89.0],
+  [27.0,88.5],[27.5,87.0],[28.0,86.5],[28.5,87.0],[29.0,88.0],
+  [30.0,88.5],[31.0,88.0],[32.0,85.0],[33.0,80.0],[34.0,79.0],
+  [34.5,78.5],[35.0,78.0],[35.5,77.8],
+];
+
+// Canvas state
+let cam={x:0,y:0,scale:1};
+let isDragging=false,lastMouse={x:0,y:0};
+let hoveredPlace=null;
+let canvasW=800,canvasH=680;
+let animFrame=0;
+
+function initMap(){
+  const canvas=document.getElementById('india-canvas'); if(!canvas)return;
+  const wrap=document.getElementById('map-wrap');
+  canvas.width=wrap.clientWidth*window.devicePixelRatio||800;
+  canvas.height=680*window.devicePixelRatio||680;
+  canvas.style.height='680px';
+  canvasW=canvas.width/window.devicePixelRatio;
+  canvasH=canvas.height/window.devicePixelRatio;
+  cam={x:canvasW/2,y:canvasH/2,scale:1};
+  bindMapEvents(canvas);
+  renderMap();
+}
+
+function mapZoom(factor){
+  const canvas=document.getElementById('india-canvas'); if(!canvas)return;
+  cam.scale=Math.max(0.4,Math.min(6,cam.scale*factor));
+  renderMap();
+}
+function mapReset(){
+  const canvas=document.getElementById('india-canvas'); if(!canvas)return;
+  cam={x:canvasW/2,y:canvasH/2,scale:1};
+  renderMap();
+}
+
+function bindMapEvents(canvas){
+  // Mouse drag
+  canvas.addEventListener('mousedown',e=>{isDragging=true;lastMouse={x:e.clientX,y:e.clientY};});
+  window.addEventListener('mouseup',()=>{isDragging=false;});
+  canvas.addEventListener('mousemove',e=>{
+    if(isDragging){
+      const dx=e.clientX-lastMouse.x, dy=e.clientY-lastMouse.y;
+      cam.x+=dx; cam.y+=dy;
+      lastMouse={x:e.clientX,y:e.clientY};
+      renderMap(); return;
+    }
+    // hover tooltip
+    const rect=canvas.getBoundingClientRect();
+    const mx=(e.clientX-rect.left), my=(e.clientY-rect.top);
+    checkHover(canvas,mx,my,e.clientX,e.clientY);
+  });
+  canvas.addEventListener('mouseleave',()=>{
+    document.getElementById('map-tooltip').style.display='none';
+    hoveredPlace=null;
+  });
+  // Wheel zoom
+  canvas.addEventListener('wheel',e=>{
+    e.preventDefault();
+    const factor=e.deltaY<0?1.12:0.89;
+    const rect=canvas.getBoundingClientRect();
+    const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    cam.x=mx+(cam.x-mx)*factor;
+    cam.y=my+(cam.y-my)*factor;
+    cam.scale=Math.max(0.4,Math.min(6,cam.scale*factor));
+    renderMap();
+  },{passive:false});
+  // Touch
+  let lastPinchDist=null;
+  let lastTouch=null;
+  canvas.addEventListener('touchstart',e=>{
+    if(e.touches.length===1){lastTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};}
+    if(e.touches.length===2){lastPinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+  });
+  canvas.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    if(e.touches.length===1&&lastTouch){
+      cam.x+=e.touches[0].clientX-lastTouch.x;
+      cam.y+=e.touches[0].clientY-lastTouch.y;
+      lastTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};
+      renderMap();
+    }
+    if(e.touches.length===2&&lastPinchDist){
+      const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      const factor=d/lastPinchDist;
+      cam.scale=Math.max(0.4,Math.min(6,cam.scale*factor));
+      lastPinchDist=d;
+      renderMap();
+    }
+  },{passive:false});
+  canvas.addEventListener('touchend',()=>{lastTouch=null;lastPinchDist=null;});
+  // Click
+  canvas.addEventListener('click',e=>{
+    const rect=canvas.getBoundingClientRect();
+    const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    MAP_PLACES.forEach(p=>{
+      if(!passesFilter(p))return;
+      const[px,py]=worldToScreen(p.la,p.lo);
+      const r=markerR(p);
+      if(Math.hypot(mx-px,my-py)<r+4){
+        showTooltip(p,e.clientX,e.clientY,true);
+      }
+    });
+  });
+}
+
+function worldToScreen(lat,lon){
+  const [wx,wy]=project(lat,lon,canvasW,canvasH);
+  const cx=canvasW/2, cy=canvasH/2;
+  const sx=cam.x+(wx-cx)*cam.scale;
+  const sy=cam.y+(wy-cy)*cam.scale;
+  return[sx,sy];
+}
+
+function markerR(p){
+  const base={tiger:7,np:6,sanctuary:5,biosphere:6,wetland:5,marine:5};
+  return (base[p.t]||5)*Math.max(0.7,Math.min(1.5,cam.scale));
+}
+
+function passesFilter(p){
+  if(mapFilter==='all')return true;
+  if(mapFilter==='tiger')return p.t==='tiger';
+  if(mapFilter==='np')return p.t==='np'||p.t==='tiger';
+  if(mapFilter==='sanctuary')return p.t==='sanctuary';
+  if(mapFilter==='biosphere')return p.t==='biosphere';
+  if(mapFilter==='wetland')return p.t==='wetland';
+  if(mapFilter==='marine')return p.t==='marine';
+  return true;
+}
+
+const TYPE_COLORS={tiger:'#c2410c',np:'#15803d',sanctuary:'#7c3aed',biosphere:'#0369a1',wetland:'#0891b2',marine:'#0284c7'};
+
+function checkHover(canvas,mx,my,cx,cy){
+  let found=null;
+  MAP_PLACES.forEach(p=>{
+    if(!passesFilter(p))return;
+    const[px,py]=worldToScreen(p.la,p.lo);
+    const r=markerR(p);
+    if(Math.hypot(mx-px,my-py)<r+6)found=p;
+  });
+  if(found){
+    showTooltip(found,cx,cy,false);
+    canvas.style.cursor='pointer';
+  } else {
+    document.getElementById('map-tooltip').style.display='none';
+    canvas.style.cursor=isDragging?'grabbing':'grab';
+  }
+  hoveredPlace=found;
+}
+
+function showTooltip(p,cx,cy,pin){
+  const tt=document.getElementById('map-tooltip');
+  document.getElementById('tt-name').textContent=p.n;
+  document.getElementById('tt-type').textContent=p.sub;
+  document.getElementById('tt-body').textContent=p.info;
+  tt.style.display='block';
+  const wrap=document.getElementById('map-wrap');
+  const wr=wrap.getBoundingClientRect();
+  let lx=cx-wr.left+12, ly=cy-wr.top+12;
+  if(lx+270>wrap.clientWidth)lx=cx-wr.left-275;
+  if(ly+120>wrap.clientHeight)ly=cy-wr.top-120;
+  tt.style.left=lx+'px'; tt.style.top=ly+'px';
+}
+
+function renderMap(){
+  const canvas=document.getElementById('india-canvas'); if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const dark=isDark();
+  const W=canvasW, H=canvasH;
+
+  // Background
+  ctx.fillStyle=dark?'#060d08':'#f2f7f3';
+  ctx.fillRect(0,0,W,H);
+
+  // Subtle grid
+  ctx.strokeStyle=dark?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)';
+  ctx.lineWidth=1;
+  for(let lo=68;lo<=98;lo+=5){
+    const[x]=worldToScreen(20,lo);
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+  }
+  for(let la=8;la<=38;la+=5){
+    const[,y]=worldToScreen(la,80);
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+  }
+
+  // India polygon fill
+  ctx.save();
+  ctx.beginPath();
+  INDIA_POLY.forEach(([la,lo],i)=>{
+    const[x,y]=worldToScreen(la,lo);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.closePath();
+  ctx.fillStyle=dark?'rgba(20,83,45,.18)':'rgba(20,83,45,.10)';
+  ctx.fill();
+  ctx.strokeStyle=dark?'rgba(100,200,120,.35)':'rgba(30,100,60,.25)';
+  ctx.lineWidth=1.5;
+  ctx.stroke();
+  ctx.restore();
+
+  // Ocean hint around India
+  ctx.save();
+  ctx.font=`${11*Math.min(cam.scale,1.5)}px "DM Mono"`;
+  ctx.fillStyle=dark?'rgba(38,120,200,.25)':'rgba(38,120,200,.2)';
+  ctx.textAlign='center';
+  const[ax,ay]=worldToScreen(20,64); ctx.fillText('Arabian Sea',ax,ay);
+  const[bx,by]=worldToScreen(15,87); ctx.fillText('Bay of Bengal',bx,by);
+  const[icx,icy]=worldToScreen(6,76); ctx.fillText('Indian Ocean',icx,icy);
+  ctx.restore();
+
+  // ── MIGRATION PATHS ──
+  animFrame=(animFrame+1)%120;
+  const dashOffset=animFrame*0.6;
+
+  Object.entries(MIGRATION_PATHS).forEach(([key,paths])=>{
+    if(!migState[key])return;
+    paths.forEach(path=>{
+      if(path.pts.length<2)return;
+      const screenPts=path.pts.map(([la,lo])=>worldToScreen(la,lo));
+      ctx.save();
+      ctx.strokeStyle=path.col;
+      ctx.lineWidth=Math.max(1.5,2*Math.min(cam.scale,1.5));
+      ctx.setLineDash(path.dash.map(v=>v*Math.min(cam.scale,1.5)));
+      ctx.lineDashOffset=-dashOffset;
+      ctx.globalAlpha=0.75;
+      ctx.shadowBlur=6;
+      ctx.shadowColor=path.col;
+      ctx.beginPath();
+      screenPts.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+      ctx.stroke();
+      // Arrow at end
+      if(screenPts.length>=2){
+        const[x1,y1]=screenPts[screenPts.length-2];
+        const[x2,y2]=screenPts[screenPts.length-1];
+        const ang=Math.atan2(y2-y1,x2-x1);
+        const as=8*Math.min(cam.scale,1.5);
+        ctx.setLineDash([]);
+        ctx.globalAlpha=0.9;
+        ctx.beginPath();
+        ctx.moveTo(x2,y2);
+        ctx.lineTo(x2-as*Math.cos(ang-0.4),y2-as*Math.sin(ang-0.4));
+        ctx.lineTo(x2-as*Math.cos(ang+0.4),y2-as*Math.sin(ang+0.4));
+        ctx.closePath();
+        ctx.fillStyle=path.col;
+        ctx.fill();
+      }
+      // Label mid-path
+      const mid=screenPts[Math.floor(screenPts.length/2)];
+      ctx.setLineDash([]);
+      ctx.globalAlpha=0.9;
+      ctx.shadowBlur=0;
+      ctx.font=`${Math.max(7,9*Math.min(cam.scale,1.5))}px "DM Mono"`;
+      ctx.fillStyle=path.col;
+      ctx.textAlign='center';
+      ctx.fillText(path.label,mid[0],mid[1]-8);
+      ctx.restore();
+    });
+  });
+
+  // ── MARKERS ──
+  MAP_PLACES.forEach(p=>{
+    if(!passesFilter(p))return;
+    const[px,py]=worldToScreen(p.la,p.lo);
+    if(px<-20||px>W+20||py<-20||py>H+20)return;
+    const r=markerR(p);
+    const col=TYPE_COLORS[p.t]||'#888';
+    const hov=hoveredPlace&&hoveredPlace.n===p.n;
+
+    ctx.save();
+    // Glow on hover
+    if(hov){
+      ctx.shadowBlur=14;
+      ctx.shadowColor=col;
+    }
+    // Outer ring
+    ctx.beginPath();
+    ctx.arc(px,py,r+2,0,Math.PI*2);
+    ctx.fillStyle=col+'33';
+    ctx.fill();
+    // Inner dot
+    ctx.beginPath();
+    ctx.arc(px,py,r,0,Math.PI*2);
+    ctx.fillStyle=col;
+    ctx.fill();
+    // White centre dot
+    ctx.beginPath();
+    ctx.arc(px,py,r*0.38,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,0.85)';
+    ctx.fill();
+    ctx.restore();
+
+    // Label on high zoom
+    if(cam.scale>1.6){
+      ctx.save();
+      ctx.font=`${Math.max(8,9*Math.min(cam.scale,2))}px "DM Mono"`;
+      ctx.fillStyle=dark?'#e2ede6':'#0d1a10';
+      ctx.textAlign='center';
+      ctx.shadowBlur=3;
+      ctx.shadowColor=dark?'#060d08':'#ffffff';
+      ctx.fillText(p.n,px,py+r+10);
+      ctx.restore();
+    }
+  });
+
+  // Compass rose
+  const[crx,cry]=[W-38,H-38];
+  ctx.save();
+  ctx.globalAlpha=0.5;
+  ctx.fillStyle=dark?'#e2ede6':'#0d1a10';
+  ctx.font='9px DM Mono';
+  ctx.textAlign='center';
+  ctx.fillText('N',crx,cry-14);
+  ctx.fillText('S',crx,cry+19);
+  ctx.fillText('W',crx-16,cry+4);
+  ctx.fillText('E',crx+16,cry+4);
+  ctx.strokeStyle=dark?'rgba(255,255,255,.35)':'rgba(0,0,0,.3)';
+  ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(crx,cry-10);ctx.lineTo(crx,cry+10);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(crx-10,cry);ctx.lineTo(crx+10,cry);ctx.stroke();
+  ctx.restore();
+
+  // Scale bar
+  ctx.save();
+  ctx.globalAlpha=0.6;
+  ctx.strokeStyle=dark?'#e2ede6':'#0d1a10';
+  ctx.lineWidth=1.5;
+  const scalePixels=worldToScreen(20,80)[0]-worldToScreen(20,75)[0];
+  const sbx=30,sby=H-20;
+  ctx.beginPath();ctx.moveTo(sbx,sby);ctx.lineTo(sbx+scalePixels,sby);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(sbx,sby-4);ctx.lineTo(sbx,sby+4);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(sbx+scalePixels,sby-4);ctx.lineTo(sbx+scalePixels,sby+4);ctx.stroke();
+  ctx.font='8px DM Mono'; ctx.fillStyle=dark?'#e2ede6':'#0d1a10';
+  ctx.textAlign='center';
+  ctx.fillText('~555 km',sbx+scalePixels/2,sby-7);
+  ctx.restore();
+
+  // Animate for migration dashes
+  if(migState.bird||migState.elephant||migState.turtle||migState.leopard){
+    requestAnimationFrame(renderMap);
+  }
+}
+
+function setFilter(f){
+  mapFilter=f;
+  document.querySelectorAll('.map-filter-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('fb-'+f);
+  if(btn){
+    btn.classList.add('active');
+    const cols={all:'#60a5fa',tiger:'#c2410c',np:'#15803d',sanctuary:'#7c3aed',biosphere:'#0369a1',wetland:'#0891b2',marine:'#0284c7'};
+    btn.style.background=cols[f]||'#60a5fa';
+    btn.style.borderColor=cols[f]||'#60a5fa';
+    btn.style.color='#fff';
+  }
+  renderMap();
+}
+
+function toggleMig(key){
+  migState[key]=!migState[key];
+  const btn=document.getElementById('mb-'+key);
+  const cols={bird:'#b45309',elephant:'#0369a1',turtle:'#0891b2',leopard:'#7c3aed'};
+  if(migState[key]){
+    btn.classList.add('on');
+    btn.style.background=cols[key];
+    btn.style.borderColor=cols[key];
+    btn.style.color='#fff';
+  } else {
+    btn.classList.remove('on');
+    btn.style.background='transparent';
+    btn.style.borderColor='var(--border)';
+    btn.style.color='var(--muted)';
+  }
+  // restart animation if any on
+  renderMap();
+  if(migState.bird||migState.elephant||migState.turtle||migState.leopard){
+    requestAnimationFrame(renderMap);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  MASTER REDRAW
+// ═══════════════════════════════════════════
+function redrawAll(){
+  drawOverviewSvg();
+  drawForestPie();
+  drawCalendarSvg();
+  drawRamsarBar();
+  if(document.getElementById('panel-map').classList.contains('visible')){
+    initMap();
+  }
+}
+
+// Tab switch hook to init map when first shown
+const _origSwitch=switchTab;
+function switchTab(section){
+  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');});
+  document.querySelectorAll('.phase-panel').forEach(p=>{p.classList.remove('visible');});
+  const tab=document.querySelector(`.tab[data-section="${section}"]`);
+  if(tab)tab.classList.add('active');
+  const panel=document.getElementById(`panel-${section}`);
+  if(panel)panel.classList.add('visible');
+  if(section==='map'){
+    setTimeout(()=>{
+      initMap();
+      requestAnimationFrame(renderMap);
+    },80);
+  }
+  if(section==='wetlands'){drawRamsarBar();}
+}
+
+// ═══════════════════════════════════════════
+//  INITIALISE
+// ═══════════════════════════════════════════
+switchTab('overview');
+redrawAll();
+window.addEventListener('resize',()=>{
+  if(document.getElementById('panel-map').classList.contains('visible')){initMap();}
+  drawRamsarBar();
+});
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>
+

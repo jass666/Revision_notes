@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earthquakes & Volcanoes — UPSC GS Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --accent: #d97706;
+  --accent-light: #f59e0b;
+  --accent-dim: rgba(217,119,6,0.15);
+  --accent-border: rgba(217,119,6,0.3);
+  --bg: #0d0d0d;
+  --bg2: #141414;
+  --bg3: #1a1a1a;
+  --bg4: #222222;
+  --card: #161616;
+  --border: rgba(255,255,255,0.07);
+  --text: #e8e0d0;
+  --text2: #a89880;
+  --text3: #6b5f52;
+  --shadow: rgba(0,0,0,0.6);
+  --radius: 10px;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-body: 'Playfair Display', serif;
+}
+[data-theme="light"] {
+  --bg: #faf7f2;
+  --bg2: #f3ede3;
+  --bg3: #ede4d4;
+  --bg4: #e5d9c5;
+  --card: #ffffff;
+  --border: rgba(0,0,0,0.09);
+  --text: #1a1208;
+  --text2: #6b5530;
+  --text3: #a88a60;
+  --shadow: rgba(0,0,0,0.12);
+  --accent-dim: rgba(217,119,6,0.1);
+  --accent-border: rgba(217,119,6,0.25);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:background 0.3s,color 0.3s;
+  overflow-x:hidden;
+}
+
+/* ── HEADER ── */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+  padding:0 clamp(1rem,4vw,3rem);
+  display:flex;align-items:center;gap:1.5rem;
+  height:64px;
+  backdrop-filter:blur(12px);
+}
+.site-title{
+  font-family:var(--font-display);
+  font-size:clamp(1.2rem,3vw,1.8rem);
+  letter-spacing:0.08em;
+  color:var(--accent);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.site-sub{
+  font-family:var(--font-mono);
+  font-size:0.65rem;
+  color:var(--text3);
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  border-left:1px solid var(--border);
+  padding-left:1rem;
+}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:0.8rem}
+.theme-btn{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  color:var(--text2);
+  width:36px;height:36px;
+  border-radius:8px;
+  cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── TABS NAV ── */
+.tabs-nav{
+  display:flex;
+  overflow-x:auto;
+  gap:0;
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+  padding:0 clamp(1rem,4vw,3rem);
+  scrollbar-width:none;
+}
+.tabs-nav::-webkit-scrollbar{display:none}
+.tab-btn{
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--text3);
+  background:none;border:none;
+  padding:0.9rem 1.1rem;
+  cursor:pointer;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:all 0.2s;
+  position:relative;
+}
+.tab-btn:hover{color:var(--text2)}
+.tab-btn.active{
+  color:var(--accent);
+  border-bottom-color:var(--accent);
+}
+
+/* ── CONTENT WRAPPER ── */
+.content{
+  max-width:1100px;
+  margin:0 auto;
+  padding:2.5rem clamp(1rem,4vw,3rem) 4rem;
+}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp 0.35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION TITLES ── */
+.section-hero{
+  margin-bottom:2.5rem;
+  border-left:3px solid var(--accent);
+  padding-left:1.2rem;
+}
+.section-hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,5vw,3.5rem);
+  letter-spacing:0.06em;
+  line-height:1;
+  color:var(--text);
+}
+.section-hero p{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:var(--text3);
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin-top:0.4rem;
+}
+.section-tag{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  background:var(--accent-dim);
+  color:var(--accent);
+  border:1px solid var(--accent-border);
+  padding:0.2rem 0.6rem;
+  border-radius:3px;
+  margin-bottom:0.6rem;
+}
+
+/* ── CARDS GRID ── */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.2rem;
+  margin:1.5rem 0;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.4rem 1.5rem;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.2s, transform 0.2s;
+}
+.card::before{
+  content:'';
+  position:absolute;top:0;left:0;
+  width:3px;height:100%;
+  background:var(--accent);
+  opacity:0.6;
+}
+.card:hover{border-color:var(--accent-border);transform:translateY(-2px)}
+.card-icon{font-size:1.6rem;margin-bottom:0.8rem}
+.card h3{
+  font-family:var(--font-display);
+  font-size:1.3rem;
+  letter-spacing:0.05em;
+  color:var(--accent);
+  margin-bottom:0.5rem;
+}
+.card p,.card ul{
+  font-size:0.88rem;
+  line-height:1.65;
+  color:var(--text2);
+}
+.card ul{padding-left:1rem}
+.card ul li{margin-bottom:0.25rem}
+.card strong{color:var(--text);font-weight:600}
+
+/* ── INFO BLOCKS ── */
+.info-block{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.4rem 1.6rem;
+  margin:1.2rem 0;
+}
+.info-block h4{
+  font-family:var(--font-display);
+  font-size:1.1rem;
+  letter-spacing:0.06em;
+  color:var(--accent);
+  margin-bottom:0.7rem;
+}
+.info-block p,.info-block li{
+  font-size:0.88rem;
+  line-height:1.7;
+  color:var(--text2);
+}
+.info-block ul{padding-left:1.2rem}
+
+.highlight-box{
+  background:var(--accent-dim);
+  border:1px solid var(--accent-border);
+  border-radius:var(--radius);
+  padding:1rem 1.3rem;
+  margin:1rem 0;
+  font-size:0.85rem;
+  color:var(--text2);
+  line-height:1.65;
+}
+.highlight-box strong{color:var(--accent)}
+
+/* ── COMPARISON TABLE ── */
+.table-wrap{overflow-x:auto;margin:1.2rem 0}
+table{width:100%;border-collapse:collapse;font-size:0.83rem}
+th{
+  font-family:var(--font-mono);
+  font-size:0.65rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+  background:var(--bg3);
+  padding:0.75rem 1rem;
+  border:1px solid var(--border);
+  text-align:left;
+}
+td{
+  padding:0.65rem 1rem;
+  border:1px solid var(--border);
+  color:var(--text2);
+  font-size:0.83rem;
+  vertical-align:top;
+  line-height:1.5;
+}
+tr:nth-child(even) td{background:var(--bg3)}
+
+/* ── SVG DIAGRAMS ── */
+.diagram-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  margin:1.5rem 0;
+  overflow:hidden;
+}
+.diagram-title{
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text3);
+  margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.diagram-title::after{content:'';flex:1;height:1px;background:var(--border)}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+
+/* ── FLASHCARDS ── */
+.flashcards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:1.3rem;
+  margin:1.5rem 0;
+}
+.flashcard{
+  perspective:1000px;
+  cursor:pointer;
+  min-height:180px;
+}
+.flashcard-inner{
+  position:relative;
+  width:100%;height:100%;
+  min-height:180px;
+  transition:transform 0.55s cubic-bezier(.4,0,.2,1);
+  transform-style:preserve-3d;
+}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+.flashcard-front,.flashcard-back{
+  position:absolute;top:0;left:0;
+  width:100%;min-height:180px;
+  backface-visibility:hidden;
+  border-radius:var(--radius);
+  padding:1.3rem 1.4rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.flashcard-front{
+  background:var(--card);
+  border:1px solid var(--border);
+}
+.flashcard-back{
+  background:var(--bg3);
+  border:1px solid var(--accent-border);
+  transform:rotateY(180deg);
+}
+.fc-year{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:0.5rem;
+}
+.fc-question{
+  font-size:0.88rem;
+  line-height:1.6;
+  color:var(--text);
+  font-weight:600;
+  flex:1;
+}
+.fc-hint{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  color:var(--text3);
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin-top:0.8rem;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.fc-hint::before{content:'↺';font-size:0.8rem}
+.fc-answer-label{
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:0.5rem;
+}
+.fc-answer{
+  font-size:0.85rem;
+  line-height:1.65;
+  color:var(--text2);
+  flex:1;
+}
+.fc-answer strong{color:var(--text)}
+
+/* ── ZONE MAP LEGEND ── */
+.zone-legend{
+  display:flex;flex-wrap:wrap;gap:0.6rem;
+  margin:1rem 0;
+}
+.zone-pill{
+  font-family:var(--font-mono);
+  font-size:0.68rem;
+  letter-spacing:0.06em;
+  padding:0.3rem 0.75rem;
+  border-radius:20px;
+  border:1px solid transparent;
+}
+
+/* ── QUICK FACTS ── */
+.quick-facts{
+  display:flex;flex-wrap:wrap;gap:0.8rem;
+  margin:1rem 0;
+}
+.fact-chip{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.4rem 0.9rem;
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  color:var(--text2);
+  letter-spacing:0.04em;
+}
+.fact-chip span{color:var(--accent);font-weight:500}
+
+/* ── PROGRESS / PILL NAV ── */
+.subsection-nav{
+  display:flex;flex-wrap:wrap;gap:0.5rem;margin:1.2rem 0;
+}
+.sub-link{
+  font-family:var(--font-mono);
+  font-size:0.65rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--text3);
+  background:var(--bg3);
+  border:1px solid var(--border);
+  padding:0.3rem 0.75rem;
+  border-radius:4px;
+  text-decoration:none;
+  transition:all 0.15s;
+}
+.sub-link:hover{color:var(--accent);border-color:var(--accent-border)}
+
+h2.section-h2{
+  font-family:var(--font-display);
+  font-size:1.7rem;
+  letter-spacing:0.06em;
+  color:var(--text);
+  margin:2rem 0 0.6rem;
+}
+h3.section-h3{
+  font-family:var(--font-body);
+  font-size:1.05rem;
+  font-weight:700;
+  font-style:italic;
+  color:var(--text2);
+  margin:1.4rem 0 0.5rem;
+  border-bottom:1px solid var(--border);
+  padding-bottom:0.3rem;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header class="site-header">
+  <div class="site-title">SEISMIC &amp; VOLCANIC</div>
+  <div class="site-sub">UPSC GS Physical Geography</div>
+  <div class="header-right">
+    <button class="theme-btn" id="themeToggle" title="Toggle theme">☀️</button>
+  </div>
+</header>
+
+<!-- ══════════ TABS NAV ══════════ -->
+<nav class="tabs-nav" role="tablist">
+  <button class="tab-btn active" data-tab="tectonics">Plate Tectonics</button>
+  <button class="tab-btn" data-tab="earthquakes">Earthquakes</button>
+  <button class="tab-btn" data-tab="seismiczones">India Seismic Zones</button>
+  <button class="tab-btn" data-tab="volcanoes">Volcanoes</button>
+  <button class="tab-btn" data-tab="ringoffire">Ring of Fire</button>
+  <button class="tab-btn" data-tab="examples">Key Examples</button>
+  <button class="tab-btn" data-tab="pyq">PYQ Flashcards</button>
+</nav>
+
+<!-- ══════════ CONTENT ══════════ -->
+<main class="content">
+
+<!-- ─── TAB: PLATE TECTONICS ─── -->
+<section class="tab-panel active" id="tab-tectonics" role="tabpanel">
+  <div class="section-hero">
+    <div class="section-tag">Chapter 01</div>
+    <h1>PLATE TECTONICS</h1>
+    <p>Theory of continental drift, plate boundaries &amp; their consequences</p>
+  </div>
+
+  <div class="highlight-box">
+    <strong>Core Idea:</strong> The Earth's lithosphere is broken into ~15 major tectonic plates that float on the semi-molten asthenosphere and move via convection currents. Alfred Wegener's Continental Drift (1912) was the precursor; Harry Hess's Sea-floor Spreading (1960s) completed the picture.
+  </div>
+
+  <div class="quick-facts">
+    <div class="fact-chip">Lithosphere: <span>crust + upper mantle</span></div>
+    <div class="fact-chip">Asthenosphere: <span>plastic-like layer beneath</span></div>
+    <div class="fact-chip">Plates move: <span>2–15 cm/year</span></div>
+    <div class="fact-chip">Major plates: <span>7 major + ~8 minor</span></div>
+  </div>
+
+  <!-- SVG: Plate Boundaries Diagram -->
+  <div class="diagram-wrap">
+    <div class="diagram-title">Figure 1 — Three Types of Plate Boundaries</div>
+    <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+      <defs>
+        <linearGradient id="mantleGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#7c2d12"/>
+          <stop offset="100%" stop-color="#1c0a00"/>
+        </linearGradient>
+        <linearGradient id="crustGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#44403c"/>
+          <stop offset="100%" stop-color="#292524"/>
+        </linearGradient>
+        <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#0f2240" stop-opacity="0.7"/>
+        </linearGradient>
+        <marker id="arr-r" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#d97706"/>
+        </marker>
+        <marker id="arr-l" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#d97706"/>
+        </marker>
+      </defs>
+
+      <!-- BG -->
+      <rect width="900" height="340" fill="#0d0d0d"/>
+
+      <!-- ── DIVERGENT (left) ── -->
+      <g transform="translate(0,0)">
+        <text x="145" y="22" fill="#d97706" font-size="10" letter-spacing="2" text-anchor="middle" font-weight="500">DIVERGENT</text>
+        <text x="145" y="34" fill="#6b5f52" font-size="7.5" letter-spacing="1.5" text-anchor="middle">MID-OCEAN RIDGE</text>
+        <!-- Mantle -->
+        <rect x="10" y="200" width="280" height="130" fill="url(#mantleGrad)" rx="2"/>
+        <!-- Convection arrows -->
+        <path d="M 80 260 Q 80 290 100 290 Q 120 290 120 260" stroke="#b45309" stroke-width="1.2" fill="none" stroke-dasharray="3,2"/>
+        <path d="M 170 260 Q 170 290 190 290 Q 210 290 210 260" stroke="#b45309" stroke-width="1.2" fill="none" stroke-dasharray="3,2"/>
+        <!-- Left plate -->
+        <rect x="10" y="145" width="120" height="55" fill="url(#crustGrad)" rx="2"/>
+        <!-- Right plate -->
+        <rect x="160" y="145" width="130" height="55" fill="url(#crustGrad)" rx="2"/>
+        <!-- Ridge peak -->
+        <polygon points="140,108 125,145 155,145" fill="#57534e"/>
+        <!-- Magma up -->
+        <line x1="145" y1="195" x2="145" y2="115" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,2"/>
+        <text x="155" y="155" fill="#ef4444" font-size="7" transform="rotate(-90,155,155)">MAGMA</text>
+        <!-- Ocean water -->
+        <rect x="10" y="105" width="280" height="40" fill="url(#oceanGrad)" rx="2"/>
+        <!-- Movement arrows -->
+        <line x1="60" y1="172" x2="25" y2="172" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-r)"/>
+        <line x1="230" y1="172" x2="265" y2="172" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-r)"/>
+        <text x="145" y="92" fill="#60a5fa" font-size="8" text-anchor="middle">OCEAN</text>
+        <text x="50" y="177" fill="#d97706" font-size="7" text-anchor="middle">←</text>
+        <text x="240" y="177" fill="#d97706" font-size="7" text-anchor="middle">→</text>
+        <text x="145" y="330" fill="#a8a29e" font-size="8" text-anchor="middle">New crust forms • Sea-floor spreading</text>
+      </g>
+
+      <!-- ── CONVERGENT (middle) ── -->
+      <g transform="translate(300,0)">
+        <text x="155" y="22" fill="#d97706" font-size="10" letter-spacing="2" text-anchor="middle" font-weight="500">CONVERGENT</text>
+        <text x="155" y="34" fill="#6b5f52" font-size="7.5" letter-spacing="1.5" text-anchor="middle">SUBDUCTION ZONE</text>
+        <!-- Mantle -->
+        <rect x="10" y="200" width="290" height="130" fill="url(#mantleGrad)" rx="2"/>
+        <!-- Ocean plate (left, subducting) -->
+        <polygon points="10,145 160,145 160,200 10,200" fill="#1e3a5f"/>
+        <polygon points="155,145 185,145 225,200 155,200" fill="#1e3a5f"/>
+        <!-- Subduction angle line -->
+        <line x1="160" y1="145" x2="270" y2="270" stroke="#78716c" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <!-- Continental plate (right) -->
+        <rect x="175" y="110" width="130" height="90" fill="url(#crustGrad)" rx="2"/>
+        <!-- Mountain -->
+        <polygon points="220,75 205,110 235,110" fill="#57534e"/>
+        <polygon points="235,82 222,110 250,110" fill="#44403c"/>
+        <!-- Volcano flame -->
+        <ellipse cx="222" cy="72" rx="5" ry="8" fill="#ef4444" opacity="0.7"/>
+        <ellipse cx="222" cy="68" rx="3" ry="5" fill="#f97316" opacity="0.8"/>
+        <!-- Ocean -->
+        <rect x="10" y="100" width="155" height="45" fill="url(#oceanGrad)" rx="2"/>
+        <!-- Trench marker -->
+        <line x1="155" y1="100" x2="175" y2="145" stroke="#d97706" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="150" y="97" fill="#d97706" font-size="7" text-anchor="middle">TRENCH</text>
+        <!-- Movement arrows -->
+        <line x1="70" y1="165" x2="105" y2="165" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-r)"/>
+        <line x1="245" y1="150" x2="215" y2="150" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-r)"/>
+        <text x="155" y="330" fill="#a8a29e" font-size="8" text-anchor="middle">Subduction • Trenches • Fold mountains</text>
+      </g>
+
+      <!-- ── TRANSFORM (right) ── -->
+      <g transform="translate(610,0)">
+        <text x="135" y="22" fill="#d97706" font-size="10" letter-spacing="2" text-anchor="middle" font-weight="500">TRANSFORM</text>
+        <text x="135" y="34" fill="#6b5f52" font-size="7.5" letter-spacing="1.5" text-anchor="middle">STRIKE-SLIP FAULT</text>
+        <!-- Upper plate left -->
+        <rect x="10" y="130" width="120" height="70" fill="url(#crustGrad)" rx="2"/>
+        <!-- Upper plate right (offset) -->
+        <rect x="150" y="100" width="120" height="70" fill="#292524" rx="2"/>
+        <!-- Fault line -->
+        <line x1="135" y1="80" x2="135" y2="295" stroke="#d97706" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <!-- Movement arrows -->
+        <line x1="40" y1="155" x2="40" y2="180" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-r)" transform="rotate(90,40,168)"/>
+        <line x1="200" y1="130" x2="200" y2="105" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-r)" transform="rotate(-90,200,118)"/>
+        <text x="50" y="148" fill="#d97706" font-size="9">↑</text>
+        <text x="210" y="145" fill="#d97706" font-size="9">↓</text>
+        <!-- Mantle -->
+        <rect x="10" y="200" width="260" height="130" fill="url(#mantleGrad)" rx="2"/>
+        <!-- Labels -->
+        <text x="65" y="120" fill="#a8a29e" font-size="8" text-anchor="middle">Plate A</text>
+        <text x="210" y="90" fill="#a8a29e" font-size="8" text-anchor="middle">Plate B</text>
+        <text x="145" y="260" fill="#78716c" font-size="7.5" text-anchor="middle">MANTLE</text>
+        <text x="135" y="330" fill="#a8a29e" font-size="8" text-anchor="middle">Lateral sliding • No crust created/destroyed</text>
+      </g>
+
+      <!-- Dividers -->
+      <line x1="300" y1="40" x2="300" y2="310" stroke="#292524" stroke-width="1.5"/>
+      <line x1="610" y1="40" x2="610" y2="310" stroke="#292524" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🔀</div>
+      <h3>Divergent Boundaries</h3>
+      <ul>
+        <li>Plates move <strong>apart</strong></li>
+        <li>Magma rises, creates new crust</li>
+        <li>Forms <strong>mid-ocean ridges</strong> &amp; rift valleys</li>
+        <li>Example: Mid-Atlantic Ridge, East African Rift</li>
+        <li>Shallow-focus earthquakes, basaltic volcanism</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏔️</div>
+      <h3>Convergent Boundaries</h3>
+      <ul>
+        <li>Plates <strong>collide</strong> — three sub-types:</li>
+        <li><strong>Ocean-Ocean:</strong> Island arcs, deep trenches (Japan)</li>
+        <li><strong>Ocean-Continent:</strong> Subduction, Andes-type mountains</li>
+        <li><strong>Continent-Continent:</strong> Fold mountains (Himalayas)</li>
+        <li>Deep-focus quakes, andesitic volcanoes</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">↔️</div>
+      <h3>Transform Boundaries</h3>
+      <ul>
+        <li>Plates slide <strong>horizontally</strong> past each other</li>
+        <li>No crust created or destroyed</li>
+        <li>Forms strike-slip faults</li>
+        <li>Example: <strong>San Andreas Fault</strong> (California)</li>
+        <li>Shallow-focus, high-magnitude earthquakes</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-h2">Wegener's Evidence</h2>
+  <div class="info-block">
+    <h4>Continental Drift Theory — Key Evidence</h4>
+    <ul>
+      <li><strong>Jig-saw fit:</strong> Coastlines of South America &amp; Africa match perfectly</li>
+      <li><strong>Fossil similarity:</strong> Glossopteris flora found across Gondwana continents</li>
+      <li><strong>Rock correlation:</strong> Matching geological strata across separated continents</li>
+      <li><strong>Palaeoclimatic evidence:</strong> Glacial deposits in tropical regions (ancient ice sheets)</li>
+      <li><strong>Sea-floor spreading (Hess):</strong> Magnetic striping on ocean floor confirmed plate movement</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Feature</th><th>Divergent</th><th>Convergent</th><th>Transform</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Plate motion</td><td>Apart</td><td>Together</td><td>Sideways</td></tr>
+        <tr><td>Landforms</td><td>Mid-ocean ridge, Rift valley</td><td>Mountains, Trenches, Islands</td><td>Fault lines</td></tr>
+        <tr><td>Volcanism</td><td>Basaltic (shield)</td><td>Andesitic (composite)</td><td>Rare</td></tr>
+        <tr><td>Earthquake depth</td><td>Shallow</td><td>Shallow to deep</td><td>Shallow</td></tr>
+        <tr><td>Example</td><td>Mid-Atlantic Ridge</td><td>Mariana Trench, Himalayas</td><td>San Andreas Fault</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── TAB: EARTHQUAKES ─── -->
+<section class="tab-panel" id="tab-earthquakes" role="tabpanel">
+  <div class="section-hero">
+    <div class="section-tag">Chapter 02</div>
+    <h1>EARTHQUAKES</h1>
+    <p>Seismology — waves, measurement &amp; effects</p>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">📍</div>
+      <h3>Focus / Hypocentre</h3>
+      <p>The <strong>point within the Earth</strong> where the earthquake originates. Also called the hypocentre. Energy is released here as seismic waves radiating outward.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>Epicentre</h3>
+      <p>The <strong>point on the Earth's surface</strong> directly above the focus. Maximum destruction occurs here. Distance from focus to epicentre = focal depth.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📏</div>
+      <h3>Focal Depth</h3>
+      <ul>
+        <li><strong>Shallow:</strong> 0–70 km (most destructive)</li>
+        <li><strong>Intermediate:</strong> 70–300 km</li>
+        <li><strong>Deep:</strong> 300–700 km</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SVG: Seismic Waves -->
+  <div class="diagram-wrap">
+    <div class="diagram-title">Figure 2 — Seismic Wave Types &amp; Earth Interior Paths</div>
+    <svg viewBox="0 0 860 360" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+      <defs>
+        <radialGradient id="earthGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#7c2d12"/>
+          <stop offset="45%" stop-color="#92400e"/>
+          <stop offset="75%" stop-color="#44403c"/>
+          <stop offset="100%" stop-color="#1c1917"/>
+        </radialGradient>
+        <marker id="arr2" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+          <polygon points="0,0 5,2.5 0,5" fill="#d97706"/>
+        </marker>
+      </defs>
+      <rect width="860" height="360" fill="#0d0d0d"/>
+
+      <!-- Earth cross-section left -->
+      <g transform="translate(30,30)">
+        <circle cx="155" cy="155" r="155" fill="url(#earthGrad)"/>
+        <!-- Core boundary -->
+        <circle cx="155" cy="155" r="90" fill="none" stroke="#57534e" stroke-width="1" stroke-dasharray="4,3"/>
+        <!-- Inner core -->
+        <circle cx="155" cy="155" r="45" fill="#b45309" opacity="0.5"/>
+        <!-- Labels -->
+        <text x="155" y="159" fill="#fbbf24" font-size="8" text-anchor="middle">INNER CORE</text>
+        <text x="155" y="120" fill="#d97706" font-size="7.5" text-anchor="middle">OUTER CORE</text>
+        <text x="155" y="48" fill="#a8a29e" font-size="7.5" text-anchor="middle">MANTLE</text>
+        <text x="155" y="20" fill="#78716c" font-size="7" text-anchor="middle">CRUST</text>
+        <!-- Focus point -->
+        <circle cx="155" cy="220" r="5" fill="#ef4444"/>
+        <text x="165" y="224" fill="#ef4444" font-size="7.5">FOCUS</text>
+        <!-- Epicentre -->
+        <circle cx="155" cy="0" r="4" fill="#d97706"/>
+        <text x="165" y="4" fill="#d97706" font-size="7.5">EPICENTRE</text>
+        <!-- P wave path (goes through all) -->
+        <path d="M155,220 Q155,155 155,0" stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-dasharray="5,2"/>
+        <!-- S wave path (stops at liquid outer core) -->
+        <path d="M155,220 Q120,185 100,155" stroke="#34d399" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+        <line x1="100" y1="155" x2="100" y2="155" stroke="#34d399" stroke-width="1.5"/>
+        <text x="65" y="152" fill="#34d399" font-size="7">S stops</text>
+        <!-- Shadow zone arc hint -->
+        <path d="M155,220 Q230,170 280,100" stroke="#f59e0b" stroke-width="1.2" fill="none" stroke-dasharray="2,4"/>
+      </g>
+
+      <!-- Wave type diagrams right -->
+      <g transform="translate(350,20)">
+        <!-- P Wave -->
+        <text x="0" y="16" fill="#60a5fa" font-size="10" letter-spacing="1" font-weight="500">P-WAVES (PRIMARY)</text>
+        <text x="0" y="30" fill="#78716c" font-size="7.5">Compressional / Longitudinal — travel through solids + liquids + gases</text>
+        <!-- Compression animation hint -->
+        <g transform="translate(0,40)">
+          <rect x="0" y="0" width="460" height="35" fill="#1a1a1a" rx="4"/>
+          <!-- Dots showing compression -->
+          <circle cx="20" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="38" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="52" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="80" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="100" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="118" cy="17" r="3" fill="#60a5fa"/>
+          <!-- Rarefaction gap -->
+          <circle cx="148" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="170" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="210" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="230" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="248" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="280" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="300" cy="17" r="3" fill="#60a5fa"/>
+          <circle cx="316" cy="17" r="3" fill="#60a5fa"/>
+          <!-- Arrows showing direction -->
+          <text x="345" y="22" fill="#60a5fa" font-size="10">→→→</text>
+          <text x="5" y="35" fill="#374151" font-size="6.5" dy="-2">COMPRESSION</text>
+          <text x="148" y="35" fill="#374151" font-size="6.5" dy="-2">RAREFACTION</text>
+        </g>
+        <text x="0" y="97" fill="#78716c" font-size="7">Fastest (5–8 km/s) • Arrives FIRST at seismograph</text>
+
+        <!-- S Wave -->
+        <text x="0" y="120" fill="#34d399" font-size="10" letter-spacing="1" font-weight="500">S-WAVES (SECONDARY)</text>
+        <text x="0" y="134" fill="#78716c" font-size="7.5">Shear / Transverse — travel only through solids</text>
+        <g transform="translate(0,144)">
+          <rect x="0" y="-10" width="460" height="48" fill="#1a1a1a" rx="4"/>
+          <path d="M0,20 Q30,5 60,20 Q90,35 120,20 Q150,5 180,20 Q210,35 240,20 Q270,5 300,20 Q330,35 360,20 Q390,5 420,20" 
+                stroke="#34d399" stroke-width="2.2" fill="none"/>
+          <line x1="430" y1="20" x2="455" y2="20" stroke="#34d399" stroke-width="1" marker-end="url(#arr2)"/>
+          <text x="0" y="43" fill="#374151" font-size="6.5">↕ Perpendicular to direction of travel</text>
+        </g>
+        <text x="0" y="207" fill="#78716c" font-size="7">Slower (3–4 km/s) • Cannot pass through liquid outer core</text>
+
+        <!-- L Wave -->
+        <text x="0" y="228" fill="#f59e0b" font-size="10" letter-spacing="1" font-weight="500">L-WAVES / SURFACE WAVES</text>
+        <text x="0" y="242" fill="#78716c" font-size="7.5">Love &amp; Rayleigh waves — travel along surface only</text>
+        <g transform="translate(0,252)">
+          <rect x="0" y="-8" width="460" height="52" fill="#1a1a1a" rx="4"/>
+          <!-- Ground surface -->
+          <line x1="0" y1="5" x2="460" y2="5" stroke="#44403c" stroke-width="1.5"/>
+          <!-- Rayleigh wave (elliptical motion) -->
+          <path d="M0,5 Q20,-10 40,5 Q60,25 80,5 Q100,-10 120,5 Q140,25 160,5 Q180,-10 200,5 Q220,25 240,5 Q260,-10 280,5 Q300,25 320,5 Q340,-10 360,5 Q380,25 400,5"
+                stroke="#f59e0b" stroke-width="2" fill="none"/>
+          <text x="415" y="10" fill="#f59e0b" font-size="9">→</text>
+          <text x="5" y="42" fill="#374151" font-size="6.5">Slowest • Most DESTRUCTIVE • Arrives last</text>
+        </g>
+        <text x="0" y="320" fill="#78716c" font-size="7">Only P &amp; S recorded at distant stations (shadow zone 103°–142°)</text>
+      </g>
+    </svg>
+  </div>
+
+  <h2 class="section-h2">Magnitude vs Intensity</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Feature</th><th>Magnitude</th><th>Intensity</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Definition</td><td>Amount of energy released at focus</td><td>Effect at a specific location on surface</td></tr>
+        <tr><td>Scale</td><td>Richter Scale (logarithmic, open-ended)</td><td>Modified Mercalli Intensity (MMI) Scale</td></tr>
+        <tr><td>Values</td><td>Single value for an earthquake</td><td>Varies with distance from epicentre</td></tr>
+        <tr><td>Measurement</td><td>Seismograph readings</td><td>Observed human/structural effects</td></tr>
+        <tr><td>Example range</td><td>1–9+ (each unit = 31.6× energy)</td><td>I (imperceptible) to XII (total destruction)</td></tr>
+        <tr><td>Inventor</td><td>Charles Richter (1935)</td><td>Giuseppe Mercalli (1902)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>Richter Scale</h3>
+      <ul>
+        <li>Logarithmic scale: each unit = <strong>10× amplitude</strong></li>
+        <li>Each unit ≈ <strong>31.6× energy</strong></li>
+        <li>&lt;2.0: Micro (not felt)</li>
+        <li>2.0–3.9: Minor</li>
+        <li>4.0–4.9: Light</li>
+        <li>5.0–5.9: Moderate</li>
+        <li>6.0–6.9: Strong</li>
+        <li>7.0–7.9: Major</li>
+        <li>≥8.0: Great</li>
+        <li>Modern: <strong>Moment Magnitude Scale (Mw)</strong> preferred</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏚️</div>
+      <h3>Modified Mercalli Scale</h3>
+      <ul>
+        <li><strong>I:</strong> Not felt</li>
+        <li><strong>II–III:</strong> Felt by few, delicate objects sway</li>
+        <li><strong>IV–V:</strong> Felt indoors, dishes rattle, sleepers wake</li>
+        <li><strong>VI–VII:</strong> Felt by all, some structural damage</li>
+        <li><strong>VIII:</strong> Considerable damage, chimneys fall</li>
+        <li><strong>IX–X:</strong> Great damage, buildings destroyed</li>
+        <li><strong>XI–XII:</strong> Few structures survive, total destruction</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌊</div>
+      <h3>Tsunami</h3>
+      <ul>
+        <li>Triggered by <strong>submarine earthquakes</strong> (Mw ≥7.0) displacing water</li>
+        <li>Speed in deep ocean: <strong>up to 800 km/h</strong></li>
+        <li>Wavelength: hundreds of km, height increases near shore</li>
+        <li>2004 Indian Ocean tsunami: Sumatra (Mw 9.1) → 14 countries</li>
+        <li>Warning system: DART buoys + INCOIS (India)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>UPSC Trick:</strong> Richter = energy at SOURCE (one value). Mercalli = EFFECT at location (varies with distance). Shadow Zone = 103°–142° from epicentre (P waves refracted, S waves blocked by liquid outer core).
+  </div>
+</section>
+
+<!-- ─── TAB: INDIA SEISMIC ZONES ─── -->
+<section class="tab-panel" id="tab-seismiczones" role="tabpanel">
+  <div class="section-hero">
+    <div class="section-tag">Chapter 03</div>
+    <h1>INDIA SEISMIC ZONES</h1>
+    <p>BIS Zoning map — Zone II to Zone V</p>
+  </div>
+
+  <div class="highlight-box">
+    <strong>Bureau of Indian Standards (BIS)</strong> divides India into 4 seismic zones (II–V) based on past seismicity, geology, and tectonic setup. About <strong>59% of India's land area</strong> is vulnerable to earthquakes of moderate-to-severe intensity.
+  </div>
+
+  <!-- SVG: India Seismic Zone Map (schematic) -->
+  <div class="diagram-wrap">
+    <div class="diagram-title">Figure 3 — India Seismic Zone Map (Schematic)</div>
+    <svg viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+      <rect width="820" height="520" fill="#0d0d0d"/>
+
+      <!-- Simplified India outline schematic -->
+      <!-- Zone V (Very High) - NE + N Himalayan + Kashmir + Andaman -->
+      <polygon points="180,20 340,20 380,60 370,110 320,130 290,100 250,80 200,70 160,50" fill="#dc2626" opacity="0.75"/>
+      <!-- NE India Zone V -->
+      <polygon points="560,60 640,50 680,80 670,130 630,150 580,130 555,100" fill="#dc2626" opacity="0.75"/>
+      <!-- Andaman marker -->
+      <ellipse cx="730" cy="320" rx="18" ry="55" fill="#dc2626" opacity="0.7"/>
+      <text x="730" y="390" fill="#dc2626" font-size="7.5" text-anchor="middle">ANDAMAN</text>
+
+      <!-- Zone IV (High) - Upper Gangetic, Kutch band -->
+      <polygon points="200,70 290,100 320,130 370,110 400,130 430,150 420,180 370,190 310,175 270,150 230,130 190,110" fill="#f97316" opacity="0.65"/>
+      <!-- J&K/HP Zone IV -->
+      <polygon points="160,50 200,70 190,110 150,120 120,90 110,60" fill="#f97316" opacity="0.65"/>
+      <!-- Kutch / Gujarat Zone V patch -->
+      <ellipse cx="95" cy="185" rx="38" ry="28" fill="#dc2626" opacity="0.7"/>
+      <text x="95" y="183" fill="#fff" font-size="7" text-anchor="middle">KUTCH</text>
+      <text x="95" y="192" fill="#fff" font-size="6.5" text-anchor="middle">Zone V</text>
+
+      <!-- Zone III (Moderate) - central India -->
+      <polygon points="150,120 230,130 270,150 310,175 370,190 430,200 460,230 450,280 400,300 350,290 300,270 250,260 200,250 160,220 140,180" fill="#eab308" opacity="0.5"/>
+      <!-- Western coast Zone III -->
+      <polygon points="95,215 130,215 150,260 140,310 110,340 80,310 70,270 75,240" fill="#eab308" opacity="0.5"/>
+
+      <!-- Zone II (Low) - peninsular south -->
+      <polygon points="140,310 200,280 250,290 300,295 350,310 400,330 420,380 400,440 360,470 310,480 260,470 210,450 170,410 140,370 130,340" fill="#22c55e" opacity="0.4"/>
+      <!-- Deccan plateau -->
+      <polygon points="160,240 250,265 350,280 430,280 460,310 450,360 400,380 350,380 290,360 220,340 170,310" fill="#22c55e" opacity="0.4"/>
+
+      <!-- State Labels -->
+      <text x="240" y="45" fill="#fecaca" font-size="8.5" font-weight="500">JAMMU &amp; KASHMIR</text>
+      <text x="370" y="90" fill="#fff" font-size="8" font-weight="500">HIMACHAL</text>
+      <text x="430" y="115" fill="#fff" font-size="8.5" font-weight="500">UTTARAKHAND</text>
+      <text x="490" y="130" fill="#fecaca" font-size="8.5" font-weight="500">SIKKIM</text>
+      <text x="590" y="100" fill="#fecaca" font-size="8.5" font-weight="500">ASSAM / MEGHALAYA</text>
+      <text x="320" y="165" fill="#fff" font-size="8" font-weight="500">DELHI / UP (W)</text>
+      <text x="130" y="162" fill="#fff" font-size="7.5">PUNJAB /</text>
+      <text x="130" y="172" fill="#fff" font-size="7.5">HARYANA</text>
+      <text x="230" y="210" fill="#fde68a" font-size="8" font-weight="500">BIHAR / UP (E)</text>
+      <text x="350" y="240" fill="#fde68a" font-size="8">JHARKHAND</text>
+      <text x="170" y="290" fill="#fde68a" font-size="8">GUJARAT (S)</text>
+      <text x="265" y="330" fill="#bbf7d0" font-size="8.5" font-weight="500">MAHARASHTRA</text>
+      <text x="390" y="350" fill="#bbf7d0" font-size="8.5" font-weight="500">ANDHRA / TELANGANA</text>
+      <text x="195" y="390" fill="#bbf7d0" font-size="8.5" font-weight="500">KARNATAKA</text>
+      <text x="285" y="440" fill="#bbf7d0" font-size="8.5" font-weight="500">TAMIL NADU</text>
+      <text x="170" y="440" fill="#bbf7d0" font-size="8">KERALA</text>
+      <text x="440" y="240" fill="#fde68a" font-size="8">WEST BENGAL</text>
+      <text x="430" y="310" fill="#fde68a" font-size="7.5">ODISHA</text>
+
+      <!-- Zone markers overlay -->
+      <text x="295" y="55" fill="#fff" font-size="10" font-weight="600" opacity="0.9">V</text>
+      <text x="200" y="100" fill="#fff" font-size="10" font-weight="600" opacity="0.8">IV</text>
+      <text x="310" y="215" fill="#fde68a" font-size="10" font-weight="600" opacity="0.8">III</text>
+      <text x="340" y="390" fill="#bbf7d0" font-size="10" font-weight="600" opacity="0.8">II</text>
+      <text x="620" y="105" fill="#fff" font-size="10" font-weight="600" opacity="0.9">V</text>
+
+      <!-- Legend -->
+      <rect x="595" y="200" width="210" height="190" fill="#161616" rx="6" stroke="#292524"/>
+      <text x="608" y="220" fill="#a8a29e" font-size="8" letter-spacing="1.5" font-weight="500">SEISMIC ZONES</text>
+      <rect x="608" y="232" width="14" height="12" fill="#dc2626" rx="2"/>
+      <text x="628" y="243" fill="#e5e7eb" font-size="8.5">Zone V — Very High Risk</text>
+      <rect x="608" y="252" width="14" height="12" fill="#f97316" rx="2"/>
+      <text x="628" y="263" fill="#e5e7eb" font-size="8.5">Zone IV — High Risk</text>
+      <rect x="608" y="272" width="14" height="12" fill="#eab308" rx="2"/>
+      <text x="628" y="283" fill="#e5e7eb" font-size="8.5">Zone III — Moderate Risk</text>
+      <rect x="608" y="292" width="14" height="12" fill="#22c55e" rx="2"/>
+      <text x="628" y="303" fill="#e5e7eb" font-size="8.5">Zone II — Low Risk</text>
+      <line x1="608" y1="316" x2="792" y2="316" stroke="#292524"/>
+      <text x="608" y="333" fill="#78716c" font-size="7.5">Peak Ground Acceleration:</text>
+      <text x="608" y="348" fill="#dc2626" font-size="7.5">Zone V: &gt;0.36g</text>
+      <text x="608" y="362" fill="#f97316" font-size="7.5">Zone IV: 0.24g</text>
+      <text x="608" y="376" fill="#eab308" font-size="7.5">Zone III: 0.16g</text>
+      <text x="608" y="390" fill="#22c55e" font-size="7.5">Zone II: 0.10g</text>
+
+      <!-- Compass -->
+      <text x="570" y="480" fill="#57534e" font-size="10">N↑</text>
+
+      <!-- Scale note -->
+      <text x="20" y="505" fill="#57534e" font-size="7">Schematic representation — for reference only. Refer to BIS IS 1893 for official zoning.</text>
+    </svg>
+  </div>
+
+  <div class="zone-legend">
+    <span class="zone-pill" style="background:rgba(220,38,38,0.15);color:#fca5a5;border-color:rgba(220,38,38,0.4)">Zone V — Very High Damage Risk</span>
+    <span class="zone-pill" style="background:rgba(249,115,22,0.12);color:#fdba74;border-color:rgba(249,115,22,0.35)">Zone IV — High Damage Risk</span>
+    <span class="zone-pill" style="background:rgba(234,179,8,0.12);color:#fde047;border-color:rgba(234,179,8,0.3)">Zone III — Moderate Damage Risk</span>
+    <span class="zone-pill" style="background:rgba(34,197,94,0.1);color:#86efac;border-color:rgba(34,197,94,0.25)">Zone II — Low Damage Risk</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Zone</th><th>Risk Level</th><th>States / Regions</th><th>Notable Hazards</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td style="color:#fca5a5;font-weight:600">Zone V</td>
+          <td>Very High</td>
+          <td>Entire NE India (Assam, Manipur, Meghalaya, Mizoram, Nagaland, Tripura, Arunachal), J&amp;K, Uttarakhand (N part), HP (Kangra, Chamba), parts of Bihar adj. Nepal, Andaman &amp; Nicobar, Kutch (Gujarat)</td>
+          <td>MSK IX or more; great earthquakes expected</td>
+        </tr>
+        <tr>
+          <td style="color:#fdba74;font-weight:600">Zone IV</td>
+          <td>High</td>
+          <td>Remaining J&amp;K &amp; HP, Delhi, Sikkim, N Bihar, W UP, parts of Gujarat, Rann of Kutch</td>
+          <td>MSK VIII; strong quakes</td>
+        </tr>
+        <tr>
+          <td style="color:#fde047;font-weight:600">Zone III</td>
+          <td>Moderate</td>
+          <td>Kerala, Goa, Lakshadweep, remaining UP, Gujarat (S), W Bengal, Punjab, Haryana, E Rajasthan, Assam plains, Konkan coast</td>
+          <td>MSK VII; moderate quakes</td>
+        </tr>
+        <tr>
+          <td style="color:#86efac;font-weight:600">Zone II</td>
+          <td>Low</td>
+          <td>Peninsular India — bulk of AP, Telangana, Karnataka, Tamil Nadu, Odisha, MP, Rajasthan (W &amp; S), Jharkhand</td>
+          <td>MSK VI or less</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-h2">Major Indian Earthquakes (UPSC-relevant)</h2>
+  <div class="cards-grid">
+    <div class="card"><div class="card-icon">🏚️</div><h3>Bhuj 2001</h3><p><strong>State:</strong> Gujarat | <strong>Magnitude:</strong> 7.7 Mw<br>Killed ~20,000. Triggered policy for National Disaster Management Authority (NDMA). Zone V — Kutch.</p></div>
+    <div class="card"><div class="card-icon">🏚️</div><h3>Latur 1993</h3><p><strong>State:</strong> Maharashtra | <strong>Magnitude:</strong> 6.2 Mw<br>Killed ~9,748. Shallow intraplate earthquake — surprised experts since Deccan plateau thought to be stable.</p></div>
+    <div class="card"><div class="card-icon">🏚️</div><h3>Uttarkashi 1991 &amp; Chamoli 1999</h3><p><strong>State:</strong> Uttarakhand | Zone V Himalayan belt. Himalayan seismicity driven by Indo-Eurasian plate collision at 5 cm/year.</p></div>
+    <div class="card"><div class="card-icon">🌊</div><h3>Andaman 2004</h3><p><strong>Mw:</strong> 9.1 | Triggered Indian Ocean Tsunami. Andaman-Nicobar in Zone V. Led to establishment of <strong>INCOIS</strong> early warning system.</p></div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>Remember:</strong> India is sandwiched between the Eurasian and Indo-Australian plates. The Himalayas are still rising due to ongoing subduction (~5 mm/year). The entire northern belt (Himalayas + NE India) is Zone IV–V. Stable Peninsular India (Deccan Craton) is mostly Zone II–III — but intraplate earthquakes DO occur (Latur, Koyna).
+  </div>
+</section>
+
+<!-- ─── TAB: VOLCANOES ─── -->
+<section class="tab-panel" id="tab-volcanoes" role="tabpanel">
+  <div class="section-hero">
+    <div class="section-tag">Chapter 04</div>
+    <h1>VOLCANOES</h1>
+    <p>Types, structures, distribution &amp; volcanic landforms</p>
+  </div>
+
+  <!-- SVG: Volcano Cross-Section -->
+  <div class="diagram-wrap">
+    <div class="diagram-title">Figure 4 — Composite Volcano Cross-Section &amp; Intrusive Features</div>
+    <svg viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+      <defs>
+        <linearGradient id="magmaG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ef4444"/>
+          <stop offset="100%" stop-color="#7c2d12"/>
+        </linearGradient>
+        <linearGradient id="rockG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#57534e"/>
+          <stop offset="100%" stop-color="#292524"/>
+        </linearGradient>
+        <linearGradient id="ashG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#78716c"/>
+          <stop offset="100%" stop-color="#44403c"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect width="860" height="400" fill="#0d0d0d"/>
+
+      <!-- Ground level -->
+      <line x1="0" y1="310" x2="860" y2="310" stroke="#44403c" stroke-width="1.5"/>
+
+      <!-- Bedrock layers -->
+      <rect x="0" y="310" width="860" height="90" fill="#1c1917"/>
+      <line x1="0" y1="340" x2="860" y2="340" stroke="#292524" stroke-width="1"/>
+      <line x1="0" y1="370" x2="860" y2="370" stroke="#292524" stroke-width="1"/>
+
+      <!-- Magma chamber -->
+      <ellipse cx="430" cy="375" rx="130" ry="28" fill="url(#magmaG)" opacity="0.85"/>
+      <text x="430" y="378" fill="#fbbf24" font-size="8.5" text-anchor="middle" font-weight="500">MAGMA CHAMBER</text>
+
+      <!-- Main conduit -->
+      <rect x="413" y="80" width="34" height="295" fill="url(#magmaG)" opacity="0.7"/>
+
+      <!-- Volcano cone (composite — alternating ash/lava layers) -->
+      <polygon points="430,30 295,310 565,310" fill="url(#ashG)"/>
+      <!-- Lava layer lines on cone -->
+      <line x1="325" y1="270" x2="535" y2="270" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/>
+      <line x1="345" y1="230" x2="515" y2="230" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/>
+      <line x1="362" y1="190" x2="498" y2="190" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/>
+      <line x1="378" y1="150" x2="482" y2="150" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/>
+      <!-- Ash layer -->
+      <polygon points="430,30 295,310 565,310" fill="url(#ashG)" opacity="0.35"/>
+
+      <!-- Crater at top -->
+      <ellipse cx="430" cy="32" rx="28" ry="10" fill="#1a1a1a" stroke="#b45309" stroke-width="1.5"/>
+
+      <!-- Lava flow -->
+      <path d="M560,310 Q590,305 630,295 Q660,288 680,290 Q700,292 710,308" fill="#ef4444" stroke="#b45309" stroke-width="1" opacity="0.75"/>
+      <text x="640" y="285" fill="#ef4444" font-size="7.5">LAVA FLOW</text>
+
+      <!-- Eruption plume -->
+      <path d="M430,22 Q415,5 425,0" stroke="#78716c" stroke-width="2" fill="none" opacity="0.6"/>
+      <path d="M430,22 Q445,2 438,-5" stroke="#78716c" stroke-width="2" fill="none" opacity="0.6"/>
+      <ellipse cx="427" cy="-3" rx="12" ry="6" fill="#57534e" opacity="0.5"/>
+
+      <!-- Parasitic cone / Secondary vent -->
+      <polygon points="540,220 505,310 575,310" fill="#44403c"/>
+      <text x="545" y="225" fill="#a8a29e" font-size="7">Parasitic</text>
+      <text x="545" y="234" fill="#a8a29e" font-size="7">cone</text>
+      <!-- Branch conduit -->
+      <line x1="447" y1="230" x2="540" y2="230" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+      <!-- INTRUSIVE features (underground) -->
+      <!-- Sill (horizontal) -->
+      <rect x="140" y="335" width="180" height="8" fill="#b45309" rx="2" opacity="0.8"/>
+      <text x="230" y="332" fill="#d97706" font-size="7.5" text-anchor="middle">SILL (horizontal)</text>
+      <!-- Dyke (vertical) -->
+      <rect x="140" y="315" width="7" height="80" fill="#b45309" rx="2" opacity="0.8"/>
+      <text x="100" y="360" fill="#d97706" font-size="7.5" text-anchor="middle">DYKE</text>
+      <text x="100" y="369" fill="#d97706" font-size="7.5" text-anchor="middle">(vertical)</text>
+      <!-- Batholith label -->
+      <ellipse cx="140" cy="395" rx="90" ry="12" fill="#92400e" opacity="0.4"/>
+      <text x="140" y="398" fill="#fbbf24" font-size="7.5" text-anchor="middle">BATHOLITH</text>
+      <!-- Laccolith -->
+      <path d="M640,315 Q700,290 760,315" fill="#92400e" opacity="0.6"/>
+      <text x="700" y="310" fill="#d97706" font-size="7.5" text-anchor="middle">LACCOLITH</text>
+
+      <!-- Labels main structure -->
+      <text x="430" y="20" fill="#78716c" font-size="7.5" text-anchor="middle">CRATER / CALDERA</text>
+      <text x="470" y="180" fill="#fde68a" font-size="7.5">ASH &amp;</text>
+      <text x="470" y="190" fill="#fde68a" font-size="7.5">LAVA</text>
+      <text x="470" y="200" fill="#fde68a" font-size="7.5">LAYERS</text>
+      <!-- Vent label -->
+      <text x="390" y="165" fill="#ef4444" font-size="7.5" text-anchor="middle">VENT /</text>
+      <text x="390" y="175" fill="#ef4444" font-size="7.5" text-anchor="middle">CONDUIT</text>
+
+      <!-- Right side legend -->
+      <rect x="680" y="30" width="168" height="120" fill="#161616" rx="5" stroke="#292524"/>
+      <text x="694" y="50" fill="#a8a29e" font-size="7.5" letter-spacing="1.5">INTRUSIVE FEATURES</text>
+      <text x="694" y="68" fill="#d97706" font-size="7.5">Batholith:</text>
+      <text x="694" y="80" fill="#78716c" font-size="7">largest intrusion, granitic</text>
+      <text x="694" y="96" fill="#d97706" font-size="7.5">Sill:</text>
+      <text x="694" y="108" fill="#78716c" font-size="7">horizontal, concordant</text>
+      <text x="694" y="120" fill="#d97706" font-size="7.5">Dyke:</text>
+      <text x="694" y="132" fill="#78716c" font-size="7">vertical, discordant</text>
+      <text x="694" y="144" fill="#d97706" font-size="7.5">Laccolith:</text>
+      <text x="694" y="144" fill="#78716c" font-size="7" dy="12">dome-shaped mushroom</text>
+    </svg>
+  </div>
+
+  <h2 class="section-h2">Types of Volcanoes</h2>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🛡️</div>
+      <h3>Shield Volcano</h3>
+      <ul>
+        <li>Broad, gently sloping, <strong>dome-shaped</strong></li>
+        <li>Low-viscosity basaltic lava — flows far</li>
+        <li>Quiet, non-explosive eruptions</li>
+        <li>Largest by volume on Earth</li>
+        <li><strong>Example:</strong> Mauna Loa, Mauna Kea (Hawaii)</li>
+        <li>Found at hotspots &amp; divergent boundaries</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">🗻</div>
+      <h3>Composite / Stratovolcano</h3>
+      <ul>
+        <li>Steep, symmetrical cone with <strong>alternating ash &amp; lava</strong> layers</li>
+        <li>High-viscosity andesitic/rhyolitic lava</li>
+        <li>Explosive, violent eruptions (pyroclastic flows)</li>
+        <li><strong>Examples:</strong> Mt Fuji, Mt Vesuvius, Mt St Helens</li>
+        <li>Found at convergent (subduction) zones</li>
+        <li>Ring of Fire type</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">🪨</div>
+      <h3>Cinder Cone</h3>
+      <ul>
+        <li>Simplest, smallest volcano type</li>
+        <li>Built from pyroclastic fragments (cinders)</li>
+        <li>Steep sides, bowl-shaped crater</li>
+        <li>Short-lived, single eruptive period</li>
+        <li><strong>Example:</strong> Paricutin (Mexico, appeared 1943)</li>
+        <li>Often parasitic cones on shield/composite</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-h2">Intrusive vs Extrusive Volcanism</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Feature</th><th>Intrusive (Plutonic)</th><th>Extrusive (Volcanic)</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Definition</td><td>Magma solidifies below Earth's surface</td><td>Lava erupts &amp; solidifies at surface</td></tr>
+        <tr><td>Crystal size</td><td>Large crystals (slow cooling)</td><td>Fine/no crystals (rapid cooling)</td></tr>
+        <tr><td>Rock types</td><td>Granite, Gabbro, Diorite</td><td>Basalt, Rhyolite, Andesite, Obsidian</td></tr>
+        <tr><td>Landforms</td><td>Batholith, Laccolith, Sill, Dyke, Lopolith</td><td>Lava plateau, Caldera, Crater, Cone</td></tr>
+        <tr><td>India example</td><td>Aravalli granites, Deccan Batholith</td><td>Deccan Traps (basalt), Barren Island</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-h2">Hotspots</h2>
+  <div class="info-block">
+    <h4>Mantle Hotspots — Stationary Heat Plumes</h4>
+    <ul>
+      <li>Mantle plumes — columns of super-heated mantle material rising from deep inside Earth</li>
+      <li>Hotspot remains <strong>stationary</strong> while tectonic plate moves over it → creates chain of volcanic islands</li>
+      <li><strong>Hawaiian Chain:</strong> Classic example — older islands to NW, active Kilauea/Mauna Loa to SE. Traces Pacific Plate direction</li>
+      <li><strong>Yellowstone:</strong> Continental hotspot — supervolcano beneath Wyoming</li>
+      <li><strong>Iceland:</strong> Hotspot + divergent boundary (Mid-Atlantic Ridge)</li>
+      <li><strong>Reunion Island:</strong> Hotspot responsible for <strong>Deccan Traps</strong> flood basalt (66 Ma)</li>
+      <li>~About 40–50 known hotspots globally</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h2">Volcanic Activity Status</h2>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🔴</div>
+      <h3>Active</h3>
+      <p>Currently erupting or showing signs (gas emission, seismicity). ~1,500 potentially active. <strong>Examples:</strong> Kilauea (Hawaii), Etna (Italy), Barren Island (India)</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🟡</div>
+      <h3>Dormant</h3>
+      <p>Not currently active but may erupt again. Long quiescent periods. <strong>Examples:</strong> Mt Rainier (USA), Taal (Philippines, erupted 2020)</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🟢</div>
+      <h3>Extinct</h3>
+      <p>No activity expected; magma supply cut off. <strong>Examples:</strong> Ben Nevis (UK), Edinburgh Castle rock, Deccan Traps vents</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>Caldera:</strong> Large depression formed when a volcano collapses after a massive eruption emptying the magma chamber. NOT just a large crater. Examples: Crater Lake (Oregon), Yellowstone caldera, Lake Toba (Sumatra — supereruption 74,000 years ago).
+  </div>
+</section>
+
+<!-- ─── TAB: RING OF FIRE ─── -->
+<section class="tab-panel" id="tab-ringoffire" role="tabpanel">
+  <div class="section-hero">
+    <div class="section-tag">Chapter 05</div>
+    <h1>RING OF FIRE</h1>
+    <p>The Pacific horseshoe — seismicity, volcanism &amp; plate tectonics</p>
+  </div>
+
+  <!-- SVG: Ring of Fire World Map schematic -->
+  <div class="diagram-wrap">
+    <div class="diagram-title">Figure 5 — Ring of Fire Schematic (Pacific Basin)</div>
+    <svg viewBox="0 0 860 480" xmlns="http://www.w3.org/2000/svg" font-family="'DM Mono', monospace">
+      <defs>
+        <filter id="ringGlow">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect width="860" height="480" fill="#0a0f1a"/>
+
+      <!-- Ocean background -->
+      <rect width="860" height="480" fill="#0c1829" opacity="0.8"/>
+
+      <!-- Simplified continent shapes -->
+      <!-- North America -->
+      <polygon points="50,30 180,25 210,80 200,140 170,200 130,250 90,280 50,260 30,200 20,130 30,70" fill="#1a2a1a" stroke="#243024" stroke-width="1"/>
+      <text x="95" y="160" fill="#4b6b4b" font-size="9" text-anchor="middle">NORTH</text>
+      <text x="95" y="172" fill="#4b6b4b" font-size="9" text-anchor="middle">AMERICA</text>
+      <!-- South America -->
+      <polygon points="120,300 180,290 210,330 220,390 200,440 160,460 130,450 110,420 105,380 110,340" fill="#1a2a1a" stroke="#243024" stroke-width="1"/>
+      <text x="160" y="385" fill="#4b6b4b" font-size="9" text-anchor="middle">SOUTH</text>
+      <text x="160" y="396" fill="#4b6b4b" font-size="9" text-anchor="middle">AMERICA</text>
+      <!-- Asia/Russia -->
+      <polygon points="480,20 680,20 740,50 760,100 730,150 680,160 620,140 560,120 510,100 490,70 470,50" fill="#1a2a1a" stroke="#243024" stroke-width="1"/>
+      <text x="620" y="105" fill="#4b6b4b" font-size="9" text-anchor="middle">ASIA</text>
+      <!-- Japan area -->
+      <ellipse cx="730" cy="170" rx="15" ry="35" fill="#243024" stroke="#2d402d"/>
+      <text x="750" y="175" fill="#6b8b6b" font-size="7">JAPAN</text>
+      <!-- SE Asia / Philippines -->
+      <ellipse cx="720" cy="240" rx="18" ry="20" fill="#243024"/>
+      <text x="745" y="245" fill="#6b8b6b" font-size="7">PHIL.</text>
+      <!-- Indonesia -->
+      <ellipse cx="700" cy="310" rx="55" ry="12" fill="#243024"/>
+      <text x="700" y="314" fill="#6b8b6b" font-size="7" text-anchor="middle">INDONESIA</text>
+      <!-- Australia -->
+      <polygon points="590,360 710,350 740,380 730,430 700,450 640,455 600,440 575,410 570,380" fill="#1a2a1a" stroke="#243024"/>
+      <text x="655" y="405" fill="#4b6b4b" font-size="9" text-anchor="middle">AUSTRALIA</text>
+      <!-- New Zealand -->
+      <ellipse cx="790" cy="430" rx="15" ry="25" fill="#243024"/>
+      <text x="810" y="435" fill="#6b8b6b" font-size="7">N.Z.</text>
+      <!-- Antarctica hint -->
+      <rect x="50" y="465" width="760" height="15" fill="#162020" rx="3"/>
+      <text x="430" y="476" fill="#2d4a4a" font-size="7" text-anchor="middle">ANTARCTICA</text>
+
+      <!-- ═══ RING OF FIRE PATH ═══ -->
+      <!-- West coast Americas -->
+      <path d="M 60,260 Q 50,300 60,340 Q 75,390 120,440" 
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round"/>
+      <!-- Chile to Mexico up W coast -->
+      <path d="M 65,30 Q 55,100 60,160 Q 62,210 60,260"
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round"/>
+      <!-- Alaska / Aleutians arc -->
+      <path d="M 65,30 Q 150,10 250,15 Q 350,18 450,25 Q 500,28 540,32"
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round" stroke-dasharray="6,3"/>
+      <!-- Kamchatka -->
+      <path d="M 760,110 Q 755,140 750,170"
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round"/>
+      <!-- Japan arc -->
+      <path d="M 730,155 Q 735,190 730,220"
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round"/>
+      <!-- Philippines to Indonesia -->
+      <path d="M 720,225 Q 715,260 710,295 Q 720,305 755,320"
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round"/>
+      <!-- Indonesia arc -->
+      <path d="M 640,318 Q 680,322 755,320"
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round" stroke-dasharray="6,3"/>
+      <!-- NZ -->
+      <path d="M 640,318 Q 700,370 790,420"
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round"/>
+      <!-- Kamchatka to Japan connection line -->
+      <path d="M 756,170 Q 745,160 735,155"
+            stroke="#d97706" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Alaska to Kamchatka -->
+      <path d="M 540,32 Q 620,28 680,40 Q 730,55 760,110"
+            stroke="#d97706" stroke-width="3" fill="none" filter="url(#ringGlow)" stroke-linecap="round" stroke-dasharray="6,3"/>
+
+      <!-- Volcano markers along ring -->
+      <!-- West coast -->
+      <circle cx="195" cy="90" r="4" fill="#ef4444"/>
+      <text x="175" y="88" fill="#ef4444" font-size="6.5" text-anchor="end">Cascade</text>
+      <circle cx="140" cy="340" r="4" fill="#ef4444"/>
+      <text x="118" y="345" fill="#ef4444" font-size="6.5" text-anchor="end">Cotopaxi</text>
+      <circle cx="120" cy="438" r="4" fill="#ef4444"/>
+      <text x="100" y="443" fill="#ef4444" font-size="6.5" text-anchor="end">Villarrica</text>
+      <!-- Japan -->
+      <circle cx="730" cy="165" r="4" fill="#ef4444"/>
+      <text x="755" y="162" fill="#ef4444" font-size="6.5">Mt Fuji</text>
+      <!-- Philippines -->
+      <circle cx="720" cy="238" r="4" fill="#ef4444"/>
+      <text x="745" y="235" fill="#ef4444" font-size="6.5">Pinatubo</text>
+      <!-- Indonesia -->
+      <circle cx="680" cy="310" r="4" fill="#ef4444"/>
+      <text x="680" y="305" fill="#ef4444" font-size="6.5" text-anchor="middle">Krakatau</text>
+      <!-- Kamchatka -->
+      <circle cx="758" cy="130" r="4" fill="#ef4444"/>
+      <text x="775" y="128" fill="#ef4444" font-size="6.5">Klyuchevskaya</text>
+      <!-- Alaska -->
+      <circle cx="270" cy="15" r="4" fill="#ef4444"/>
+
+      <!-- Pacific Ocean label -->
+      <text x="430" y="220" fill="#1e3a5f" font-size="22" font-weight="700" text-anchor="middle" opacity="0.5">PACIFIC</text>
+      <text x="430" y="248" fill="#1e3a5f" font-size="22" font-weight="700" text-anchor="middle" opacity="0.5">OCEAN</text>
+
+      <!-- Indian Ocean label -->
+      <text x="530" y="380" fill="#0f2240" font-size="13" font-weight="500" text-anchor="middle" opacity="0.6">INDIAN OCEAN</text>
+
+      <!-- Stats box -->
+      <rect x="10" y="350" width="200" height="120" fill="#0d0d0d" rx="6" stroke="#292524"/>
+      <text x="22" y="370" fill="#d97706" font-size="8.5" letter-spacing="1.5" font-weight="500">RING OF FIRE STATS</text>
+      <text x="22" y="388" fill="#78716c" font-size="7.5">Length: ~40,000 km</text>
+      <text x="22" y="402" fill="#78716c" font-size="7.5">~75% of world's volcanoes</text>
+      <text x="22" y="416" fill="#78716c" font-size="7.5">~90% of world's earthquakes</text>
+      <text x="22" y="430" fill="#78716c" font-size="7.5">Deepest trench: Mariana (~11km)</text>
+      <text x="22" y="444" fill="#78716c" font-size="7.5">Countries: 15+ (incl. Chile, Japan,</text>
+      <text x="22" y="458" fill="#78716c" font-size="7.5">Philippines, NZ, USA, Indonesia)</text>
+
+      <!-- Legend -->
+      <rect x="630" y="10" width="220" height="55" fill="#0d0d0d" rx="5" stroke="#292524"/>
+      <line x1="645" y1="28" x2="680" y2="28" stroke="#d97706" stroke-width="2.5" filter="url(#ringGlow)"/>
+      <text x="690" y="32" fill="#e5e7eb" font-size="8">Ring of Fire</text>
+      <circle cx="655" cy="46" r="4" fill="#ef4444"/>
+      <text x="690" y="50" fill="#e5e7eb" font-size="8">Active volcano</text>
+    </svg>
+  </div>
+
+  <div class="quick-facts">
+    <div class="fact-chip">Length: <span>~40,000 km</span></div>
+    <div class="fact-chip">Earthquakes: <span>~90% of world's total</span></div>
+    <div class="fact-chip">Volcanoes: <span>~75% of world's active</span></div>
+    <div class="fact-chip">Deepest trench: <span>Mariana (~11,034 m)</span></div>
+    <div class="fact-chip">Shape: <span>Horseshoe</span></div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🌏</div>
+      <h3>Why So Active?</h3>
+      <p>The Pacific Plate is surrounded by <strong>convergent and transform boundaries</strong>. The Pacific Plate subducts under surrounding plates, creating deep trenches, fold mountains, and volcanic arcs around the entire margin. Subducting oceanic crust melts in asthenosphere, producing andesitic magma that rises to form composite volcanoes.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🗺️</div>
+      <h3>Major Trenches &amp; Arcs</h3>
+      <ul>
+        <li><strong>Mariana Trench:</strong> 11,034 m — Pacific + Philippine plates</li>
+        <li><strong>Japan Trench:</strong> Pacific subducts under Eurasian</li>
+        <li><strong>Peru-Chile Trench:</strong> Nazca subducts under S. America</li>
+        <li><strong>Aleutian Trench:</strong> Pacific subducts under N. American</li>
+        <li><strong>Java Trench:</strong> Indo-Australian subducts under Eurasian</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">💥</div>
+      <h3>Historic Catastrophic Events</h3>
+      <ul>
+        <li><strong>Krakatau 1883:</strong> VEI 6; tsunamis killed 36,000</li>
+        <li><strong>Mt Pinatubo 1991:</strong> Largest 20th-c eruption</li>
+        <li><strong>Mt St Helens 1980:</strong> Lateral blast, 57 deaths</li>
+        <li><strong>Tohoku 2011:</strong> Mw 9.0, tsunami, Fukushima</li>
+        <li><strong>Good Friday 1964:</strong> Alaska Mw 9.2</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>UPSC Note:</strong> India is NOT part of the Ring of Fire. India lies on the Indo-Australian plate. The Andaman &amp; Nicobar Islands, however, are on the eastern margin of the Indian plate near the Sunda subduction zone — hence seismically active. <strong>Barren Island</strong> (India's only active volcano) is in this zone.
+  </div>
+</section>
+
+<!-- ─── TAB: KEY EXAMPLES ─── -->
+<section class="tab-panel" id="tab-examples" role="tabpanel">
+  <div class="section-hero">
+    <div class="section-tag">Chapter 06</div>
+    <h1>KEY EXAMPLES</h1>
+    <p>Deccan Traps, Barren Island &amp; UPSC-relevant case studies</p>
+  </div>
+
+  <h2 class="section-h2">Deccan Traps</h2>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🌋</div>
+      <h3>Formation</h3>
+      <ul>
+        <li>Formed ~<strong>66 million years ago</strong> (Late Cretaceous)</li>
+        <li>Massive flood basalt province — <strong>fissure/effusive eruption</strong></li>
+        <li>Original area: ~1.5 million km² (now ~500,000 km² exposed)</li>
+        <li>Thickness: up to <strong>2,000 m</strong> in places</li>
+        <li>Caused by <strong>Reunion Island hotspot</strong> as India moved over it</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">🦕</div>
+      <h3>Significance</h3>
+      <ul>
+        <li>Coincided with <strong>K-Pg mass extinction</strong> (dinosaur extinction)</li>
+        <li>Debate: volcanic winters from SO₂ vs Chicxulub asteroid</li>
+        <li>Created the <strong>Deccan Plateau</strong> / Deccan lava plateau</li>
+        <li>Rich in black cotton soil (<strong>Regur soil</strong>)</li>
+        <li>Important for agriculture — Maharashtra, MP, Karnataka</li>
+        <li>Intrusive features: Dykes, Sills visible in Sahyadri ranges</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">⛏️</div>
+      <h3>Economic Importance</h3>
+      <ul>
+        <li>Black cotton soil (Regur) — ideal for cotton cultivation</li>
+        <li>Basaltic rocks — quarried for construction</li>
+        <li>Mineral resources — manganese, iron ore</li>
+        <li>Diamonds found in kimberlite pipes of Deccan region</li>
+        <li>Grape cultivation (viticulture) in Nashik on basaltic soils</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-h2">Barren Island</h2>
+  <div class="info-block">
+    <h4>India's Only Active Volcano</h4>
+    <ul>
+      <li><strong>Location:</strong> Andaman Sea, ~135 km NE of Port Blair, Andaman &amp; Nicobar Islands</li>
+      <li><strong>Type:</strong> Stratovolcano (composite) — andesitic lava</li>
+      <li><strong>Tectonic setting:</strong> Near Sunda Subduction Zone (Burma plate subducting under Indo-Australian plate)</li>
+      <li><strong>First recorded eruption:</strong> 1787 (by Archibald Blair)</li>
+      <li><strong>Dormant period:</strong> ~150 years (1832–1991)</li>
+      <li><strong>Recent activity:</strong> Active phases 1991, 1994–95, 2005–06, 2008–09, 2017, 2020</li>
+      <li><strong>UPSC angle:</strong> Only active volcano in South Asia; uninhabited island under Indian jurisdiction</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h2">Narcondam Island</h2>
+  <div class="info-block">
+    <h4>India's Only Dormant Volcano</h4>
+    <ul>
+      <li>Located NE of Barren Island in Andaman Sea</li>
+      <li>Dormant stratovolcano; last eruption unknown (prehistoric)</li>
+      <li>Home to <strong>Narcondam hornbill</strong> (endemic species)</li>
+      <li>Wildlife sanctuary; no permanent human habitation</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h2">Important Landforms &amp; Features</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Feature</th><th>Location</th><th>Type</th><th>UPSC Relevance</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Deccan Traps</td><td>Peninsular India (Maha, MP, Karnataka)</td><td>Flood basalt / Extrusive</td><td>Regur soil, K-Pg extinction, Reunion hotspot</td></tr>
+        <tr><td>Barren Island</td><td>Andaman Sea</td><td>Active stratovolcano</td><td>India's only active volcano, Sunda zone</td></tr>
+        <tr><td>Narcondam Island</td><td>Andaman Sea</td><td>Dormant stratovolcano</td><td>Endemic species, dormant volcano in India</td></tr>
+        <tr><td>Aravalli Range</td><td>Rajasthan-Gujarat-Delhi</td><td>Erosional remnant (ancient fold mountain)</td><td>Oldest range in India; Pre-Cambrian</td></tr>
+        <tr><td>Koyna Region</td><td>Maharashtra (W. Ghats)</td><td>Reservoir-induced seismicity</td><td>1967 Koyna earthquake (6.5 Mw) — first documented RIS India</td></tr>
+        <tr><td>Himalayan Belt</td><td>Northern India</td><td>Fold mountains (convergent boundary)</td><td>Ongoing orogeny; Zone IV–V; most earthquake-prone</td></tr>
+        <tr><td>Andaman-Nicobar</td><td>Bay of Bengal</td><td>Island arc (subduction)</td><td>Zone V; 2004 tsunami origin; Barren &amp; Narcondam</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-h2">Notable Global Comparisons</h2>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🏔️</div>
+      <h3>Himalayas vs Andes</h3>
+      <ul>
+        <li><strong>Himalayas:</strong> Continent-continent collision (India + Eurasian plates). No subduction, no volcanism. Only fold mountains + earthquakes.</li>
+        <li><strong>Andes:</strong> Ocean-continent collision (Nazca subducting under S. America). Active volcanoes + earthquakes + fold mountains.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌊</div>
+      <h3>Mid-Ocean Ridges</h3>
+      <ul>
+        <li><strong>Mid-Atlantic Ridge:</strong> Longest mountain range on Earth (~80,000 km); divergent boundary</li>
+        <li>Iceland: sits on Mid-Atlantic Ridge + hotspot</li>
+        <li>Sea-floor spreading creates new oceanic crust</li>
+        <li>Oldest ocean floor subducted at trenches — cycle continues</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">⛰️</div>
+      <h3>World's Famous Volcanoes</h3>
+      <ul>
+        <li><strong>Mauna Kea (Hawaii):</strong> Tallest from ocean floor (10,210 m)</li>
+        <li><strong>Mt Etna (Sicily):</strong> Most active in Europe</li>
+        <li><strong>Vesuvius:</strong> Destroyed Pompeii 79 CE</li>
+        <li><strong>Krakatau (Indonesia):</strong> 1883 — heard 5,000 km away</li>
+        <li><strong>Lake Toba (Sumatra):</strong> Super-eruption 74,000 ya — genetic bottleneck theory</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TAB: PYQ FLASHCARDS ─── -->
+<section class="tab-panel" id="tab-pyq" role="tabpanel">
+  <div class="section-hero">
+    <div class="section-tag">Chapter 07</div>
+    <h1>PYQ FLASHCARDS</h1>
+    <p>Click a card to reveal the answer</p>
+  </div>
+
+  <div class="highlight-box" style="margin-bottom:1.5rem">
+    <strong>Instructions:</strong> Each card shows a previous year UPSC question. Click/tap to flip and see the answer. Review all before exam!
+  </div>
+
+  <div class="flashcards-grid">
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div>
+            <div class="fc-year">UPSC CSE Prelims 2021</div>
+            <div class="fc-question">Consider the following statements:<br>1. The Barren Island volcano is an active volcano located in the Indian territory.<br>2. Barren Island lies about 140 km east of Great Nicobar.<br>3. The last time the Barren Island volcano erupted was in 1991 and it has remained inactive since then.<br><br>Which of the statements given above is/are correct?</div>
+          </div>
+          <div class="fc-hint">Tap to reveal answer</div>
+        </div>
+        <div class="flashcard-back">
+          <div>
+            <div class="fc-answer-label">Answer</div>
+            <div class="fc-answer">
+              <strong>Only Statement 1 is correct.</strong><br><br>
+              <strong>St. 1 ✓:</strong> Barren Island IS an active volcano in Indian territory (Andaman &amp; Nicobar).<br>
+              <strong>St. 2 ✗:</strong> It lies ~140 km NE of Port Blair, NOT east of Great Nicobar.<br>
+              <strong>St. 3 ✗:</strong> Barren Island has erupted multiple times after 1991 — in 1994–95, 2005, 2008–09, 2017, and 2020.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div>
+            <div class="fc-year">UPSC CSE Prelims 2020</div>
+            <div class="fc-question">With reference to the 'Indian Ocean Dipole (IOD)' sometimes mentioned in the news, which of the following statements is/are correct?<br><br>[Related context: Seismicity in Indian Ocean region, tsunamis &amp; their warning systems]<br><br>What is the role of INCOIS in India's tsunami early warning system?</div>
+          </div>
+          <div class="fc-hint">Tap to reveal answer</div>
+        </div>
+        <div class="flashcard-back">
+          <div>
+            <div class="fc-answer-label">Answer</div>
+            <div class="fc-answer">
+              <strong>INCOIS</strong> (Indian National Centre for Ocean Information Services), Hyderabad, operates India's <strong>Tsunami Early Warning Centre (ITEWC)</strong>.<br><br>
+              Established post-2004 Indian Ocean Tsunami. Uses DART (Deep-ocean Assessment and Reporting of Tsunamis) buoys, bottom pressure recorders, tide gauges, and seismic data to issue warnings within 10–20 minutes of an earthquake. Covers Indian Ocean region. Key point: INCOIS ≠ just oceanic data; it's India's frontline for tsunami warnings.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div>
+            <div class="fc-year">UPSC CSE Prelims 2019</div>
+            <div class="fc-question">Consider the following pairs:<br>1. Bering Sea — Alaska, USA<br>2. Banda Sea — Indonesia<br>3. Celebes Sea — Philippines<br>4. Sulu Sea — Malaysia<br><br>Which of the above pairs is/are correctly matched? (Context: Ring of Fire geography)</div>
+          </div>
+          <div class="fc-hint">Tap to reveal answer</div>
+        </div>
+        <div class="flashcard-back">
+          <div>
+            <div class="fc-answer-label">Answer</div>
+            <div class="fc-answer">
+              <strong>All four pairs are correctly matched.</strong><br><br>
+              These seas are all part of the western Pacific, within or near the Ring of Fire. The SE Asian arc — Philippines, Indonesia, Malaysia — represents one of the most seismically active convergent boundaries globally. Indonesia alone has ~130 active volcanoes. The Java/Sunda Trench lies south of this region.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div>
+            <div class="fc-year">UPSC CSE Prelims 2017</div>
+            <div class="fc-question">'Loess Plateau' is located in which of the following countries?<br><br>[Extended Q] — What type of landform is created by flood basalt volcanism similar to the Deccan Traps? Name a global example.</div>
+          </div>
+          <div class="fc-hint">Tap to reveal answer</div>
+        </div>
+        <div class="flashcard-back">
+          <div>
+            <div class="fc-answer-label">Answer</div>
+            <div class="fc-answer">
+              <strong>Loess Plateau → China</strong> (original PYQ answer).<br><br>
+              <strong>Flood basalt → Lava Plateau / Trap topography.</strong><br><br>
+              Global examples of flood basalt provinces:<br>
+              • <strong>Deccan Traps</strong> — India (66 Ma, Reunion hotspot)<br>
+              • <strong>Siberian Traps</strong> — Russia (252 Ma, Permian extinction)<br>
+              • <strong>Columbia River Basalt</strong> — NW USA<br>
+              • <strong>Parana Traps</strong> — Brazil/Argentina<br>
+              All formed by fissure eruptions (not central vent).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div>
+            <div class="fc-year">UPSC CSE Mains GS-1 2015</div>
+            <div class="fc-question">The frequency of earthquakes appears to have increased in recent times. Discuss the factors responsible for this and also suggest some measures to reduce the impact of earthquakes on human society. (200 words)</div>
+          </div>
+          <div class="fc-hint">Tap to reveal answer</div>
+        </div>
+        <div class="flashcard-back">
+          <div>
+            <div class="fc-answer-label">Key Points for Answer</div>
+            <div class="fc-answer">
+              <strong>Factors:</strong> Better seismic monitoring (NEIC, IMD); Reservoir-induced seismicity (large dams); Fracking / mining; Urban concentration near fault zones; Climate-induced glacial isostatic adjustment.<br><br>
+              <strong>Mitigation:</strong> Earthquake-resistant building codes (IS 1893); Early warning systems; Public awareness; Land use zoning away from fault zones; NDMA guidelines; NIDM training; International cooperation (UNDRR Sendai Framework 2015–2030).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div>
+            <div class="fc-year">UPSC CSE Prelims 2022</div>
+            <div class="fc-question">With reference to India, consider the following statements:<br>1. Whole of North-East India lies in Seismic Zone V.<br>2. Gujarat's entire coast lies in Seismic Zone IV.<br>3. The region of Deccan Plateau is in Seismic Zone II.<br><br>Which is/are correct?</div>
+          </div>
+          <div class="fc-hint">Tap to reveal answer</div>
+        </div>
+        <div class="flashcard-back">
+          <div>
+            <div class="fc-answer-label">Answer</div>
+            <div class="fc-answer">
+              <strong>Statement 1 — Partially incorrect.</strong> Most of NE India IS in Zone V, but not ALL — some parts of Assam plains are Zone IV. In exam context, often taken as correct.<br><br>
+              <strong>Statement 2 — Incorrect.</strong> Gujarat's Kutch/Rann region is Zone V; not the entire coast — S. Gujarat coast is Zone III.<br><br>
+              <strong>Statement 3 — Partially correct.</strong> Much of Deccan is Zone II, but Koyna and some western areas are Zone III. <br><br>
+              <strong>Best answer: Only Statement 3 has core accuracy (Deccan = Zone II).</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div>
+            <div class="fc-year">UPSC CSE Prelims 2014</div>
+            <div class="fc-question">Which of the following is/are the possible consequence(s) of heavy sand mining in riverbeds?<br><br>[Extended concept] — What is 'Shadow Zone' in seismology?</div>
+          </div>
+          <div class="fc-hint">Tap to reveal answer</div>
+        </div>
+        <div class="flashcard-back">
+          <div>
+            <div class="fc-answer-label">Answer</div>
+            <div class="fc-answer">
+              <strong>Shadow Zone</strong> = region on Earth's surface (between 103° and 142° from the epicentre) where <strong>neither P nor S waves are received</strong> from an earthquake.<br><br>
+              • <strong>P wave shadow zone:</strong> 103°–180° (P waves refracted by core)<br>
+              • <strong>S wave shadow zone:</strong> 103°–180° (S cannot travel through liquid outer core)<br>
+              • Complete shadow (no P or S): 103°–142°<br><br>
+              This is how scientists determined the outer core is <strong>liquid</strong> (S waves cannot pass through liquids).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div>
+            <div class="fc-year">UPSC CSE Mains GS-1 2021</div>
+            <div class="fc-question">Discuss the causes of depletion of mangroves and explain their importance in maintaining coastal ecology. (Linked topic) — How does a tsunami differ from a storm surge? Explain the geological conditions that generate a tsunami.</div>
+          </div>
+          <div class="fc-hint">Tap to reveal answer</div>
+        </div>
+        <div class="flashcard-back">
+          <div>
+            <div class="fc-answer-label">Key Points</div>
+            <div class="fc-answer">
+              <strong>Tsunami vs Storm Surge:</strong><br>
+              Tsunami — triggered by <strong>submarine earthquake/landslide/volcanic eruption</strong>; long wavelength (100–500 km); travels at 800 km/h in deep ocean; height increases near shore (shoaling).<br>
+              Storm Surge — driven by <strong>wind and pressure</strong> of tropical cyclone; localized; different physics.<br><br>
+              <strong>Geological conditions for tsunami:</strong> Subduction zone earthquake (Mw ≥7.0); vertical displacement of seafloor; shallow focal depth (&lt;70 km); enough energy to displace massive water column. Classic: Sumatra 2004 (Indian plate + Burma plate boundary).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="highlight-box" style="margin-top:2rem">
+    <strong>Exam Strategy:</strong> For earthquake PYQs — always check if statements mix magnitude/intensity, Richter/Mercalli, or zone details. For volcano PYQs — Barren Island (active) vs Narcondam (dormant) is a classic trap. Deccan Traps connection to K-Pg extinction and Reunion hotspot comes up repeatedly in Mains.
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════ SCRIPT ══════════ -->
+<script>
+// Theme toggle
+const themeBtn = document.getElementById('themeToggle');
+const html = document.documentElement;
+let dark = true;
+themeBtn.addEventListener('click', () => {
+  dark = !dark;
+  html.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeBtn.textContent = dark ? '☀️' : '🌙';
+});
+
+// Tabs
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabPanels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + target).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

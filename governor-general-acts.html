@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Governor-General Acts of India — Legislative Chronicle 1773–1947</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --company:#c2410c; --crown:#0369a1; --reform:#15803d; --admin:#7c3aed;
+    --press:#0e7490; --judicial:#0284c7; --finance:#d97706; --military:#b91c1c;
+    --critical:#dc2626; --landmark:#059669; --transition:#b45309;
+  }
+  [data-theme="dark"] {
+    --bg:#07080f; --surface:#0e1017; --surface2:#131520;
+    --border:rgba(255,255,255,0.07); --text:#e8e6f0; --muted:#6b6e84;
+    --nav-bg:rgba(7,8,15,0.96); --table-hover:rgba(255,255,255,0.02);
+    --toggle-bg:#0e1017; --toggle-border:rgba(255,255,255,0.13);
+    --prose:#a8aac4;
+  }
+  [data-theme="light"] {
+    --bg:#f4f4f8; --surface:#ffffff; --surface2:#eaeaf0;
+    --border:rgba(0,0,0,0.08); --text:#0d0e1a; --muted:#555570;
+    --nav-bg:rgba(244,244,248,0.97); --table-hover:rgba(0,0,0,0.02);
+    --toggle-bg:#d8d8e8; --toggle-border:rgba(0,0,0,0.1);
+    --prose:#2a2b44;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;transition:background .3s,color .3s;}
+
+  header{padding:3rem 2rem 1.75rem;text-align:center;position:relative;border-bottom:1px solid var(--border);}
+  header::before{content:'';position:absolute;inset:0;background:
+    radial-gradient(ellipse at 20% 0%,rgba(194,65,12,.14) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 0%,rgba(3,105,161,.12) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 100%,rgba(21,128,61,.08) 0%,transparent 50%);
+    pointer-events:none;}
+  .eyebrow{font-size:.62rem;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:.75rem;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,8vw,5.2rem);letter-spacing:.05em;line-height:1;
+    background:linear-gradient(135deg,#c2410c 0%,#f97316 20%,#0369a1 45%,#7c3aed 65%,#15803d 85%,#c2410c 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--muted);font-size:.97rem;margin-top:.5rem;}
+  .header-stats{display:flex;justify-content:center;gap:2rem;margin-top:1.4rem;flex-wrap:wrap;}
+  .hstat{text-align:center;}
+  .hstat-val{font-family:'Bebas Neue',sans-serif;font-size:1.65rem;letter-spacing:.04em;}
+  .hstat-lbl{font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+
+  .theme-toggle{position:absolute;top:1.2rem;right:1.5rem;display:flex;align-items:center;gap:.5rem;cursor:pointer;
+    background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:.35rem .75rem;transition:all .2s;user-select:none;}
+  .theme-toggle:hover{opacity:.8;}
+  .theme-toggle-icon{font-size:.85rem;}
+  .theme-toggle-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+  nav{display:flex;justify-content:center;gap:.4rem;padding:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);
+    position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:100;transition:background .3s;}
+  .tab{padding:.4rem .9rem;border-radius:2px;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace;}
+  .tab:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .tab.active{color:#fff;}
+  .tab[data-section="overview"].active{background:#7c3aed;border-color:#7c3aed;}
+  .tab[data-section="company"].active{background:#c2410c;border-color:#c2410c;}
+  .tab[data-section="crown"].active{background:#0369a1;border-color:#0369a1;}
+  .tab[data-section="reforms"].active{background:#15803d;border-color:#15803d;}
+  .tab[data-section="press"].active{background:#0e7490;border-color:#0e7490;}
+  .tab[data-section="judicial"].active{background:#0284c7;border-color:#0284c7;}
+  .tab[data-section="military"].active{background:#b91c1c;border-color:#b91c1c;}
+  .tab[data-section="timeline"].active{background:#d97706;border-color:#d97706;}
+  .tab[data-section="compare"].active{background:#6d28d9;border-color:#6d28d9;}
+
+  main{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+  .phase-panel{display:none;}
+  .phase-panel.visible{display:block;animation:fadeUp .4s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  .section-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .phase-label{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.05em;}
+  .phase-tag{font-size:.7rem;padding:.3rem .7rem;border-radius:2px;letter-spacing:.08em;font-weight:500;}
+  .phase-desc{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--muted);margin-left:auto;font-style:italic;}
+
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;transition:background .3s,border-color .3s;}
+  .box-title{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+
+  /* ACT CARDS */
+  .act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem;margin-bottom:1.5rem;}
+  .act-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;transition:border-color .25s,transform .2s;position:relative;overflow:hidden;}
+  .act-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+  .act-card:hover{transform:translateY(-2px);}
+  .act-card.company::before{background:linear-gradient(90deg,#c2410c,#f97316);}
+  .act-card.crown::before{background:linear-gradient(90deg,#0369a1,#38bdf8);}
+  .act-card.reform::before{background:linear-gradient(90deg,#15803d,#4ade80);}
+  .act-card.admin::before{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+  .act-card.press::before{background:linear-gradient(90deg,#0e7490,#67e8f9);}
+  .act-card.judicial::before{background:linear-gradient(90deg,#0284c7,#38bdf8);}
+  .act-card.military::before{background:linear-gradient(90deg,#b91c1c,#f87171);}
+  .act-card.finance::before{background:linear-gradient(90deg,#d97706,#fbbf24);}
+  .act-card.company:hover{border-color:rgba(194,65,12,.4);}
+  .act-card.crown:hover{border-color:rgba(3,105,161,.4);}
+  .act-card.reform:hover{border-color:rgba(21,128,61,.4);}
+  .act-card.admin:hover{border-color:rgba(124,58,237,.4);}
+  .act-card.press:hover{border-color:rgba(14,116,144,.4);}
+  .act-card.judicial:hover{border-color:rgba(2,132,199,.4);}
+  .act-card.military:hover{border-color:rgba(185,28,28,.4);}
+  .act-card.finance:hover{border-color:rgba(217,119,6,.4);}
+
+  .act-year{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em;line-height:1;margin-bottom:.1rem;}
+  .act-name{font-size:.75rem;font-weight:500;color:var(--text);margin-bottom:.15rem;line-height:1.35;}
+  .act-gg{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem;}
+  .act-body{font-size:.72rem;line-height:1.65;color:var(--prose,var(--muted));margin-bottom:.75rem;}
+  .act-body b{color:var(--text);}
+  .tag-row{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem;}
+  .tag{font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .5rem;border-radius:1px;border:1px solid;}
+  .tag-company{border-color:rgba(194,65,12,.5);color:#c2410c;background:rgba(194,65,12,.08);}
+  .tag-crown{border-color:rgba(3,105,161,.5);color:#0369a1;background:rgba(3,105,161,.08);}
+  .tag-reform{border-color:rgba(21,128,61,.5);color:#15803d;background:rgba(21,128,61,.08);}
+  .tag-admin{border-color:rgba(124,58,237,.5);color:#7c3aed;background:rgba(124,58,237,.08);}
+  .tag-press{border-color:rgba(14,116,144,.5);color:#0e7490;background:rgba(14,116,144,.08);}
+  .tag-judicial{border-color:rgba(2,132,199,.5);color:#0284c7;background:rgba(2,132,199,.08);}
+  .tag-military{border-color:rgba(185,28,28,.5);color:#b91c1c;background:rgba(185,28,28,.08);}
+  .tag-finance{border-color:rgba(217,119,6,.5);color:#d97706;background:rgba(217,119,6,.08);}
+  .tag-landmark{border-color:rgba(5,150,105,.5);color:#059669;background:rgba(5,150,105,.08);}
+  .tag-repressive{border-color:rgba(220,38,38,.5);color:#dc2626;background:rgba(220,38,38,.08);}
+
+  .mech-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+  @media(max-width:640px){.mech-grid{grid-template-columns:1fr;}}
+  .mech-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em;margin-bottom:.6rem;}
+  .mech-card-body{font-size:.73rem;color:var(--prose,var(--muted));line-height:1.7;}
+  .mech-card-body b{color:var(--text);font-weight:600;}
+
+  .callout{background:var(--surface2,var(--surface));border-left:3px solid;border-radius:0 3px 3px 0;padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .callout b{color:var(--text);}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+  @media(max-width:700px){.three-col{grid-template-columns:1fr;}}
+
+  table{width:100%;border-collapse:collapse;font-size:.72rem;}
+  th{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--border);}
+  td{padding:.6rem .75rem;border-bottom:1px solid var(--border);line-height:1.4;vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--table-hover);}
+
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin:1rem 0;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;text-align:center;}
+  .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;margin-bottom:.25rem;}
+  .stat-label{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+
+  .prose-block{font-size:.75rem;line-height:1.75;color:var(--prose,var(--muted));margin-bottom:1rem;}
+  .prose-block b{color:var(--text);}
+  .info-section{margin-bottom:2rem;}
+  .info-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.04em;margin-bottom:.5rem;}
+
+  /* GG PORTRAIT CARDS */
+  .gg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:1.5rem;}
+  .gg-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
+  .gg-card:hover{transform:translateY(-2px);}
+  .gg-era-bar{height:3px;position:absolute;top:0;left:0;right:0;}
+  .gg-name{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.04em;margin-bottom:.15rem;margin-top:.25rem;}
+  .gg-tenure{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;}
+  .gg-body{font-size:.7rem;line-height:1.6;color:var(--prose,var(--muted));}
+  .gg-body b{color:var(--text);}
+  .gg-acts-count{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;margin-bottom:.1rem;}
+  .gg-acts-lbl{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+  /* TIMELINE */
+  .timeline{position:relative;padding-left:1.5rem;margin-bottom:1.5rem;}
+  .timeline::before{content:'';position:absolute;left:.4rem;top:0;bottom:0;width:1px;background:var(--border);}
+  .tl-item{position:relative;margin-bottom:1.5rem;}
+  .tl-dot{position:absolute;left:-1.1rem;top:.25rem;width:10px;height:10px;border-radius:50%;border:2px solid;background:var(--bg);}
+  .tl-year{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;line-height:1;margin-bottom:.1rem;}
+  .tl-title{font-size:.72rem;font-weight:500;color:var(--text);margin-bottom:.2rem;}
+  .tl-body{font-size:.7rem;line-height:1.6;color:var(--prose,var(--muted));}
+  .tl-body b{color:var(--text);}
+
+  /* ACCORDION */
+  .acc-item{border:1px solid var(--border);border-radius:3px;margin-bottom:.5rem;overflow:hidden;}
+  .acc-header{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1rem;cursor:pointer;transition:background .2s;}
+  .acc-header:hover{background:var(--surface2,rgba(128,128,128,.05));}
+  .acc-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;}
+  .acc-sub{font-size:.62rem;color:var(--muted);letter-spacing:.08em;}
+  .acc-arrow{font-size:.8rem;transition:transform .25s;color:var(--muted);}
+  .acc-body{display:none;padding:0 1rem 1rem;border-top:1px solid var(--border);font-size:.72rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .acc-body b{color:var(--text);}
+  .acc-body.open{display:block;}
+
+  /* IMPACT METER */
+  .impact-item{display:grid;grid-template-columns:220px 1fr 50px;gap:.75rem;align-items:center;margin-bottom:.6rem;}
+  @media(max-width:600px){.impact-item{grid-template-columns:1fr;gap:.3rem;}}
+  .impact-name{font-size:.7rem;color:var(--text);}
+  .impact-bar-wrap{background:var(--surface2,var(--surface));border-radius:2px;height:8px;overflow:hidden;}
+  .impact-bar{height:100%;border-radius:2px;transition:width .6s ease;}
+  .impact-pct{font-family:'Bebas Neue',sans-serif;font-size:1rem;text-align:right;}
+
+  /* COMPARE */
+  .compare-row{display:grid;grid-template-columns:200px 1fr 1fr;gap:.5rem;align-items:start;margin-bottom:.4rem;font-size:.7rem;}
+  .compare-row.header{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:.4rem;margin-bottom:.6rem;}
+  .compare-aspect{color:var(--muted);}
+  .compare-cell{padding:.3rem .5rem;border-radius:2px;line-height:1.5;}
+  @media(max-width:600px){.compare-row{grid-template-columns:1fr;}.compare-row.header{display:none;}}
+
+  .highlight-box{background:var(--surface2,var(--surface));border:1px solid var(--border);border-radius:4px;padding:1.1rem 1.25rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .highlight-box b{color:var(--text);}
+  .highlight-box .hb-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--text);margin-bottom:.4rem;}
+
+  .status-landmark{background:rgba(5,150,105,.15);color:#059669;padding:.18rem .55rem;border-radius:1px;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;margin-top:.5rem;}
+  .status-repressive{background:rgba(220,38,38,.15);color:#dc2626;padding:.18rem .55rem;border-radius:1px;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;margin-top:.5rem;}
+  .status-transitional{background:rgba(217,119,6,.15);color:#d97706;padding:.18rem .55rem;border-radius:1px;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;margin-top:.5rem;}
+  .status-administrative{background:rgba(124,58,237,.15);color:#7c3aed;padding:.18rem .55rem;border-radius:1px;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;margin-top:.5rem;}
+
+  @media(max-width:500px){
+    .stat-row{grid-template-columns:1fr 1fr;}
+    .act-grid{grid-template-columns:1fr;}
+    .gg-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<header>
+  <div class="eyebrow">India · 1773–1947 · Colonial Legislative History</div>
+  <h1>GOVERNOR-GENERAL ACTS</h1>
+  <div class="subtitle">From the Regulating Act to the Independence of India — 174 years of colonial legislation</div>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-val" style="color:#c2410c;">1773</div><div class="hstat-lbl">First Major Act</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#0369a1;">40+</div><div class="hstat-lbl">Landmark Acts</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#7c3aed;">12</div><div class="hstat-lbl">Governor-Generals</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#15803d;">1947</div><div class="hstat-lbl">Independence Act</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#d97706;">174</div><div class="hstat-lbl">Years of Rule</div></div>
+  </div>
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <span class="theme-toggle-icon" id="theme-icon">☀️</span>
+    <span class="theme-toggle-label" id="theme-lbl">Light</span>
+  </div>
+</header>
+
+<nav>
+  <button class="tab active" data-section="overview" onclick="switchTab('overview')">Overview</button>
+  <button class="tab" data-section="company" onclick="switchTab('company')">Company Era</button>
+  <button class="tab" data-section="crown" onclick="switchTab('crown')">Crown Era</button>
+  <button class="tab" data-section="reforms" onclick="switchTab('reforms')">Reform Acts</button>
+  <button class="tab" data-section="press" onclick="switchTab('press')">Press & Social</button>
+  <button class="tab" data-section="judicial" onclick="switchTab('judicial')">Judicial</button>
+  <button class="tab" data-section="military" onclick="switchTab('military')">Military & Security</button>
+  <button class="tab" data-section="timeline" onclick="switchTab('timeline')">Timeline</button>
+  <button class="tab" data-section="compare" onclick="switchTab('compare')">Compare</button>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════ OVERVIEW ═══════════════════════ -->
+<div class="phase-panel visible" id="panel-overview">
+  <div class="section-header">
+    <span class="phase-label" style="color:#7c3aed;">Overview</span>
+    <span class="phase-tag" style="background:rgba(124,58,237,.15);color:#7c3aed;">Legislative Architecture</span>
+    <span class="phase-desc">The constitutional skeleton of British India</span>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-value" style="color:#c2410c;">1773</div><div class="stat-label">Regulating Act — First Parliament intervention</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#0369a1;">1858</div><div class="stat-label">Crown Takeover from EIC</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#15803d;">1919</div><div class="stat-label">Montagu–Chelmsford Reforms</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#7c3aed;">1935</div><div class="stat-label">GOI Act — Largest British statute</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#d97706;">1947</div><div class="stat-label">Indian Independence Act</div></div>
+  </div>
+
+  <div class="callout" style="border-color:#c2410c;">
+    <b>Two Eras, One Thread:</b> British legislative control of India divides cleanly into two eras — the <b>East India Company period (1773–1858)</b> where Parliament progressively curtailed Company autonomy, and the <b>Crown Rule period (1858–1947)</b> where the British government administered India directly through the Secretary of State and Viceroy. Every major act reduced Indian self-governance while the reform acts, ironically, slowly restored it.
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Era Breakdown</div>
+    <div class="mech-grid">
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#c2410c;">🏴 Company Era · 1773–1858</div>
+        <div class="mech-card-body">The East India Company ruled India commercially until 1858. Parliament passed acts to <b>regulate the Company</b> — Regulating Act (1773), Pitt's India Act (1784), Charter Acts of 1793, 1813, 1833, and 1853. Key themes: centralising power in a single Governor-General, ending Company trade monopoly, opening India to missionaries, abolishing sati. The <b>1857 Revolt</b> ended this era permanently.</div>
+      </div>
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#0369a1;">👑 Crown Era · 1858–1947</div>
+        <div class="mech-card-body">After the 1857 mutiny, the Crown assumed direct control. The <b>Government of India Act 1858</b> abolished the Company and created the Viceroy post. Subsequent acts oscillated between repression (IPC, Arms Act, Sedition Laws) and reform (Indian Councils Acts, Rowlatt Act protests, Morley-Minto, Montagu-Chelmsford, GOI Act 1935). The arc ended with the <b>Indian Independence Act 1947</b>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Landmark Acts at a Glance</div>
+    <div class="box">
+      <table>
+        <thead>
+          <tr><th>Year</th><th>Act / Law</th><th>Governor-General / Viceroy</th><th>Significance</th><th>Category</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>1773</b></td><td>Regulating Act</td><td>Warren Hastings</td><td>First Parliamentary control over EIC; created Supreme Court Calcutta</td><td><span class="tag tag-company">Company</span></td></tr>
+          <tr><td><b>1784</b></td><td>Pitt's India Act</td><td>Warren Hastings</td><td>Dual government — Company + Board of Control; Parliament's real grip begins</td><td><span class="tag tag-company">Company</span></td></tr>
+          <tr><td><b>1793</b></td><td>Charter Act</td><td>Lord Cornwallis</td><td>Permanent Settlement; Company monopoly extended; covenanted civil service</td><td><span class="tag tag-admin">Admin</span></td></tr>
+          <tr><td><b>1813</b></td><td>Charter Act</td><td>Lord Minto I</td><td>Ended EIC trade monopoly (except China tea); opened India to missionaries</td><td><span class="tag tag-company">Company</span></td></tr>
+          <tr><td><b>1829</b></td><td>Sati Regulation</td><td>Lord William Bentinck</td><td>Abolished sati across Bengal Presidency</td><td><span class="tag tag-reform">Social Reform</span></td></tr>
+          <tr><td><b>1833</b></td><td>Charter Act</td><td>Lord William Bentinck</td><td>First "Governor-General of India"; EIC lost all trading functions; Law Commission created</td><td><span class="tag tag-landmark">Landmark</span></td></tr>
+          <tr><td><b>1835</b></td><td>English Education Act</td><td>Lord William Bentinck</td><td>Macaulay's Minute; English as medium of higher education</td><td><span class="tag tag-reform">Education</span></td></tr>
+          <tr><td><b>1853</b></td><td>Charter Act</td><td>Lord Dalhousie</td><td>Last charter renewal; introduced competitive civil service exams; separated executive & legislative</td><td><span class="tag tag-admin">Admin</span></td></tr>
+          <tr><td><b>1858</b></td><td>Govt. of India Act</td><td>Lord Canning</td><td>Abolished EIC; Crown rule; created Viceroy of India post; Secretary of State</td><td><span class="tag tag-landmark">Landmark</span></td></tr>
+          <tr><td><b>1861</b></td><td>Indian Councils Act</td><td>Lord Canning</td><td>First Indians in legislative council; portfolio system; power of ordinance</td><td><span class="tag tag-crown">Crown</span></td></tr>
+          <tr><td><b>1878</b></td><td>Vernacular Press Act</td><td>Lord Lytton</td><td>Censored Indian-language press; "Gagging Act"</td><td><span class="tag tag-repressive">Repressive</span></td></tr>
+          <tr><td><b>1882</b></td><td>Arms Act</td><td>Lord Ripon</td><td>Indians barred from possessing arms without licence; replaced 1878 version</td><td><span class="tag tag-military">Military</span></td></tr>
+          <tr><td><b>1892</b></td><td>Indian Councils Act</td><td>Lord Lansdowne</td><td>Enlarged councils; indirect elections introduced (first time)</td><td><span class="tag tag-crown">Crown</span></td></tr>
+          <tr><td><b>1909</b></td><td>Morley-Minto Reforms</td><td>Lord Minto II</td><td>Separate Muslim electorates; enlarged legislative councils; sowed seeds of partition</td><td><span class="tag tag-landmark">Landmark</span></td></tr>
+          <tr><td><b>1919</b></td><td>Montagu-Chelmsford Reforms</td><td>Lord Chelmsford</td><td>Dyarchy in provinces; bicameral central legislature; direct elections</td><td><span class="tag tag-landmark">Landmark</span></td></tr>
+          <tr><td><b>1919</b></td><td>Rowlatt Act</td><td>Lord Chelmsford</td><td>Detention without trial; triggered Gandhi's mass civil disobedience</td><td><span class="tag tag-repressive">Repressive</span></td></tr>
+          <tr><td><b>1935</b></td><td>Govt. of India Act</td><td>Lord Willingdon</td><td>Largest British statute ever; provincial autonomy; federal structure; source of India's 1950 Constitution</td><td><span class="tag tag-landmark">Landmark</span></td></tr>
+          <tr><td><b>1947</b></td><td>Indian Independence Act</td><td>Lord Mountbatten</td><td>Partition; created India and Pakistan; ended 190 years of British rule</td><td><span class="tag tag-landmark">Landmark</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Impact Assessment</div>
+    <div class="box">
+      <div class="box-title">Constitutional Impact Score (Historian Consensus)</div>
+      <div class="impact-item">
+        <div class="impact-name">GOI Act 1935</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:98%;background:linear-gradient(90deg,#7c3aed,#a78bfa);"></div></div>
+        <div class="impact-pct" style="color:#7c3aed;">98</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-name">Indian Independence Act 1947</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:96%;background:linear-gradient(90deg,#15803d,#4ade80);"></div></div>
+        <div class="impact-pct" style="color:#15803d;">96</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-name">GOI Act 1858 (Crown Rule)</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:90%;background:linear-gradient(90deg,#0369a1,#38bdf8);"></div></div>
+        <div class="impact-pct" style="color:#0369a1;">90</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-name">Montagu-Chelmsford 1919</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:82%;background:linear-gradient(90deg,#c2410c,#f97316);"></div></div>
+        <div class="impact-pct" style="color:#c2410c;">82</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-name">Morley-Minto 1909</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:75%;background:linear-gradient(90deg,#b91c1c,#f87171);"></div></div>
+        <div class="impact-pct" style="color:#b91c1c;">75</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-name">Charter Act 1833</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:70%;background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+        <div class="impact-pct" style="color:#d97706;">70</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-name">Regulating Act 1773</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:65%;background:linear-gradient(90deg,#0e7490,#67e8f9);"></div></div>
+        <div class="impact-pct" style="color:#0e7490;">65</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-name">Pitt's India Act 1784</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:60%;background:linear-gradient(90deg,#0284c7,#38bdf8);"></div></div>
+        <div class="impact-pct" style="color:#0284c7;">60</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-name">Rowlatt Act 1919</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:55%;background:linear-gradient(90deg,#dc2626,#f87171);"></div></div>
+        <div class="impact-pct" style="color:#dc2626;">55</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ COMPANY ERA ═══════════════════════ -->
+<div class="phase-panel" id="panel-company">
+  <div class="section-header">
+    <span class="phase-label" style="color:#c2410c;">Company Era</span>
+    <span class="phase-tag" style="background:rgba(194,65,12,.15);color:#c2410c;">1773–1857</span>
+    <span class="phase-desc">Parliament tightens its grip on the East India Company</span>
+  </div>
+
+  <div class="callout" style="border-color:#c2410c;">
+    <b>Context:</b> The British East India Company (EIC) had transformed from a trading outfit to a de facto government controlling vast swaths of India. By 1773, the Company's mismanagement, corruption (notably Warren Hastings' Bengal famine of 1770), and military overextension alarmed the British Parliament. The Charter Acts series progressively <b>stripped the Company of commercial and political autonomy</b> until the 1857 Revolt ended its existence entirely.
+  </div>
+
+  <div class="act-grid">
+    <div class="act-card company">
+      <div class="act-year" style="color:#c2410c;">1773</div>
+      <div class="act-name">Regulating Act of 1773</div>
+      <div class="act-gg">Warren Hastings · First Governor-General of Bengal</div>
+      <div class="act-body">
+        Parliament's <b>first major intervention</b> in EIC affairs. Created the post of <b>Governor-General of Bengal</b> (Warren Hastings being the first). Established a Supreme Court at Calcutta with a Chief Justice and three judges. Created a four-member Executive Council — the GG could be overruled 3-to-1. Prohibited Company servants from private trade and accepting gifts.
+        <br><br><b>Key provisions:</b> GG appointed for 5 years; subordinated Bombay and Madras presidencies to Bengal; Secretary of State to oversee; Court of Directors required to report revenues to British government.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-company">EIC Reform</span>
+        <span class="tag tag-judicial">Supreme Court</span>
+        <span class="tag tag-landmark">First Act</span>
+      </div>
+      <span class="status-landmark">Landmark</span>
+    </div>
+
+    <div class="act-card company">
+      <div class="act-year" style="color:#c2410c;">1781</div>
+      <div class="act-name">Amending Act of 1781 (Settlement Act)</div>
+      <div class="act-gg">Warren Hastings</div>
+      <div class="act-body">
+        Passed to <b>rectify defects of the Regulating Act</b>. Exempted actions of GG and Council from Supreme Court jurisdiction when done in official capacity. Established that the Supreme Court had no jurisdiction over the revenue collection. Indians could be tried by their own personal law in personal matters.
+        <br><br><b>Significance:</b> First attempt to define the boundary between civil/executive and judicial functions under British Indian law.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-judicial">Judicial Clarity</span>
+        <span class="tag tag-admin">Admin Reform</span>
+      </div>
+    </div>
+
+    <div class="act-card company">
+      <div class="act-year" style="color:#c2410c;">1784</div>
+      <div class="act-name">Pitt's India Act (India Act 1784)</div>
+      <div class="act-gg">Warren Hastings / Lord Cornwallis</div>
+      <div class="act-body">
+        Named after PM William Pitt the Younger. Established <b>dual government</b>: the Company retained commercial functions; a new <b>Board of Control</b> (six members, two cabinet ministers) supervised political, military and revenue affairs. The Board's secret committee could issue secret orders directly to India bypassing the Court of Directors.
+        <br><br><b>Impact:</b> Gave Parliament effective day-to-day control. Prohibited aggressive wars and subsidiary alliances without home approval. Distinguished commercial from political functions for the first time.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-company">Dual Govt</span>
+        <span class="tag tag-admin">Board of Control</span>
+        <span class="tag tag-landmark">Constitutional</span>
+      </div>
+      <span class="status-landmark">Landmark</span>
+    </div>
+
+    <div class="act-card admin">
+      <div class="act-year" style="color:#7c3aed;">1793</div>
+      <div class="act-name">Charter Act of 1793</div>
+      <div class="act-gg">Lord Cornwallis</div>
+      <div class="act-body">
+        Renewed the Company's charter for 20 years. Made the GG's powers supreme — he could <b>overrule his council</b> in any matter. Introduced the principle of <b>covenanted civil service</b> exclusively for Europeans. Provided salary from Indian revenues for the Board of Control members (controversial). Gave the GG command over Bombay and Madras military.
+        <br><br><b>Also notable:</b> Permanent Settlement of Bengal (1793) under this era — Lord Cornwallis fixed land revenue permanently with zamindars.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-admin">Civil Service</span>
+        <span class="tag tag-company">Charter Renewal</span>
+      </div>
+    </div>
+
+    <div class="act-card company">
+      <div class="act-year" style="color:#c2410c;">1813</div>
+      <div class="act-name">Charter Act of 1813</div>
+      <div class="act-gg">Lord Minto I</div>
+      <div class="act-body">
+        Charter renewed for 20 more years but the EIC's <b>trade monopoly over India was abolished</b> — opening Indian trade to all British merchants. The monopoly over China tea trade and trade with China was retained until 1833. <b>Christian missionaries</b> were allowed to enter India for the first time. Introduced a provision for the education of Indians — ₹1 lakh annual spend on Indian education.
+        <br><br><b>Significance:</b> The beginning of the end of the Company as a trading entity; purely an administrative arm henceforth.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-company">Monopoly Ended</span>
+        <span class="tag tag-reform">Education Fund</span>
+        <span class="tag tag-reform">Missionaries</span>
+      </div>
+    </div>
+
+    <div class="act-card reform">
+      <div class="act-year" style="color:#15803d;">1829</div>
+      <div class="act-name">Bengal Sati Regulation (Reg. XVII)</div>
+      <div class="act-gg">Lord William Bentinck</div>
+      <div class="act-body">
+        <b>Abolished the practice of sati</b> (widow immolation) throughout the Bengal Presidency — later extended to Bombay and Madras. Passed under intense lobbying by <b>Raja Ram Mohan Roy</b> and against fierce orthodox Hindu opposition. First major legislative intervention in Indian social/religious practices.
+        <br><br><b>Impact:</b> Landmark in social reform; established the precedent that British administration would intervene in practices deemed inhumane regardless of religious sanction.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-reform">Social Reform</span>
+        <span class="tag tag-landmark">Humanitarian</span>
+      </div>
+      <span class="status-landmark">Social Landmark</span>
+    </div>
+
+    <div class="act-card company">
+      <div class="act-year" style="color:#c2410c;">1833</div>
+      <div class="act-name">Charter Act of 1833</div>
+      <div class="act-gg">Lord William Bentinck</div>
+      <div class="act-body">
+        Most significant charter act. EIC became a <b>purely administrative body</b> — all commercial functions ended. The title changed from "Governor-General of Bengal" to <b>"Governor-General of India"</b> — the first holder being Lord William Bentinck. A <b>Law Member</b> added to the GG's council (first was Macaulay). All laws for British India now required GG Council's approval.
+        <br><br><b>Also:</b> Prohibition of discrimination based on race, religion, colour in public employment (first such provision). A Law Commission was created to codify Indian law.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-company">EIC Ends Trade</span>
+        <span class="tag tag-landmark">GG of India Title</span>
+        <span class="tag tag-reform">Non-Discrimination</span>
+      </div>
+      <span class="status-landmark">Constitutional Landmark</span>
+    </div>
+
+    <div class="act-card reform">
+      <div class="act-year" style="color:#15803d;">1835</div>
+      <div class="act-name">English Education Act / Macaulay's Minute</div>
+      <div class="act-gg">Lord William Bentinck</div>
+      <div class="act-body">
+        <b>Macaulay's Minute on Education</b> (1835) argued for English over Sanskrit/Arabic. The Act directed the ₹1 lakh education fund toward <b>English-medium Western education</b>. Created a class of Indians "Indian in blood and colour but English in taste, opinions, morals and intellect."
+        <br><br><b>Long-term effect:</b> Shaped India's educated class for 200 years; produced the nationalist leadership that eventually drove the British out. Deeply controversial — celebrated as modernisation, condemned as cultural erasure.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-reform">Education Policy</span>
+        <span class="tag tag-press">Language Policy</span>
+      </div>
+    </div>
+
+    <div class="act-card admin">
+      <div class="act-year" style="color:#7c3aed;">1853</div>
+      <div class="act-name">Charter Act of 1853</div>
+      <div class="act-gg">Lord Dalhousie</div>
+      <div class="act-body">
+        Last charter renewal before the 1857 Revolt ended the Company. Charter renewal was for an indefinite period (not 20 years). Introduced <b>competitive examinations</b> for civil services (Indians now legally eligible). <b>Separated legislative and executive functions</b> of the GG's Council for the first time — the legislative council had additional members from provinces.
+        <br><br><b>Notable:</b> First step toward a separate legislative body. Macaulay's influence visible in the civil service reform. This act effectively drafted the blueprint that the Crown would execute in 1858.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-admin">Civil Service Exams</span>
+        <span class="tag tag-admin">Legislative Separation</span>
+        <span class="tag tag-landmark">Last Charter</span>
+      </div>
+      <span class="status-transitional">Pre-Crown</span>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Governor-Generals of the Company Era</div>
+    <div class="gg-grid">
+      <div class="gg-card">
+        <div class="gg-era-bar" style="background:linear-gradient(90deg,#c2410c,#f97316);"></div>
+        <div class="gg-name">Warren Hastings</div>
+        <div class="gg-tenure">1773–1785 · GG of Bengal</div>
+        <div class="gg-body">First Governor-General under the Regulating Act. Expanded British power; impeached (but acquitted) for corruption. Presided over the Regulating Act, Amending Act, and Pitt's India Act era.</div>
+      </div>
+      <div class="gg-card">
+        <div class="gg-era-bar" style="background:linear-gradient(90deg,#c2410c,#f97316);"></div>
+        <div class="gg-name">Lord Cornwallis</div>
+        <div class="gg-tenure">1786–1793 · GG of Bengal</div>
+        <div class="gg-body">Introduced <b>Permanent Settlement (1793)</b>. Passed Charter Act 1793. Cornwallis Code — first serious attempt at separation of powers. Banned Indians from high civil posts.</div>
+      </div>
+      <div class="gg-card">
+        <div class="gg-era-bar" style="background:linear-gradient(90deg,#c2410c,#f97316);"></div>
+        <div class="gg-name">Lord Wellesley</div>
+        <div class="gg-tenure">1798–1805 · GG of Bengal</div>
+        <div class="gg-body">Introduced <b>Subsidiary Alliance system</b> — expanded British territory massively. Fort William College (1800) for civil servants. Defeated Tipu Sultan (1799).</div>
+      </div>
+      <div class="gg-card">
+        <div class="gg-era-bar" style="background:linear-gradient(90deg,#c2410c,#f97316);"></div>
+        <div class="gg-name">Lord William Bentinck</div>
+        <div class="gg-tenure">1828–1835 · First GG of India (1833)</div>
+        <div class="gg-body">Greatest social reformer. <b>Abolished sati (1829)</b>, suppressed Thuggee, Charter Act 1833, English Education Act 1835. First GG of India (not Bengal) under Charter Act 1833.</div>
+      </div>
+      <div class="gg-card">
+        <div class="gg-era-bar" style="background:linear-gradient(90deg,#c2410c,#f97316);"></div>
+        <div class="gg-name">Lord Dalhousie</div>
+        <div class="gg-tenure">1848–1856 · GG of India</div>
+        <div class="gg-body"><b>Doctrine of Lapse</b> — annexed states without heirs. Built first Indian railway (1853), telegraph, PWD, Universities Act 1857. Charter Act 1853. His aggressive policies contributed directly to 1857 Revolt.</div>
+      </div>
+      <div class="gg-card">
+        <div class="gg-era-bar" style="background:linear-gradient(90deg,#c2410c,#f97316);"></div>
+        <div class="gg-name">Lord Canning</div>
+        <div class="gg-tenure">1856–1862 · Last GG, First Viceroy</div>
+        <div class="gg-body">Presided over the <b>1857 Revolt</b>. Managed the transition from Company to Crown. GOI Act 1858 made him first Viceroy. Indian Councils Act 1861 passed under his viceroyalty.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ CROWN ERA ═══════════════════════ -->
+<div class="phase-panel" id="panel-crown">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0369a1;">Crown Era</span>
+    <span class="phase-tag" style="background:rgba(3,105,161,.15);color:#0369a1;">1858–1947</span>
+    <span class="phase-desc">Direct rule — from Crown takeover to Independence</span>
+  </div>
+
+  <div class="callout" style="border-color:#0369a1;">
+    <b>The 1857 Pivot:</b> The Revolt of 1857 (Sepoy Mutiny / First War of Independence) was the decisive rupture. The Government of India Act 1858 dissolved the East India Company, transferred its powers to the Crown, and created the post of <b>Secretary of State for India</b> (Cabinet minister) supported by a 15-member Council of India in London, and the <b>Viceroy of India</b> on the ground. The Queen's Proclamation (November 1858) promised non-interference in religion, equality, and good governance — promises honoured variably.
+  </div>
+
+  <div class="act-grid">
+    <div class="act-card crown">
+      <div class="act-year" style="color:#0369a1;">1858</div>
+      <div class="act-name">Government of India Act, 1858</div>
+      <div class="act-gg">Lord Canning · First Viceroy</div>
+      <div class="act-body">
+        <b>Abolished the East India Company.</b> All territories, powers and revenues transferred to the Crown. The GG was redesignated <b>Viceroy of India</b>. A Secretary of State for India (Cabinet minister) with a 15-member Council of India took over in London. The Board of Control and Court of Directors were abolished.
+        <br><br><b>Queen's Proclamation:</b> Promised equal treatment of Indians, respect for existing treaties, no further annexations, religious tolerance. In practice, power was further centralised.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-crown">Crown Rule</span>
+        <span class="tag tag-landmark">EIC Abolished</span>
+        <span class="tag tag-admin">Viceroy Created</span>
+      </div>
+      <span class="status-landmark">Constitutional Landmark</span>
+    </div>
+
+    <div class="act-card crown">
+      <div class="act-year" style="color:#0369a1;">1861</div>
+      <div class="act-name">Indian Councils Act, 1861</div>
+      <div class="act-gg">Lord Canning</div>
+      <div class="act-body">
+        <b>First Indians admitted</b> to the Viceroy's expanded Legislative Council (nominated). The GG could issue ordinances with immediate effect (6 months). The portfolio system introduced — each council member given charge of a department. Bombay and Madras presidencies restored their legislative councils. Decentralised legislation to provinces.
+        <br><br><b>Significance:</b> First step toward Indian representation in legislation — though purely nominated and advisory.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-crown">Indian Reps</span>
+        <span class="tag tag-admin">Portfolio System</span>
+        <span class="tag tag-reform">Decentralisation</span>
+      </div>
+    </div>
+
+    <div class="act-card crown">
+      <div class="act-year" style="color:#0369a1;">1892</div>
+      <div class="act-name">Indian Councils Act, 1892</div>
+      <div class="act-gg">Lord Lansdowne</div>
+      <div class="act-body">
+        Enlarged the legislative councils (Central and Provincial). Introduced <b>indirect elections</b> for the first time — though the term "election" was not used. Members could discuss budget and ask questions (but not vote on them). District boards, municipalities, universities, traders' associations could recommend members.
+        <br><br><b>Criticism:</b> Elected members were still a minority; nomination dominated. However, this planted the seed of electoral politics in India.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-crown">Indirect Elections</span>
+        <span class="tag tag-reform">Legislative Discussion</span>
+      </div>
+    </div>
+
+    <div class="act-card crown">
+      <div class="act-year" style="color:#0369a1;">1909</div>
+      <div class="act-name">Indian Councils Act, 1909 (Morley-Minto Reforms)</div>
+      <div class="act-gg">Lord Minto II · Secy of State: John Morley</div>
+      <div class="act-body">
+        Significantly enlarged legislative councils. Introduced <b>direct elections</b> for the first time. An Indian (Satyendra Prasanna Sinha) appointed to the Viceroy's Executive Council for the first time. Most controversially, introduced <b>separate electorates for Muslims</b> — a fateful decision that Jinnah and later historians blamed for seeding the Partition.
+        <br><br><b>Context:</b> The Swadeshi movement and partition of Bengal (1905) had inflamed nationalist politics. Morley-Minto was a calculated attempt to split the moderate from the radical Congress while appeasing Muslim League demands.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-crown">Direct Elections</span>
+        <span class="tag tag-repressive">Separate Electorates</span>
+        <span class="tag tag-landmark">First Indian in Council</span>
+      </div>
+      <span class="status-landmark">Landmark (Controversial)</span>
+    </div>
+
+    <div class="act-card crown">
+      <div class="act-year" style="color:#0369a1;">1919</div>
+      <div class="act-name">GOI Act, 1919 (Montagu-Chelmsford Reforms)</div>
+      <div class="act-gg">Lord Chelmsford · Secy: Edwin Montagu</div>
+      <div class="act-body">
+        Introduced <b>Dyarchy</b> in provinces: subjects split into "Reserved" (law, finance, police — under governor) and "Transferred" (education, agriculture, health — under elected ministers). Created a <b>bicameral central legislature</b> (Council of State + Legislative Assembly). Expanded franchise. Communal representation extended.
+        <br><br><b>Also created:</b> Public Service Commission; Auditor-General; first steps toward responsible government but the most vital powers remained reserved.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-crown">Dyarchy</span>
+        <span class="tag tag-reform">Bicameral Legislature</span>
+        <span class="tag tag-landmark">Provincial Autonomy</span>
+      </div>
+      <span class="status-landmark">Major Reform</span>
+    </div>
+
+    <div class="act-card crown">
+      <div class="act-year" style="color:#7c3aed;">1935</div>
+      <div class="act-name">Government of India Act, 1935</div>
+      <div class="act-gg">Lord Willingdon / Lord Linlithgow</div>
+      <div class="act-body">
+        The <b>longest Act in British parliamentary history</b> (321 sections, 10 schedules). Proposed an All-India Federation (never implemented). Granted <b>full provincial autonomy</b> — dyarchy abolished at provincial level, introduced at Centre. Extended franchise to ~35 million. Established <b>Federal Court of India, RBI, Federal Railway Authority</b>. Abolished Council of India (London).
+        <br><br><b>Legacy:</b> Became the working constitution of independent India (1947–1950) with modifications. The 1950 Constitution borrowed extensively from this Act.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-crown">Provincial Autonomy</span>
+        <span class="tag tag-judicial">Federal Court</span>
+        <span class="tag tag-landmark">India's Working Constitution</span>
+      </div>
+      <span class="status-landmark">Most Important Act</span>
+    </div>
+
+    <div class="act-card reform">
+      <div class="act-year" style="color:#15803d;">1947</div>
+      <div class="act-name">Indian Independence Act, 1947</div>
+      <div class="act-gg">Lord Mountbatten · Last Viceroy</div>
+      <div class="act-body">
+        Passed by UK Parliament on 18 July 1947. Partitioned British India into <b>two independent dominions: India and Pakistan</b> (effective 15 August 1947). Dissolved the post of Viceroy. Crown suzerainty over princely states lapsed. Each dominion was free to frame its own constitution. The GOI Act 1935 (as adapted) continued as the interim constitution.
+        <br><br><b>Impact:</b> Ended 190 years of British colonial rule. Accompanied by massive population displacement (15 million), violence, and communal riots claiming 200,000–2 million lives.
+      </div>
+      <div class="tag-row">
+        <span class="tag tag-landmark">Independence</span>
+        <span class="tag tag-reform">Partition</span>
+        <span class="tag tag-crown">Dominion Status</span>
+      </div>
+      <span class="status-landmark">Final Act</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ REFORM ACTS ═══════════════════════ -->
+<div class="phase-panel" id="panel-reforms">
+  <div class="section-header">
+    <span class="phase-label" style="color:#15803d;">Reform Acts</span>
+    <span class="phase-tag" style="background:rgba(21,128,61,.15);color:#15803d;">Social & Constitutional</span>
+    <span class="phase-desc">Social legislation and the slow march toward self-rule</span>
+  </div>
+
+  <div class="callout" style="border-color:#15803d;">
+    <b>The Reform Paradox:</b> British reform legislation in India served a dual purpose — genuinely improving conditions for Indians while simultaneously legitimising and extending British rule. Social reform (sati abolition, age of consent, caste discrimination) often came from liberal Governors-General working with Indian reformers. Constitutional reforms were harder-fought and always stopped short of full self-governance until 1947.
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Social Reform Acts</div>
+    <div class="act-grid">
+      <div class="act-card reform">
+        <div class="act-year" style="color:#15803d;">1829</div>
+        <div class="act-name">Bengal Sati Regulation (Reg. XVII, 1829)</div>
+        <div class="act-gg">Lord William Bentinck</div>
+        <div class="act-body">Declared <b>sati (widow immolation) illegal</b> and punishable as culpable homicide. Extended to Bombay (1830) and Madras (1830). Championed by Raja Ram Mohan Roy who had witnessed his sister-in-law's immolation. Fierce orthodox opposition led by Radhakant Deb.</div>
+        <div class="tag-row"><span class="tag tag-reform">Sati Abolished</span><span class="tag tag-landmark">Humanitarian</span></div>
+      </div>
+      <div class="act-card reform">
+        <div class="act-year" style="color:#15803d;">1856</div>
+        <div class="act-name">Hindu Widows' Remarriage Act, 1856</div>
+        <div class="act-gg">Lord Dalhousie</div>
+        <div class="act-body">Legalised the remarriage of Hindu widows — previously prohibited by custom and considered socially taboo. Advocated by <b>Ishwar Chandra Vidyasagar</b>. Provided that widow remarriage was valid and children legitimate. Widow forfeited inheritance rights from former husband upon remarriage.</div>
+        <div class="tag-row"><span class="tag tag-reform">Widow Rights</span><span class="tag tag-landmark">Social Reform</span></div>
+      </div>
+      <div class="act-card reform">
+        <div class="act-year" style="color:#15803d;">1872</div>
+        <div class="act-name">Special Marriage Act, 1872</div>
+        <div class="act-gg">Lord Mayo / Lord Northbrook</div>
+        <div class="act-body">Allowed <b>civil marriages outside religious rites</b> — particularly for inter-caste and inter-religion couples. Advocated by Brahmo Samaj. Required both parties to renounce their religion (this controversial clause removed in 1923 revision). First attempt at a secular personal law.</div>
+        <div class="tag-row"><span class="tag tag-reform">Civil Marriage</span><span class="tag tag-judicial">Secular Law</span></div>
+      </div>
+      <div class="act-card reform">
+        <div class="act-year" style="color:#15803d;">1891</div>
+        <div class="act-name">Age of Consent Act, 1891</div>
+        <div class="act-gg">Lord Lansdowne</div>
+        <div class="act-body">Raised the <b>age of consent for sexual intercourse from 10 to 12 years</b> (for both married and unmarried girls). Triggered after Phulmani Dasi case (1889) — a 10-year-old died from injuries. Bal Gangadhar Tilak opposed it as interference in Hindu tradition. Social reformers like Pandita Ramabai supported it.</div>
+        <div class="tag-row"><span class="tag tag-reform">Child Protection</span><span class="tag tag-landmark">Gender Justice</span></div>
+      </div>
+      <div class="act-card reform">
+        <div class="act-year" style="color:#15803d;">1929</div>
+        <div class="act-name">Child Marriage Restraint Act, 1929 (Sarda Act)</div>
+        <div class="act-gg">Lord Irwin</div>
+        <div class="act-body">Fixed minimum age of marriage at <b>18 for boys and 14 for girls</b> (later raised). Named after Har Bilas Sarda, its proposer. Opposed by traditionalists. First national legislation against child marriage. Gave magistrates powers to prevent impending child marriages.</div>
+        <div class="tag-row"><span class="tag tag-reform">Child Marriage</span><span class="tag tag-landmark">Sarda Act</span></div>
+      </div>
+      <div class="act-card reform">
+        <div class="act-year" style="color:#15803d;">1937</div>
+        <div class="act-name">Muslim Personal Law (Shariat) Application Act, 1937</div>
+        <div class="act-gg">Lord Linlithgow</div>
+        <div class="act-body">Applied the <b>Muslim personal law (Shariat)</b> to all Muslims in India in matters of marriage, succession, inheritance, and charities. Previously, many Muslim communities (especially in Punjab and NWFP) followed Hindu customary law. Demanded by the Muslim League as recognition of Islamic personal law.</div>
+        <div class="tag-row"><span class="tag tag-reform">Personal Law</span><span class="tag tag-admin">Muslim Communities</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Education & Economic Reform Acts</div>
+    <div class="act-grid">
+      <div class="act-card reform">
+        <div class="act-year" style="color:#15803d;">1854</div>
+        <div class="act-name">Wood's Education Despatch, 1854</div>
+        <div class="act-gg">Lord Dalhousie</div>
+        <div class="act-body">"Magna Carta of Indian Education." Sir Charles Wood's despatch established a <b>graded education system</b>: primary schools (vernacular) → high schools (Anglo-vernacular) → colleges (English) → universities. Recommended creation of universities in Calcutta, Bombay, Madras. Department of Education in each province. Grants-in-aid system introduced. Secular focus — universities only teaching and examining, not residential.</div>
+        <div class="tag-row"><span class="tag tag-reform">University System</span><span class="tag tag-landmark">Education Policy</span></div>
+      </div>
+      <div class="act-card reform">
+        <div class="act-year" style="color:#15803d;">1857</div>
+        <div class="act-name">Indian Universities Act, 1857</div>
+        <div class="act-gg">Lord Canning</div>
+        <div class="act-body">Established the Universities of <b>Calcutta, Bombay, and Madras</b> — the three oldest universities in Asia (founded 24 Jan, 18 Jul, 5 Sep 1857 respectively). Modelled on University of London — affiliating, examining bodies, not teaching. Also established Allahabad University (1887). Transformed Indian higher education.</div>
+        <div class="tag-row"><span class="tag tag-reform">Universities Founded</span><span class="tag tag-landmark">Higher Education</span></div>
+      </div>
+      <div class="act-card finance">
+        <div class="act-year" style="color:#d97706;">1861</div>
+        <div class="act-name">Income Tax Act, 1861</div>
+        <div class="act-gg">Lord Canning</div>
+        <div class="act-body">Introduced <b>income tax in India for the first time</b> to recover costs of the 1857 Revolt. Tax on persons earning over ₹200 per annum. A license tax on trades and professions. James Wilson (finance member) designed the system. Wilson died in Calcutta in 1860, having also established the paper currency system and budget system for India.</div>
+        <div class="tag-row"><span class="tag tag-finance">Income Tax</span><span class="tag tag-admin">Fiscal Reform</span></div>
+      </div>
+      <div class="act-card finance">
+        <div class="act-year" style="color:#d97706;">1934</div>
+        <div class="act-name">Reserve Bank of India Act, 1934</div>
+        <div class="act-gg">Lord Willingdon</div>
+        <div class="act-body">Established the <b>Reserve Bank of India</b> (commenced operations 1 April 1935). Based on Hilton Young Commission recommendations. Brought monetary management under a central bank. Initially privately owned; nationalised in 1949. RBI became the banker to government and banker to banks — the foundation of India's modern monetary system.</div>
+        <div class="tag-row"><span class="tag tag-finance">Central Bank</span><span class="tag tag-landmark">RBI Founded</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PRESS & SOCIAL ═══════════════════════ -->
+<div class="phase-panel" id="panel-press">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0e7490;">Press & Social</span>
+    <span class="phase-tag" style="background:rgba(14,116,144,.15);color:#0e7490;">Freedom vs Control</span>
+    <span class="phase-desc">The battle over Indian voices and social fabric</span>
+  </div>
+
+  <div class="callout" style="border-color:#0e7490;">
+    <b>Press as Battleground:</b> The Indian press was the primary vehicle for nationalist thought. British responses oscillated — liberal governors repealed press restrictions; conservative ones reimposed them. The arc from Metcalfe's liberalisation (1835) through the Vernacular Press Act (1878) through Tilak's sedition trials defines this tension. Every major press act was directly connected to a political crisis.
+  </div>
+
+  <div class="act-grid">
+    <div class="act-card press">
+      <div class="act-year" style="color:#0e7490;">1799</div>
+      <div class="act-name">Press Regulations, 1799</div>
+      <div class="act-gg">Lord Wellesley</div>
+      <div class="act-body">First serious censorship regulations. All newspapers required to submit copy to the government secretary <b>before publication</b>. Required newspapers to carry names of editors and printers. War with France cited as justification. Effectively gave the government veto over all news. Remained in force for 30+ years.</div>
+      <div class="tag-row"><span class="tag tag-press">Pre-Censorship</span><span class="tag tag-repressive">Press Control</span></div>
+    </div>
+    <div class="act-card press">
+      <div class="act-year" style="color:#0e7490;">1823</div>
+      <div class="act-name">Press Ordinance, 1823</div>
+      <div class="act-gg">Lord John Adam (Acting GG)</div>
+      <div class="act-body">Required <b>licences for all newspapers</b>. Ram Mohan Roy's Mirat-ul-Akhbar (Persian) and Brahmin Seva Mirat suspended under this. Roy protested and shut down his own paper in protest. This act directly galvanised the Indian free-press movement and became a touchstone for press freedom advocates for generations.</div>
+      <div class="tag-row"><span class="tag tag-press">Licensing</span><span class="tag tag-repressive">Censorship</span></div>
+    </div>
+    <div class="act-card press">
+      <div class="act-year" style="color:#15803d;">1835</div>
+      <div class="act-name">Press Act / Metcalfe's Act, 1835</div>
+      <div class="act-gg">Lord William Bentinck / Sir Charles Metcalfe (Acting)</div>
+      <div class="act-body"><b>Liberated the Indian press.</b> Sir Charles Metcalfe repealed the 1823 licensing requirements. Required only that the printer/publisher file a declaration with the magistrate. No prior censorship. Earned Metcalfe the title <b>"Liberator of the Indian Press."</b> Led to explosion of newspapers in vernacular languages. Bengal, Bombay, and Madras press boomed.</div>
+      <div class="tag-row"><span class="tag tag-press">Press Freedom</span><span class="tag tag-reform">Liberalisation</span></div>
+      <span class="status-landmark">Press Landmark</span>
+    </div>
+    <div class="act-card press">
+      <div class="act-year" style="color:#0e7490;">1867</div>
+      <div class="act-name">Registration of Books Act, 1867</div>
+      <div class="act-gg">Lord Lawrence</div>
+      <div class="act-body">Required <b>registration of every book/newspaper</b> published in British India. Three copies to be deposited with specified authority. Primarily administrative — created a bibliographic record. Replaced earlier registration systems. The foundation of India's copyright and publications registry which persists (much amended) today.</div>
+      <div class="tag-row"><span class="tag tag-press">Book Registration</span><span class="tag tag-admin">Administrative</span></div>
+    </div>
+    <div class="act-card press">
+      <div class="act-year" style="color:#dc2626;">1878</div>
+      <div class="act-name">Vernacular Press Act, 1878</div>
+      <div class="act-gg">Lord Lytton</div>
+      <div class="act-body">The notorious <b>"Gagging Act."</b> Applied specifically to newspapers in Indian languages (not English — a deliberate racial distinction). Magistrates could demand security bonds from editors; could seize printing presses if "seditious" content printed. Passed during the 2nd Afghan War when Lytton wanted no critical coverage.
+      <br><br><b>Response:</b> Amrita Bazar Patrika converted to English overnight to escape the Act. Repealed in 1882 by Lord Ripon.</div>
+      <div class="tag-row"><span class="tag tag-press">Vernacular Gagged</span><span class="tag tag-repressive">Gagging Act</span></div>
+      <span class="status-repressive">Repressive</span>
+    </div>
+    <div class="act-card press">
+      <div class="act-year" style="color:#dc2626;">1908</div>
+      <div class="act-name">Newspapers (Incitement to Offences) Act, 1908</div>
+      <div class="act-gg">Lord Minto II</div>
+      <div class="act-body">Passed after Bal Gangadhar <b>Tilak's sedition trial</b> (Kesari articles). Allowed magistrates to seize printing presses used to publish material inciting violence or murder. Tilak sentenced to 6 years transportation to Burma's Mandalay jail. Widely condemned as targeting nationalist press. Denounced by Gokhale in the Imperial Legislative Council.</div>
+      <div class="tag-row"><span class="tag tag-press">Anti-Tilak</span><span class="tag tag-repressive">Sedition</span></div>
+      <span class="status-repressive">Repressive</span>
+    </div>
+    <div class="act-card press">
+      <div class="act-year" style="color:#dc2626;">1910</div>
+      <div class="act-name">Indian Press Act, 1910</div>
+      <div class="act-gg">Lord Minto II</div>
+      <div class="act-body">Required publishers to deposit security (<b>₹500–₹2,000</b>) which could be forfeited if seditious material published. Gave provincial governments power to ban import of foreign seditious publications. Specifically targeted the growing revolutionary press inspired by the Swadeshi movement. Repealed and replaced in 1922, then reimposed in harsher form during WWII.</div>
+      <div class="tag-row"><span class="tag tag-press">Security Deposits</span><span class="tag tag-repressive">Anti-Revolutionary</span></div>
+      <span class="status-repressive">Repressive</span>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <div class="hb-title">IPC Section 124A — Sedition Law</div>
+    <b>Introduced by Lord Mayo (1870)</b>, Section 124A of the Indian Penal Code criminalised "exciting disaffection towards the Government." Used to prosecute Bal Gangadhar Tilak (1897, 1908), Mahatma Gandhi (1922 — he called it the "prince among the political sections"), Annie Besant, Maulana Azad, and scores of others. Gandhi accepted the charge proudly: <i>"I am here therefore to invite and cheerfully submit to the highest penalty that can be inflicted upon me."</i> The law survived into independent India (Article 19 challenge) and remains controversial to date.
+  </div>
+</div>
+
+<!-- ═══════════════════════ JUDICIAL ═══════════════════════ -->
+<div class="phase-panel" id="panel-judicial">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0284c7;">Judicial</span>
+    <span class="phase-tag" style="background:rgba(2,132,199,.15);color:#0284c7;">Courts & Codes</span>
+    <span class="phase-desc">From the Supreme Court to the Federal Court — building colonial justice</span>
+  </div>
+
+  <div class="callout" style="border-color:#0284c7;">
+    <b>The Colonial Legal System:</b> British India built a parallel legal system on top of existing Mughal and regional structures. English Common Law mixed with codified personal laws for Hindus and Muslims. The IPC (1860) and CPC are Macaulay's lasting contributions — still largely in force. High Courts replaced the old Supreme Courts and Sadar Diwani Adalats in 1861. The Federal Court (1937) became the Supreme Court of India in 1950.
+  </div>
+
+  <div class="act-grid">
+    <div class="act-card judicial">
+      <div class="act-year" style="color:#0284c7;">1773</div>
+      <div class="act-name">Supreme Court of Calcutta (Regulating Act)</div>
+      <div class="act-gg">Warren Hastings</div>
+      <div class="act-body">Established the <b>Supreme Court of Judicature at Fort William, Calcutta</b> — the first British court in India. Chief Justice: Sir Elijah Impey. Had jurisdiction over all British subjects in Bengal. Famously came into conflict with the GG's Council over its jurisdiction — the Patna Case (1778) and the Raja Nand Kumar affair (Impey hanged Nand Kumar, accused of Warren Hastings' enemy, in 1775 — deeply controversial).</div>
+      <div class="tag-row"><span class="tag tag-judicial">First Supreme Court</span><span class="tag tag-landmark">1773</span></div>
+    </div>
+    <div class="act-card judicial">
+      <div class="act-year" style="color:#0284c7;">1860</div>
+      <div class="act-name">Indian Penal Code, 1860</div>
+      <div class="act-gg">Lord Canning</div>
+      <div class="act-body">Drafted by <b>Macaulay's First Law Commission</b> (1834–37), finalised by Barnes Peacock. Came into force 1 January 1862. Comprehensive criminal code covering offences against the state, body, property, marriage, religion, elections. <b>Still substantially in force</b> (now renamed BNS 2023 in India). 511 sections, clear definitions, graded punishments. Replaced fragmented Presidency criminal laws.</div>
+      <div class="tag-row"><span class="tag tag-judicial">Criminal Code</span><span class="tag tag-landmark">IPC</span></div>
+      <span class="status-landmark">Still in Force (2023)</span>
+    </div>
+    <div class="act-card judicial">
+      <div class="act-year" style="color:#0284c7;">1861</div>
+      <div class="act-name">High Courts Act, 1861</div>
+      <div class="act-gg">Lord Canning</div>
+      <div class="act-body">Replaced the Supreme Courts (at Calcutta, Bombay, Madras) and the Sadar Adalats with <b>High Courts</b>. High Courts of Calcutta, Bombay, and Madras established. Combined the jurisdiction of the old courts. Power to make rules of procedure. Original, appellate, and criminal jurisdiction. Allahabad HC followed in 1866, others later. Created the structure of India's current High Court system.</div>
+      <div class="tag-row"><span class="tag tag-judicial">High Courts</span><span class="tag tag-admin">Court Reform</span></div>
+    </div>
+    <div class="act-card judicial">
+      <div class="act-year" style="color:#0284c7;">1872</div>
+      <div class="act-name">Indian Evidence Act, 1872</div>
+      <div class="act-gg">Lord Mayo / Lord Northbrook</div>
+      <div class="act-body">Drafted by Sir <b>James Fitzjames Stephen</b>. Codified the rules of evidence in all Indian courts. 167 sections covering relevancy, admissibility, oral and documentary evidence, witnesses, estoppel, burden of proof. Replaced highly inconsistent evidence rules across presidencies. Still largely in force today (renamed Bharatiya Sakshya Adhiniyam, 2023).</div>
+      <div class="tag-row"><span class="tag tag-judicial">Evidence Law</span><span class="tag tag-landmark">Still in Force</span></div>
+    </div>
+    <div class="act-card judicial">
+      <div class="act-year" style="color:#0284c7;">1882</div>
+      <div class="act-name">Transfer of Property Act, 1882</div>
+      <div class="act-gg">Lord Ripon</div>
+      <div class="act-body">Codified <b>laws governing property transfers</b> — sales, mortgages, leases, exchanges, gifts, actionable claims. Replaced inconsistent English common law and local custom. Introduced the concept of "notice" and "bona fide purchaser." Still substantially in force in India. One of the cornerstones of Indian property law — every real estate transaction today is governed by its principles.</div>
+      <div class="tag-row"><span class="tag tag-judicial">Property Law</span><span class="tag tag-landmark">Still in Force</span></div>
+    </div>
+    <div class="act-card judicial">
+      <div class="act-year" style="color:#0284c7;">1935</div>
+      <div class="act-name">Federal Court of India (GOI Act 1935)</div>
+      <div class="act-gg">Lord Willingdon</div>
+      <div class="act-body">Established the <b>Federal Court of India</b> (became operational 1937) as the apex judicial body. Original jurisdiction in federal disputes; appellate jurisdiction from High Courts in constitutional matters. Appeal lay to the Privy Council in London. Chief Justice: Sir Maurice Gwyer (first). Became the <b>Supreme Court of India</b> on 28 January 1950.</div>
+      <div class="tag-row"><span class="tag tag-judicial">Federal Court</span><span class="tag tag-landmark">Future Supreme Court</span></div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Personal Law Codes</div>
+    <div class="box">
+      <table>
+        <thead><tr><th>Code / Act</th><th>Year</th><th>Community</th><th>Coverage</th></tr></thead>
+        <tbody>
+          <tr><td><b>Hindu Widows' Remarriage Act</b></td><td>1856</td><td>Hindus</td><td>Legality of widow remarriage</td></tr>
+          <tr><td><b>Native Converts Marriage Dissolution Act</b></td><td>1866</td><td>Christians</td><td>Marriage dissolution on conversion</td></tr>
+          <tr><td><b>Indian Christian Marriage Act</b></td><td>1872</td><td>Christians</td><td>Christian marriage registration</td></tr>
+          <tr><td><b>Special Marriage Act</b></td><td>1872</td><td>All / Inter-faith</td><td>Civil marriage without religion</td></tr>
+          <tr><td><b>Muslim Personal Law (Shariat) Application Act</b></td><td>1937</td><td>Muslims</td><td>Marriage, divorce, inheritance under Shariat</td></tr>
+          <tr><td><b>Dissolution of Muslim Marriages Act</b></td><td>1939</td><td>Muslim women</td><td>Muslim women's right to divorce</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MILITARY & SECURITY ═══════════════════════ -->
+<div class="phase-panel" id="panel-military">
+  <div class="section-header">
+    <span class="phase-label" style="color:#b91c1c;">Military & Security</span>
+    <span class="phase-tag" style="background:rgba(185,28,28,.15);color:#b91c1c;">Control & Coercion</span>
+    <span class="phase-desc">Disarming, detaining, and dominating — the security state</span>
+  </div>
+
+  <div class="callout" style="border-color:#b91c1c;">
+    <b>The Security Architecture:</b> Maintaining control over 300 million people required a legal infrastructure of coercion. The Arms Act, Sedition Laws, and Preventive Detention laws formed the backbone. Most controversially, the <b>Rowlatt Act (1919)</b> — allowing detention without trial — triggered Gandhi's first nationwide satyagraha and directly led to the Jallianwala Bagh massacre. Many of these laws survived independence and were used by post-independence governments against their own citizens.
+  </div>
+
+  <div class="act-grid">
+    <div class="act-card military">
+      <div class="act-year" style="color:#b91c1c;">1857</div>
+      <div class="act-name">Indian (New) Penal Code — Mutiny Background</div>
+      <div class="act-gg">Lord Canning</div>
+      <div class="act-body">The IPC was drafted before 1857 but its provisions on <b>waging war against the government (Section 121), sedition (124A), and unlawful assembly</b> were directly shaped by the 1857 experience. The Mutiny Act allowed courts martial for civilians in disturbed areas. After 1857, a comprehensive counter-insurgency legal framework was built into the IPC itself.</div>
+      <div class="tag-row"><span class="tag tag-military">Waging War</span><span class="tag tag-repressive">Post-Mutiny</span></div>
+    </div>
+    <div class="act-card military">
+      <div class="act-year" style="color:#b91c1c;">1878</div>
+      <div class="act-name">Arms Act, 1878</div>
+      <div class="act-gg">Lord Lytton</div>
+      <div class="act-body"><b>Prohibited Indians from possessing arms</b> without a licence issued by a British official. Europeans were exempt. Directly disarmed the Indian population after 1857. Gandhi called it one of the most humiliating laws — "it is we taking away their manliness." Amended and replaced by Arms Act 1959 after independence. Bhagat Singh's acquisition of arms was technically a violation of this Act.</div>
+      <div class="tag-row"><span class="tag tag-military">Arms Disarmament</span><span class="tag tag-repressive">Anti-Indian</span></div>
+      <span class="status-repressive">Racially Discriminatory</span>
+    </div>
+    <div class="act-card military">
+      <div class="act-year" style="color:#b91c1c;">1908</div>
+      <div class="act-name">Explosive Substances Act, 1908</div>
+      <div class="act-gg">Lord Minto II</div>
+      <div class="act-body">Passed after the <b>Muzaffarpur bomb attack</b> (1908) by Khudiram Bose and Prafulla Chaki (targeted magistrate Kingsford but killed two British women). Made possession and manufacture of explosives a serious criminal offence with harsh sentences. Used extensively to prosecute revolutionary nationalists — Bhagat Singh charged under this Act for the Delhi Assembly bombing (1929).</div>
+      <div class="tag-row"><span class="tag tag-military">Anti-Terrorism</span><span class="tag tag-repressive">Revolutionary Control</span></div>
+    </div>
+    <div class="act-card military">
+      <div class="act-year" style="color:#b91c1c;">1919</div>
+      <div class="act-name">Anarchical and Revolutionary Crimes Act, 1919 (Rowlatt Act)</div>
+      <div class="act-gg">Lord Chelmsford</div>
+      <div class="act-body">Based on the <b>Sedition Committee Report (Rowlatt Committee)</b>. Allowed <b>detention without trial for up to 2 years</b> for political prisoners. No jury trial; suspects could be confined without charge. Indians called it the <b>"Black Act"</b> and "No Dalil, No Vakil, No Appeal."
+        <br><br>Gandhi launched his first nationwide satyagraha (6 April 1919 hartal). Led directly to <b>Jallianwala Bagh massacre</b> (13 April 1919 — 379+ killed per official figures, 1,000+ per Indian estimates). Repealed in 1922 but its legacy defined Indian nationalism's turn to mass mobilisation.</div>
+      <div class="tag-row"><span class="tag tag-military">Detention Without Trial</span><span class="tag tag-repressive">Black Act</span></div>
+      <span class="status-repressive">Most Hated Law</span>
+    </div>
+    <div class="act-card military">
+      <div class="act-year" style="color:#b91c1c;">1939</div>
+      <div class="act-name">Defence of India Act, 1939</div>
+      <div class="act-gg">Lord Linlithgow</div>
+      <div class="act-body">Wartime emergency legislation passed at the outbreak of WWII. Gave the government <b>sweeping powers to detain, censor, and commandeer resources</b>. Used to arrest virtually the entire Congress leadership (Nehru, Patel, Azad) after the Quit India Movement (1942). Over <b>60,000 Congress members</b> arrested under Defence of India Rules during 1942-44. Also regulated prices and controlled economy.</div>
+      <div class="tag-row"><span class="tag tag-military">Wartime Emergency</span><span class="tag tag-repressive">Quit India Crackdown</span></div>
+      <span class="status-repressive">Wartime Repression</span>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="border-color:rgba(185,28,28,.3);">
+    <div class="hb-title">Jallianwala Bagh — The Consequence of the Rowlatt Act</div>
+    On 13 April 1919, Brigadier-General Reginald Dyer ordered troops to fire on an unarmed crowd gathered at Jallianwala Bagh, Amritsar for the Baisakhi festival, unaware of a prohibition order under the Rowlatt crackdown. <b>Minimum 379 dead (official), over 1,200 by Indian National Congress estimates.</b> The crowd had no exit — troops fired 1,650 rounds. The event permanently alienated moderate Indian opinion from British rule. Rabindranath Tagore returned his knighthood. Winston Churchill called it "monstrous." General Dyer was forced to resign but received a £26,000 "sword of honour" subscription from British India sympathisers.
+  </div>
+</div>
+
+<!-- ═══════════════════════ TIMELINE ═══════════════════════ -->
+<div class="phase-panel" id="panel-timeline">
+  <div class="section-header">
+    <span class="phase-label" style="color:#d97706;">Timeline</span>
+    <span class="phase-tag" style="background:rgba(217,119,6,.15);color:#d97706;">1773–1947</span>
+    <span class="phase-desc">174 years of legislation, chronologically</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="info-section-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:1rem;">Company Era · 1773–1857</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#c2410c;"></div>
+          <div class="tl-year" style="color:#c2410c;">1773</div>
+          <div class="tl-title">Regulating Act</div>
+          <div class="tl-body">First Parliamentary control. Supreme Court, Calcutta. Warren Hastings as first GG of Bengal.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#c2410c;"></div>
+          <div class="tl-year" style="color:#c2410c;">1781</div>
+          <div class="tl-title">Amending Act</div>
+          <div class="tl-body">Rectified defects of Regulating Act. Exempted GG's council from Supreme Court jurisdiction.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#c2410c;"></div>
+          <div class="tl-year" style="color:#c2410c;">1784</div>
+          <div class="tl-title">Pitt's India Act</div>
+          <div class="tl-body">Board of Control created. Dual government — Company + Parliament. Prohibited aggressive war.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#7c3aed;"></div>
+          <div class="tl-year" style="color:#7c3aed;">1793</div>
+          <div class="tl-title">Charter Act</div>
+          <div class="tl-body">GG empowered to overrule council. Covenanted civil service (Europeans only). Permanent Settlement era.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#c2410c;"></div>
+          <div class="tl-year" style="color:#c2410c;">1813</div>
+          <div class="tl-title">Charter Act</div>
+          <div class="tl-body">Trade monopoly ended. Missionaries allowed. ₹1 lakh education fund for Indians.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#0e7490;"></div>
+          <div class="tl-year" style="color:#0e7490;">1823</div>
+          <div class="tl-title">Press Ordinance</div>
+          <div class="tl-body">Licensing of all newspapers. Ram Mohan Roy protests. Galvanised free-press movement.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#15803d;"></div>
+          <div class="tl-year" style="color:#15803d;">1829</div>
+          <div class="tl-title">Bengal Sati Regulation</div>
+          <div class="tl-body">Sati abolished. Bentinck + Ram Mohan Roy. First major social reform intervention.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#c2410c;"></div>
+          <div class="tl-year" style="color:#c2410c;">1833</div>
+          <div class="tl-title">Charter Act</div>
+          <div class="tl-body">EIC loses all trade. "Governor-General of India" title. Law Commission. Non-discrimination clause.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#15803d;"></div>
+          <div class="tl-year" style="color:#15803d;">1835</div>
+          <div class="tl-title">Macaulay's Minute / Metcalfe's Press Act</div>
+          <div class="tl-body">English education policy + press freedom. Metcalfe = "Liberator of Indian Press."</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#15803d;"></div>
+          <div class="tl-year" style="color:#15803d;">1856</div>
+          <div class="tl-title">Hindu Widows' Remarriage Act</div>
+          <div class="tl-body">Vidyasagar's advocacy succeeds. Widow remarriage legalised. Dalhousie's social legacy.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#7c3aed;"></div>
+          <div class="tl-year" style="color:#7c3aed;">1853</div>
+          <div class="tl-title">Charter Act (Last)</div>
+          <div class="tl-body">Competitive civil service. Legislative separated from executive. Final EIC Charter.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#b91c1c;"></div>
+          <div class="tl-year" style="color:#b91c1c;">1857</div>
+          <div class="tl-title">Revolt of 1857</div>
+          <div class="tl-body">First War of Independence. Ended the East India Company. Victoria's Proclamation follows.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="info-section-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:1rem;">Crown Era · 1858–1947</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#0369a1;"></div>
+          <div class="tl-year" style="color:#0369a1;">1858</div>
+          <div class="tl-title">GOI Act, 1858</div>
+          <div class="tl-body">EIC abolished. Crown rule. Viceroy created. Secretary of State for India. Queen's Proclamation.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#0369a1;"></div>
+          <div class="tl-year" style="color:#0369a1;">1861</div>
+          <div class="tl-title">Indian Councils Act + IPC + High Courts Act</div>
+          <div class="tl-body">First Indians in legislature. IPC enforced. High Courts replace Supreme Courts.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#b91c1c;"></div>
+          <div class="tl-year" style="color:#b91c1c;">1878</div>
+          <div class="tl-title">Vernacular Press Act + Arms Act</div>
+          <div class="tl-body">Gagging Act censors Indian press. Indians disarmed. Lord Lytton's repressive era.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#15803d;"></div>
+          <div class="tl-year" style="color:#15803d;">1882</div>
+          <div class="tl-title">Vernacular Press Act Repealed</div>
+          <div class="tl-body">Lord Ripon repeals Gagging Act. Transfer of Property Act. Local Self-Government Resolution.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#15803d;"></div>
+          <div class="tl-year" style="color:#15803d;">1891</div>
+          <div class="tl-title">Age of Consent Act</div>
+          <div class="tl-body">Age of consent raised to 12. Tilak opposes. Phulmani Dasi case catalyst.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#0369a1;"></div>
+          <div class="tl-year" style="color:#0369a1;">1892</div>
+          <div class="tl-title">Indian Councils Act</div>
+          <div class="tl-body">Indirect elections (first time). Enlarged councils. Legislative discussion rights.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#b91c1c;"></div>
+          <div class="tl-year" style="color:#b91c1c;">1908</div>
+          <div class="tl-title">Explosive Substances Act + Newspapers Act</div>
+          <div class="tl-body">Post-Muzaffarpur bombing crackdown. Tilak jailed for 6 years.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#0369a1;"></div>
+          <div class="tl-year" style="color:#0369a1;">1909</div>
+          <div class="tl-title">Morley-Minto Reforms</div>
+          <div class="tl-body">Direct elections. Separate Muslim electorates (fateful). First Indian in Executive Council.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#b91c1c;"></div>
+          <div class="tl-year" style="color:#b91c1c;">1919</div>
+          <div class="tl-title">Rowlatt Act + Montagu-Chelmsford</div>
+          <div class="tl-body">Black Act → Gandhi's satyagraha → Jallianwala Bagh. Simultaneously dyarchy reforms.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#15803d;"></div>
+          <div class="tl-year" style="color:#15803d;">1929</div>
+          <div class="tl-title">Child Marriage Restraint Act (Sarda Act)</div>
+          <div class="tl-body">Minimum marriage age fixed. National anti-child marriage legislation.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#d97706;"></div>
+          <div class="tl-year" style="color:#d97706;">1934</div>
+          <div class="tl-title">RBI Act</div>
+          <div class="tl-body">Reserve Bank of India established (opens 1 April 1935). Modern monetary system foundation.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#7c3aed;"></div>
+          <div class="tl-year" style="color:#7c3aed;">1935</div>
+          <div class="tl-title">GOI Act, 1935</div>
+          <div class="tl-body">Provincial autonomy. Federal Court. Largest British statute. India's interim constitution 1947–50.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#b91c1c;"></div>
+          <div class="tl-year" style="color:#b91c1c;">1939</div>
+          <div class="tl-title">Defence of India Act</div>
+          <div class="tl-body">WWII emergency. Congress leaders jailed. 60,000+ arrested in Quit India (1942).</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#15803d;"></div>
+          <div class="tl-year" style="color:#15803d;">1947</div>
+          <div class="tl-title">Indian Independence Act</div>
+          <div class="tl-body">Partition. India + Pakistan. End of 190 years of British rule. 15 August 1947.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ COMPARE ═══════════════════════ -->
+<div class="phase-panel" id="panel-compare">
+  <div class="section-header">
+    <span class="phase-label" style="color:#6d28d9;">Compare</span>
+    <span class="phase-tag" style="background:rgba(109,40,217,.15);color:#6d28d9;">Side by Side</span>
+    <span class="phase-desc">Key constitutional acts compared across dimensions</span>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">The Four Reform Acts Compared</div>
+    <div class="box">
+      <div class="compare-row header">
+        <div class="compare-aspect">Dimension</div>
+        <div style="color:#0369a1;font-weight:500;">1909 Morley-Minto</div>
+        <div style="color:#15803d;font-weight:500;">1919 Montagu-Chelmsford</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Central Legislature</div>
+        <div class="compare-cell" style="background:rgba(3,105,161,.06);">Enlarged imperial legislative council; advisory; 60 members</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">Bicameral: Council of State (60) + Legislative Assembly (145); some elected majority</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Elections</div>
+        <div class="compare-cell" style="background:rgba(3,105,161,.06);">Direct elections introduced; communal electorates for Muslims</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">Extended franchise; direct elections; communal electorates retained and expanded</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Executive Responsibility</div>
+        <div class="compare-cell" style="background:rgba(3,105,161,.06);">None — GG/Governor still absolute</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">Dyarchy in provinces — transferred subjects to ministers; reserved subjects to governor</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Key Legacy</div>
+        <div class="compare-cell" style="background:rgba(3,105,161,.06);">Separate Muslim electorates — seed of Pakistan</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">First experiment in responsible government; dyarchy deemed failure</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Indian Reaction</div>
+        <div class="compare-cell" style="background:rgba(3,105,161,.06);">Congress: too little. Muslim League: satisfied with separate electorates</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">Congress: rejected dyarchy as sham. Simultaneously Rowlatt Act triggered Gandhi's mass movement</div>
+      </div>
+    </div>
+
+    <div class="box" style="margin-top:1rem;">
+      <div class="compare-row header">
+        <div class="compare-aspect">Dimension</div>
+        <div style="color:#7c3aed;font-weight:500;">1935 GOI Act</div>
+        <div style="color:#15803d;font-weight:500;">1947 Independence Act</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Length</div>
+        <div class="compare-cell" style="background:rgba(124,58,237,.06);">321 sections, 10 schedules — largest British statute ever</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">20 sections — shortest in impact-to-length ratio in history</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Federation</div>
+        <div class="compare-cell" style="background:rgba(124,58,237,.06);">Proposed All-India Federation — never implemented (princes refused)</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">Created two dominions: India and Pakistan; states acceded separately</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Executive Power</div>
+        <div class="compare-cell" style="background:rgba(124,58,237,.06);">Provincial autonomy (dyarchy abolished at province). Dyarchy at Centre. Viceroy retained veto.</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">Full sovereign power to dominion legislatures. Crown suzerainty lapsed over princely states.</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Congress Reaction</div>
+        <div class="compare-cell" style="background:rgba(124,58,237,.06);">Rejected federal part; accepted provincial autonomy. Congress swept 1937 elections, formed ministries.</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">Accepted independence; opposed partition but accepted. Mountbatten plan agreed June 1947.</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-aspect">Post-Independence Impact</div>
+        <div class="compare-cell" style="background:rgba(124,58,237,.06);">Became India's working constitution 1947–1950. ~250 provisions copied into Indian Constitution.</div>
+        <div class="compare-cell" style="background:rgba(21,128,61,.06);">Created the political reality; India's Constitution (1950) replaced it entirely for India.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Charter Acts: A Progressive Comparison</div>
+    <div class="box">
+      <table>
+        <thead><tr><th>Act</th><th>Company Status</th><th>GG Power</th><th>Indians in Govt</th><th>Trade</th><th>Key Reform</th></tr></thead>
+        <tbody>
+          <tr><td><b>Regulating Act 1773</b></td><td>Company continues; Parliament watches</td><td>GG created (Bengal); council can overrule</td><td>None</td><td>Monopoly intact</td><td>Supreme Court, Calcutta</td></tr>
+          <tr><td><b>Pitt's India Act 1784</b></td><td>Board of Control created; Company = commercial arm only</td><td>GG strengthened; Board overrides CoD</td><td>None</td><td>Monopoly intact</td><td>Dual govt structure</td></tr>
+          <tr><td><b>Charter Act 1793</b></td><td>Renewed 20 yrs; EIC trade continues</td><td>GG can overrule council</td><td>None (Europeans-only service)</td><td>Monopoly intact</td><td>Covenanted Civil Service</td></tr>
+          <tr><td><b>Charter Act 1813</b></td><td>Trade monopoly ended (except China)</td><td>Unchanged</td><td>None</td><td>India open to all British</td><td>Missionaries; ₹1L education fund</td></tr>
+          <tr><td><b>Charter Act 1833</b></td><td>EIC = admin only; all trade ended</td><td>"GG of India" — supreme authority</td><td>Non-discrimination clause (nominal)</td><td>All monopoly ended</td><td>Law Commission; unified legislation</td></tr>
+          <tr><td><b>Charter Act 1853</b></td><td>Indefinite renewal — writing on wall</td><td>Legislative separated from executive</td><td>Eligible for ICS exam (theory)</td><td>N/A</td><td>Civil service exams</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Repressive vs Reform: The Pendulum</div>
+    <div class="callout" style="border-color:#6d28d9;">
+      <b>Pattern:</b> British India's legislative history shows a clear pendulum between liberal and repressive phases, often tied to which party governed in Britain. <b>Whig/Liberal governors</b> (Bentinck, Ripon, Minto with Morley) pushed reform. <b>Conservative governors</b> (Lytton, Dyer era, post-WWI) pushed coercion. Indian nationalism accelerated reforms but each reform came too late and fell too short — widening the credibility gap until independence became inevitable.
+    </div>
+    <div class="three-col">
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#15803d;">Liberal Phase</div>
+        <div class="mech-card-body">Bentinck era (1828–35): Sati abolished, press freed, English education, widow remarriage debate. <br>Ripon era (1880–84): Vernacular Press Act repealed, Local Self-Government, Ilbert Bill (controversial). <br>Morley-Minto (1905–10): First Indian in executive council, direct elections.</div>
+      </div>
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#b91c1c;">Repressive Phase</div>
+        <div class="mech-card-body">Wellesley era (1798–1805): Press censorship, expansionism. <br>Lytton era (1876–80): Vernacular Press Act, Arms Act, Grand Durbar during famine. <br>Chelmsford era (1916–21): Rowlatt Act, Jallianwala Bagh — the most damaging phase for British credibility.</div>
+      </div>
+      <div class="mech-card">
+        <div class="mech-card-title" style="color:#d97706;">Transitional Phase</div>
+        <div class="mech-card-body">Dalhousie era (1848–56): Progressive (railways, telegraph, education) but aggressive (Doctrine of Lapse). <br>Post-1935 era: Provincial autonomy worked (1937 elections) but WWII and partition overshadowed constitutional progress.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+function toggleTheme(){
+  const body=document.body;
+  const isDark=body.getAttribute('data-theme')==='dark';
+  body.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-icon').textContent=isDark?'🌙':'☀️';
+  document.getElementById('theme-lbl').textContent=isDark?'Dark':'Light';
+}
+
+function switchTab(section){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.phase-panel').forEach(p=>p.classList.remove('visible'));
+  const tab=document.querySelector(`.tab[data-section="${section}"]`);
+  if(tab)tab.classList.add('active');
+  const panel=document.getElementById(`panel-${section}`);
+  if(panel)panel.classList.add('visible');
+}
+
+// Accordion
+document.querySelectorAll('.acc-header').forEach(header=>{
+  header.addEventListener('click',()=>{
+    const body=header.nextElementSibling;
+    const arrow=header.querySelector('.acc-arrow');
+    body.classList.toggle('open');
+    if(arrow)arrow.style.transform=body.classList.contains('open')?'rotate(90deg)':'';
+  });
+});
+
+switchTab('overview');
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

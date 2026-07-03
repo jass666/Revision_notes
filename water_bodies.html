@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Water Bodies — UPSC GS Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --accent: #d97706;
+  --accent-light: #f59e0b;
+  --accent-dim: rgba(217,119,6,0.15);
+  --bg: #0d0d0d;
+  --bg2: #141414;
+  --bg3: #1c1c1c;
+  --bg4: #242424;
+  --border: #2a2a2a;
+  --text: #e8e4dc;
+  --text2: #a09890;
+  --text3: #6b6560;
+  --cr: #ef4444;
+  --en: #f97316;
+  --vu: #eab308;
+  --nt: #3b82f6;
+  --lc: #22c55e;
+  --dd: #8b5cf6;
+  --radius: 10px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+[data-theme="light"] {
+  --bg: #f5f0e8;
+  --bg2: #ede8df;
+  --bg3: #e4dfd5;
+  --bg4: #d9d3c8;
+  --border: #c8c0b0;
+  --text: #1a1612;
+  --text2: #5a5040;
+  --text3: #8a7860;
+  --shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.7;transition:background .3s,color .3s}
+a{color:var(--accent);text-decoration:none}
+
+/* HEADER */
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;backdrop-filter:blur(8px)}
+.site-title{font-family:'Bebas Neue',cursive;font-size:1.7rem;letter-spacing:2px;color:var(--accent);line-height:1}
+.site-subtitle{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.header-left{display:flex;flex-direction:column}
+.theme-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.08em;transition:all .2s}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TABS NAV */
+.tabs-nav{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;padding:0 16px;gap:2px;scrollbar-width:none}
+.tabs-nav::-webkit-scrollbar{display:none}
+.tab-btn{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:12px 16px;border:none;background:transparent;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* SECTIONS */
+.tab-section{display:none;padding:28px 24px;max-width:1200px;margin:0 auto}
+.tab-section.active{display:block}
+
+/* HEADINGS */
+h1{font-family:'Bebas Neue',cursive;font-size:2.6rem;letter-spacing:2px;color:var(--accent);margin-bottom:6px}
+h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--text);margin:28px 0 12px;border-left:3px solid var(--accent);padding-left:12px}
+h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--accent-light);margin:18px 0 8px}
+h4{font-family:'DM Mono',monospace;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin:14px 0 6px}
+
+/* INTRO PILL */
+.section-intro{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--text3);background:var(--accent-dim);border:1px solid rgba(217,119,6,.3);padding:8px 14px;border-radius:20px;display:inline-block;margin-bottom:20px;letter-spacing:.05em}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;transition:border-color .2s,box-shadow .2s}
+.card:hover{border-color:var(--accent);box-shadow:0 0 0 1px rgba(217,119,6,.2)}
+.card-title{font-family:'Bebas Neue',cursive;font-size:1.2rem;letter-spacing:1.5px;color:var(--accent);margin-bottom:6px}
+.card-meta{font-size:.7rem;color:var(--text3);margin-bottom:8px;letter-spacing:.06em}
+.card p{font-size:.8rem;color:var(--text2);line-height:1.65}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.76rem}
+thead{background:var(--bg3)}
+th{font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;font-size:.65rem;color:var(--accent);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--accent-dim)}
+
+/* BADGE */
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-family:'DM Mono',monospace}
+.badge-cr{background:rgba(239,68,68,.2);color:var(--cr);border:1px solid var(--cr)}
+.badge-en{background:rgba(249,115,22,.2);color:var(--en);border:1px solid var(--en)}
+.badge-vu{background:rgba(234,179,8,.2);color:var(--vu);border:1px solid var(--vu)}
+.badge-nt{background:rgba(59,130,246,.2);color:var(--nt);border:1px solid var(--nt)}
+.badge-lc{background:rgba(34,197,94,.2);color:var(--lc);border:1px solid var(--lc)}
+.badge-dd{background:rgba(139,92,246,.2);color:var(--dd);border:1px solid var(--dd)}
+.badge-acc{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(217,119,6,.4)}
+
+/* FLASHCARDS */
+.flashcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin-top:10px}
+.flashcard{perspective:1000px;height:200px;cursor:pointer}
+.flashcard-inner{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+.flashcard-front,.flashcard-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--border)}
+.flashcard-front{background:var(--bg2)}
+.flashcard-back{background:var(--bg3);transform:rotateY(180deg)}
+.flashcard-front .q-label{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.flashcard-front .q-text{font-family:'Playfair Display',serif;font-size:.92rem;color:var(--text);line-height:1.5;flex:1}
+.flashcard-back .a-label{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--lc);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.flashcard-back .a-text{font-size:.76rem;color:var(--text2);line-height:1.6;flex:1;overflow-y:auto}
+.flashcard-hint{font-size:.62rem;color:var(--text3);text-align:right;margin-top:4px}
+.flashcard-year{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--text3);border:1px solid var(--border);padding:2px 7px;border-radius:3px;display:inline-block}
+
+/* COMPARE TABLE highlight */
+.cmp-him{color:#60a5fa}
+.cmp-pen{color:#34d399}
+
+/* SVG MAPS */
+.svg-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:16px 0;overflow:hidden}
+.svg-wrap svg{display:block;margin:0 auto;max-width:100%}
+.svg-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;text-align:center}
+
+/* TAG PILLS */
+.tag{display:inline-block;background:var(--bg4);border:1px solid var(--border);padding:2px 8px;border-radius:4px;font-size:.62rem;color:var(--text3);margin:2px 2px 2px 0}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+
+/* FACT BOX */
+.fact-box{background:var(--accent-dim);border:1px solid rgba(217,119,6,.35);border-radius:var(--radius);padding:12px 16px;margin:12px 0;font-size:.78rem;color:var(--text)}
+.fact-box strong{color:var(--accent)}
+
+/* SPECIES CARD */
+.species-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:border-color .2s}
+.species-card:hover{border-color:var(--accent)}
+.species-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:2px}
+.species-sci{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--text3);font-style:italic;margin-bottom:8px}
+
+/* SCHEME CARD */
+.scheme-card{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.scheme-title{font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:1.5px;color:var(--accent)}
+
+/* CROSS REF */
+.cross-ref{background:var(--bg3);border:1px dashed var(--border);border-radius:var(--radius);padding:10px 14px;font-size:.74rem;color:var(--text3);margin:10px 0}
+.cross-ref span{color:var(--accent)}
+
+/* QUICK KEY */
+.qkey{display:inline-block;background:var(--bg4);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--text2)}
+
+/* SECTION HEADER */
+.sec-header{display:flex;align-items:flex-end;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.sec-num{font-family:'Bebas Neue',cursive;font-size:4rem;line-height:1;color:var(--accent);opacity:.25}
+
+/* IUCN SCALE */
+.iucn-scale{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+
+/* PROGRESS BAR */
+.prog-bar{height:6px;border-radius:3px;background:var(--bg4);margin:4px 0;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent-light))}
+
+/* ACCORDION */
+.accordion{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:10px}
+.accordion-header{background:var(--bg2);padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:.78rem;transition:background .2s}
+.accordion-header:hover{background:var(--bg3)}
+.accordion-header .arr{color:var(--accent);transition:transform .3s;font-size:.8rem}
+.accordion-content{display:none;padding:14px 16px;background:var(--bg3);font-size:.77rem;color:var(--text2);line-height:1.7}
+.accordion-content.open{display:block}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .site-header{padding:0 14px}
+  .tab-section{padding:20px 14px}
+  h1{font-size:2rem}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .flashcard-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-left">
+    <div class="site-title">WATER BODIES</div>
+    <div class="site-subtitle">India &amp; World · UPSC GS Revision</div>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀ Light</button>
+</header>
+
+<!-- TAB NAV -->
+<nav class="tabs-nav" id="tabsNav">
+  <button class="tab-btn active" onclick="showTab('rivers-india',this)">01 · Rivers India</button>
+  <button class="tab-btn" onclick="showTab('rivers-world',this)">02 · Rivers World</button>
+  <button class="tab-btn" onclick="showTab('lakes-india',this)">03 · Lakes India</button>
+  <button class="tab-btn" onclick="showTab('lakes-world',this)">04 · Lakes &amp; Seas World</button>
+  <button class="tab-btn" onclick="showTab('oceans',this)">05 · Oceans</button>
+  <button class="tab-btn" onclick="showTab('glaciers',this)">06 · Glaciers</button>
+  <button class="tab-btn" onclick="showTab('flora-fauna',this)">07 · Flora &amp; Fauna</button>
+  <button class="tab-btn" onclick="showTab('schemes',this)">08 · Schemes</button>
+  <button class="tab-btn" onclick="showTab('pyqs',this)">09 · PYQs</button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: RIVERS OF INDIA -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section active" id="rivers-india">
+  <div class="sec-header">
+    <div class="sec-num">01</div>
+    <div>
+      <h1>Rivers of India</h1>
+      <div class="section-intro">Himalayan · Peninsular · Drainage Basins · Pollution · Islands</div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <h2>Himalayan vs Peninsular Rivers</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Feature</th><th class="cmp-him">Himalayan Rivers</th><th class="cmp-pen">Peninsular Rivers</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Source</td><td class="cmp-him">Glaciers / snowfields in Himalayas</td><td class="cmp-pen">Hills &amp; plateaus of Deccan / Sahyadri</td></tr>
+        <tr><td>Flow Type</td><td class="cmp-him">Perennial (snow + rain-fed)</td><td class="cmp-pen">Seasonal / intermittent (rain-fed)</td></tr>
+        <tr><td>Course</td><td class="cmp-him">Long; flow through alluvial plains</td><td class="cmp-pen">Shorter; flow over hard rock</td></tr>
+        <tr><td>Valley</td><td class="cmp-him">Gorge-like in mountains; wide in plains</td><td class="cmp-pen">Shallow, wide; mature stage</td></tr>
+        <tr><td>Drainage Pattern</td><td class="cmp-him">Antecedent / dendritic</td><td class="cmp-pen">Trellis / rectangular</td></tr>
+        <tr><td>Load Carrying</td><td class="cmp-him">Heavy silt; meanders; deltaic deposition</td><td class="cmp-pen">Less silt; form estuaries or deltas</td></tr>
+        <tr><td>Navigation</td><td class="cmp-him">Better navigability in plains</td><td class="cmp-pen">Less navigable; falls obstruct</td></tr>
+        <tr><td>Examples</td><td class="cmp-him">Ganga, Brahmaputra, Indus</td><td class="cmp-pen">Godavari, Krishna, Kaveri, Narmada</td></tr>
+        <tr><td>Outlet</td><td class="cmp-him">Bay of Bengal / Arabian Sea</td><td class="cmp-pen">Bay of Bengal / Arabian Sea</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SVG RIVER MAP -->
+  <h2>India — Major Rivers &amp; Drainage Basins</h2>
+  <div class="svg-wrap">
+    <div class="svg-label">Schematic map · not to scale · for UPSC orientation</div>
+    <svg viewBox="0 0 640 720" xmlns="http://www.w3.org/2000/svg" width="600" style="max-width:100%">
+      <defs>
+        <style>
+          .river{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+          .rlabel{font-family:'DM Mono',monospace;font-size:10px;fill:#d97706}
+          .clabel{font-family:'DM Mono',monospace;font-size:9px;fill:#a09890}
+          .him-river{stroke:#60a5fa}
+          .pen-river{stroke:#34d399}
+          .west-river{stroke:#f472b6}
+          .state-line{fill:none;stroke:#2a2a2a;stroke-width:1}
+          .coast{fill:#1c2a3a;stroke:#3b6b8a;stroke-width:1.5}
+          .land{fill:#1c1c1c;stroke:#2a2a2a;stroke-width:1}
+          .him{fill:#1e2d3d;stroke:#3d5a78;stroke-width:1}
+          .city{fill:#d97706;r:3}
+          .divide{fill:none;stroke:#3a3a3a;stroke-width:1;stroke-dasharray:5,3}
+        </style>
+      </defs>
+      <!-- India outline simplified -->
+      <polygon class="land" points="220,30 290,25 350,35 390,50 420,70 440,100 460,140 480,180 500,220 510,260 505,300 490,340 480,380 460,410 440,445 420,480 400,510 370,530 340,545 310,560 280,570 260,580 240,590 220,580 200,565 180,545 165,525 150,500 140,475 130,450 125,420 120,390 118,360 120,330 125,300 135,270 145,240 155,210 165,180 180,155 190,130 200,100 205,70 210,50"/>
+      <!-- Sea fills -->
+      <rect x="0" y="0" width="640" height="720" fill="#0a1520" rx="0"/>
+      <!-- Land redraw -->
+      <polygon class="land" points="220,30 290,25 350,35 390,50 420,70 440,100 460,140 480,180 500,220 510,260 505,300 490,340 480,380 460,410 440,445 420,480 400,510 370,530 340,545 310,560 280,570 260,580 240,590 220,580 200,565 180,545 165,525 150,500 140,475 130,450 125,420 120,390 118,360 120,330 125,300 135,270 145,240 155,210 165,180 180,155 190,130 200,100 205,70 210,50"/>
+      <!-- Himalayas band -->
+      <path class="him" d="M180,55 Q250,15 330,18 Q390,22 430,55 Q450,75 440,100 L420,70 L390,50 L350,35 L290,25 L220,30 L205,50 Z"/>
+      <!-- WESTERN GHATS -->
+      <path d="M185,200 Q178,300 175,400 Q170,450 165,480" class="state-line" stroke="#3d5a3d" stroke-width:1.5/>
+
+      <!-- HIMALAYAN RIVERS (blue) -->
+      <!-- Indus system -->
+      <path class="river him-river" d="M235,40 Q220,80 200,120 Q185,155 170,160 Q155,165 140,180 Q130,195 120,230"/>
+      <text class="rlabel" x="142" y="200" transform="rotate(-30 142 200)">INDUS</text>
+      <!-- Jhelum -->
+      <path class="river him-river" stroke="#93c5fd" stroke-width="1.5" d="M240,45 Q230,70 220,90 Q210,110 195,130"/>
+      <!-- Sutlej -->
+      <path class="river him-river" stroke="#93c5fd" stroke-width="1.5" d="M265,38 Q255,60 245,90 Q240,120 235,150 Q225,180 215,200"/>
+      <!-- Ganga system -->
+      <path class="river him-river" stroke-width="2.5" d="M280,40 Q285,60 290,80 Q295,110 305,140 Q315,170 330,195 Q350,220 370,240 Q400,260 430,270 Q460,278 490,278"/>
+      <text class="rlabel" x="365" y="230">GANGA</text>
+      <!-- Yamuna -->
+      <path class="river him-river" stroke="#93c5fd" stroke-width="1.5" d="M285,42 Q280,70 278,100 Q278,135 285,165 Q295,195 305,220 Q318,240 330,250"/>
+      <text class="clabel" x="266" y="160">Yamuna</text>
+      <!-- Ghaghra / Kosi -->
+      <path class="river him-river" stroke="#93c5fd" stroke-width="1.2" d="M310,38 Q320,70 325,105 Q328,130 330,160 Q335,185 340,200"/>
+      <!-- Chambal -->
+      <path class="river him-river" stroke="#7dd3fc" stroke-width="1.2" d="M240,110 Q250,145 265,175 Q280,200 300,220 Q315,235 330,248"/>
+      <text class="clabel" x="252" y="158">Chambal</text>
+      <!-- Brahmaputra -->
+      <path class="river him-river" stroke="#818cf8" stroke-width="2.5" d="M495,38 Q490,55 480,75 Q465,100 445,120 Q430,135 415,150 Q400,165 385,178 Q370,190 355,200 Q340,210 325,218"/>
+      <text class="rlabel" x="408" y="120" transform="rotate(-20 408 120)">BRAHMAPUTRA</text>
+
+      <!-- PENINSULAR RIVERS (green) -->
+      <!-- Narmada (west flowing) -->
+      <path class="river west-river" d="M230,305 Q250,305 270,302 Q300,298 325,290 Q350,282 370,275 Q395,268 415,265"/>
+      <text class="rlabel" x="275" y="295" fill="#f472b6">NARMADA</text>
+      <!-- Tapi (west flowing) -->
+      <path class="river west-river" stroke-width="1.5" d="M230,340 Q255,340 280,336 Q310,330 340,322 Q365,315 390,308"/>
+      <text class="clabel" x="275" y="327" fill="#f9a8d4">Tapi</text>
+      <!-- Godavari -->
+      <path class="river pen-river" stroke-width="2.2" d="M205,285 Q220,295 235,310 Q255,330 275,345 Q300,365 330,385 Q360,400 390,415 Q420,425 450,430 Q475,433 490,435"/>
+      <text class="rlabel" x="330" y="395" fill="#34d399">GODAVARI</text>
+      <!-- Krishna -->
+      <path class="river pen-river" stroke-width="2" d="M195,370 Q215,378 235,390 Q260,403 285,415 Q315,428 345,438 Q375,445 405,448 Q430,450 450,450"/>
+      <text class="rlabel" x="310" y="445">KRISHNA</text>
+      <!-- Tungabhadra -->
+      <path class="river pen-river" stroke-width="1.2" d="M210,400 Q225,410 240,418 Q260,428 280,433"/>
+      <text class="clabel" x="215" y="406">Tungabhadra</text>
+      <!-- Kaveri -->
+      <path class="river pen-river" stroke-width="1.8" d="M200,450 Q218,455 235,462 Q258,470 278,478 Q305,488 330,495 Q355,500 375,500"/>
+      <text class="rlabel" x="265" y="492">KAVERI</text>
+      <!-- Mahanadi -->
+      <path class="river pen-river" stroke-width="1.6" d="M245,295 Q270,295 295,298 Q330,302 360,308 Q395,316 420,322 Q450,330 475,335"/>
+      <text class="clabel" x="310" y="306">Mahanadi</text>
+      <!-- Ken -->
+      <path class="river pen-river" stroke-width="1.1" d="M258,260 Q265,275 270,290 Q275,305 280,320"/>
+      <text class="clabel" x="260" y="270" fill="#6ee7b7">Ken</text>
+      <!-- Betwa -->
+      <path class="river pen-river" stroke-width="1.1" d="M275,230 Q278,255 280,275 Q282,295 285,315"/>
+      <text class="clabel" x="277" y="246" fill="#6ee7b7">Betwa</text>
+
+      <!-- DRAINAGE DIVIDE LINE -->
+      <path class="divide" d="M195,135 Q200,200 195,265 Q192,300 195,340 Q200,380 200,420"/>
+
+      <!-- CITIES / REFERENCE POINTS -->
+      <circle class="city" cx="305" cy="185" r="3"/>
+      <text class="clabel" x="310" y="189">Delhi</text>
+      <circle class="city" cx="355" cy="350" r="3"/>
+      <text class="clabel" x="360" y="354">Hyderabad</text>
+      <circle class="city" cx="270" cy="510" r="3"/>
+      <text class="clabel" x="275" y="514">Chennai</text>
+      <circle class="city" cx="185" cy="270" r="3"/>
+      <text class="clabel" x="140" y="266">Mumbai</text>
+
+      <!-- BAY OF BENGAL label -->
+      <text class="clabel" x="490" y="450" fill="#3b6b8a">Bay of</text>
+      <text class="clabel" x="490" y="462" fill="#3b6b8a">Bengal</text>
+      <!-- ARABIAN SEA -->
+      <text class="clabel" x="60" y="380" fill="#3b6b8a">Arabian</text>
+      <text class="clabel" x="60" y="392" fill="#3b6b8a">Sea</text>
+
+      <!-- LEGEND -->
+      <rect x="10" y="580" width="180" height="105" rx="6" fill="#1c1c1c" stroke="#2a2a2a"/>
+      <text x="18" y="597" class="clabel" fill="#d97706" style="font-size:9px;font-weight:600">LEGEND</text>
+      <line x1="18" y1="608" x2="45" y2="608" stroke="#60a5fa" stroke-width="2"/>
+      <text x="50" y="612" class="clabel">Himalayan Rivers</text>
+      <line x1="18" y1="623" x2="45" y2="623" stroke="#34d399" stroke-width="2"/>
+      <text x="50" y="627" class="clabel">Peninsular Rivers (E)</text>
+      <line x1="18" y1="638" x2="45" y2="638" stroke="#f472b6" stroke-width="2"/>
+      <text x="50" y="642" class="clabel">Peninsular Rivers (W)</text>
+      <line x1="18" y1="653" x2="45" y2="653" stroke="#3a3a3a" stroke-width="1" stroke-dasharray="4,2"/>
+      <text x="50" y="657" class="clabel">Drainage Divide</text>
+      <circle cx="22" cy="668" r="3" fill="#d97706"/>
+      <text x="30" y="672" class="clabel">Major City</text>
+
+      <!-- MAJULI ISLAND -->
+      <ellipse cx="460" cy="140" rx="10" ry="5" fill="none" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3,2"/>
+      <text class="clabel" x="465" y="145" fill="#f59e0b" style="font-size:8px">Majuli</text>
+    </svg>
+  </div>
+
+  <!-- MAJOR RIVER SYSTEMS TABLE -->
+  <h2>Major River Systems — At a Glance</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>River</th><th>Origin</th><th>Length (km)</th><th>Key Tributaries</th><th>States Covered</th><th>Drains Into</th><th>Type</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Indus</strong></td><td>Bokhar Chu (Tibet, near Mansarovar)</td><td>2,900 (in India ~1,114)</td><td>Jhelum, Chenab, Ravi, Beas, Sutlej</td><td>J&amp;K, Ladakh, Punjab (mostly Pakistan)</td><td>Arabian Sea</td><td class="cmp-him">Himalayan</td></tr>
+        <tr><td><strong>Ganga</strong></td><td>Gangotri glacier (Bhagirathi); joins Alaknanda at Devprayag</td><td>2,525</td><td>Yamuna, Son, Ghaghra, Gandak, Kosi, Chambal</td><td>Uttarakhand, UP, Bihar, WB, Jharkhand</td><td>Bay of Bengal</td><td class="cmp-him">Himalayan</td></tr>
+        <tr><td><strong>Brahmaputra</strong></td><td>Chemayungdung glacier (Tibet) — called Tsangpo</td><td>2,900 (in India 916)</td><td>Subansiri, Manas, Teesta, Dhansiri</td><td>Arunachal Pradesh, Assam</td><td>Bay of Bengal (via Bangladesh)</td><td class="cmp-him">Himalayan</td></tr>
+        <tr><td><strong>Godavari</strong></td><td>Trimbakeshwar, Nasik (Maharashtra)</td><td>1,465</td><td>Pranhita, Manjra, Wainganga, Indravati</td><td>Maharashtra, AP, Telangana, Odisha</td><td>Bay of Bengal</td><td class="cmp-pen">Peninsular</td></tr>
+        <tr><td><strong>Krishna</strong></td><td>Mahabaleshwar (Western Ghats)</td><td>1,400</td><td>Tungabhadra, Bhima, Koyna, Ghataprabha</td><td>Maharashtra, Karnataka, AP</td><td>Bay of Bengal</td><td class="cmp-pen">Peninsular</td></tr>
+        <tr><td><strong>Kaveri</strong></td><td>Talakaveri, Brahmagiri Range (Karnataka)</td><td>805</td><td>Kabini, Hemavathi, Shimsha, Arkavathi</td><td>Karnataka, Tamil Nadu</td><td>Bay of Bengal</td><td class="cmp-pen">Peninsular</td></tr>
+        <tr><td><strong>Mahanadi</strong></td><td>Sihawa, Chhattisgarh</td><td>858</td><td>Seonath, Jonk, Mand, Ib, Tel</td><td>Chhattisgarh, Odisha</td><td>Bay of Bengal</td><td class="cmp-pen">Peninsular</td></tr>
+        <tr><td><strong>Narmada</strong></td><td>Amarkantak plateau (MP)</td><td>1,312</td><td>Burhner, Banjar, Sher, Shakkar, Tawa</td><td>MP, Maharashtra, Gujarat</td><td>Arabian Sea</td><td class="cmp-pen">Peninsular (W)</td></tr>
+        <tr><td><strong>Tapi</strong></td><td>Multai, Betul district (MP)</td><td>724</td><td>Purna, Girna, Panzara, Waghur</td><td>MP, Maharashtra, Gujarat</td><td>Arabian Sea</td><td class="cmp-pen">Peninsular (W)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fact-box">
+    <strong>Antecedent Drainage:</strong> Himalayan rivers are older than the mountains — they predate the Himalayan uplift and continued cutting gorges as the mountains rose. The Brahmaputra has the world's deepest gorge where it cuts through the Himalayas.
+  </div>
+
+  <!-- RIVER ISLANDS -->
+  <h2>Important River Islands</h2>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">Majuli</div>
+      <div class="card-meta">Brahmaputra · Assam</div>
+      <p>World's largest river island (by some measures). District headquarters of Assam. Rapidly shrinking due to erosion — from ~1,200 km² to ~420 km². UNESCO nomination pending. Neo-Vaishnavite cultural hub (Satra monasteries).</p>
+      <div style="margin-top:8px"><span class="tag">Largest river island India</span><span class="tag">Neo-Vaishnavism</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Umananda</div>
+      <div class="card-meta">Brahmaputra · Guwahati, Assam</div>
+      <p>Smallest inhabited river island in the world. Hosts the Umananda temple (dedicated to Shiva). Located in the middle of Brahmaputra near Guwahati city. Reached by ferry.</p>
+      <div style="margin-top:8px"><span class="tag">Smallest inhabited river island</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Divar Island</div>
+      <div class="card-meta">Mandovi River · Goa</div>
+      <p>Historic river island in Goa's Mandovi River. Known for Portuguese-era churches (Our Lady of Piedade) and traditional Goan village life. Connected by ferry. Known for Intruz (carnival) celebrations.</p>
+      <div style="margin-top:8px"><span class="tag">Indo-Portuguese heritage</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Srirangam</div>
+      <div class="card-meta">Kaveri-Kollidam · Tamil Nadu</div>
+      <p>Island formed between Kaveri and Kollidam (Coleroon). Houses the famous Ranganathaswamy temple — one of the largest temple complexes in the world. Major pilgrimage site.</p>
+      <div style="margin-top:8px"><span class="tag">Largest living temple complex</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Bhavani Island</div>
+      <div class="card-meta">Krishna River · AP</div>
+      <p>Largest river island in South India located in the Krishna River near Vijayawada, Andhra Pradesh. Major tourist destination developed by Andhra Pradesh Tourism.</p>
+    </div>
+  </div>
+
+  <!-- RIVER INTERLINKING -->
+  <h2>National River Linking Project (NRLP)</h2>
+  <div class="card">
+    <div class="card-title">Overview</div>
+    <p>NRLP proposes linking 37 Himalayan and Peninsular rivers via a network of 30 links and 3,000 storage reservoirs. Conceptualized by K.L. Rao and later by Arthur Cotton. Revived post-2002 by NDA government.</p>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <span class="tag">30 Links proposed</span>
+      <span class="tag">Himalayan component: 14 links</span>
+      <span class="tag">Peninsular component: 16 links</span>
+      <span class="tag">Water transfer: 174 BCM/year</span>
+      <span class="tag">Irrigation: 35 Mha additional</span>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Ken–Betwa Link (First NRLP)</div>
+      <div class="card-meta">Status: Under construction post-2022</div>
+      <p>First inter-linking project to take off. Transfers water from Ken (surplus) to Betwa (deficit) — both tributaries of Yamuna in MP and UP. Daudhan dam being built on Ken. <strong>Issue:</strong> 10% of Panna Tiger Reserve to be submerged. Supreme Court and NGT clearances obtained.</p>
+      <div style="margin-top:8px"><span class="tag">MP &amp; UP</span><span class="tag">Panna Tiger Reserve conflict</span><span class="tag">900 MW hydro power</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Pros &amp; Cons of NRLP</div>
+      <table style="width:100%;font-size:.72rem;margin-top:4px">
+        <tr><th style="color:#34d399;padding:4px">Pros</th><th style="color:#ef4444;padding:4px">Cons</th></tr>
+        <tr><td style="padding:4px;color:var(--text2)">Drought mitigation in water-scarce regions</td><td style="padding:4px;color:var(--text2)">Ecological disruption of river ecosystems</td></tr>
+        <tr><td style="padding:4px;color:var(--text2)">Flood control in surplus basins</td><td style="padding:4px;color:var(--text2)">Massive displacement of communities</td></tr>
+        <tr><td style="padding:4px;color:var(--text2)">Additional irrigation &amp; power generation</td><td style="padding:4px;color:var(--text2)">Astronomical costs; implementation delays</td></tr>
+        <tr><td style="padding:4px;color:var(--text2)">Year-round river flow in seasonal rivers</td><td style="padding:4px;color:var(--text2)">Inter-state disputes over water sharing</td></tr>
+        <tr><td style="padding:4px;color:var(--text2)">Groundwater recharge along canals</td><td style="padding:4px;color:var(--text2)">International concerns (Bangladesh, Nepal)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- RIVER POLLUTION -->
+  <h2>River Pollution &amp; CPCB Classification</h2>
+  <div class="card">
+    <div class="card-title">CPCB Priority Basins</div>
+    <p>CPCB identifies priority rivers by BOD (Biochemical Oxygen Demand) load. Rivers are categorised into Priority-I, II, III based on pollution severity.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h4>Most Polluted Rivers (CPCB)</h4>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li><strong>Ganga</strong> — 150+ drains; industrial effluents from tanneries (Kanpur), textile units</li>
+        <li><strong>Yamuna</strong> — 80% of Delhi's sewage; Wazirpur, Okhla industrial zones</li>
+        <li><strong>Damodar</strong> — "Sorrow of Bengal"; heavy metal pollution; Jharkhand/WB</li>
+        <li><strong>Subernarekha</strong> — Jharkhand; uranium tailings; heavy metals</li>
+        <li><strong>Mithi</strong> — Mumbai; treated as open drain</li>
+        <li><strong>Cooum &amp; Adyar</strong> — Chennai; severely polluted</li>
+        <li><strong>Sabarmati</strong> — Ahmedabad; textile effluents</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>BOD Classification (CPCB)</h4>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li><strong>Class A</strong> (BOD ≤1 mg/L) — Drinking water without conventional treatment</li>
+        <li><strong>Class B</strong> (BOD ≤3 mg/L) — Outdoor bathing</li>
+        <li><strong>Class C</strong> (BOD ≤3 mg/L) — Drinking water with conventional treatment</li>
+        <li><strong>Class D</strong> (BOD ≤6 mg/L) — Wildlife, fisheries</li>
+        <li><strong>Class E</strong> (BOD ≤6 mg/L) — Irrigation, industrial cooling</li>
+      </ul>
+      <div class="fact-box" style="margin-top:10px;padding:8px">
+        <strong>Key fact:</strong> Ganga near Varanasi often has BOD >6 mg/L — Class E or worse.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: RIVERS OF THE WORLD -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section" id="rivers-world">
+  <div class="sec-header">
+    <div class="sec-num">02</div>
+    <div>
+      <h1>Rivers of the World</h1>
+      <div class="section-intro">Major systems · Transboundary disputes · Endorheic basins</div>
+    </div>
+  </div>
+
+  <h2>Major World Rivers — Comparison</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>River</th><th>Length (km)</th><th>Drainage Area (km²)</th><th>Source</th><th>Outlet</th><th>Continent</th><th>Significance</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Nile</strong></td><td>6,650</td><td>3,254,555</td><td>Lake Victoria / Burundi</td><td>Mediterranean Sea</td><td>Africa</td><td>Longest river; supports Egyptian civilization; Blue &amp; White Nile merge at Khartoum</td></tr>
+        <tr><td><strong>Amazon</strong></td><td>6,400</td><td>7,050,000</td><td>Andes, Peru</td><td>Atlantic Ocean</td><td>S. America</td><td>Largest by discharge; 20% of world's freshwater runoff; UPSC: largest drainage basin</td></tr>
+        <tr><td><strong>Yangtze</strong></td><td>6,300</td><td>1,808,500</td><td>Tibetan Plateau</td><td>East China Sea</td><td>Asia</td><td>Longest in Asia; Three Gorges Dam; flows through 11 provinces</td></tr>
+        <tr><td><strong>Mississippi-Missouri</strong></td><td>6,275</td><td>3,220,000</td><td>Minnesota / Montana</td><td>Gulf of Mexico</td><td>N. America</td><td>Longest in North America; major agricultural heartland</td></tr>
+        <tr><td><strong>Yenisei</strong></td><td>5,539</td><td>2,580,000</td><td>Mongolia</td><td>Arctic Ocean</td><td>Asia</td><td>Largest drainage in Russia; flows north to Arctic</td></tr>
+        <tr><td><strong>Congo</strong></td><td>4,700</td><td>3,680,000</td><td>Zambia highlands</td><td>Atlantic Ocean</td><td>Africa</td><td>Deepest river in world (220m); second largest by discharge; straddles equator</td></tr>
+        <tr><td><strong>Mekong</strong></td><td>4,909</td><td>795,000</td><td>Tibetan Plateau</td><td>South China Sea</td><td>Asia</td><td>Flows through 6 countries; crucial for SE Asian food security; transboundary tension</td></tr>
+        <tr><td><strong>Danube</strong></td><td>2,860</td><td>817,000</td><td>Black Forest, Germany</td><td>Black Sea</td><td>Europe</td><td>Flows through 10 countries — most in any river; Europe's "international river"</td></tr>
+        <tr><td><strong>Rhine</strong></td><td>1,230</td><td>185,000</td><td>Swiss Alps</td><td>North Sea</td><td>Europe</td><td>Major trade/industrial river; chemical pollution in 1986 (Sandoz spill) — landmark case</td></tr>
+        <tr><td><strong>Tigris-Euphrates</strong></td><td>~1,900</td><td>879,790</td><td>Turkey (Taurus Mountains)</td><td>Persian Gulf</td><td>Asia</td><td>Cradle of civilization (Mesopotamia); Turkey-Syria-Iraq dispute; GAP project</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Transboundary River Disputes</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Mekong River</div>
+      <div class="card-meta">China · Myanmar · Laos · Thailand · Cambodia · Vietnam</div>
+      <p>China's upstream dams (11+) reduce downstream flow. Mekong River Commission (MRC) was established in 1995 — China and Myanmar are dialogue partners, not full members. Key UPSC angle: <strong>China's dam diplomacy</strong> and downstream food security.</p>
+      <div style="margin-top:8px"><span class="badge badge-acc">MRC 1995</span><span class="tag">Lancang-Mekong Cooperation</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Nile River</div>
+      <div class="card-meta">Ethiopia · Sudan · Egypt</div>
+      <p>Ethiopia's Grand Ethiopian Renaissance Dam (GERD) — Africa's largest dam — threatens Egypt's water supply (Nile provides 90% of Egypt's freshwater). Dispute over filling schedule and drought years. No binding agreement yet (2024).</p>
+      <div style="margin-top:8px"><span class="badge badge-acc">GERD</span><span class="tag">Nile Waters Treaty 1959</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Indus Waters Treaty (1960)</div>
+      <div class="card-meta">India · Pakistan · World Bank</div>
+      <p>Eastern rivers (Ravi, Beas, Sutlej) to India; Western rivers (Indus, Jhelum, Chenab) to Pakistan. India has right to limited use of western rivers. Treaty withstood wars (1965, 1971, 1999). India suspended it in 2024. <strong>UPSC: model transboundary water treaty.</strong></p>
+      <div style="margin-top:8px"><span class="badge badge-acc">World Bank brokered</span><span class="tag">Permanent Indus Commission</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Tigris-Euphrates</div>
+      <div class="card-meta">Turkey · Syria · Iraq</div>
+      <p>Turkey's GAP (Southeastern Anatolia Project) — 22 dams including Atatürk Dam — reduces flow to Syria and Iraq by 40–80%. No binding treaty exists. Iraq and Syria face severe water stress. Oil-water nexus in regional geopolitics.</p>
+      <div style="margin-top:8px"><span class="badge badge-acc">GAP Project</span><span class="tag">Cradle of civilization</span></div>
+    </div>
+  </div>
+
+  <h2>Endorheic (Internal Drainage) Rivers &amp; Basins</h2>
+  <div class="card">
+    <div class="card-title">What is Endorheic Drainage?</div>
+    <p>A closed drainage basin with no outlet to the ocean. Water collects in lakes (often saline), sinks into the ground, or evaporates. Covers ~18% of Earth's land surface.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h4>Major Endorheic Basins</h4>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li><strong>Caspian Sea basin</strong> — Volga, Ural rivers drain here; world's largest endorheic basin</li>
+        <li><strong>Aral Sea basin</strong> — Central Asia; one of the worst ecological disasters (now nearly dry)</li>
+        <li><strong>Tarim Basin</strong> — Xinjiang, China; Tarim River drains into Lop Nur</li>
+        <li><strong>Great Basin</strong> — Nevada, USA; Colorado Plateau rim</li>
+        <li><strong>Lake Chad basin</strong> — Shrinking rapidly (90% reduction since 1960s)</li>
+        <li><strong>Sambhar Lake basin</strong> — Rajasthan, India (endorheic saline lake)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="fact-box">
+        <strong>Aral Sea Disaster:</strong> Soviet irrigation diverted Amu Darya and Syr Darya for cotton cultivation. The Aral Sea shrank by 90% between 1960–2009. Salinization, dust storms, stranded ships — classic case of human-induced ecological collapse. Frequently asked in UPSC environment questions.
+      </div>
+      <div class="fact-box" style="margin-top:8px">
+        <strong>UN Watercourses Convention (1997):</strong> Governs non-navigational uses of international watercourses. Principles: equitable &amp; reasonable utilisation, no significant harm, notification obligation. India has NOT ratified.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: LAKES OF INDIA -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section" id="lakes-india">
+  <div class="sec-header">
+    <div class="sec-num">03</div>
+    <div>
+      <h1>Lakes of India</h1>
+      <div class="section-intro">Natural · Glacial · Lagoon · Volcanic · Crater · Ramsar Sites</div>
+    </div>
+  </div>
+
+  <h2>Major Lakes — Quick Reference</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Lake</th><th>State</th><th>Type</th><th>Area (km²)</th><th>Water</th><th>Special Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Wular</strong></td><td>J&amp;K</td><td>Tectonic</td><td>130–260 (seasonal)</td><td>Freshwater</td><td>Largest freshwater lake in India; Ramsar site</td></tr>
+        <tr><td><strong>Dal</strong></td><td>J&amp;K</td><td>Tectonic/Glacial</td><td>18</td><td>Freshwater</td><td>Shrinking; National Mission for Clean Lakes</td></tr>
+        <tr><td><strong>Chilika</strong></td><td>Odisha</td><td>Lagoon (brackish)</td><td>1,100</td><td>Brackish</td><td>Ramsar site; largest brackish lagoon in Asia; Irrawaddy dolphin</td></tr>
+        <tr><td><strong>Pulicat</strong></td><td>AP/Tamil Nadu</td><td>Lagoon</td><td>759</td><td>Brackish</td><td>Second largest brackish lagoon; Flamingo sanctuary</td></tr>
+        <tr><td><strong>Loktak</strong></td><td>Manipur</td><td>Natural freshwater</td><td>287</td><td>Freshwater</td><td>Ramsar site; phumdis (floating islands); Keibul Lamjao NP</td></tr>
+        <tr><td><strong>Sambhar</strong></td><td>Rajasthan</td><td>Tectonic/Saline</td><td>190–230</td><td>Saline</td><td>Largest saline lake in India; salt production; Ramsar site</td></tr>
+        <tr><td><strong>Pangong Tso</strong></td><td>Ladakh</td><td>Glacial/Tectonic</td><td>604</td><td>Saline (high altitude)</td><td>60% in China; LAC dispute; altitude 4,350m</td></tr>
+        <tr><td><strong>Tsomoriri (Moriri)</strong></td><td>Ladakh</td><td>Glacial</td><td>120</td><td>Saline</td><td>Ramsar site; highest Ramsar site in India at 4,522m; Black-necked Cranes</td></tr>
+        <tr><td><strong>Lonar</strong></td><td>Maharashtra (Buldana)</td><td>Meteor impact (volcanic basalt)</td><td>1.13</td><td>Saline + Alkaline</td><td>Only hypervelocity meteor crater in basaltic rock in world; Ramsar 2020</td></tr>
+        <tr><td><strong>Bhimtal</strong></td><td>Uttarakhand</td><td>Natural</td><td>1.6</td><td>Freshwater</td><td>Bhimtal Island in centre; freshwater aquarium</td></tr>
+        <tr><td><strong>Vembanad</strong></td><td>Kerala</td><td>Lagoon</td><td>2,033</td><td>Brackish</td><td>Largest lake in Kerala; Ramsar site; Kuttanad (below sea level farming)</td></tr>
+        <tr><td><strong>Kolleru</strong></td><td>Andhra Pradesh</td><td>Freshwater</td><td>245</td><td>Freshwater</td><td>Ramsar site; between Krishna &amp; Godavari deltas; Pelicans</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHILIKA AND LOKTAK -->
+  <h2>Chilika Lake — Deep Dive</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Chilika Lake</div>
+      <div class="card-meta">Odisha · Puri, Khurda, Ganjam districts</div>
+      <p>Asia's largest brackish water lagoon (1,100 km²). Separated from Bay of Bengal by a narrow sandbar — opens seasonally. Declared Ramsar site in 1981 (India's first Ramsar site, along with Keoladeo Ghana). Chilika Development Authority (CDA) manages it.</p>
+      <div style="margin-top:10px">
+        <span class="tag">Migratory birds — 160+ species</span>
+        <span class="tag">Irrawaddy Dolphin</span>
+        <span class="tag">Flamingos</span>
+        <span class="tag">Jackals</span>
+        <span class="tag">Olive Ridley turtles</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ecological Threats to Chilika</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li>Siltation reducing depth and area</li>
+        <li>Mouth closure → reduced salinity → change in ecology</li>
+        <li>Invasive water hyacinth (Eichhornia crassipes)</li>
+        <li>Prawn farming (aquaculture) in sensitive zones</li>
+        <li>Over-fishing depleting fish stocks</li>
+        <li>Agricultural runoff; fertilizer &amp; pesticide pollution</li>
+        <li>Removal from Montreux Record (2002) after restoration</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Loktak Lake — Deep Dive</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Loktak Lake</div>
+      <div class="card-meta">Manipur · 4 districts</div>
+      <p>Largest freshwater lake in Northeast India. Famous for <strong>phumdis</strong> — floating masses of soil, vegetation, and organic matter unique to Loktak. Home to <strong>Keibul Lamjao National Park</strong> — world's only floating national park. Sanctuary for Sangai (Brow-antlered Deer) — <strong>dancing deer</strong>.</p>
+      <div style="margin-top:10px">
+        <span class="tag">Ramsar site</span>
+        <span class="tag">Floating NP</span>
+        <span class="tag">Sangai deer</span>
+        <span class="badge badge-cr">CR</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Threats to Loktak</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li>Ithai Barrage (1983) — altered hydrology; phumdis fragmented</li>
+        <li>Siltation from deforestation in catchment</li>
+        <li>Encroachment by villages on phumdis</li>
+        <li>Pollution from Imphal city and agricultural runoff</li>
+        <li>Decline of Sangai habitat</li>
+        <li>Added to Montreux Record (1993)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LONAR -->
+  <h2>Lonar Lake — Global Uniqueness</h2>
+  <div class="card">
+    <div class="card-title">Lonar Crater Lake</div>
+    <div class="card-meta">Buldana, Maharashtra · ~52,000 years old</div>
+    <p>Formed by a meteorite impact on the Deccan Trap basaltic rock — making it the <strong>only hypervelocity meteorite crater lake in basaltic rock in the world</strong>. The lake is alkaline and saline (pH ~10.5). Contains unique halophilic (salt-loving) bacteria and archaea. Declared <strong>Ramsar site in 2020</strong>. Has both a crater lake (saline) and an outer fresh water lake. Surrounded by Lonar Crater Wildlife Sanctuary.</p>
+    <div style="margin-top:10px">
+      <span class="tag">Hypervelocity impact</span>
+      <span class="tag">Basaltic rock</span>
+      <span class="tag">pH ~10.5</span>
+      <span class="tag">Ramsar 2020</span>
+      <span class="tag">Unique microbial life</span>
+    </div>
+    <div class="fact-box" style="margin-top:12px"><strong>UPSC One-liner:</strong> Lonar is the only saline volcanic crater lake formed in basaltic rock in the world (technically meteor impact, not volcanic — but the surrounding rock is basaltic Deccan Trap). This distinction appears in exam questions.</div>
+  </div>
+
+  <h2>Lakes Under Threat</h2>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">Dal Lake, Kashmir</div>
+      <p>Shrunk from 75 km² to 18 km²; encroachment by over 100,000 households; floating gardens (Radhs) reduce water body; eutrophication from nutrients; National Mission for Clean Lakes (NMCL) program ongoing.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Bellandur Lake, Bengaluru</div>
+      <p>Urban lake — severely eutrophied; froth and fire events (2015, 2017) — phosphate-laden froth caught fire; National Green Tribunal (NGT) ordered restoration; encroachment by IT corridors.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Deepor Beel, Assam</div>
+      <p>Ramsar site near Guwahati; threatened by railway line cutting through it, municipal garbage dumping, and urban expansion. Significant for migratory birds and Asian Elephant habitat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: LAKES & WATER BODIES OF THE WORLD -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section" id="lakes-world">
+  <div class="sec-header">
+    <div class="sec-num">04</div>
+    <div>
+      <h1>Lakes &amp; Seas of the World</h1>
+      <div class="section-intro">Notable lakes · Seas · Straits · Gulfs &amp; Bays</div>
+    </div>
+  </div>
+
+  <h2>World's Notable Lakes</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Lake</th><th>Superlative</th><th>Area / Depth</th><th>Location</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Caspian Sea</strong></td><td>World's largest lake (by area)</td><td>371,000 km²</td><td>Russia/Kazakhstan/Iran/Azerbaijan/Turkmenistan</td><td>Endorheic; technically a lake; closed in 2018 Caspian Sea Convention as "sea"</td></tr>
+        <tr><td><strong>Lake Baikal</strong></td><td>World's deepest lake; oldest (25 million yrs); largest freshwater volume</td><td>1,642m deep; 31,722 km³</td><td>Siberia, Russia</td><td>UNESCO WHS; 20% world's surface freshwater; endemic Baikal Seal</td></tr>
+        <tr><td><strong>Lake Superior</strong></td><td>Largest freshwater lake by surface area</td><td>82,103 km²</td><td>USA–Canada (Great Lakes)</td><td>One of 5 Great Lakes; highest in elevation of Great Lakes</td></tr>
+        <tr><td><strong>Lake Titicaca</strong></td><td>World's highest navigable lake</td><td>3,810m altitude; 8,372 km²</td><td>Bolivia–Peru border, Andes</td><td>Floating reed islands (Uros); freshwater; ancient Inca culture</td></tr>
+        <tr><td><strong>Dead Sea</strong></td><td>Lowest point on Earth's surface; saltiest water body</td><td>−430m below MSL; salinity ~34%</td><td>Israel–Jordan–Palestine</td><td>Shrinking at 1m/yr; minerals; no aquatic life (hence "dead")</td></tr>
+        <tr><td><strong>Lake Victoria</strong></td><td>Largest lake in Africa; 2nd largest freshwater by surface</td><td>68,870 km²</td><td>Uganda/Kenya/Tanzania</td><td>Source of White Nile; Nile Perch introduction → ecological disaster</td></tr>
+        <tr><td><strong>Aral Sea</strong></td><td>4th largest lake in 1960s; now nearly gone</td><td>Was 68,000 km²; now ~10%</td><td>Kazakhstan/Uzbekistan</td><td>Ecological catastrophe from Soviet-era irrigation diversion</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Notable Seas &amp; Their Significance</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Arabian Sea</div>
+      <div class="card-meta">NW Indian Ocean</div>
+      <p>India's western coast. Major oil tanker routes from Persian Gulf. Receives India's west-flowing rivers (Narmada, Tapi, Mahi, Sabarmati). Strong southwest monsoon winds originate here. Somalia piracy zone.</p>
+      <div style="margin-top:8px"><span class="tag">Oil routes</span><span class="tag">Monsoon origin</span><span class="tag">Mumbai coast</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Bay of Bengal</div>
+      <div class="card-meta">NE Indian Ocean</div>
+      <p>Receives most of India's major rivers (Ganga, Brahmaputra, Godavari, Krishna, Mahanadi, Kaveri). Cyclone frequency is high. BIMSTEC nations. Bengal Tiger's Sundarbans open to it. Andaman &amp; Nicobar Islands.</p>
+      <div style="margin-top:8px"><span class="tag">Cyclone belt</span><span class="tag">BIMSTEC</span><span class="tag">Sundarbans</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Red Sea</div>
+      <div class="card-meta">Between Africa and Arabian Peninsula</div>
+      <p>One of the world's busiest shipping lanes; connects Suez Canal to Indian Ocean. Highest salinity (40‰) due to high evaporation &amp; little freshwater inflow. Coral reefs; Djibouti, Eritrea, Yemen coast. Houthi attacks on shipping (2023–24) disrupted global trade.</p>
+      <div style="margin-top:8px"><span class="tag">Suez Canal</span><span class="tag">High salinity</span><span class="tag">Coral reefs</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Mediterranean Sea</div>
+      <div class="card-meta">Europe–Africa–Asia</div>
+      <p>Semi-enclosed sea; connects to Atlantic via Strait of Gibraltar. High salinity; limited tidal range. Birthplace of Western civilization. Climate model for "Mediterranean climate." 22 countries border it. Migration crisis flashpoint.</p>
+      <div style="margin-top:8px"><span class="tag">Gibraltar strait</span><span class="tag">Mediterranean climate</span><span class="tag">Migration routes</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">South China Sea</div>
+      <div class="card-meta">SE Asia</div>
+      <p>$3–5 trillion in trade passes annually. Territorial disputes: China's Nine-Dash Line vs. UNCLOS. Spratly and Paracel islands contested by China, Vietnam, Philippines, Malaysia, Brunei, Taiwan. 2016 PCA ruling against China's claims (Philippines vs China).</p>
+      <div style="margin-top:8px"><span class="tag">Nine-Dash Line</span><span class="tag">UNCLOS</span><span class="tag">PCA 2016</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Black Sea</div>
+      <div class="card-meta">Eastern Europe</div>
+      <p>Connects to Mediterranean via Bosphorus and Dardanelles (Montreux Convention regulates warship passage). Receives Danube, Dnieper, Don rivers. Russia–Ukraine conflict (2022) impacted grain exports through this region.</p>
+      <div style="margin-top:8px"><span class="tag">Montreux Convention</span><span class="tag">Grain corridor</span></div>
+    </div>
+  </div>
+
+  <h2>Key Straits — Location &amp; UPSC Relevance</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Strait</th><th>Connects</th><th>Location</th><th>UPSC Significance</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Strait of Hormuz</strong></td><td>Persian Gulf ↔ Gulf of Oman</td><td>Between Iran and UAE/Oman</td><td>~20% world's oil passes through; choke point; Iran frequently threatens closure; India's energy security</td></tr>
+        <tr><td><strong>Strait of Malacca</strong></td><td>Indian Ocean ↔ South China Sea</td><td>Between Malay Peninsula and Sumatra</td><td>Busiest strait; ~80% of Asia's trade; piracy concerns; China's "Malacca Dilemma"; India's SAGAR initiative</td></tr>
+        <tr><td><strong>Strait of Gibraltar</strong></td><td>Atlantic Ocean ↔ Mediterranean Sea</td><td>Between Spain and Morocco</td><td>Gateway to Mediterranean; NATO strategic point; migration route</td></tr>
+        <tr><td><strong>Palk Strait</strong></td><td>Bay of Bengal ↔ Gulf of Mannar</td><td>Between India (TN) and Sri Lanka</td><td>Setu Samudram project; shallow (10m avg); historical route; Dugong habitat</td></tr>
+        <tr><td><strong>Lombok Strait</strong></td><td>Bali Sea ↔ Indian Ocean</td><td>Between Bali and Lombok, Indonesia</td><td>Deep water alternative to Malacca; Wallace Line passes through; US Navy transit</td></tr>
+        <tr><td><strong>Bab-el-Mandeb</strong></td><td>Red Sea ↔ Gulf of Aden</td><td>Between Yemen/Djibouti</td><td>Strategic chokepoint; Houthi attacks 2023–24 disrupted Suez route shipping</td></tr>
+        <tr><td><strong>Bosphorus &amp; Dardanelles</strong></td><td>Black Sea ↔ Aegean/Mediterranean</td><td>Turkey</td><td>Montreux Convention (1936) — Turkey controls; key for Russia's warm-water access</td></tr>
+        <tr><td><strong>Taiwan Strait</strong></td><td>South China Sea ↔ East China Sea</td><td>China–Taiwan</td><td>Geopolitical flashpoint; US freedom of navigation operations; UNCLOS</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Notable Gulfs &amp; Bays</h2>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">Gulf of Mannar</div>
+      <div class="card-meta">India · Sri Lanka · Palk Strait</div>
+      <p>Between India (Tamil Nadu) and Sri Lanka. India's first marine biosphere reserve. Rich coral reefs; seagrass meadows; Dugong habitat. Mannar Biosphere Reserve. Gulf of Mannar Marine National Park.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Gulf of Kutch</div>
+      <div class="card-meta">Gujarat · Arabian Sea</div>
+      <p>Rich coral reefs along southern coast — only coral reefs in Indian mainland. Marine NP &amp; Sanctuary. India's largest salt pans (Little Rann of Kutch). Major port of Mundra.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Gulf of Khambhat (Cambay)</div>
+      <div class="card-meta">Gujarat · Arabian Sea</div>
+      <p>High tidal range (8–11m) makes it suitable for tidal power. River Narmada, Tapti, Mahi, Sabarmati empty here. Underwater ruins reportedly found — disputed Cambay controversy.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Persian Gulf</div>
+      <div class="card-meta">Middle East · Indian Ocean</div>
+      <p>World's largest oil and gas reserves in surrounding countries. Shallow (avg 50m). High salinity and warming. GCC nations border it. India's diaspora and remittances hub.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Gulf of Aqaba</div>
+      <div class="card-meta">Red Sea · Israel/Jordan/Egypt/Saudi Arabia</div>
+      <p>Israel's only Red Sea coast (Eilat). Exceptional coral reefs. Jordan's only port (Aqaba). Strategic access for landlocked countries.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Hudson Bay</div>
+      <div class="card-meta">Canada · Arctic</div>
+      <p>Large inland sea in Canada; semi-enclosed; seasonal ice cover; polar bear migration to Churchill, Manitoba. James Bay hydropower project.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: OCEANS -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section" id="oceans">
+  <div class="sec-header">
+    <div class="sec-num">05</div>
+    <div>
+      <h1>Oceans</h1>
+      <div class="section-intro">Five Oceans · Ocean Floor · Coral Reefs · Ocean Acidification</div>
+    </div>
+  </div>
+
+  <h2>Five Oceans — Comparison</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Ocean</th><th>Area (km²)</th><th>Avg Depth (m)</th><th>Deepest Point</th><th>Key Features</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Pacific</strong></td><td>165,250,000</td><td>4,280</td><td>Mariana Trench (11,022m — Challenger Deep)</td><td>Largest; Ring of Fire; Pacific Garbage Patch; most islands; El Niño/La Niña</td></tr>
+        <tr><td><strong>Atlantic</strong></td><td>106,460,000</td><td>3,332</td><td>Puerto Rico Trench (8,376m)</td><td>Mid-Atlantic Ridge; ITCZ; Gulf Stream; major shipping lanes; AMOC</td></tr>
+        <tr><td><strong>Indian</strong></td><td>70,560,000</td><td>3,741</td><td>Java/Sunda Trench (7,258m)</td><td>Monsoon-dominated; warm; Arabian Sea, Bay of Bengal; Indian Ocean Dipole (IOD)</td></tr>
+        <tr><td><strong>Southern</strong></td><td>21,960,000</td><td>3,270</td><td>South Sandwich Trench (7,235m)</td><td>Surrounds Antarctica; Southern Ocean current (ACC) — major climate regulator; recognized as 5th ocean by IHO in 2000</td></tr>
+        <tr><td><strong>Arctic</strong></td><td>14,056,000</td><td>1,205</td><td>Molloy Hole (5,608m)</td><td>Shallowest; largely frozen; sea ice declining (Arctic amplification); Northern Sea Route opening</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- OCEAN FLOOR SVG -->
+  <h2>Ocean Floor — Cross Section</h2>
+  <div class="svg-wrap">
+    <div class="svg-label">Schematic cross-section — not to scale</div>
+    <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" width="680" style="max-width:100%">
+      <defs>
+        <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a2240" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#05111f" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="crustGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2d1b00"/>
+          <stop offset="100%" stop-color="#1a1000"/>
+        </linearGradient>
+        <style>
+          .ofl{font-family:'DM Mono',monospace;font-size:9px;fill:#d97706}
+          .ofl2{font-family:'DM Mono',monospace;font-size:8px;fill:#a09890}
+          .oarrow{fill:none;stroke:#d97706;stroke-width:1;marker-end:url(#arr)}
+        </style>
+        <marker id="arr" markerWidth="6" markerHeight="4" refX="3" refY="2" orient="auto">
+          <polygon points="0 0, 6 2, 0 4" fill="#d97706"/>
+        </marker>
+      </defs>
+
+      <!-- Ocean water -->
+      <rect x="0" y="0" width="700" height="320" fill="#071525"/>
+
+      <!-- Ocean floor profile -->
+      <path d="M0,80 L80,82 L120,90 L150,130 L170,150 L190,155 L240,158 L270,185 L290,210 L310,220 L340,215 L370,195 L410,175 L440,170 L480,172 L520,168 L540,140 L560,100 L590,85 L620,84 L700,85 L700,320 L0,320 Z" fill="url(#crustGrad)" stroke="#3d2200" stroke-width="1.5"/>
+
+      <!-- Water fill over floor -->
+      <path d="M0,0 L700,0 L700,85 L620,84 L590,85 L560,100 L540,140 L520,168 L480,172 L440,170 L410,175 L370,195 L340,215 L310,220 L290,210 L270,185 L240,158 L190,155 L170,150 L150,130 L120,90 L80,82 L0,80 Z" fill="url(#oceanGrad)"/>
+
+      <!-- Labels & annotations -->
+      <!-- Continental shelf -->
+      <rect x="0" y="68" width="155" height="30" rx="3" fill="none" stroke="#d97706" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text class="ofl" x="5" y="63">Continental Shelf</text>
+      <text class="ofl2" x="5" y="73">(0–200m; sunlit)</text>
+
+      <!-- Continental slope -->
+      <line x1="152" y1="155" x2="200" y2="130" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text class="ofl" x="155" y="126">Slope</text>
+
+      <!-- Abyssal plain -->
+      <line x1="245" y1="158" x2="245" y2="135" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text class="ofl" x="200" y="130">Abyssal Plain</text>
+      <text class="ofl2" x="200" y="140">(3,000–6,000m)</text>
+
+      <!-- Trench -->
+      <path d="M272,185 L290,212 L308,220" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+      <text class="ofl" x="258" y="230" fill="#ef4444">Ocean Trench</text>
+      <text class="ofl2" x="255" y="242" fill="#f87171">(6,000–11,000m+)</text>
+
+      <!-- Mid ocean ridge -->
+      <path d="M335,215 L360,190 L380,183 L400,190 L425,175" fill="none" stroke="#22c55e" stroke-width="1.8"/>
+      <text class="ofl" x="340" y="177" fill="#22c55e">Mid-Ocean Ridge</text>
+      <text class="ofl2" x="340" y="188" fill="#86efac">(seafloor spreading)</text>
+
+      <!-- Continental rise label -->
+      <text class="ofl2" x="160" y="165">Rise</text>
+
+      <!-- Seamount -->
+      <path d="M480,172 L495,148 L510,172" fill="#2d1b00" stroke="#4b3010" stroke-width="1"/>
+      <text class="ofl2" x="475" y="142">Seamount</text>
+
+      <!-- Island arc (volcanic island) -->
+      <ellipse cx="565" cy="95" rx="15" ry="8" fill="#2d1b00" stroke="#4b3010" stroke-width="1"/>
+      <text class="ofl2" x="553" y="88">Volcanic Island</text>
+
+      <!-- Depth indicators -->
+      <line x1="695" y1="80" x2="695" y2="220" stroke="#3a3a3a" stroke-width="1"/>
+      <text class="ofl2" x="660" y="83">0m</text>
+      <text class="ofl2" x="650" y="145">3,000m</text>
+      <text class="ofl2" x="650" y="220">6,000m+</text>
+
+      <!-- LEGEND -->
+      <rect x="5" y="250" width="300" height="60" rx="4" fill="rgba(0,0,0,0.5)" stroke="#2a2a2a"/>
+      <text class="ofl" x="12" y="265">ZONE SUMMARY</text>
+      <text class="ofl2" x="12" y="278">Sunlit/Epipelagic: 0–200m · Mesopelagic: 200–1,000m</text>
+      <text class="ofl2" x="12" y="290">Bathypelagic: 1,000–4,000m · Abyssopelagic: 4,000–6,000m</text>
+      <text class="ofl2" x="12" y="302">Hadalpelagic (Trench): 6,000–11,000m+</text>
+    </svg>
+  </div>
+
+  <h2>Major Trenches</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Trench</th><th>Ocean</th><th>Max Depth</th><th>Location</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Mariana Trench</strong></td><td>Pacific</td><td>11,022m (Challenger Deep)</td><td>W. Pacific, E of Philippines</td><td>Deepest point on Earth; James Cameron's solo descent (2012)</td></tr>
+        <tr><td><strong>Tonga Trench</strong></td><td>Pacific</td><td>10,882m</td><td>SW Pacific, near Tonga</td><td>Fastest subducting plate; 2022 Hunga Tonga volcanic explosion</td></tr>
+        <tr><td><strong>Java/Sunda Trench</strong></td><td>Indian</td><td>7,258m</td><td>S of Java, Indonesia</td><td>Deepest in Indian Ocean; 2004 Boxing Day Tsunami originated here</td></tr>
+        <tr><td><strong>Puerto Rico Trench</strong></td><td>Atlantic</td><td>8,376m</td><td>N of Puerto Rico</td><td>Deepest in Atlantic; tectonic boundary of Caribbean &amp; North American plates</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Coral Reefs — India &amp; World</h2>
+  <div class="fact-box">
+    <strong>Coral Reefs:</strong> Occupy less than 0.1% of ocean area but support ~25% of all marine species. Built by coral polyps depositing calcium carbonate skeletons. Require: clear, warm (23–29°C), shallow, saltwater. Three types: Fringing reefs, Barrier reefs, Atolls.
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">India's Coral Reefs</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li><strong>Lakshadweep</strong> — Best-developed coral atolls in India; 36 atolls; coral bleaching threat</li>
+        <li><strong>Andaman &amp; Nicobar</strong> — Fringing reefs; high biodiversity; tsunami impacted some reefs in 2004</li>
+        <li><strong>Gulf of Mannar</strong> — 21 small islands; fringing reefs; Biosphere Reserve; dugong habitat</li>
+        <li><strong>Gulf of Kutch</strong> — Only coral reefs on mainland India; Marine NP; bleaching events 2015–16</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">World's Notable Coral Reefs</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li><strong>Great Barrier Reef</strong>, Australia — World's largest coral system (2,300km); UNESCO WHS; mass bleaching 2016, 2017, 2020, 2022</li>
+        <li><strong>Mesoamerican Reef</strong> — Caribbean; 2nd largest barrier reef; Mexico to Honduras</li>
+        <li><strong>New Caledonia</strong> — Pacific; UNESCO WHS; 2nd most biodiverse reef</li>
+        <li><strong>Red Sea Coral Reef</strong> — More heat-tolerant; survives at 32°C</li>
+        <li><strong>Coral Triangle</strong> — Philippines, Indonesia, Malaysia, PNG — "Amazon of the Sea"</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Ocean Acidification</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Cause</div>
+      <p>Oceans absorb ~30% of anthropogenic CO₂. CO₂ + H₂O → H₂CO₃ (carbonic acid) → H⁺ + HCO₃⁻. Increased H⁺ lowers ocean pH. Ocean pH has dropped from 8.2 to 8.1 since industrialisation (~26% increase in acidity, logarithmic scale).</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Effects &amp; UPSC Angle</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li>Dissolves calcium carbonate shells of corals, molluscs, pteropods</li>
+        <li>Coral bleaching + dissolution = reef collapse</li>
+        <li>Disrupts fish behaviour (altered CO₂ sensing)</li>
+        <li>Affects plankton — base of marine food chain</li>
+        <li>Arctic/Southern Oceans most vulnerable (cold water absorbs more CO₂)</li>
+        <li><strong>UPSC:</strong> Linked to UNFCCC, IPCC reports, Paris Agreement targets</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Ocean Currents — Key for India</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Current</th><th>Type</th><th>Region</th><th>Effect on India</th></tr></thead>
+      <tbody>
+        <tr><td>North Equatorial Current</td><td>Warm</td><td>Pacific/Indian</td><td>Drives NE trade winds; links to monsoon system</td></tr>
+        <tr><td>South Equatorial Current</td><td>Warm</td><td>Indian Ocean</td><td>Part of monsoon circulation</td></tr>
+        <tr><td>Somali Current</td><td>Reverses seasonally</td><td>Arabian Sea / Somalia coast</td><td>Drives SW monsoon; upwelling supports rich fisheries</td></tr>
+        <tr><td>Indian Ocean Dipole (IOD)</td><td>Phenomenon (not current)</td><td>Indian Ocean</td><td>Positive IOD = good SW monsoon for India; negative IOD = deficit</td></tr>
+        <tr><td>Gulf Stream / AMOC</td><td>Warm (Atlantic)</td><td>N. Atlantic</td><td>Warming of Europe; AMOC slowing threatens global climate</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: GLACIERS -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section" id="glaciers">
+  <div class="sec-header">
+    <div class="sec-num">06</div>
+    <div>
+      <h1>Glaciers</h1>
+      <div class="section-intro">India's Glaciers · Retreat · GLOFs · Cryosphere</div>
+    </div>
+  </div>
+
+  <!-- GLACIER ANATOMY SVG -->
+  <h2>Glacier Anatomy</h2>
+  <div class="svg-wrap">
+    <div class="svg-label">Schematic cross-section of a valley glacier</div>
+    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" width="680" style="max-width:100%">
+      <defs>
+        <linearGradient id="iceGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#bfdbfe"/>
+          <stop offset="100%" stop-color="#60a5fa"/>
+        </linearGradient>
+        <linearGradient id="iceGrad2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#93c5fd"/>
+          <stop offset="100%" stop-color="#3b82f6"/>
+        </linearGradient>
+        <style>.gl{font-family:'DM Mono',monospace;font-size:10px;fill:#d97706}.gl2{font-family:'DM Mono',monospace;font-size:8px;fill:#a09890}.gl3{fill:#1c1c1c;stroke:#2a2a2a;stroke-width:1}</style>
+      </defs>
+
+      <!-- Mountain background -->
+      <rect x="0" y="0" width="700" height="300" fill="#0a0a0a"/>
+      <!-- Mountain terrain -->
+      <polygon fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1" points="0,300 0,200 60,130 120,80 180,40 250,20 320,30 350,80 400,120 450,150 500,170 550,185 600,192 650,198 700,200 700,300"/>
+
+      <!-- Ice body (accumulation zone) -->
+      <polygon fill="url(#iceGrad)" opacity="0.85" points="120,85 180,45 250,25 320,35 350,85 320,100 270,95 220,90 170,88"/>
+
+      <!-- Ice body (ablation zone) -->
+      <polygon fill="url(#iceGrad2)" opacity="0.8" points="170,88 220,90 270,95 320,100 350,85 400,125 380,145 340,155 300,158 260,155 220,148 190,140 170,125"/>
+
+      <!-- Snout -->
+      <ellipse cx="285" cy="162" rx="40" ry="15" fill="#60a5fa" opacity="0.7"/>
+      <ellipse cx="285" cy="170" rx="25" ry="8" fill="#3b82f6" opacity="0.6"/>
+
+      <!-- Meltwater stream -->
+      <path d="M285,175 Q270,195 255,220 Q240,240 225,260" fill="none" stroke="#60a5fa" stroke-width="2" opacity="0.8"/>
+
+      <!-- Bergschrund -->
+      <path d="M155,88 Q158,78 165,72" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text class="gl" x="90" y="68" fill="#ef4444">Bergschrund</text>
+      <text class="gl2" x="90" y="78" fill="#fca5a5">(crevasse at head)</text>
+
+      <!-- Equilibrium Line -->
+      <line x1="170" y1="88" x2="350" y2="95" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text class="gl" x="355" y="90" fill="#22c55e">ELA (Equil. Line Alt.)</text>
+
+      <!-- Labels -->
+      <text class="gl" x="190" y="60">Accumulation Zone</text>
+      <text class="gl2" x="190" y="72">(snowfall &gt; melt)</text>
+
+      <text class="gl" x="230" y="135">Ablation Zone</text>
+      <text class="gl2" x="230" y="147">(melt &gt; snowfall)</text>
+
+      <text class="gl" x="240" y="175">Snout / Terminal</text>
+      <text class="gl" x="182" y="280">Proglacial Stream</text>
+      <line x1="224" y1="270" x2="248" y2="250" stroke="#60a5fa" stroke-width="0.8" stroke-dasharray="2,2"/>
+
+      <!-- Moraines -->
+      <path d="M170,100 Q168,130 168,155 Q170,170 175,175" fill="none" stroke="#8b5a00" stroke-width="2.5"/>
+      <text class="gl2" x="110" y="148" fill="#b45309">Lateral</text>
+      <text class="gl2" x="108" y="158" fill="#b45309">Moraine</text>
+
+      <path d="M285,175 L330,175 L340,170" fill="none" stroke="#8b5a00" stroke-width="2.5"/>
+      <text class="gl2" x="320" y="192" fill="#b45309">Terminal</text>
+      <text class="gl2" x="318" y="202" fill="#b45309">Moraine</text>
+
+      <!-- Crevasse -->
+      <line x1="310" y1="90" x2="308" y2="105" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2"/>
+      <text class="gl2" x="315" y="100" fill="#fca5a5">Crevasse</text>
+
+      <!-- Ice fall zone -->
+      <text class="gl" x="390" y="140" fill="#f59e0b">Icefall</text>
+      <text class="gl2" x="390" y="150" fill="#fbbf24">(steep, broken ice)</text>
+
+      <!-- LEGEND -->
+      <rect x="5" y="235" width="200" height="55" rx="4" fill="rgba(0,0,0,0.6)" stroke="#2a2a2a"/>
+      <text class="gl" x="12" y="252">KEY PROCESSES</text>
+      <text class="gl2" x="12" y="264">Accumulation: snow compacts → firn → glacial ice</text>
+      <text class="gl2" x="12" y="276">Ablation: melting, calving, sublimation</text>
+      <text class="gl2" x="12" y="288">Mass balance = Accumulation − Ablation</text>
+    </svg>
+  </div>
+
+  <!-- INDIA GLACIERS TABLE -->
+  <h2>Major Glaciers of India</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Glacier</th><th>Location</th><th>Length (km)</th><th>River Fed</th><th>Significance</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Siachen</strong></td><td>Karakoram, Ladakh</td><td>76</td><td>Nubra → Shyok → Indus</td><td>World's highest battlefield (India vs Pakistan); largest glacier in Himalayas outside polar regions</td></tr>
+        <tr><td><strong>Gangotri</strong></td><td>Uttarkashi, Uttarakhand</td><td>30.2</td><td>Bhagirathi (→ Ganga)</td><td>Origin of Ganga (Bhagirathi); retreating ~22m/year; Gomukh snout; UPSC most referenced</td></tr>
+        <tr><td><strong>Zemu</strong></td><td>North Sikkim</td><td>26</td><td>Teesta</td><td>Largest glacier in Eastern Himalayas; Kangchenjunga base</td></tr>
+        <tr><td><strong>Bara Shigri</strong></td><td>Lahaul-Spiti, HP</td><td>25</td><td>Chandra → Chenab</td><td>Largest glacier in Himachal Pradesh; second largest in India</td></tr>
+        <tr><td><strong>Pindari</strong></td><td>Bageshwar, Uttarakhand</td><td>3.7</td><td>Pindari River → Alaknanda</td><td>Source of Pindari River; trekking destination; retreating significantly</td></tr>
+        <tr><td><strong>Milam</strong></td><td>Pithoragarh, Uttarakhand</td><td>~16</td><td>Goriganga → Kali/Sharda</td><td>Source of Goriganga; near Indo-Nepal border</td></tr>
+        <tr><td><strong>Kolahoi</strong></td><td>Kashmir Valley, J&amp;K</td><td>~11</td><td>Lidder → Jhelum</td><td>"Goddess of Light"; crucial for Kashmir Valley water supply; rapid retreat documented</td></tr>
+        <tr><td><strong>Satopanth</strong></td><td>Chamoli, Uttarakhand</td><td>~13</td><td>Alaknanda</td><td>Near Badrinath; revered Hindu site</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Glacial Retreat — Data &amp; Impact</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Key Data Points</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li>Hindu Kush Himalaya hosts 56,000+ glaciers — "Third Pole" (largest freshwater reserve outside polar regions)</li>
+        <li>HKH glaciers lost ~40% volume since Little Ice Age; accelerating since 1970s</li>
+        <li>Gangotri retreating at 22m/year; net retreat since 1780 = ~2,850m</li>
+        <li>IPCC AR6 (2021): Even at 1.5°C warming, HKH glaciers lose 36% by 2100; at 2°C = 49%; at 4°C = 75%</li>
+        <li>Siachen: losing ice but also heavily polluted by military waste</li>
+        <li>India's glaciers feed Indus, Ganga, Brahmaputra — water for 500+ million people</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Consequences for India</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li><strong>Short-term gain:</strong> Initially increased meltwater (glacial surge) → floods</li>
+        <li><strong>Long-term deficit:</strong> Reduced perennial flow → water insecurity</li>
+        <li>Hydropower disruption (Himachal, Uttarakhand, J&amp;K)</li>
+        <li>Agricultural collapse in irrigation-dependent Indo-Gangetic Plain</li>
+        <li>Increased GLOF frequency and flood risk</li>
+        <li>Drinking water scarcity for mountain communities</li>
+        <li>Pakistan more vulnerable — 75% of Indus flow from glaciers</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Glacial Lake Outburst Floods (GLOFs)</h2>
+  <div class="card">
+    <div class="card-title">Mechanism of GLOF</div>
+    <p>Glacial lakes form when meltwater is dammed by moraine, ice, or bedrock. As the lake grows and the dam weakens (from melting, erosion, or seismic activity), it fails catastrophically — releasing millions of cubic metres of water, ice, rocks and sediment into river valleys.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Chamoli Disaster (February 7, 2021)</div>
+      <div class="card-meta">Uttarakhand · Rishiganga &amp; Dhauliganga valleys</div>
+      <p>A rockfall + glacial lake outburst triggered a catastrophic flash flood in Chamoli district. Destroyed Rishiganga Power Project and NTPC Tapovan-Vishnugad project. Over 200 people dead/missing. Raised questions about development in ecologically sensitive Himalayan river valleys and the Char Dham project.</p>
+      <div style="margin-top:8px"><span class="badge badge-en">Anthropogenic + natural</span><span class="tag">Tapovan project</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Vulnerable Regions in India</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li><strong>Uttarakhand</strong> — Alaknanda, Bhagirathi, Dhauliganga valleys; multiple hydro projects</li>
+        <li><strong>Himachal Pradesh</strong> — Beas, Chenab catchments; Kullu-Manali flash floods</li>
+        <li><strong>Sikkim</strong> — South Lhonak Lake GLOF (October 2023) — destroyed Teesta Stage III dam; major flooding</li>
+        <li><strong>Ladakh</strong> — Shyok River; Siachen area</li>
+        <li><strong>Arunachal Pradesh</strong> — Subansiri basin; Himalayan seismic zone</li>
+      </ul>
+      <div class="fact-box" style="margin-top:10px"><strong>Sikkim GLOF (Oct 2023):</strong> South Lhonak Lake burst → Teesta floodwave → wiped out NHPC's 1200MW Teesta Stage III dam; 100+ dead; major infrastructure loss.</div>
+    </div>
+  </div>
+
+  <h2>World's Major Glaciers &amp; Ice Sheets</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Glacier/Ice Body</th><th>Location</th><th>Area</th><th>Sea Level Rise Potential</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Antarctic Ice Sheet</strong></td><td>Antarctica</td><td>13.9 million km²</td><td>58m if fully melted</td><td>Losing mass; West Antarctic Ice Sheet (WAIS) most vulnerable; "Doomsday Glacier" (Thwaites)</td></tr>
+        <tr><td><strong>Greenland Ice Sheet</strong></td><td>Arctic</td><td>1.7 million km²</td><td>7.2m if fully melted</td><td>Melting at record pace; contributes most to current SLR after thermal expansion</td></tr>
+        <tr><td><strong>Patagonian Ice Fields</strong></td><td>Chile/Argentina</td><td>17,200 km²</td><td>Minor but significant regionally</td><td>Among the fastest retreating glaciers globally; North &amp; South Patagonian Icefields</td></tr>
+        <tr><td><strong>Columbia Glacier</strong></td><td>Alaska, USA</td><td>~900 km² (declining)</td><td>Minor</td><td>Lost ~50% of volume since 1980s; tidewater glacier calving</td></tr>
+        <tr><td><strong>Franz Josef / Fox</strong></td><td>New Zealand</td><td>~30 km² each</td><td>Minor</td><td>Temperate glaciers; respond quickly to temperature change; retreating rapidly</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Cryosphere &amp; Climate Regulation</h2>
+  <div class="card">
+    <div class="card-title">What is the Cryosphere?</div>
+    <p>The portion of Earth's surface where water exists in solid form: ice sheets, glaciers, sea ice, permafrost, snow cover, ice caps, frozen ground. Covers ~15% of Earth's land surface and much of the polar oceans seasonally.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h4>Climate Regulation Roles</h4>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li><strong>Albedo effect:</strong> Ice reflects 80–90% solar radiation; loss → warming acceleration (positive feedback)</li>
+        <li><strong>Freshwater storage:</strong> 70% of world's freshwater stored in glaciers/ice sheets</li>
+        <li><strong>Ocean circulation:</strong> Meltwater → salinity changes → AMOC disruption</li>
+        <li><strong>Sea level regulation:</strong> Thermal expansion + ice melt = SLR</li>
+        <li><strong>Permafrost carbon:</strong> Permafrost holds ~1.5 trillion tonnes of carbon; thawing releases methane &amp; CO₂</li>
+        <li><strong>Arctic amplification:</strong> Arctic warming 2–4× faster than global average</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="fact-box">
+        <strong>IPCC SROCC (2019):</strong> Special Report on Ocean and Cryosphere in a Changing Climate — projected 0.61–1.10m global mean SLR by 2100 under high emissions. Ice-sheet instability could push this higher.
+      </div>
+      <div class="fact-box" style="margin-top:8px">
+        <strong>Arctic Sea Ice:</strong> Summer minimum Arctic sea ice extent declined by ~13%/decade since 1979. "Ice-free Arctic summers" possible by 2030s under current trajectories — opens Northern Sea Route, geopolitical contest for Arctic resources.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: FLORA & FAUNA -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section" id="flora-fauna">
+  <div class="sec-header">
+    <div class="sec-num">07</div>
+    <div>
+      <h1>Endemic Flora &amp; Fauna</h1>
+      <div class="section-intro">Aquatic &amp; Riverine Species · IUCN Status · Ecology</div>
+    </div>
+  </div>
+
+  <!-- IUCN SCALE -->
+  <h2>IUCN Red List Categories</h2>
+  <div class="svg-wrap" style="padding:20px">
+    <svg viewBox="0 0 680 80" xmlns="http://www.w3.org/2000/svg" width="660" style="max-width:100%">
+      <defs><style>.il{font-family:'DM Mono',monospace;font-size:9px;text-anchor:middle}</style></defs>
+      <!-- EX -->
+      <rect x="5" y="15" width="80" height="30" rx="5" fill="#000000"/>
+      <text class="il" x="45" y="34" fill="white">EX</text>
+      <text class="il" x="45" y="58" fill="#a09890">Extinct</text>
+      <!-- EW -->
+      <rect x="95" y="15" width="80" height="30" rx="5" fill="#3d0000"/>
+      <text class="il" x="135" y="34" fill="white">EW</text>
+      <text class="il" x="135" y="58" fill="#a09890">Extinct Wild</text>
+      <!-- CR -->
+      <rect x="185" y="15" width="80" height="30" rx="5" fill="#ef4444"/>
+      <text class="il" x="225" y="34" fill="white">CR</text>
+      <text class="il" x="225" y="58" fill="#a09890">Critically End.</text>
+      <!-- EN -->
+      <rect x="275" y="15" width="80" height="30" rx="5" fill="#f97316"/>
+      <text class="il" x="315" y="34" fill="white">EN</text>
+      <text class="il" x="315" y="58" fill="#a09890">Endangered</text>
+      <!-- VU -->
+      <rect x="365" y="15" width="80" height="30" rx="5" fill="#eab308"/>
+      <text class="il" x="405" y="34" fill="white">VU</text>
+      <text class="il" x="405" y="58" fill="#a09890">Vulnerable</text>
+      <!-- NT -->
+      <rect x="455" y="15" width="80" height="30" rx="5" fill="#3b82f6"/>
+      <text class="il" x="495" y="34" fill="white">NT</text>
+      <text class="il" x="495" y="58" fill="#a09890">Near Threatened</text>
+      <!-- LC -->
+      <rect x="545" y="15" width="80" height="30" rx="5" fill="#22c55e"/>
+      <text class="il" x="585" y="34" fill="white">LC</text>
+      <text class="il" x="585" y="58" fill="#a09890">Least Concern</text>
+      <!-- Arrow -->
+      <path d="M5,50 L665,50" fill="none" stroke="#3a3a3a" stroke-width="0.5"/>
+      <text x="340" y="72" fill="#6b6560" style="font-family:'DM Mono',monospace;font-size:8px;text-anchor:middle">← HIGHER RISK ———————————————————————— LOWER RISK →</text>
+    </svg>
+  </div>
+
+  <h2>Riverine &amp; Freshwater Species</h2>
+  <div class="grid-3">
+    <div class="species-card">
+      <span class="badge badge-cr">CR</span>
+      <div class="species-name" style="margin-top:8px">Gangetic River Dolphin</div>
+      <div class="species-sci">Platanista gangetica</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">National Aquatic Animal of India. Functionally blind — uses echolocation. Found in Ganga-Brahmaputra-Meghna, Karnaphuli-Sangu systems. Protected under Schedule I, Wildlife Protection Act. Population: ~2,600–3,700. Major threats: dams, fishing nets, pollution, sand mining. <strong>Project Dolphin</strong> launched 2020.</p>
+      <div style="margin-top:8px"><span class="tag">National Aquatic Animal</span><span class="tag">Project Dolphin</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-en">EN</span>
+      <div class="species-name" style="margin-top:8px">Irrawaddy Dolphin</div>
+      <div class="species-sci">Orcaella brevirostris</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Found in Chilika Lake (largest non-marine population). Cooperative fishing with humans in Myanmar (Irrawaddy River). Coastal and estuarine dolphin; round melon-like head. Also found in Mahakam Lake (Indonesia), Songkhla Lake (Thailand). Threats: fishing nets, boat strikes.</p>
+      <div style="margin-top:8px"><span class="tag">Chilika Lake</span><span class="tag">Cooperative fishing</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-cr">CR</span>
+      <div class="species-name" style="margin-top:8px">Gharial</div>
+      <div class="species-sci">Gavialis gangeticus</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Critically endangered crocodilian; long narrow snout adapted for fish-eating. Ghara (pot-like nasal boss) on adult males. Found in Ganga (Chambal, Girwa, Gandak), Mahanadi. Captive breeding at Kukrail (Lucknow), National Chambal Sanctuary key habitat. Population: fewer than 1,000 adults. <strong>Project Crocodile</strong> since 1975.</p>
+      <div style="margin-top:8px"><span class="tag">National Chambal Sanctuary</span><span class="tag">Project Crocodile</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-vu">VU</span>
+      <div class="species-name" style="margin-top:8px">Mugger Crocodile</div>
+      <div class="species-sci">Crocodylus palustris</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Medium-sized freshwater crocodile; broad snout. Widest distribution of India's three crocodilians. Freshwater rivers, lakes, ponds. Found across India, Nepal, Sri Lanka, Pakistan, Iran. More tolerant of humans; overland movement common. Population recovering under Project Crocodile.</p>
+      <div style="margin-top:8px"><span class="tag">Broadest range</span><span class="tag">3 crocodilian species in India</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-cr">CR</span>
+      <div class="species-name" style="margin-top:8px">Ganges Shark</div>
+      <div class="species-sci">Glyphis gangeticus</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">One of the rarest sharks in the world. Freshwater river shark — found in Ganga, Hooghly, Brahmaputra, Mahanadi. Often confused with Bull Shark (which also enters rivers). Small eyes adapted to turbid water. Severe population decline from habitat loss, fishing. Very few confirmed sightings recently.</p>
+      <div style="margin-top:8px"><span class="tag">Freshwater shark</span><span class="tag">Ganga basin</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-en">EN</span>
+      <div class="species-name" style="margin-top:8px">Golden Mahseer</div>
+      <div class="species-sci">Tor putitora</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">"Tiger of the rivers" — largest carp; powerful game fish. Himalayan foothill rivers (Ganga system, Ramganga, Beas). Indicator species for river health. Severely threatened by overfishing, habitat degradation, invasive species, dam construction. Conservation breeding underway at Harsil (Uttarakhand).</p>
+      <div style="margin-top:8px"><span class="tag">Himalayan rivers</span><span class="tag">Indicator species</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-nt">NT</span>
+      <div class="species-name" style="margin-top:8px">Indian Skimmer</div>
+      <div class="species-sci">Rynchops albicollis</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Distinctive bird with lower mandible longer than upper — skims water surface to catch fish. Chambal River is key stronghold. Nests on sand bars (vulnerable to floods and human disturbance). Winters in coastal areas. Classified EN by some authorities; IUCN lists as EN since 2020. Chambal sanctuary critical.</p>
+      <div style="margin-top:8px"><span class="tag">Chambal River</span><span class="tag">Sand bar nesting</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-vu">VU</span>
+      <div class="species-name" style="margin-top:8px">Fishing Cat</div>
+      <div class="species-sci">Prionailurus viverrinus</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Small wild cat; excellent swimmer; webbed paws. Associated with wetlands, mangroves, riverine forests. India, Nepal, Sri Lanka, SE Asia. Threats: wetland drainage, fishing net entanglement, loss of riparian habitat. Chilika, Sundarbans, WB, Odisha — strongholds.</p>
+      <div style="margin-top:8px"><span class="tag">Wetland-associated</span><span class="tag">Swims underwater</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-lc">LC</span>
+      <div class="species-name" style="margin-top:8px">Snow Trout</div>
+      <div class="species-sci">Schizothorax spp.</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Genus of cyprinid fishes adapted to cold, high-altitude Himalayan rivers. Highly valued for food in Kashmir (local name: Kashmiri Trout). Threatened by climate change-driven water temperature rise, dam construction, overfishing. Key food fish in Himalayan communities. Species vary in IUCN status.</p>
+      <div style="margin-top:8px"><span class="tag">Kashmir, HP, Uttarakhand</span><span class="tag">Cold-adapted</span></div>
+    </div>
+  </div>
+
+  <h2>Marine &amp; Coastal Species</h2>
+  <div class="grid-3">
+    <div class="species-card">
+      <span class="badge badge-vu">VU</span>
+      <div class="species-name" style="margin-top:8px">Dugong</div>
+      <div class="species-sci">Dugong dugon</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">India's only marine mammal herbivore; feeds on seagrass. In India: Gulf of Mannar, Gulf of Kutch, Andaman &amp; Nicobar. Palk Strait habitat declining. IUCN Vulnerable; listed in Schedule I WPA. Often called "sea cow." Threatened by boat strikes, fishing nets, seagrass habitat loss. Global population: ~92,000 (mainly Australia).</p>
+      <div style="margin-top:8px"><span class="tag">Gulf of Mannar</span><span class="tag">Seagrass-dependent</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-vu">VU</span>
+      <div class="species-name" style="margin-top:8px">Olive Ridley Sea Turtle</div>
+      <div class="species-sci">Lepidochelys olivacea</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rm">India's most abundant sea turtle. Mass nesting (Arribada) at Odisha coast — Gahirmatha, Rushikulya, Devi River mouth. Nesting season Nov–March. Caught in trawl fishing nets (bycatch) — TEDs (Turtle Excluder Devices) mandated. IUCN Vulnerable. Protected under WPA Schedule I and CITES Appendix I.</p>
+      <div style="margin-top:8px"><span class="tag">Arribada nesting</span><span class="tag">Gahirmatha</span><span class="tag">TEDs</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-vu">VU</span>
+      <div class="species-name" style="margin-top:8px">Leatherback Sea Turtle</div>
+      <div class="species-sci">Dermochelys coriacea</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">World's largest turtle (up to 700kg, 2.4m). Only turtle without hard shell — leathery carapace. Deep-diving. Andaman &amp; Nicobar Islands — nesting. Feeds on jellyfish. Critically endangered globally (some assessments); IUCN Vulnerable. Major threat: plastic bags mistaken for jellyfish.</p>
+      <div style="margin-top:8px"><span class="tag">Largest turtle</span><span class="tag">No hard shell</span><span class="tag">Andaman</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-en">EN</span>
+      <div class="species-name" style="margin-top:8px">Green Sea Turtle</div>
+      <div class="species-sci">Chelonia mydas</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Only herbivorous sea turtle — adults feed on seagrass and algae. Named for green colour of fat (not shell). Found along India's coast; nesting in Lakshadweep, Andaman, Gulf of Mannar. Threatened by coastal development, boat strikes, fishing nets, plastic.</p>
+      <div style="margin-top:8px"><span class="tag">Herbivorous adult</span><span class="tag">Lakshadweep</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-nt">NT</span>
+      <div class="species-name" style="margin-top:8px">Saltwater Crocodile</div>
+      <div class="species-sci">Crocodylus porosus</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">World's largest reptile. In India: Sundarbans, Bhitarkanika, Andaman &amp; Nicobar. Estuarine and marine; can travel hundreds of km at sea. IUCN NT but recovering in India. Protected by Project Crocodile (1975). Bhitarkanika in Odisha is India's largest nesting site.</p>
+      <div style="margin-top:8px"><span class="tag">World's largest reptile</span><span class="tag">Bhitarkanika</span><span class="tag">Sundarbans</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-vu">VU</span>
+      <div class="species-name" style="margin-top:8px">Whale Shark</div>
+      <div class="species-sci">Rhincodon typus</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">World's largest fish. Filter-feeder on plankton. Found in Indian waters — Gujarat coast, Lakshadweep. Historically hunted in Gujarat; banned since 2001. Gahirmatha coastline a key foraging ground. Now photographed and eco-tourism developing.</p>
+      <div style="margin-top:8px"><span class="tag">World's largest fish</span><span class="tag">Gujarat</span></div>
+    </div>
+  </div>
+
+  <h2>Migratory Birds of Water Bodies</h2>
+  <div class="grid-3">
+    <div class="species-card">
+      <span class="badge badge-lc">LC</span>
+      <div class="species-name" style="margin-top:8px">Bar-headed Goose</div>
+      <div class="species-sci">Anser indicus</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">World's highest-flying migratory bird — crosses Himalayas at 9,000m+. Breeds in Central Asian lakes (Qinghai, Mongolia); winters in India — Chilika, Keoladeo, Pong Dam. Adapted to low-oxygen conditions: high-affinity haemoglobin.</p>
+      <div style="margin-top:8px"><span class="tag">Chilika Lake</span><span class="tag">Highest flying</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-lc">LC</span>
+      <div class="species-name" style="margin-top:8px">Flamingo</div>
+      <div class="species-sci">Phoenicopterus roseus (Greater)</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Mass congregation at Chilika (Nalabana Island), Pulicat, Mumbai flameback, Little Rann of Kutch, Flamingo City (Thol Lake, Gujarat). Breeds in Rann of Kutch. Feeds by filter-feeding on algae/shrimp in saline/alkaline lakes. Pink colour from carotenoids.</p>
+      <div style="margin-top:8px"><span class="tag">Nalabana, Chilika</span><span class="tag">Rann of Kutch breeding</span></div>
+    </div>
+    <div class="species-card">
+      <span class="badge badge-nt">NT</span>
+      <div class="species-name" style="margin-top:8px">Black-necked Crane</div>
+      <div class="species-sci">Grus nigricollis</div>
+      <p class="card" style="padding:8px;margin:0;font-size:.75rem">Only alpine crane in the world. Breeds on Tibetan Plateau; winters in Bhutan, Arunachal Pradesh (Sangti Valley), Ladakh. Associated with Tsomoriri and Hanle lakes in India. Sacred to Tibetan Buddhists. Vulnerable to disturbance at wintering grounds.</p>
+      <div style="margin-top:8px"><span class="tag">Tsomoriri Lake</span><span class="tag">Sangti Valley</span></div>
+    </div>
+  </div>
+
+  <h2>Aquatic Plants</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Water Hyacinth — Invasive Menace</div>
+      <div class="card-meta">Eichhornia crassipes · Family: Pontederiaceae</div>
+      <p>Introduced from Brazil/South America. World's worst aquatic weed. Forms dense floating mats blocking sunlight and oxygen — creating dead zones below (eutrophication accelerator). Clogs waterways, disrupts fishing, blocks dams. Found in Chilika, Dal, Bengal waterways, Loktak. <strong>IUCN: Top 100 Invasive Species.</strong> Control methods: mechanical removal, biological control (Neochetina weevil), chemical (contested).</p>
+      <div style="margin-top:8px"><span class="badge badge-acc">Invasive Species</span><span class="tag">Chilika, Dal, Loktak</span><span class="tag">Top 100 IUCN invasive</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Sacred Lotus</div>
+      <div class="card-meta">Nelumbo nucifera · National Flower of India</div>
+      <p>India's national flower. Aquatic perennial — emerges from muddy water; symbolic of purity in Hinduism, Buddhism, Jainism. Found in ponds, lakes, slow rivers. Edible: seeds, rhizomes, leaves. Ecological role: oxygenation, habitat for invertebrates, reduces turbidity. <strong>Lotophile</strong> insects pollinate. Traditional medicine — anti-inflammatory, cardiac properties.</p>
+      <div style="margin-top:8px"><span class="badge badge-lc">LC</span><span class="tag">National Flower</span><span class="tag">Sacred</span><span class="tag">Edible</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: GOVERNMENT SCHEMES -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section" id="schemes">
+  <div class="sec-header">
+    <div class="sec-num">08</div>
+    <div>
+      <h1>Schemes &amp; Initiatives</h1>
+      <div class="section-intro">Namami Gange · Jal Shakti · ICZM · National Water Policy</div>
+    </div>
+  </div>
+
+  <div class="scheme-card">
+    <div class="scheme-title">Namami Gange Programme</div>
+    <div class="card-meta">Launched: 2015 · Ministry: Jal Shakti · Budget: ₹20,000 crore (Phase 1)</div>
+    <p style="font-size:.78rem;color:var(--text2);margin-bottom:10px">Integrated conservation mission to prevent pollution and rejuvenate the Ganga. Works under National Mission for Clean Ganga (NMCG) since 2011. Key objectives: Nirmal Ganga (clean Ganga) &amp; Aviral Ganga (continuous flow).</p>
+    <div class="grid-2" style="margin-top:10px">
+      <div>
+        <h4>Key Components</h4>
+        <ul style="font-size:.76rem;color:var(--text2);padding-left:14px;line-height:1.8">
+          <li>Sewage Treatment Plants (STPs) in 118 Urban Local Bodies</li>
+          <li>Industrial Effluent Treatment along Ganga banks</li>
+          <li>River Surface Cleaning — ghats &amp; floodplains</li>
+          <li>Afforestation on floodplains (Harihar Van)</li>
+          <li>Biological Conservation: Biodiversity Conservation</li>
+          <li>Public Awareness: Ganga Gram Yojana</li>
+          <li>E-flows: Minimum environmental flows mandated (2018 Notification)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Achievements (Key Claims)</h4>
+        <ul style="font-size:.76rem;color:var(--text2);padding-left:14px;line-height:1.8">
+          <li>Dissolved oxygen improved at several stretches</li>
+          <li>Dolphin population surveys show modest recovery</li>
+          <li>4,000+ km of riverbanks cleaned</li>
+          <li>97 ghats &amp; 11 crematoria renovated</li>
+          <li>Arthganga — economic activities linked to Ganga conservation</li>
+          <li>5 River Cities Alliance (Varanasi, Kanpur, Rishikesh…)</li>
+          <li>World Bank — $400 million loan support</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fact-box" style="margin-top:10px"><strong>Criticism:</strong> CAG and CPCB reports note persistent water quality issues; BOD still above Class B in many stretches; pace of STP construction slow; industrial violations continue in Kanpur tanneries.</div>
+  </div>
+
+  <div class="scheme-card">
+    <div class="scheme-title">Atal Bhujal Yojana (Atal Jal)</div>
+    <div class="card-meta">Launched: 2019 · Ministry: Jal Shakti · World Bank supported · Budget: ₹6,000 crore</div>
+    <p style="font-size:.78rem;color:var(--text2)">Community-led groundwater management in 7 over-exploited states: Gujarat, Maharashtra, Rajasthan, MP, UP, Karnataka, Haryana. Focus on demand-side management. Incentive-based: Gram Panchayats that reduce groundwater use get more funds. AQUIFER mapping and Water Security Plans (WSPs) at Gram Panchayat level.</p>
+    <div style="margin-top:8px"><span class="tag">7 states</span><span class="tag">Demand-side management</span><span class="tag">World Bank</span><span class="tag">Panchayat-led</span></div>
+  </div>
+
+  <div class="scheme-card">
+    <div class="scheme-title">Jal Shakti Abhiyan</div>
+    <div class="card-meta">Launched: July 2019 · Time-bound campaign · Pan-India</div>
+    <p style="font-size:.78rem;color:var(--text2)">Mission-mode water conservation campaign with special focus on 256 water-stressed districts. Components: rainwater harvesting, traditional water body restoration, reuse of treated wastewater, intensive afforestation, Jal Shakti Kendras. Officers deployed to each district. Jal Shakti Abhiyan: Catch the Rain (2021) — broader phase targeting all districts.</p>
+    <div style="margin-top:8px"><span class="tag">256 water-stressed districts</span><span class="tag">Catch the Rain</span><span class="tag">Traditional water bodies</span></div>
+  </div>
+
+  <div class="scheme-card">
+    <div class="scheme-title">Jal Jeevan Mission</div>
+    <div class="card-meta">Launched: August 2019 · Target: 2024 (extended) · Budget: ₹3.60 lakh crore</div>
+    <p style="font-size:.78rem;color:var(--text2)">Har Ghar Jal — functional tap water connections to every rural household. Target: 19.33 crore rural households with 55 LPCD (litres per capita per day) drinking water. As of 2024: ~75%+ households covered. Focus on quality (fluoride, arsenic, nitrate testing) and sustainability (Village Water & Sanitation Committees — VWSCs).</p>
+    <div style="margin-top:8px"><span class="tag">Har Ghar Jal</span><span class="tag">55 LPCD</span><span class="tag">VWSC</span><span class="tag">₹3.6L crore</span></div>
+  </div>
+
+  <div class="scheme-card">
+    <div class="scheme-title">Project Dolphin</div>
+    <div class="card-meta">Announced: Independence Day 2020 · Ministry: Environment</div>
+    <p style="font-size:.78rem;color:var(--text2)">Announced by PM Modi on 15 August 2020. Aims to protect both river dolphins (Gangetic) and oceanic dolphins. Conservation, monitoring, habitat restoration. Modelled on Project Tiger &amp; Project Elephant. Key rivers: Ganga, Chambal, Beas. Sand mining regulation, net fishing restrictions, pollution control — key tools. National Aquatic Animal — Gangetic Dolphin.</p>
+    <div style="margin-top:8px"><span class="tag">Gangetic + Oceanic</span><span class="tag">August 2020</span><span class="tag">Modelled on Project Tiger</span></div>
+  </div>
+
+  <div class="scheme-card">
+    <div class="scheme-title">Project Crocodile</div>
+    <div class="card-meta">Launched: 1975 · Ministry: Environment · UNDP supported</div>
+    <p style="font-size:.78rem;color:var(--text2)">One of India's oldest species conservation programmes. Covers all 3 Indian crocodilian species: (1) Gharial (CR) — Chambal, Girwa; (2) Mugger (VU) — widespread; (3) Saltwater Crocodile (NT) — Bhitarkanika, Sundarbans, Andaman. Captive breeding &amp; release, habitat protection, anti-poaching. Gharial population recovered from under 200 in 1970s to 1,000+ today.</p>
+    <div style="margin-top:8px"><span class="tag">3 species</span><span class="tag">1975</span><span class="tag">Captive breeding</span><span class="tag">Gharial recovery</span></div>
+  </div>
+
+  <div class="scheme-card">
+    <div class="scheme-title">Integrated Coastal Zone Management (ICZM)</div>
+    <div class="card-meta">World Bank funded · Ministry: Environment</div>
+    <p style="font-size:.78rem;color:var(--text2)">Holistic planning and management of India's ~7,500km coastline balancing development and ecological conservation. CRZ (Coastal Regulation Zone) Notification 2019 revised earlier 1991 notification. Key: No Development Zone (NDZ), setback lines, mangrove protection, island protection. Pilot states: Gujarat, Odisha, West Bengal.</p>
+    <div style="margin-top:8px"><span class="tag">CRZ 2019</span><span class="tag">7,500km coastline</span><span class="tag">Mangroves</span><span class="tag">3 pilot states</span></div>
+  </div>
+
+  <div class="scheme-card">
+    <div class="scheme-title">National Water Policy 2012</div>
+    <div class="card-meta">Ministry: Jal Shakti (then Water Resources) · Under review for new policy</div>
+    <div class="grid-2" style="margin-top:8px">
+      <div>
+        <h4>Key Provisions</h4>
+        <ul style="font-size:.76rem;color:var(--text2);padding-left:14px;line-height:1.8">
+          <li>Water as common pool resource; no individual property rights</li>
+          <li>Priority: Drinking water &gt; Agriculture &gt; Industry &gt; Ecology &gt; Non-consumptive</li>
+          <li>Basin/sub-basin as unit for planning</li>
+          <li>Groundwater regulation under law</li>
+          <li>Water pricing for equitable allocation</li>
+          <li>River Basin Authorities recommended</li>
+          <li>Community participation &amp; decentralisation</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Concerns &amp; Gaps</h4>
+        <ul style="font-size:.76rem;color:var(--text2);padding-left:14px;line-height:1.8">
+          <li>No legally binding status — only advisory</li>
+          <li>Water is a State subject (7th Schedule) — Centre has limited direct authority</li>
+          <li>Climate change not adequately addressed</li>
+          <li>No universal right to water guaranteed</li>
+          <li>New National Water Policy under draft as of 2024</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>International Frameworks</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Ramsar Convention (1971)</div>
+      <div class="card-meta">Convention on Wetlands of International Importance</div>
+      <p>India has 85 Ramsar sites (2024) — largest in South Asia. Sites of international importance for waterfowl and wetland biodiversity. <span class="cross-ref"><span>Cross-reference:</span> Wetlands covered in detail in the separate Wetlands revision file.</span></p>
+    </div>
+    <div class="card">
+      <div class="card-title">UN Watercourses Convention (1997)</div>
+      <div class="card-meta">Into force: 2014</div>
+      <p>Governs non-navigational uses of international watercourses. Principles: equitable &amp; reasonable utilisation; obligation not to cause significant harm; prior notification of planned measures; dispute settlement. <strong>India has not ratified</strong> — critical for UPSC. 37 parties as of 2024.</p>
+      <div style="margin-top:8px"><span class="badge badge-acc">India not ratified</span></div>
+    </div>
+  </div>
+
+  <h2>Interlinking of Rivers — Legal &amp; Environmental Concerns</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Legal Framework</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li>Supreme Court (2012) directed Centre to set up Task Force under cabinet secretary</li>
+        <li>Env clearance needed under EIA Notification 2006</li>
+        <li>Forest clearance under Forest Conservation Act 1980</li>
+        <li>Inter-state water disputes — Article 262; Inter-State Water Disputes Act 1956</li>
+        <li>International law: Bangladesh (Ganga waters), Nepal (Himalayan component)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Environmental Concerns</div>
+      <ul style="font-size:.78rem;color:var(--text2);padding-left:16px;line-height:1.9">
+        <li>Disruption of river morphology and sediment transport</li>
+        <li>Loss of riverine ecosystems and species habitat</li>
+        <li>Downstream salinity intrusion from reduced freshwater flow</li>
+        <li>Submergence of forests, wildlife habitats</li>
+        <li>Spread of invasive species across basins via canals</li>
+        <li>Geological risks — earthquake-prone zones (Ken-Betwa area)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: PYQs -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="tab-section" id="pyqs">
+  <div class="sec-header">
+    <div class="sec-num">09</div>
+    <div>
+      <h1>Previous Year Questions</h1>
+      <div class="section-intro">Click a card to flip and reveal the answer</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+    <span class="badge badge-cr">Prelims = Red border</span>
+    <span class="badge badge-nt">Mains = Blue border</span>
+    <span style="font-size:.72rem;color:var(--text3);align-self:center">Click any card to flip · Click again to reset</span>
+  </div>
+
+  <div class="flashcard-grid" id="flashcardGrid">
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2019</div><div class="q-text">With reference to Majuli island, consider the following statements:<br>1. It is situated in Brahmaputra River.<br>2. It is the only island district of India.<br>Which is/are correct?</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer</div><div class="a-text"><strong>Both 1 and 2 are correct.</strong><br><br>Majuli is the world's largest river island in the Brahmaputra, Assam. It was declared India's first island district in 2016. However, Majuli is rapidly eroding — down from ~1,200 km² to ~420 km². Neo-Vaishnavite Satra monasteries are its cultural identity.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2019</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2020</div><div class="q-text">Lonar Lake is sometimes seen in news. Which of the following statements is/are correct?<br>1. It is a salt water lake.<br>2. It is India's only crater lake.<br>3. It was recently included in Ramsar list.</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer</div><div class="a-text"><strong>1 and 3 are correct.</strong><br><br>Lonar is a saline/alkaline lake in Buldana, Maharashtra, formed by a hypervelocity meteorite impact on basaltic rock — the only such lake in basaltic rock in the world. It was included in the Ramsar list in 2020. Statement 2 is incorrect — there are other crater lakes, Lonar's uniqueness is basaltic rock + saline.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2020</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#3b82f6">
+          <div><div class="q-label">Mains GS-III · 2018</div><div class="q-text">Explain the concept of ocean acidification. How is it threatening the marine biodiversity? What steps are being taken internationally to address it?</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Key Points</div><div class="a-text"><strong>Cause:</strong> Oceans absorb ~30% CO₂; CO₂+H₂O→H₂CO₃→lower pH. pH dropped 8.2→8.1 (26% more acidic). <strong>Effects:</strong> Dissolves CaCO₃ shells of corals/molluscs; disrupts fish behaviour; bleaching; plankton loss (food chain). <strong>International steps:</strong> Paris Agreement (limit warming); UNFCCC COP commitments; SDG 14 (Life Below Water); CBD coral programmes; MARPOL shipping pollution.</div></div>
+          <div class="flashcard-year"><span class="badge badge-nt">Mains</span> 2018</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2021</div><div class="q-text">With reference to the Indus Water Treaty, which of the following statements is correct?<br>The treaty assigns the three eastern rivers (Ravi, Beas, Sutlej) to India and the three western rivers to Pakistan.</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer</div><div class="a-text"><strong>Correct.</strong><br><br>Indus Waters Treaty 1960 (World Bank brokered): Eastern rivers — Ravi, Beas, Sutlej → India's unrestricted use. Western rivers — Indus, Jhelum, Chenab → Pakistan's unrestricted use (India has limited agricultural &amp; run-of-river hydropower rights on western rivers). Permanent Indus Commission manages disputes. Survived 3 wars. India issued notice to modify in 2023.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2021</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2017</div><div class="q-text">The National Aquatic Animal of India is?<br>(a) River Otter (b) Gangetic Dolphin (c) Marsh Crocodile (d) Gharial</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer: (b)</div><div class="a-text"><strong>Gangetic River Dolphin</strong> (Platanista gangetica) declared National Aquatic Animal in 2009. IUCN Critically Endangered. Functionally blind, uses echolocation. Found in Ganga-Brahmaputra-Meghna systems. Project Dolphin announced 2020. Also State Aquatic Animal of Ganga states.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2017</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#3b82f6">
+          <div><div class="q-label">Mains GS-I · 2016</div><div class="q-text">Explain the differences between Himalayan and Peninsular river systems. How does this difference affect water management policies in India?</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Key Points</div><div class="a-text"><strong>Himalayan:</strong> perennial (snow+rain), antecedent, heavy load, meanders, large plains, flood-prone. <strong>Peninsular:</strong> seasonal (rain-fed), trellis drainage, rocky beds, waterfalls, estuaries. <strong>Policy implications:</strong> Himalayan rivers need flood management, embankments, and irrigation canals; Peninsular rivers need better reservoir storage and rainwater harvesting due to seasonal nature. Interlinking aims to use Himalayan surplus for Peninsular deficit.</div></div>
+          <div class="flashcard-year"><span class="badge badge-nt">Mains</span> 2016</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2022</div><div class="q-text">With reference to Chilika Lake, which one of the following statements is NOT correct?<br>(a) It is the largest coastal lagoon in India<br>(b) It is a Ramsar Wetland of International Importance<br>(c) It is the largest wintering ground for migratory waterfowl in South Asia<br>(d) It is fed by the Mahanadi River</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer: (d)</div><div class="a-text"><strong>Option (d) is NOT correct.</strong><br><br>Chilika is not fed by the Mahanadi directly — it is a lagoon separated from the Bay of Bengal by a sandbar. It receives inflow from local rivers (Daya, Bhargavi) and seasonal tidal exchange with the sea. It IS the largest coastal lagoon in India (1,100 km²), a Ramsar site (1981 — India's first), and largest wintering ground for migratory birds in South Asia.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2022</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#3b82f6">
+          <div><div class="q-label">Mains GS-I · 2020</div><div class="q-text">Discuss the causes and consequences of the rapid retreat of Himalayan glaciers. What are the implications for India's water security?</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Key Points</div><div class="a-text"><strong>Causes:</strong> Rising temperatures (Himalayan warming faster than global avg), black carbon deposition, albedo reduction, permafrost thaw, precipitation pattern changes. <strong>Consequences:</strong> Short-term increased meltwater (floods, GLOFs), long-term water deficit, altered river regimes. <strong>Implications:</strong> Hydropower disruption, agricultural stress in IGP, drinking water scarcity, migration, geopolitical tensions (shared rivers — Indus, Ganga, Brahmaputra). IPCC projects 36–75% volume loss by 2100.</div></div>
+          <div class="flashcard-year"><span class="badge badge-nt">Mains</span> 2020</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2016</div><div class="q-text">The Keibul Lamjao National Park is the only floating national park in the world. In which state is it located and what is its significance?</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer</div><div class="a-text"><strong>Manipur</strong> — located in Loktak Lake. Significance: (1) World's only floating national park (on phumdis — floating masses of vegetation); (2) Last natural refuge of the <strong>Sangai</strong> (Brow-antlered Deer / Cervus eldii eldii) — classified CR; (3) Part of Loktak Lake Ramsar site; (4) Ithai Barrage has affected the lake's ecology. The dancing Sangai is Manipur's state animal.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2016</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2023</div><div class="q-text">The Gharial (Gavialis gangeticus) is considered a flagship species for river conservation. Why?</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer</div><div class="a-text">Gharial is IUCN Critically Endangered; exists only in Indian subcontinent. As an apex aquatic predator, its presence indicates: (1) clean, fast-flowing water with sandy banks; (2) healthy fish populations; (3) intact riverine ecosystem. Their narrow snout evolved for fish-eating; sensitive to pollution &amp; dams. National Chambal Sanctuary is their stronghold. Project Crocodile (1975) brought them back from near-extinction. Population recovered from ~200 to ~1,000.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#3b82f6">
+          <div><div class="q-label">Mains GS-III · 2019</div><div class="q-text">Evaluate the National River Linking Project (NRLP). What are its potential benefits and environmental concerns?</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Key Points</div><div class="a-text"><strong>Benefits:</strong> Transfer surplus water to deficit basins; irrigation of 35 Mha additional; 34,000 MW hydropower; flood control; navigation. <strong>Concerns:</strong> Ecological disruption; displacement of communities; international issues (Bangladesh, Nepal); inter-state disputes; massive costs (~₹5.5 lakh crore); climate uncertainty on surplus projections; loss of riverine habitats. <strong>Ken-Betwa:</strong> First link; Panna Tiger Reserve submergence controversy. SC endorsed in principle (2012) but implementation slow.</div></div>
+          <div class="flashcard-year"><span class="badge badge-nt">Mains</span> 2019</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2018</div><div class="q-text">Which of the following is the correct order of seas from the highest to the lowest salinity?<br>(a) Red Sea > Dead Sea > Arabian Sea<br>(b) Dead Sea > Red Sea > Arabian Sea<br>(c) Arabian Sea > Dead Sea > Red Sea<br>(d) Dead Sea > Arabian Sea > Red Sea</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer: (b)</div><div class="a-text"><strong>Dead Sea (34%) &gt; Red Sea (40‰ ≈ 4%) &gt; Arabian Sea (~37‰)</strong><br><br>Wait — careful: Dead Sea salinity is ~34% (340 g/L), making it by far the saltiest. Red Sea ~40‰ (40g/L = 4%). Arabian Sea ~36–37‰. So: Dead Sea >> Red Sea > Arabian Sea. Option (b) is correct. Dead Sea is a hypersaline lake — ~10× saltier than average ocean.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2018</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#3b82f6">
+          <div><div class="q-label">Mains GS-III · 2021</div><div class="q-text">The Chamoli disaster of 2021 has raised questions about development in the Himalayan region. Analyse the causes and implications for disaster risk management.</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Key Points</div><div class="a-text"><strong>Cause:</strong> Rock-ice avalanche (glacial lake/permafrost collapse) + GLOF cascade on Rishiganga and Dhauliganga. <strong>Context:</strong> Climate warming → unstable slopes; Char Dham highway project; hydro projects in fragile zones. <strong>Implications:</strong> Review of hydropower siting; implementation of EIA norms; NDRF pre-positioning; GLOF early warning systems; Eco-Sensitive Zone notifications; Wadia Institute glaciological monitoring. Disaster Management Act application; Supreme Court Char Dham case.</div></div>
+          <div class="flashcard-year"><span class="badge badge-nt">Mains</span> 2021</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2015</div><div class="q-text">The Mekong-Ganga Cooperation is an initiative of —<br>(a) Six ASEAN nations<br>(b) India and five ASEAN nations<br>(c) India, China and ASEAN<br>(d) India, Japan and ASEAN</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer: (b)</div><div class="a-text"><strong>India + 5 ASEAN nations:</strong> India, Myanmar, Thailand, Laos, Cambodia, Vietnam. Launched in 2000 in Vientiane. Focuses on tourism, culture, education, transport and communication. Named after two great civilisational rivers. China is NOT a member despite the Mekong originating in Tibet. Distinct from Mekong River Commission (MRC).</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2015</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front" style="border-color:#ef4444">
+          <div><div class="q-label">Prelims · 2024</div><div class="q-text">Consider the following: Which of the following water bodies is NOT a Ramsar site in India?<br>(a) Chilika Lake<br>(b) Sambhar Lake<br>(c) Dal Lake<br>(d) Pangong Tso</div></div>
+          <div class="flashcard-hint">Tap to reveal answer ↓</div>
+        </div>
+        <div class="flashcard-back">
+          <div><div class="a-label">Answer: (c) Dal Lake</div><div class="a-text"><strong>Dal Lake is NOT a Ramsar site</strong> (as of 2024). Chilika (1981 — India's first), Sambhar (1990), Pangong Tso (2002) are all Ramsar sites. Dal Lake faces severe ecological degradation (shrinkage, pollution, encroachment) but has NOT been designated as a Ramsar wetland, though it is covered under the National Mission for Clean Lakes.</div></div>
+          <div class="flashcard-year"><span class="badge badge-cr">Prelims</span> 2024</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end flashcard grid -->
+
+  <div style="margin-top:20px;padding:14px;background:var(--bg3);border-radius:var(--radius);font-size:.74rem;color:var(--text3)">
+    <strong style="color:var(--accent)">Study Tip:</strong> For PYQs on water bodies, always note: (1) state location, (2) type of water body, (3) Ramsar status, (4) associated species, (5) recent news. These cross-linkages are how UPSC designs tricky statements.
+  </div>
+</section>
+
+<!-- SCRIPTS -->
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeBtn');
+  if (html.getAttribute('data-theme') === 'dark') {
+    html.setAttribute('data-theme', 'light');
+    btn.textContent = '☾ Dark';
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    btn.textContent = '☀ Light';
+  }
+}
+
+// Accordion toggle
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const content = header.nextElementSibling;
+    const arr = header.querySelector('.arr');
+    content.classList.toggle('open');
+    if (arr) arr.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : '';
+  });
+});
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

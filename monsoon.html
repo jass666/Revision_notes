@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Summer Monsoon — Earth's Greatest Seasonal Migration</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --onset:#16a34a; --retreat:#b45309; --active:#0369a1; --break:#7c3aed;
+    --drought:#dc2626; --flood:#2563eb; --normal:#059669;
+    --el:#e84545; --la:#2196f3; --iod:#f59e0b;
+    --mon-green:#15803d; --mon-blue:#0284c7; --mon-amber:#d97706;
+  }
+  [data-theme="dark"] {
+    --bg:#07100d; --surface:#0f1f16; --surface2:#162a1e;
+    --border:rgba(255,255,255,0.07); --text:#e4ede8; --muted:#6b7c72;
+    --nav-bg:rgba(7,16,13,0.93); --table-hover:rgba(255,255,255,0.02);
+    --toggle-bg:#162a1e; --toggle-border:rgba(255,255,255,0.15);
+    --prose:#b8ccbe;
+  }
+  [data-theme="light"] {
+    --bg:#f0f7f2; --surface:#ffffff; --surface2:#e4f0e8;
+    --border:rgba(0,0,0,0.08); --text:#0f1f16; --muted:#5a7060;
+    --nav-bg:rgba(240,247,242,0.96); --table-hover:rgba(0,0,0,0.02);
+    --toggle-bg:#d4e8db; --toggle-border:rgba(0,0,0,0.1);
+    --prose:#2d4a36;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;transition:background .3s,color .3s;}
+
+  /* HEADER */
+  header{padding:3rem 2rem 1.5rem;text-align:center;position:relative;border-bottom:1px solid var(--border);}
+  header::before{content:'';position:absolute;inset:0;background:
+    radial-gradient(ellipse at 30% 0%,rgba(21,128,61,.13) 0%,transparent 60%),
+    radial-gradient(ellipse at 70% 100%,rgba(2,132,199,.1) 0%,transparent 55%),
+    radial-gradient(ellipse at 90% 30%,rgba(217,119,6,.08) 0%,transparent 45%);
+    pointer-events:none;}
+  .eyebrow{font-size:.65rem;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:.75rem;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,8vw,5.5rem);letter-spacing:.04em;line-height:1;
+    background:linear-gradient(135deg,#16a34a 0%,#0ea5e9 35%,#0369a1 60%,#15803d 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--muted);font-size:1rem;margin-top:.5rem;}
+  .header-stats{display:flex;justify-content:center;gap:2rem;margin-top:1.25rem;flex-wrap:wrap;}
+  .hstat{text-align:center;}
+  .hstat-val{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.04em;}
+  .hstat-lbl{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+
+  /* THEME TOGGLE */
+  .theme-toggle{position:absolute;top:1.2rem;right:1.5rem;display:flex;align-items:center;gap:.5rem;cursor:pointer;
+    background:var(--toggle-bg);border:1px solid var(--toggle-border);border-radius:20px;padding:.35rem .75rem;transition:all .2s;user-select:none;}
+  .theme-toggle:hover{opacity:.8;}
+  .theme-toggle-icon{font-size:.85rem;}
+  .theme-toggle-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+  /* NAV */
+  nav{display:flex;justify-content:center;gap:.4rem;padding:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);
+    position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:100;transition:background .3s;}
+  .tab{padding:.4rem .9rem;border-radius:2px;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace;}
+  .tab:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .tab.active{color:#fff;}
+  .tab[data-phase="overview"].active{background:#16a34a;border-color:#16a34a;}
+  .tab[data-phase="onset"].active{background:#0369a1;border-color:#0369a1;}
+  .tab[data-phase="mechanism"].active{background:#0e7490;border-color:#0e7490;}
+  .tab[data-phase="enso"].active{background:#b45309;border-color:#b45309;}
+  .tab[data-phase="regional"].active{background:#15803d;border-color:#15803d;}
+  .tab[data-phase="historic"].active{background:#7c3aed;border-color:#7c3aed;}
+  .tab[data-phase="forecast"].active{background:#1d4ed8;border-color:#1d4ed8;}
+  .tab[data-phase="upsc"].active{background:#be185d;border-color:#be185d;}
+
+  /* MAIN */
+  main{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+  .phase-panel{display:none;}
+  .phase-panel.visible{display:block;animation:fadeUp .4s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SECTION HEADER */
+  .section-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .phase-label{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.05em;}
+  .phase-tag{font-size:.72rem;padding:.3rem .7rem;border-radius:2px;letter-spacing:.08em;font-weight:500;}
+  .phase-desc{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--muted);margin-left:auto;font-style:italic;}
+
+  /* BOXES */
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;transition:background .3s,border-color .3s;}
+  .box-title{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+
+  /* IMPACT CARDS */
+  .impacts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+  .impact-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;transition:border-color .2s,background .3s;}
+  .impact-card:hover{border-color:rgba(128,128,128,.3);}
+  .impact-region{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+  .impact-icon{font-size:1.3rem;margin-bottom:.4rem;display:block;}
+  .impact-text{font-size:.75rem;line-height:1.5;color:var(--text);}
+  .impact-badge{display:inline-block;font-size:.55rem;padding:.15rem .5rem;border-radius:1px;margin-top:.5rem;letter-spacing:.1em;text-transform:uppercase;}
+  .badge-wet{background:rgba(37,99,235,.15);color:#2563eb;}
+  .badge-dry{background:rgba(220,38,38,.15);color:#dc2626;}
+  .badge-warm{background:rgba(217,119,6,.15);color:#d97706;}
+  .badge-normal{background:rgba(5,150,105,.15);color:#059669;}
+  .badge-strong{background:rgba(21,128,61,.15);color:#15803d;}
+
+  /* EVENT ITEMS */
+  .event-item{display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--border);align-items:start;}
+  .event-item:last-child{border-bottom:none;}
+  .event-year{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;line-height:1;}
+  .event-name{font-size:.7rem;letter-spacing:.08em;margin-bottom:.25rem;font-weight:500;}
+  .event-desc{font-size:.72rem;color:var(--muted);line-height:1.55;}
+  .event-peak{font-size:.6rem;margin-top:.4rem;padding:.2rem .6rem;border-radius:1px;display:inline-block;letter-spacing:.08em;}
+
+  /* MECH CARDS */
+  .mech-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+  @media(max-width:640px){.mech-grid{grid-template-columns:1fr;}}
+  .mech-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em;margin-bottom:.6rem;}
+  .mech-card-body{font-size:.73rem;color:var(--prose,var(--muted));line-height:1.7;}
+  .mech-card-body b{color:var(--text);font-weight:600;}
+
+  /* CALLOUT */
+  .callout{background:var(--surface2,var(--surface));border-left:3px solid;border-radius:0 3px 3px 0;padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .callout b{color:var(--text);}
+
+  /* TWO-COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+
+  /* BOTTOM ROW */
+  .phase-bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+  @media(max-width:700px){.phase-bottom-row{grid-template-columns:1fr;}}
+
+  /* MECH PHYSICS */
+  .mech-physics-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.85rem;padding-bottom:.85rem;border-bottom:1px solid var(--border);}
+  .mech-physics-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .mech-physics-icon{font-size:1.2rem;flex-shrink:0;line-height:1.3;}
+  .mech-physics-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;}
+  .mech-physics-text{font-size:.72rem;line-height:1.55;color:var(--prose,var(--text));}
+  .mech-physics-text b{color:var(--text);}
+
+  /* LINK PILLS */
+  .phase-link-pill{display:inline-flex;align-items:center;gap:.35rem;margin-top:1rem;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:2px;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .2s;background:transparent;font-family:'DM Mono',monospace;}
+  .phase-link-pill:hover{color:var(--text);border-color:rgba(128,128,128,.4);}
+  .enso-pill{border-color:rgba(37,99,235,.35);color:#2563eb;}
+  .enso-pill:hover{background:rgba(37,99,235,.1);border-color:#2563eb;color:#2563eb;}
+  .iod-pill{border-color:rgba(245,158,11,.35);color:#d97706;}
+  .iod-pill:hover{background:rgba(245,158,11,.1);border-color:#d97706;color:#d97706;}
+
+  /* STEP LIST */
+  .step-list{list-style:none;margin-top:.5rem;}
+  .step-list li{display:flex;gap:.7rem;margin-bottom:.6rem;font-size:.73rem;line-height:1.5;color:var(--prose,var(--muted));}
+  .step-num{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff;}
+
+  /* STAT CARDS */
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;text-align:center;}
+  .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;margin-bottom:.25rem;}
+  .stat-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+
+  /* PROSE BLOCK */
+  .prose-block{font-size:.75rem;line-height:1.75;color:var(--prose,var(--muted));margin-bottom:1rem;}
+  .prose-block b{color:var(--text);}
+
+  /* INFO SECTION */
+  .info-section{margin-bottom:2rem;}
+  .info-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;margin-bottom:.5rem;}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;font-size:.72rem;}
+  th{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--border);}
+  td{padding:.6rem .75rem;border-bottom:1px solid var(--border);line-height:1.4;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--table-hover);}
+
+  /* HIGHLIGHT BOX */
+  .highlight-box{background:var(--surface2,var(--surface));border:1px solid var(--border);border-radius:4px;padding:1.1rem 1.25rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .highlight-box b{color:var(--text);}
+  .highlight-box .hb-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--text);margin-bottom:.4rem;}
+
+  /* TAG ROW */
+  .tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;}
+  .tag{font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border-radius:1px;border:1px solid;}
+
+  /* ZONE SELECTOR */
+  .zone-selector{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+  .zone-btn{padding:.35rem .9rem;border-radius:2px;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;transition:all .2s;}
+  .zone-btn:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .zone-btn.active{color:#fff;background:var(--mon-green);border-color:var(--mon-green);}
+  .zone-detail{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;margin-top:1rem;}
+  .zone-detail-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:.5rem;}
+  .zone-detail-body{font-size:.73rem;line-height:1.65;color:var(--prose);}
+
+  /* FLASHCARD */
+  .flashcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+  .flashcard{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+  .flashcard:hover{border-color:rgba(190,24,93,.3);box-shadow:0 4px 16px rgba(190,24,93,.08);}
+  .flashcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#be185d,#7c3aed);}
+  .flashcard-q{font-size:.72rem;font-weight:500;color:var(--text);margin-bottom:.75rem;line-height:1.5;}
+  .flashcard-a{font-size:.7rem;color:var(--prose);line-height:1.6;display:none;}
+  .flashcard.flipped .flashcard-a{display:block;}
+  .flashcard.flipped .flashcard-q{color:var(--muted);}
+  .flashcard-hint{font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.75rem;}
+
+  /* 2×2 GRID */
+  .grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0;}
+  .grid-cell{border-radius:4px;padding:1.1rem;border:1px solid;}
+  .grid-cell-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;margin-bottom:.4rem;}
+  .grid-cell-body{font-size:.7rem;line-height:1.6;color:var(--prose);}
+
+  /* MAP SVG CONTAINER */
+  .map-container{position:relative;width:100%;border-radius:4px;overflow:hidden;background:var(--surface);border:1px solid var(--border);}
+  .map-svg-wrap{width:100%;height:480px;}
+
+  /* REGION TOOLTIP */
+  .region-tooltip{display:none;position:absolute;background:var(--surface);border:1px solid var(--border);border-radius:3px;
+    padding:.6rem .9rem;font-size:.7rem;pointer-events:none;z-index:10;min-width:180px;max-width:240px;line-height:1.5;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+  .region-tooltip.visible{display:block;}
+  .tooltip-region{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;}
+  .tooltip-effect{color:var(--text);}
+
+  /* TIMELINE */
+  .timeline-track{position:relative;margin:1.5rem 0;}
+  .timeline-bar-wrap{display:flex;height:32px;border-radius:3px;overflow:hidden;margin:.5rem 0;cursor:pointer;}
+  .timeline-seg{display:flex;align-items:center;justify-content:center;font-size:.58rem;font-family:'DM Mono',monospace;letter-spacing:.06em;color:#fff;transition:opacity .2s;}
+  .timeline-seg:hover{opacity:.85;}
+
+  /* MINI-MAP LEGEND */
+  .mini-legend{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:.6rem;font-size:.6rem;color:var(--muted);}
+  .mini-legend span{display:flex;align-items:center;gap:.3rem;}
+  .mini-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+  /* RELATED PILL (FOOTER) */
+  .related-footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;}
+  .related-label{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+  .related-pill{display:inline-flex;align-items:center;gap:.4rem;font-size:.65rem;padding:.4rem .9rem;border-radius:2px;border:1px solid var(--border);color:var(--muted);cursor:pointer;text-decoration:none;transition:all .2s;}
+  .related-pill:hover{color:var(--text);border-color:rgba(128,128,128,.4);}
+
+  /* ONSET TIMELINE */
+  .onset-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;font-size:.7rem;}
+  .onset-date{width:90px;color:var(--muted);font-size:.65rem;flex-shrink:0;}
+  .onset-state{flex:1;}
+  .onset-bar{height:6px;border-radius:3px;transition:width .6s;}
+
+  /* ACTIVE BREAK TOGGLE */
+  .ab-toggle{display:flex;gap:.5rem;margin-bottom:1rem;}
+  .ab-btn{padding:.4rem 1rem;border-radius:2px;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;transition:all .2s;}
+  .ab-btn.active-phase{background:#0369a1;border-color:#0369a1;color:#fff;}
+  .ab-btn.break-phase{background:#7c3aed;border-color:#7c3aed;color:#fff;}
+
+  @media(max-width:500px){
+    .grid-2x2{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<header>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+    <span class="theme-toggle-icon" id="themeIcon">☀️</span>
+    <span class="theme-toggle-label" id="themeLabel">Light mode</span>
+  </button>
+  <p class="eyebrow">India's Life-Giving Seasonal Wind System</p>
+  <h1>Indian Summer Monsoon</h1>
+  <p class="subtitle">Cross-Equatorial Flow · ITCZ Migration · ENSO Link · 4-Month Deluge · 1.4 Billion Lives</p>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-val" style="color:#16a34a">~80%</div><div class="hstat-lbl">of India's annual rainfall</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#0284c7">Jun–Sep</div><div class="hstat-lbl">Core monsoon months (JJAS)</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#d97706">1,200mm</div><div class="hstat-lbl">Long-Period Average</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:#be185d">±10%</div><div class="hstat-lbl">Defines normal / anomalous</div></div>
+  </div>
+</header>
+
+<nav>
+  <button class="tab" data-phase="overview">🌍 Overview</button>
+  <button class="tab" data-phase="onset">📅 Onset &amp; Withdrawal</button>
+  <button class="tab" data-phase="mechanism">⚙️ Mechanism</button>
+  <button class="tab" data-phase="enso">🌊 ENSO Link</button>
+  <button class="tab" data-phase="regional">🗺️ Regional Rainfall</button>
+  <button class="tab" data-phase="historic">📜 Historic Events</button>
+  <button class="tab" data-phase="forecast">🔮 Forecasting</button>
+  <button class="tab" data-phase="upsc">📚 UPSC Corner</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════
+     TAB 1 — OVERVIEW
+══════════════════════════════════════════════ -->
+<div class="phase-panel" id="panel-overview">
+  <div class="section-header">
+    <span class="phase-label" style="color:#16a34a">Overview</span>
+    <span class="phase-tag" style="background:rgba(22,163,74,.15);color:#16a34a">JJAS · June–September</span>
+    <span class="phase-desc">What the monsoon is and why it happens</span>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-value" style="color:#16a34a">4</div><div class="stat-label">Months dominate India's water cycle</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#0284c7">1.4B</div><div class="stat-label">People dependent on monsoon agriculture</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#d97706">60%</div><div class="stat-label">Net sown area rain-fed (no irrigation)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#dc2626">±10%</div><div class="stat-label">LPA threshold for drought / excess</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#7c3aed">~1km/day</div><div class="stat-label">Average advance speed</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#0369a1">850 hPa</div><div class="stat-label">Findlater Jet pressure level</div></div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">What Is the Monsoon? — ITCZ Migration and Cross-Equatorial Flow</p>
+    <svg id="overview-svg" viewBox="0 0 800 300" style="width:100%;height:300px;display:block;"></svg>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="mech-card">
+        <div class="mech-card-title">Definition</div>
+        <div class="mech-card-body">
+          <b>Monsoon</b> comes from Arabic <i>mawsim</i> (season). It is a <b>seasonal reversal of wind direction</b> driven by differential heating between the Indian landmass and the Indian Ocean. In summer (Apr–Sep), the land heats faster than the sea, creating a <b>thermally-induced low pressure</b> over the Thar Desert and Peninsular India. Moisture-laden south-westerly winds rush in from the Indian Ocean to fill this low — the Indian Summer Monsoon (ISM).
+        </div>
+      </div>
+      <div class="mech-card" style="margin-top:1rem;">
+        <div class="mech-card-title">Global Context</div>
+        <div class="mech-card-body">
+          The ISM is part of the <b>Asian Monsoon System</b> — the world's largest monsoon system, affecting over 4 billion people. It is driven by the <b>ITCZ (Intertropical Convergence Zone)</b> shifting northward past the equator as the Northern Hemisphere warms. The cross-equatorial flow from the Southern Hemisphere is deflected rightward by the Coriolis effect, arriving as south-westerly winds over Arabia and India.
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="mech-card">
+        <div class="mech-card-title">Onset Timing</div>
+        <div class="mech-card-body">
+          <ul class="step-list">
+            <li><span class="step-num" style="background:#16a34a">1</span>Kerala onset: <b>~June 1</b> (Kerala coast, usually Thiruvananthapuram)</li>
+            <li><span class="step-num" style="background:#0369a1">2</span>Covers peninsular India: <b>June 10–20</b></li>
+            <li><span class="step-num" style="background:#0e7490">3</span>Reaches Mumbai: <b>~June 10–11</b></li>
+            <li><span class="step-num" style="background:#d97706">4</span>Covers all of India: <b>~July 15</b></li>
+            <li><span class="step-num" style="background:#dc2626">5</span>Withdrawal begins NW India: <b>~Sep 1</b></li>
+            <li><span class="step-num" style="background:#7c3aed">6</span>Complete withdrawal: <b>~Oct 15</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout" style="border-color:#16a34a;margin-top:1rem;">
+        <b>GDP Linkage:</b> A 1% deviation in monsoon rainfall from the LPA (Long Period Average) corresponds to roughly a 0.3–0.4% impact on Indian agricultural GDP. In drought years, rural distress, reduced kharif output and food price inflation ripple through the entire economy.
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:1.5rem;">
+    <p class="box-title">Onset Progression Timeline — Kerala to Kashmir</p>
+    <svg id="onset-timeline-svg" viewBox="0 0 800 180" style="width:100%;height:180px;display:block;"></svg>
+  </div>
+
+  <div class="impacts-grid" style="margin-top:1.5rem;">
+    <div class="impact-card"><span class="impact-icon">🌾</span><div class="impact-region">Agriculture</div><div class="impact-text">Kharif crops (rice, cotton, sorghum, pulses) are entirely monsoon-dependent. ~40% of India's food output grown June–Sep.</div><span class="impact-badge badge-strong">Critical Dependency</span></div>
+    <div class="impact-card"><span class="impact-icon">💧</span><div class="impact-region">Water Reservoirs</div><div class="impact-text">Most of India's 91 major reservoirs fill almost exclusively during JJAS. Groundwater recharge also peaks.</div><span class="impact-badge badge-wet">Recharge Season</span></div>
+    <div class="impact-card"><span class="impact-icon">⚡</span><div class="impact-region">Hydropower</div><div class="impact-text">~25% of India's electricity comes from hydropower — almost entirely refilled by monsoon runoff.</div><span class="impact-badge badge-normal">Energy Security</span></div>
+    <div class="impact-card"><span class="impact-icon">🌡️</span><div class="impact-region">Temperature</div><div class="impact-text">Monsoon onset drops temperatures by 5–8°C across the peninsula — the nation's natural air conditioning.</div><span class="impact-badge badge-wet">Cooling Effect</span></div>
+    <div class="impact-card"><span class="impact-icon">🏦</span><div class="impact-region">Economy</div><div class="impact-text">India's rural economy (~45% of workforce) is structurally tied to monsoon performance. A bad monsoon triggers inflation and policy response.</div><span class="impact-badge badge-warm">Macro Impact</span></div>
+    <div class="impact-card"><span class="impact-icon">🌊</span><div class="impact-region">ENSO Modulation</div><div class="impact-text">El Niño weakens it, La Niña strengthens it — but the IOD can override or amplify these signals.</div><span class="impact-badge" style="background:rgba(37,99,235,.12);color:#2563eb;">ENSO Coupled</span></div>
+  </div>
+
+  <div class="related-footer">
+    <span class="related-label">Related</span>
+    <a class="related-pill enso-pill" onclick="switchTab('enso')">🌊 ENSO × Monsoon Link</a>
+    <a class="related-pill" onclick="switchTab('mechanism')">⚙️ Mechanism Deep-Dive</a>
+    <a class="related-pill" href="index.html" style="color:var(--muted)">📎 ENSO Explainer</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 2 — ONSET & WITHDRAWAL
+══════════════════════════════════════════════ -->
+<div class="phase-panel" id="panel-onset">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0369a1">Onset &amp; Withdrawal</span>
+    <span class="phase-tag" style="background:rgba(3,105,161,.15);color:#0369a1">Normal · Early · Late</span>
+    <span class="phase-desc">The monsoon's 4.5-month journey across India</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">India Onset Progression Map — Hover a state to see normal onset date</p>
+    <div class="map-container" style="height:480px;">
+      <svg id="india-onset-map" viewBox="0 0 500 560" style="width:100%;height:100%;display:block;"></svg>
+      <div class="region-tooltip" id="onset-tooltip">
+        <div class="tooltip-region" id="ot-region">Region</div>
+        <div class="tooltip-effect" id="ot-date">Date</div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:.3rem;" id="ot-info">Info</div>
+      </div>
+    </div>
+    <div class="mini-legend" style="margin-top:.75rem;">
+      <span><i style="background:#16a34a;border-radius:2px;"></i>Onset by June 10</span>
+      <span><i style="background:#0369a1;border-radius:2px;"></i>Onset June 10–20</span>
+      <span><i style="background:#0e7490;border-radius:2px;"></i>Onset June 20–30</span>
+      <span><i style="background:#d97706;border-radius:2px;"></i>Onset July 1–15</span>
+      <span><i style="background:#dc2626;border-radius:2px;"></i>Latest onset (NW India)</span>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:1.5rem;">
+    <div class="box" style="margin-bottom:0;">
+      <p class="box-title">Normal Onset Dates — State by State</p>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>State / Region</th><th>Normal Onset</th><th>Withdrawal</th></tr></thead>
+          <tbody>
+            <tr><td>Kerala</td><td style="color:#16a34a">June 1</td><td style="color:#d97706">Oct 28</td></tr>
+            <tr><td>Tamil Nadu coast</td><td style="color:#16a34a">June 5</td><td style="color:#d97706">Nov 10</td></tr>
+            <tr><td>Karnataka / Goa</td><td style="color:#16a34a">June 8</td><td style="color:#d97706">Oct 15</td></tr>
+            <tr><td>Maharashtra (Mumbai)</td><td style="color:#0369a1">June 11</td><td style="color:#d97706">Oct 5</td></tr>
+            <tr><td>Andhra Pradesh</td><td style="color:#0369a1">June 12</td><td style="color:#d97706">Oct 12</td></tr>
+            <tr><td>Odisha / West Bengal</td><td style="color:#0369a1">June 15</td><td style="color:#d97706">Oct 8</td></tr>
+            <tr><td>Central India (MP, CG)</td><td style="color:#0e7490">June 20</td><td style="color:#d97706">Sep 25</td></tr>
+            <tr><td>Uttar Pradesh / Bihar</td><td style="color:#0e7490">June 25</td><td style="color:#d97706">Sep 20</td></tr>
+            <tr><td>Rajasthan (East)</td><td style="color:#d97706">July 1</td><td style="color:#dc2626">Sep 10</td></tr>
+            <tr><td>Punjab / Haryana</td><td style="color:#d97706">July 8</td><td style="color:#dc2626">Sep 1</td></tr>
+            <tr><td>Rajasthan (West)</td><td style="color:#dc2626">July 15</td><td style="color:#dc2626">Sep 1</td></tr>
+            <tr><td>Jammu &amp; Kashmir / Ladakh</td><td style="color:#dc2626">July 15</td><td style="color:#dc2626">Sep 1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="mech-card">
+        <div class="mech-card-title">Early vs Late Onset</div>
+        <div class="mech-card-body">
+          IMD classifies onset as <b>early</b> if Kerala onset precedes May 25, and <b>late</b> if it comes after June 7. A delay of even 1–2 weeks can significantly reduce kharif sowing area and cause extreme heat stress.
+          <br><br>
+          <b>Early onset years:</b> Often associated with La Niña or a positive IOD in the prior season. ENSO-neutral or La Niña conditions favour an active monsoon.
+          <br><br>
+          <b>Late onset years:</b> Typically correlate with developing El Niño events. 2002, 2009, and 2023 all featured delayed onsets with El Niño forcing.
+        </div>
+      </div>
+      <div class="callout" style="border-color:#0369a1;margin-top:1rem;">
+        <b>IMD Kerala Onset Criteria (revised 2017):</b> At least 60% of 14 designated stations in Kerala and Lakshadweep must receive rainfall ≥2.5 mm on each of 2 consecutive days, with sustained westerly winds at 925 hPa and outgoing longwave radiation (OLR) below 200 W/m².
+      </div>
+      <div class="callout" style="border-color:#d97706;margin-top:.75rem;">
+        <b>Withdrawal:</b> Begins from Rajasthan (NW India) around Sep 1 as the subtropical high re-establishes over NW India, pushing the monsoon trough southward. Final withdrawal from Tamil Nadu / SE coasts by mid-October.
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:1.5rem;">
+    <p class="box-title">Onset Year Comparison — Normal vs Early (2020) vs Late (2002)</p>
+    <svg id="onset-compare-svg" viewBox="0 0 800 200" style="width:100%;height:200px;display:block;"></svg>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 3 — MECHANISM
+══════════════════════════════════════════════ -->
+<div class="phase-panel" id="panel-mechanism">
+  <div class="section-header">
+    <span class="phase-label" style="color:#0e7490">Mechanism</span>
+    <span class="phase-tag" style="background:rgba(14,116,144,.15);color:#0e7490">Findlater Jet · BoB vs AS · Active/Break</span>
+    <span class="phase-desc">The thermodynamics driving four months of rain</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">The Monsoon System — Findlater Jet, Branches, and Monsoon Trough</p>
+    <svg id="mechanism-svg" viewBox="0 0 800 320" style="width:100%;height:320px;display:block;"></svg>
+  </div>
+
+  <div class="mech-grid">
+    <div class="mech-card">
+      <div class="mech-card-title">The Findlater Jet</div>
+      <div class="mech-card-body">
+        The <b>Somali Jet</b> (Findlater Jet) is a low-level atmospheric jet stream at <b>850 hPa (~1.5 km altitude)</b> that forms in boreal summer. It carries moist air from the Southern Hemisphere across the equator over Somalia, then curves northeast across the Arabian Sea toward India.
+        <br><br>
+        Wind speeds reach <b>30–40 m/s (110–145 km/h)</b>. It is the primary moisture delivery mechanism for the monsoon. SST in the Arabian Sea helps sustain it — warmer Arabian Sea = more moisture loading.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Two Branches</div>
+      <div class="mech-card-body">
+        The ISM splits into two branches at the southern tip of India:
+        <br><br>
+        <b>Arabian Sea Branch:</b> Strikes the Western Ghats, orographically lifts, and delivers intense rainfall to the west coast (Malabar, Konkan). The rain shadow east of the Ghats is semi-arid. The branch then deflects northward into Gujarat, Rajasthan, and eventually converges with the Bay branch.
+        <br><br>
+        <b>Bay of Bengal Branch:</b> Moves northward along the east coast, enters the Gangetic plains, and also feeds the North-East (Assam, Meghalaya).
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Monsoon Trough</div>
+      <div class="mech-card-body">
+        The <b>monsoon trough</b> is a line of low pressure extending from the Thar Desert (NW India) to the Bay of Bengal. It oscillates north and south on a 2–3 week cycle, controlling where rainfall concentrates.
+        <br><br>
+        <b>Trough near Himalayas:</b> Rainfall increases over the plains (active phase). <b>Trough moves south:</b> Plains dry out → monsoon break over NW India; heavy rain over peninsular India and BoB coasts instead.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Active / Break Cycle</div>
+      <div class="mech-card-body">
+        <b>Active phase:</b> Trough is in normal/northern position. Widespread rainfall across central and northern India. Vigorous low-pressure systems in BoB. Duration: 5–10 days.
+        <br><br>
+        <b>Break phase:</b> Trough shifts to Himalayan foothills. Dry conditions over most of the Indo-Gangetic plain. Intense rain in the NE and along the west coast. Can last 5–20 days. Extended breaks = drought risk.
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Active vs Break Phase — Trough Position and Rainfall Distribution</p>
+    <div class="ab-toggle">
+      <button class="ab-btn active-phase" id="ab-active" onclick="setABPhase('active')">🌧️ Active Phase</button>
+      <button class="ab-btn" id="ab-break" onclick="setABPhase('break')">☀️ Break Phase</button>
+    </div>
+    <svg id="ab-svg" viewBox="0 0 800 260" style="width:100%;height:260px;display:block;"></svg>
+    <div id="ab-desc" style="font-size:.72rem;line-height:1.65;color:var(--prose);margin-top:.75rem;padding:.75rem;background:var(--surface2);border-radius:3px;">
+      <b>Active Phase:</b> The monsoon trough lies near its normal position across the Indo-Gangetic Plain. Cyclonic circulation in the Bay of Bengal feeds organised convection. Widespread rain over central India (MP, Chhattisgarh, Jharkhand, Odisha). Most of India's seasonal rainfall accumulates during active spells.
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:1rem;">
+    <div>
+      <div class="highlight-box">
+        <div class="hb-title">Orographic Rainfall — Western Ghats</div>
+        The Western Ghats act as an <b>orographic barrier</b>. Moist SW winds from the Arabian Sea branch are forced upward (orographic lifting), cooling and condensing rapidly. The Malabar coast and Konkan receive <b>3,000–6,000mm</b> annually — some of the highest totals on Earth. Mawsynram (Meghalaya) similarly benefits from orographic enhancement of the Bay branch against the Khasi Hills: <b>~11,871mm/year</b>.
+      </div>
+    </div>
+    <div>
+      <div class="highlight-box">
+        <div class="hb-title">Low Pressure Systems & Depressions</div>
+        The Bay of Bengal is the world's most prolific generator of monsoon <b>low-pressure systems</b>. Each JJAS season sees 5–8 LPS (Low Pressure Systems), of which 3–4 intensify to depressions or cyclonic storms. These systems track NW across central India, bringing some of India's heaviest monsoon rain events, especially in Odisha, Chhattisgarh, and Madhya Pradesh.
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:1rem;">
+    <p class="box-title">Thermal Mechanism — Land-Sea Temperature Contrast</p>
+    <svg id="thermal-svg" viewBox="0 0 800 220" style="width:100%;height:220px;display:block;"></svg>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 4 — ENSO LINK
+══════════════════════════════════════════════ -->
+<div class="phase-panel" id="panel-enso">
+  <div class="section-header">
+    <span class="phase-label" style="color:#b45309">ENSO Link</span>
+    <span class="phase-tag" style="background:rgba(180,83,9,.15);color:#b45309">El Niño · La Niña · IOD · PDO</span>
+    <span class="phase-desc">How Pacific and Indian Ocean temperatures modulate the monsoon</span>
+  </div>
+
+  <div class="callout" style="border-color:#2563eb;">
+    <b>🌊 ENSO is the dominant interannual modulator of the Indian Summer Monsoon.</b> The teleconnection is robust: El Niño (warm eastern Pacific) suppresses the ISM in ~60–70% of events; La Niña enhances it in ~60% of events. However, the relationship has been weakening since the 1980s — the IOD has emerged as an increasingly important modifier.
+    <button class="phase-link-pill enso-pill" style="margin-left:.75rem;" onclick="window.open ? window.open('index.html','_blank') : null">🌊 Open ENSO Explainer</button>
+  </div>
+
+  <div class="box">
+    <p class="box-title">ENSO × Monsoon — The 2×2 Interaction Grid</p>
+    <div class="grid-2x2">
+      <div class="grid-cell" style="background:rgba(220,38,38,.08);border-color:rgba(220,38,38,.3);">
+        <div class="grid-cell-title" style="color:#dc2626">El Niño + Neutral IOD</div>
+        <div class="grid-cell-body"><b>High drought risk.</b> Suppressed Walker circulation reduces cross-equatorial flow. Monsoon trough remains weak. LPS frequency drops. Historical correlation: 1877, 1965, 1972, 1987, 2002, 2009. Rainfall typically 10–20% below LPA.</div>
+      </div>
+      <div class="grid-cell" style="background:rgba(37,99,235,.08);border-color:rgba(37,99,235,.3);">
+        <div class="grid-cell-title" style="color:#2563eb">El Niño + Positive IOD</div>
+        <div class="grid-cell-body"><b>IOD partially offsets.</b> Warm western Indian Ocean enhances moisture over Arabia. Classic case: 1997 — a Super El Niño year, but the ISM was near-normal due to a strong positive IOD. IOD teleconnection via enhanced Hadley cell over India.</div>
+      </div>
+      <div class="grid-cell" style="background:rgba(5,150,105,.08);border-color:rgba(5,150,105,.3);">
+        <div class="grid-cell-title" style="color:#059669">La Niña + Neutral IOD</div>
+        <div class="grid-cell-body"><b>Above-normal monsoon.</b> Enhanced Walker circulation strengthens cross-equatorial flow. Active monsoon with frequent LPS. 1988, 2010, 2020 (triple-dip La Niña) — all strong to excess monsoons. Flooding risk in central and eastern India.</div>
+      </div>
+      <div class="grid-cell" style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);">
+        <div class="grid-cell-title" style="color:#d97706">La Niña + Negative IOD</div>
+        <div class="grid-cell-body"><b>Mixed signals.</b> La Niña favours excess; negative IOD (cool western IO) suppresses moisture. Net effect is often near-normal with high spatial variability. East coast may benefit while west coast sees below-normal totals.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Teleconnection Pathway — How El Niño Weakens the Monsoon</p>
+    <svg id="enso-mon-svg" viewBox="0 0 800 240" style="width:100%;height:240px;display:block;"></svg>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="info-section">
+        <div class="info-section-title">Indian Ocean Dipole (IOD)</div>
+        <div class="prose-block">
+          The <b>IOD</b> is measured by the Dipole Mode Index (DMI) — the difference in SST between the western Indian Ocean (50–70°E, 10°S–10°N) and the eastern Indian Ocean (90–110°E, 10°S–0°N).
+        </div>
+        <div class="callout" style="border-color:#f59e0b;">
+          <b>Positive IOD (+DMI):</b> Warm western IO, cool eastern IO. Enhances moisture flux into India. Stronger Hadley circulation over India. 1994, 2019 are classic positive IOD years that partially offset El Niño.
+          <button class="phase-link-pill iod-pill" onclick="window.open ? window.open('index.html#oscillations','_blank') : null" style="display:block;margin-top:.75rem;">🌊 See IOD in ENSO Explainer → Oscillations tab</button>
+        </div>
+        <div class="callout" style="border-color:#0369a1;margin-top:.5rem;">
+          <b>Negative IOD (−DMI):</b> Cool western IO, warm eastern IO. Can suppress the monsoon even in ENSO-neutral years. 2016 was a negative IOD year with below-average monsoon despite transition to La Niña.
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="info-section">
+        <div class="info-section-title">PDO &amp; AMM Influence</div>
+        <div class="prose-block">
+          The <b>Pacific Decadal Oscillation (PDO)</b> modulates ENSO's influence on a multi-decadal timescale. In warm PDO phases, El Niño events tend to be more frequent and intense — amplifying their monsoon suppression signal.
+          <br><br>
+          Research since 2000 suggests the <b>ENSO-Monsoon relationship has weakened</b> in recent decades. The warming Indian Ocean means more background moisture — partially buffering El Niño droughts. But extreme El Niño events still cause severe monsoon deficits.
+        </div>
+        <div class="highlight-box">
+          <div class="hb-title">The 1997 Paradox</div>
+          1997 was the strongest El Niño of the 20th century (ONI +2.4°C). Yet India received <b>102% of LPA</b> rainfall — near-normal. The reason: a simultaneous <b>positive IOD (+1.2°C DMI)</b> counteracted the El Niño signal. This classic case demonstrates why ENSO alone is insufficient for seasonal forecasting.
+          <div class="tag-row">
+            <span class="tag" style="border-color:rgba(220,38,38,.3);color:#dc2626;">El Niño Super</span>
+            <span class="tag" style="border-color:rgba(245,158,11,.3);color:#d97706;">+IOD Strong</span>
+            <span class="tag" style="border-color:rgba(5,150,105,.3);color:#059669;">Near Normal Monsoon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Historical ONI vs Monsoon Rainfall Anomaly (1950–2023)</p>
+    <svg id="enso-history-svg" viewBox="0 0 800 220" style="width:100%;height:220px;display:block;"></svg>
+    <div style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">Schematic representation — actual IMD data available at imd.gov.in</div>
+  </div>
+
+  <div class="related-footer">
+    <span class="related-label">Related</span>
+    <a class="related-pill enso-pill" href="index.html" onclick="return confirm('Open ENSO Explainer?')">🌊 Open ENSO Explainer</a>
+    <a class="related-pill iod-pill" href="index.html">🌊 IOD — Oscillations Tab in ENSO Explainer</a>
+    <a class="related-pill" onclick="switchTab('historic')">📜 Historic Drought/Flood Years</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 5 — REGIONAL RAINFALL
+══════════════════════════════════════════════ -->
+<div class="phase-panel" id="panel-regional">
+  <div class="section-header">
+    <span class="phase-label" style="color:#15803d">Regional Rainfall</span>
+    <span class="phase-tag" style="background:rgba(21,128,61,.15);color:#15803d">5 Homogeneous Zones</span>
+    <span class="phase-desc">How monsoon rainfall varies across India's geography</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">India Rainfall Zones — Click a zone to explore its seasonal pattern</p>
+    <div class="zone-selector">
+      <button class="zone-btn active" onclick="setZone('nw')" id="zbtn-nw">NW India</button>
+      <button class="zone-btn" onclick="setZone('ne')" id="zbtn-ne">NE India</button>
+      <button class="zone-btn" onclick="setZone('central')" id="zbtn-central">Central India</button>
+      <button class="zone-btn" onclick="setZone('peninsula')" id="zbtn-peninsula">Peninsula</button>
+      <button class="zone-btn" onclick="setZone('himalayan')" id="zbtn-himalayan">Himalayan Belt</button>
+    </div>
+    <div class="map-container" style="height:460px;">
+      <svg id="india-zones-map" viewBox="0 0 500 560" style="width:100%;height:100%;display:block;cursor:pointer;"></svg>
+      <div class="region-tooltip" id="zone-tooltip">
+        <div class="tooltip-region" id="zt-region">Zone</div>
+        <div class="tooltip-effect" id="zt-info">Click to explore</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="zone-detail" id="zone-detail">
+    <div class="zone-detail-title" id="zd-title">North-West India</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+      <div>
+        <div style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;">States Included</div>
+        <div class="zone-detail-body" id="zd-states">Rajasthan, Punjab, Haryana, Delhi, western UP, HP</div>
+      </div>
+      <div>
+        <div style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;">Annual Rainfall</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;" id="zd-rainfall">200–700mm</div>
+      </div>
+    </div>
+    <div class="zone-detail-body" id="zd-desc">The most arid zone for monsoon rainfall. West Rajasthan is hyper-arid (&lt;200mm/year). Rainfall comes primarily from July–August when the monsoon trough shifts northward. ENSO and IOD strongly influence this region — El Niño years often see near-zero rainfall in western Rajasthan.</div>
+    <svg id="zone-bar-svg" viewBox="0 0 700 120" style="width:100%;height:120px;display:block;margin-top:1rem;"></svg>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 6 — HISTORIC EVENTS
+══════════════════════════════════════════════ -->
+<div class="phase-panel" id="panel-historic">
+  <div class="section-header">
+    <span class="phase-label" style="color:#7c3aed">Historic Events</span>
+    <span class="phase-tag" style="background:rgba(124,58,237,.15);color:#7c3aed">Droughts · Floods · Anomalies</span>
+    <span class="phase-desc">How monsoon extremes shaped Indian history</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">ONI × Rainfall Anomaly Timeline — Notable Years (1877–2023)</p>
+    <svg id="historic-timeline-svg" viewBox="0 0 800 260" style="width:100%;height:260px;display:block;"></svg>
+  </div>
+
+  <div class="box" style="margin-top:1.5rem;">
+    <p class="box-title">Drought Years</p>
+    <div class="event-item">
+      <div class="event-year" style="color:#dc2626">1877</div>
+      <div>
+        <div class="event-name">The Great Madras Famine</div>
+        <div class="event-desc">One of India's worst famines — 6–10 million deaths. Triggered by an extreme El Niño (ONI est. +2.5°C). Complete failure of SW monsoon across peninsular India and concurrent failure of NE monsoon. Colonial-era governance failures amplified deaths catastrophically.</div>
+        <span class="event-peak" style="background:rgba(220,38,38,.12);color:#dc2626;">~−20% LPA · El Niño</span>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-year" style="color:#dc2626">1972</div>
+      <div>
+        <div class="event-name">The Drought that Transformed Policy</div>
+        <div class="event-desc">A severe El Niño (ONI +1.8°C) triggered a -24% anomaly — the worst drought since Independence. Led directly to the Green Revolution's acceleration, expansion of irrigation, and PDS food distribution systems.</div>
+        <span class="event-peak" style="background:rgba(220,38,38,.12);color:#dc2626;">−24% LPA · El Niño +1.8°C</span>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-year" style="color:#dc2626">1987</div>
+      <div>
+        <div class="event-name">The Century's Worst Drought</div>
+        <div class="event-desc">Rainfall just 73% of LPA — only one other year in the 20th century was worse. Co-occurred with a strong El Niño (ONI +1.7°C). 300+ million affected across central and northern India. Kharif output fell ~10% nationally.</div>
+        <span class="event-peak" style="background:rgba(220,38,38,.12);color:#dc2626;">−27% LPA · El Niño +1.7°C</span>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-year" style="color:#dc2626">2002</div>
+      <div>
+        <div class="event-name">The Policy Test</div>
+        <div class="event-desc">Rainfall 81% of LPA. Triggered by a moderate El Niño (ONI +1.2°C). Severe drought across Rajasthan, Gujarat, and Madhya Pradesh. Government's improved early warning systems and NDMA response prevented famines, though economic losses were severe.</div>
+        <span class="event-peak" style="background:rgba(220,38,38,.12);color:#dc2626;">−19% LPA · El Niño +1.2°C</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:1rem;">
+    <p class="box-title">Excess / Flood Years</p>
+    <div class="event-item">
+      <div class="event-year" style="color:#2563eb">2019</div>
+      <div>
+        <div class="event-name">The Delayed Excess Monsoon</div>
+        <div class="event-desc">Started late (Kerala onset June 8) but ended with 110% of LPA — excess. El Niño transitioned to neutral. A strong positive IOD (+1.5°C DMI) was the key driver. August 2019 was the wettest August since 1994. Severe flooding in Kerala (second consecutive year), Maharashtra, Karnataka.</div>
+        <span class="event-peak" style="background:rgba(37,99,235,.12);color:#2563eb;">+10% LPA · Positive IOD +1.5°C</span>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-year" style="color:#2563eb">2020</div>
+      <div>
+        <div class="event-name">La Niña-Fuelled Excess</div>
+        <div class="event-desc">112% of LPA — second consecutive excess year. La Niña (ONI −0.9°C) strengthened the Somali Jet and Bay of Bengal branch. Assam flooding affected ~5 million. Kerala's 2020 landslides caused by intense August rainfall. Mumbai received its highest ever 24-hour rainfall (204.8mm) in July 2020.</div>
+        <span class="event-peak" style="background:rgba(37,99,235,.12);color:#2563eb;">+12% LPA · La Niña −0.9°C</span>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-year" style="color:#2563eb">1988</div>
+      <div>
+        <div class="event-name">La Niña Super Monsoon</div>
+        <div class="event-desc">Following the worst-ever El Niño drought of 1987, a strong La Niña (ONI −2.0°C) produced one of India's wettest monsoons — 131% of LPA. Catastrophic flooding in Assam and West Bengal. The dramatic swing from drought to excess in back-to-back years remains the most studied ENSO-Monsoon case study.</div>
+        <span class="event-peak" style="background:rgba(37,99,235,.12);color:#2563eb;">+31% LPA · La Niña −2.0°C</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="related-footer">
+    <span class="related-label">ENSO Context</span>
+    <a class="related-pill enso-pill" href="index.html">🌊 Open ENSO Explainer for ONI details</a>
+    <a class="related-pill" onclick="switchTab('forecast')">🔮 IMD Forecast Methods</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 7 — FORECASTING
+══════════════════════════════════════════════ -->
+<div class="phase-panel" id="panel-forecast">
+  <div class="section-header">
+    <span class="phase-label" style="color:#1d4ed8">Forecasting</span>
+    <span class="phase-tag" style="background:rgba(29,78,216,.15);color:#1d4ed8">IMD · Dynamical Models · Skill</span>
+    <span class="phase-desc">How India predicts its monsoon — and why it's so hard</span>
+  </div>
+
+  <div class="box">
+    <p class="box-title">IMD Long-Range Forecast (LRF) System — Inputs and Outputs</p>
+    <svg id="forecast-svg" viewBox="0 0 800 280" style="width:100%;height:280px;display:block;"></svg>
+  </div>
+
+  <div class="two-col" style="margin-top:1.5rem;">
+    <div>
+      <div class="info-section">
+        <div class="info-section-title">The IMD Forecasting System</div>
+        <div class="prose-block">
+          IMD (India Meteorological Department) issues two seasonal forecasts: the <b>April forecast</b> (April 1st week) and an <b>update in June</b>. Both forecast rainfall as a percentage of the Long Period Average (LPA = ~880mm for all-India rainfall during JJAS).
+        </div>
+        <ul class="step-list">
+          <li><span class="step-num" style="background:#1d4ed8">1</span><b>Statistical Model (2003–2020):</b> IMD's earlier Statistical Ensemble Forecasting System (SEFS) used six predictors: ENSO, IOD, NW Indian winter temperature, Eurasian snow cover, etc.</li>
+          <li><span class="step-num" style="background:#1d4ed8">2</span><b>Dynamical Model (2021–):</b> IMD now uses Coupled Forecast System (CFS) v2 from NCEP — a fully coupled ocean-atmosphere model run at T126 resolution. More physically consistent but retains skill limitations.</li>
+          <li><span class="step-num" style="background:#1d4ed8">3</span><b>Ensemble Approach:</b> IMD uses multi-model ensembles combining CFS, ECMWF SEAS5, and UK Met Office GloSea6 for improved skill.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="info-section">
+        <div class="info-section-title">Forecast Skill &amp; Limitations</div>
+        <div class="prose-block">
+          All-India seasonal rainfall (AISMR) forecasts have demonstrated skill, but regional and sub-seasonal skill remains limited. Key limitations:
+        </div>
+        <div class="callout" style="border-color:#dc2626;">
+          <b>The Spring Predictability Barrier:</b> ENSO forecasts for the subsequent monsoon season (Jun–Sep) made before April have limited skill — the coupled ocean-atmosphere system is in an unpredictable state in March–April. This is the monsoon forecaster's fundamental challenge.
+        </div>
+        <div class="callout" style="border-color:#d97706;margin-top:.5rem;">
+          <b>Chaotic Atmosphere:</b> Even with perfect boundary conditions (SST), the monsoon's internal variability — active/break cycles, MJO phase, mid-latitude interactions — limits deterministic skill beyond 2–3 weeks.
+        </div>
+        <div class="callout" style="border-color:#0369a1;margin-top:.5rem;">
+          <b>Skill Score:</b> IMD's seasonal forecast has a hindcast correlation of ~0.6 for all-India rainfall — meaning it explains ~36% of interannual variance. For individual states or districts, skill drops sharply.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="box-title">Predictor Variables — Relative Importance for All-India Monsoon</p>
+    <svg id="predictor-svg" viewBox="0 0 700 200" style="width:100%;height:200px;display:block;"></svg>
+  </div>
+
+  <div class="mech-grid" style="margin-top:1.5rem;">
+    <div class="mech-card">
+      <div class="mech-card-title">Extended-Range Prediction (ERP)</div>
+      <div class="mech-card-body">
+        IMD issues weekly ERP for active/break conditions 2–4 weeks ahead. These are crucial for farmers deciding sowing windows. The <b>IITM (Indian Institute of Tropical Meteorology, Pune)</b> runs the NCUM-R ensemble for 30-day outlooks. Skill at week-2 is moderate; weeks 3–4 are generally below standard probabilistic benchmarks.
+      </div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-title">Role of MJO</div>
+      <div class="mech-card-body">
+        The <b>Madden-Julian Oscillation</b> is the most important sub-seasonal modulator. Its 30–60 day cycle of convective envelope propagating eastward can enhance or suppress the ISM by ±20–30% on a 2-week timescale. MJO phase 2–3 (over Indian Ocean) = active; Phase 6–7 (over western Pacific) = break. Monitoring the MJO is now central to ERP.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 8 — UPSC CORNER
+══════════════════════════════════════════════ -->
+<div class="phase-panel" id="panel-upsc">
+  <div class="section-header">
+    <span class="phase-label" style="color:#be185d">UPSC Corner</span>
+    <span class="phase-tag" style="background:rgba(190,24,93,.15);color:#be185d">Key Facts · PYQs · Flashcards</span>
+    <span class="phase-desc">Everything you need for the Civil Services examination</span>
+  </div>
+
+  <div class="callout" style="border-color:#be185d;">
+    <b>📚 Exam Focus:</b> The Indian Summer Monsoon is a recurring topic across <b>UPSC Prelims (Geography)</b> and <b>Mains (GS-1 Physical Geography, GS-3 Agriculture/Disaster Management)</b>. Key themes: mechanism, ENSO link, IMD forecasting, regional variability, and climate change impact.
+  </div>
+
+  <div class="info-section" style="margin-top:1.5rem;">
+    <div class="info-section-title">Flashcard Practice — Click to Reveal Answer</div>
+    <div class="flashcard-grid">
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-q">Q: What is the Long Period Average (LPA) for all-India rainfall during JJAS, and what thresholds define "normal", "deficient", and "excess"?</div>
+        <div class="flashcard-a"><b>LPA = ~880mm</b> (revised from ~1,187mm, depending on metric). IMD uses the 1961–2010 base period. <b>Normal:</b> 96–104% of LPA. <b>Below normal:</b> 90–96%. <b>Deficient:</b> &lt;90%. <b>Excess:</b> &gt;110%. A &lt;90% or &gt;110% year triggers special IMD advisories.</div>
+        <div class="flashcard-hint">Tap to reveal answer</div>
+      </div>
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-q">Q: What are the IMD criteria (revised 2017) for declaring the monsoon onset over Kerala?</div>
+        <div class="flashcard-a">At least <b>60% of 14 designated stations</b> in Kerala and Lakshadweep receive ≥2.5mm rainfall on each of <b>2 consecutive days</b>, sustained westerly winds at <b>925 hPa</b> up to 60°N, and OLR below <b>200 W/m²</b> over the area 5–10°N, 70–75°E.</div>
+        <div class="flashcard-hint">Tap to reveal answer</div>
+      </div>
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-q">Q: Define the Findlater Jet. At what pressure level does it operate? What is its role in the monsoon?</div>
+        <div class="flashcard-a">The <b>Findlater/Somali Jet</b> is a low-level atmospheric jet at <b>850 hPa (~1.5km)</b>. In boreal summer, it flows from the Southern Hemisphere across Somalia, curves NE across the Arabian Sea. Wind speeds 30–40 m/s. It is the <b>primary moisture delivery mechanism</b> for the ISM — carrying moisture from the southern IO to the Arabian Sea branch.</div>
+        <div class="flashcard-hint">Tap to reveal answer</div>
+      </div>
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-q">Q: Explain the ENSO-Monsoon teleconnection. Why was the 1997 monsoon near-normal despite a Super El Niño?</div>
+        <div class="flashcard-a">El Niño suppresses the ISM via: weakened Walker Circulation → reduced cross-equatorial flow → weak Somali Jet → deficit rainfall. In <b>1997</b>, a Super El Niño (ONI +2.4°C) coincided with a strong <b>Positive IOD</b> (+DMI), which enhanced western Indian Ocean warmth and partially restored monsoon moisture — resulting in 102% of LPA.</div>
+        <div class="flashcard-hint">Tap to reveal answer</div>
+      </div>
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-q">Q: Distinguish between an active phase and a break phase of the Indian Summer Monsoon.</div>
+        <div class="flashcard-a"><b>Active Phase:</b> Monsoon trough near normal/northern position. Widespread rainfall over central India. Frequent LPS in BoB. Duration 5–10 days. <b>Break Phase:</b> Trough shifts to Himalayan foothills. Dry over IGP. Heavy rain over NE India and Himalayan foothills. Duration 5–20 days. Extended breaks (&gt;15 days) lead to drought over central India.</div>
+        <div class="flashcard-hint">Tap to reveal answer</div>
+      </div>
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-q">Q: Which meteorological parameter does IMD primarily use to assess Indian Ocean Dipole (IOD), and what DMI threshold defines a positive event?</div>
+        <div class="flashcard-a">The <b>Dipole Mode Index (DMI)</b> = SST anomaly in <b>western box (50–70°E, 10°S–10°N)</b> minus SST anomaly in <b>eastern box (90–110°E, 10°S–0°N)</b>. A <b>positive IOD</b> event is when DMI exceeds <b>+0.4°C</b> for several consecutive weeks.</div>
+        <div class="flashcard-hint">Tap to reveal answer</div>
+      </div>
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-q">Q: Name three UPSC-relevant drought years linked to El Niño and the approximate rainfall anomaly for each.</div>
+        <div class="flashcard-a"><b>1877:</b> ~−20% LPA (El Niño); Madras Famine. <b>1987:</b> −27% LPA (El Niño +1.7°C); worst 20th-century drought. <b>2002:</b> −19% LPA (El Niño +1.2°C); govt. drought response tested. Also note <b>1972</b> (−24%, El Niño +1.8°C) and <b>2009</b> (−22%, El Niño developing).</div>
+        <div class="flashcard-hint">Tap to reveal answer</div>
+      </div>
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-q">Q: What is the "Spring Predictability Barrier" in the context of monsoon forecasting?</div>
+        <div class="flashcard-a">ENSO forecasts made <b>before April</b> for the subsequent monsoon (Jun–Sep) have limited skill because the coupled ocean-atmosphere system passes through a <b>predictability barrier in March–April</b>. During this period, the ENSO signal is weakest and the system is transitioning — making it difficult to forecast whether El Niño or La Niña will develop. This limits monsoon forecast skill.</div>
+        <div class="flashcard-hint">Tap to reveal answer</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="info-section-title">Key Terms — Quick Reference</div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Term</th><th>Full Form / Definition</th><th>Exam Relevance</th></tr></thead>
+        <tbody>
+          <tr><td><b>ISM</b></td><td>Indian Summer Monsoon (June–September, SW monsoon)</td><td>Prelims, Mains GS-1</td></tr>
+          <tr><td><b>LPA</b></td><td>Long Period Average — ~880mm JJAS all-India rainfall (1961–2010 base)</td><td>Prelims frequently</td></tr>
+          <tr><td><b>ITCZ</b></td><td>Intertropical Convergence Zone — low-pressure belt that migrates N in summer</td><td>GS-1 Mechanism</td></tr>
+          <tr><td><b>Findlater/Somali Jet</b></td><td>850 hPa low-level jet; primary moisture delivery; Somalia → Arabian Sea</td><td>GS-1, Mains</td></tr>
+          <tr><td><b>IOD / DMI</b></td><td>Indian Ocean Dipole / Dipole Mode Index; W-E SST difference in Indian Ocean</td><td>GS-1 frequently</td></tr>
+          <tr><td><b>ONI</b></td><td>Oceanic Niño Index — 3-month rolling SST anomaly in Niño 3.4 region</td><td>GS-1, ENSO link</td></tr>
+          <tr><td><b>MJO</b></td><td>Madden-Julian Oscillation — 30–60 day sub-seasonal mode; active/break modulator</td><td>Mains detailed</td></tr>
+          <tr><td><b>Active Phase</b></td><td>Monsoon trough in normal position; widespread central India rainfall</td><td>GS-1</td></tr>
+          <tr><td><b>Break Phase</b></td><td>Trough near Himalayas; IGP dry; NE India wet</td><td>GS-1</td></tr>
+          <tr><td><b>LPS</b></td><td>Low Pressure System in BoB — key driver of JJAS rain events</td><td>Prelims, GS-3 Disasters</td></tr>
+          <tr><td><b>Western Disturbance</b></td><td>Extra-tropical cyclone; winter rains in NW India; not monsoon-related</td><td>Distinguish from ISM</td></tr>
+          <tr><td><b>ERP</b></td><td>Extended Range Prediction — 2–4 week active/break outlook by IMD</td><td>GS-3 Agriculture</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="info-section" style="margin-top:1.5rem;">
+    <div class="info-section-title">Cross-Links to Related UPSC Topics</div>
+    <div class="impacts-grid">
+      <div class="impact-card"><span class="impact-icon">🌊</span><div class="impact-region">ENSO</div><div class="impact-text">El Niño / La Niña mechanism, Walker Circulation, teleconnections, historical events.</div>
+        <a class="related-pill enso-pill" href="index.html" style="display:inline-flex;margin-top:.5rem;font-size:.55rem;">🌊 ENSO Explainer</a>
+      </div>
+      <div class="impact-card"><span class="impact-icon">🌡️</span><div class="impact-region">Climate Change</div><div class="impact-text">Changing monsoon patterns, increased variability, glacial melt impacts on Himalayan rivers.</div><span class="impact-badge badge-warm">GS-3 Environment</span></div>
+      <div class="impact-card"><span class="impact-icon">🌾</span><div class="impact-region">Agriculture</div><div class="impact-text">Kharif crops, minimum support price, NDMA drought response, PM-AASHA scheme.</div><span class="impact-badge badge-normal">GS-3</span></div>
+      <div class="impact-card"><span class="impact-icon">💧</span><div class="impact-region">Water Management</div><div class="impact-text">Interlinking of rivers, reservoir management, groundwater depletion, PMKSY.</div><span class="impact-badge badge-wet">GS-3</span></div>
+      <div class="impact-card"><span class="impact-icon">🌪️</span><div class="impact-region">Disasters</div><div class="impact-text">Cyclone management (NDMA), flash floods, drought declaration criteria, SDRF/NDRF.</div><span class="impact-badge badge-dry">GS-3 Disaster</span></div>
+      <div class="impact-card"><span class="impact-icon">🗺️</span><div class="impact-region">Physical Geography</div><div class="impact-text">Western Ghats orographic rainfall, rain shadow, Himalayan barrier effect, BoB LPS tracks.</div><span class="impact-badge badge-normal">GS-1</span></div>
+    </div>
+  </div>
+
+  <div class="related-footer">
+    <span class="related-label">Related Explainers</span>
+    <a class="related-pill enso-pill" href="index.html">📎 ENSO Explainer</a>
+    <a class="related-pill iod-pill" href="index.html">🌊 IOD — Oscillations Tab</a>
+  </div>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:2rem;border-top:1px solid var(--border);font-size:.62rem;color:var(--muted);margin-top:1rem;">
+  Indian Summer Monsoon Explainer · Built to match ENSO Explainer design system ·
+  <a href="index.html" style="color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);">📎 Related: ENSO Explainer</a>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  THEME TOGGLE
+// ═══════════════════════════════════════════════
+function toggleTheme(){
+  const dark=document.body.dataset.theme==='dark';
+  document.body.dataset.theme=dark?'light':'dark';
+  document.getElementById('themeIcon').textContent=dark?'🌙':'☀️';
+  document.getElementById('themeLabel').textContent=dark?'Dark mode':'Light mode';
+  redrawAll();
+}
+
+// ═══════════════════════════════════════════════
+//  TAB NAVIGATION
+// ═══════════════════════════════════════════════
+function switchTab(phase){
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.classList.toggle('active',t.dataset.phase===phase);
+  });
+  document.querySelectorAll('.phase-panel').forEach(p=>{
+    p.classList.toggle('visible',p.id==='panel-'+phase);
+  });
+  // Trigger relevant redraws
+  redrawAll();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>switchTab(tab.dataset.phase));
+});
+
+// ═══════════════════════════════════════════════
+//  INDIA OUTLINE — simplified polygon path
+//  Coordinate system: viewBox 500×560
+// ═══════════════════════════════════════════════
+// Simplified but recognizable India outline polygon
+// Plus J&K, NE states, islands
+function getIndiaPath(){
+  // Main India body
+  return `M 195,20
+    L 210,22 L 225,18 L 248,24 L 262,20 L 280,26 L 295,22
+    L 310,28 L 325,26 L 345,30 L 360,28 L 375,32 L 390,30
+    L 405,36 L 415,45 L 418,58 L 410,68 L 415,80 L 420,92
+    L 415,104 L 408,112 L 400,125 L 398,140 L 405,155
+    L 408,172 L 400,188 L 390,200 L 378,215 L 365,228
+    L 350,240 L 338,252 L 325,265 L 310,278 L 298,292
+    L 285,308 L 270,322 L 255,335 L 245,348 L 240,360
+    L 245,370 L 252,378 L 258,388 L 262,400 L 268,410
+    L 272,422 L 275,435 L 272,448 L 265,458 L 258,466
+    L 250,474 L 240,480 L 228,485 L 218,478 L 208,468
+    L 200,456 L 194,444 L 190,430 L 186,418 L 182,405
+    L 178,392 L 175,378 L 172,365 L 175,352 L 178,340
+    L 182,328 L 178,315 L 172,302 L 165,290 L 158,278
+    L 152,265 L 148,252 L 145,238 L 142,224 L 140,210
+    L 138,196 L 135,182 L 132,168 L 130,155 L 128,142
+    L 125,128 L 122,115 L 118,102 L 115,90 L 112,78
+    L 110,65 L 112,52 L 118,42 L 128,34 L 140,28
+    L 155,24 L 170,20 L 185,18 Z`;
+}
+
+// NE India bulge (approximate Assam/NE states)
+function getNEPath(){
+  return `M 390,30 L 405,26 L 420,28 L 440,32 L 455,40
+    L 465,52 L 468,65 L 462,78 L 450,85 L 435,88
+    L 420,85 L 408,78 L 400,68 L 398,55 L 395,42 Z`;
+}
+
+// J&K simplified
+function getJKPath(){
+  return `M 195,20 L 185,18 L 170,16 L 155,18 L 140,22
+    L 128,28 L 118,36 L 112,46 L 108,56 L 106,68
+    L 108,80 L 112,90 L 118,96 L 125,100 L 130,94
+    L 135,82 L 140,72 L 148,62 L 158,54 L 168,46
+    L 178,38 L 188,30 Z`;
+}
+
+// Sri Lanka (small island)
+function getSLPath(){
+  return `M 255,500 L 265,495 L 272,505 L 268,515 L 258,518 L 250,510 Z`;
+}
+
+// Andaman (tiny)
+function getAndamanPath(){
+  return `M 438,440 L 442,438 L 445,445 L 442,452 L 438,450 Z`;
+}
+
+// ═══════════════════════════════════════════════
+//  THEME HELPERS
+// ═══════════════════════════════════════════════
+function isDark(){return document.body.dataset.theme==='dark';}
+function tc(){return isDark()?'rgba(255,255,255,.75)':'rgba(0,0,0,.72)';}
+function mc(){return isDark()?'rgba(255,255,255,.4)':'rgba(0,0,0,.38)';}
+function landFill(){return isDark()?'#1a2f22':'#c8dcc6';}
+function oceanFill(){return isDark()?'#071828':'#c5dff0';}
+function surfaceFill(){return isDark()?'#0f1f16':'#ffffff';}
+function borderColor(){return isDark()?'rgba(255,255,255,.12)':'rgba(0,0,0,.12)';}
+
+// ═══════════════════════════════════════════════
+//  OVERVIEW SVG — ITCZ + cross-equatorial flow
+// ═══════════════════════════════════════════════
+function drawOverviewSvg(){
+  const svg=document.getElementById('overview-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=300;
+  const ocn=dark?'#071828':'#c5dff0';
+  const lnd=dark?'#1e3228':'#c8d9c0';
+  const txt=tc(); const muted=mc();
+  let h='';
+
+  // Ocean background
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${ocn}"/>`;
+
+  // Equator line
+  h+=`<line x1="0" y1="190" x2="${W}" y2="190" stroke="${muted}" stroke-width="1" stroke-dasharray="6 4"/>`;
+  h+=`<text x="8" y="186" fill="${muted}" font-size="9" font-family="DM Mono,monospace">Equator</text>`;
+
+  // Indian Ocean schematic
+  // Africa (left)
+  h+=`<polygon points="80,40 130,35 145,80 148,140 140,180 130,190 115,188 100,175 85,155 78,120 75,80" fill="${lnd}"/>`;
+  h+=`<text x="90" y="220" fill="${muted}" font-size="9" font-family="DM Mono,monospace">Africa</text>`;
+
+  // India (center-right)
+  h+=`<polygon points="410,60 435,55 455,80 460,110 450,145 435,165 420,180 405,190 390,185 380,172 375,155 378,130 385,105 395,82" fill="${lnd}"/>`;
+  h+=`<text x="415" y="125" fill="${txt}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">India</text>`;
+
+  // Arabian Peninsula
+  h+=`<polygon points="280,55 325,50 340,70 335,95 315,105 290,100 275,80" fill="${lnd}"/>`;
+  h+=`<text x="305" y="88" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Arabia</text>`;
+
+  // Bay of Bengal label
+  h+=`<text x="500" y="150" fill="${muted}" font-size="9" font-family="DM Mono,monospace">Bay of Bengal</text>`;
+
+  // Arabian Sea label
+  h+=`<text x="200" y="150" fill="${muted}" font-size="9" font-family="DM Mono,monospace">Arabian Sea</text>`;
+
+  // ITCZ band
+  h+=`<rect x="0" y="55" width="${W}" height="18" fill="rgba(21,128,61,.12)" stroke="rgba(21,128,61,.3)" stroke-width="1" stroke-dasharray="8 4"/>`;
+  h+=`<text x="${W/2}" y="68" fill="#16a34a" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">ITCZ (Intertropical Convergence Zone) — June position</text>`;
+
+  // Winter ITCZ
+  h+=`<line x1="0" y1="200" x2="${W}" y2="200" stroke="rgba(21,128,61,.3)" stroke-width="1" stroke-dasharray="4 6"/>`;
+  h+=`<text x="${W-8}" y="198" fill="rgba(21,128,61,.5)" font-size="8" font-family="DM Mono,monospace" text-anchor="end">ITCZ (winter position ~5°S)</text>`;
+
+  // Cross-equatorial flow arrows (Somali Jet)
+  // Arrow path from south (Somalia) curving to India
+  const arrowPts=[
+    [108,260],[115,240],[120,220],[128,200],[140,185],[165,168],[195,155],
+    [230,142],[265,132],[300,125],[335,118],[365,112],[388,105]
+  ];
+  let pathStr='M '+arrowPts.map(p=>p.join(',')).join(' L ');
+  h+=`<path d="${pathStr}" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="none" opacity=".85" marker-end="url(#blueArrow)"/>`;
+  h+=`<text x="200" y="175" fill="#0284c7" font-size="9" font-family="DM Mono,monospace" transform="rotate(-15,200,175)">Somali / Findlater Jet (SW monsoon flow)</text>`;
+
+  // Arabian Sea branch
+  h+=`<path d="M 350,115 L 370,105 L 388,98" fill="none" stroke="#16a34a" stroke-width="2" opacity=".8" marker-end="url(#greenArrow)"/>`;
+  // BoB branch
+  h+=`<path d="M 440,175 L 460,160 L 475,140 L 488,120" fill="none" stroke="#16a34a" stroke-width="2" opacity=".8" marker-end="url(#greenArrow)"/>`;
+  h+=`<text x="480" y="115" fill="#16a34a" font-size="8" font-family="DM Mono,monospace">BoB Branch</text>`;
+
+  // Thermal low label
+  h+=`<ellipse cx="380" cy="68" rx="38" ry="15" fill="rgba(220,38,38,.12)" stroke="rgba(220,38,38,.35)" stroke-width="1" stroke-dasharray="4 3"/>`;
+  h+=`<text x="380" y="65" fill="#dc2626" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Thermal Low</text>`;
+  h+=`<text x="380" y="76" fill="#dc2626" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">Thar / NW India</text>`;
+
+  // Southern hemisphere SE trades
+  h+=`<text x="200" y="275" fill="${muted}" font-size="8" font-family="DM Mono,monospace">SE Trade Winds (S. Hemisphere)</text>`;
+  h+=`<path d="M 195,260 L 145,245" fill="none" stroke="${muted}" stroke-width="1.5" opacity=".5" marker-end="url(#greyArr)"/>`;
+  h+=`<path d="M 240,268 L 175,255" fill="none" stroke="${muted}" stroke-width="1.5" opacity=".5" marker-end="url(#greyArr)"/>`;
+
+  // Coriolis deflection note
+  h+=`<text x="145" y="210" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Coriolis: deflects right →</text>`;
+  h+=`<text x="145" y="220" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace">SE trades become SW monsoon</text>`;
+
+  // Defs
+  h=`<defs>
+    <marker id="blueArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0284c7" opacity=".85"/></marker>
+    <marker id="greenArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#16a34a" opacity=".85"/></marker>
+    <marker id="greyArr" markerWidth="6" markerHeight="6" refX="5" refY="2.5" orient="auto"><polygon points="0 0,6 2.5,0 5" fill="${muted}"/></marker>
+  </defs>`+h;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  ONSET TIMELINE SVG
+// ═══════════════════════════════════════════════
+function drawOnsetTimeline(){
+  const svg=document.getElementById('onset-timeline-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=180;
+  const txt=tc(); const muted=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  const phases=[
+    {label:'Kerala Onset',date:'Jun 1',x:60,color:'#16a34a'},
+    {label:'Karnataka/Goa',date:'Jun 8',x:155,color:'#16a34a'},
+    {label:'Mumbai',date:'Jun 11',x:230,color:'#0369a1'},
+    {label:'Kolkata',date:'Jun 15',x:308,color:'#0369a1'},
+    {label:'Central India',date:'Jun 20',x:395,color:'#0e7490'},
+    {label:'UP/Bihar',date:'Jun 25',x:468,color:'#0e7490'},
+    {label:'NW Rajasthan',date:'Jul 15',x:600,color:'#dc2626'},
+    {label:'J&K',date:'Jul 15',x:690,color:'#dc2626'},
+  ];
+
+  // Timeline track
+  h+=`<line x1="40" y1="100" x2="${W-20}" y2="100" stroke="${muted}" stroke-width="1.5" opacity=".4"/>`;
+
+  phases.forEach(p=>{
+    h+=`<circle cx="${p.x}" cy="100" r="6" fill="${p.color}" opacity=".9"/>`;
+    h+=`<line x1="${p.x}" y1="100" x2="${p.x}" y2="72" stroke="${p.color}" stroke-width="1" opacity=".5"/>`;
+    h+=`<text x="${p.x}" y="68" fill="${p.color}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">${p.date}</text>`;
+    h+=`<text x="${p.x}" y="122" fill="${txt}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${p.label.split('/').join('/ ')}</text>`;
+  });
+
+  // Month labels
+  ['June','July','Aug (all covered)'].forEach((m,i)=>{
+    const x=80+i*280;
+    h+=`<text x="${x}" y="155" fill="${muted}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">${m}</text>`;
+  });
+
+  // Withdrawal arrow
+  h+=`<path d="M 680,100 L 120,100" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5 4" opacity=".6" marker-end="url(#amberArr)"/>`;
+  h+=`<text x="400" y="175" fill="#d97706" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">← Withdrawal (Sep 1 NW India → Oct 15 SE India)</text>`;
+
+  h=`<defs><marker id="amberArr" markerWidth="6" markerHeight="6" refX="5" refY="2.5" orient="auto"><polygon points="0 0,6 2.5,0 5" fill="#d97706"/></marker></defs>`+h;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  INDIA ONSET MAP (Tab 2)
+// ═══════════════════════════════════════════════
+const onsetStates=[
+  {id:'kerala',name:'Kerala',onset:'June 1',info:'First state to receive SW monsoon every year',color:'#16a34a',
+   path:'M 230,480 L 248,470 L 258,460 L 265,448 L 268,436 L 265,422 L 260,410 L 252,398 L 245,384 L 240,370 L 238,358 L 242,346 L 248,336 L 240,342 L 232,352 L 225,365 L 218,378 L 215,392 L 212,406 L 212,420 L 215,435 L 218,450 L 222,465 Z'},
+  {id:'tamilnadu',name:'Tamil Nadu',onset:'June 5',info:'Eastern monsoon branch arrives early here',color:'#16a34a',
+   path:'M 248,336 L 265,322 L 278,308 L 290,295 L 300,282 L 308,270 L 312,258 L 305,262 L 292,270 L 278,280 L 265,292 L 255,305 L 248,318 Z'},
+  {id:'karnataka',name:'Karnataka',onset:'June 8',info:'Gets both Arabian Sea and Bay branches',color:'#16a34a',
+   path:'M 215,340 L 225,325 L 238,310 L 252,298 L 262,285 L 270,272 L 276,260 L 268,256 L 255,250 L 242,244 L 228,240 L 215,238 L 205,242 L 195,248 L 188,258 L 182,272 L 178,288 L 178,304 L 182,318 L 190,330 L 202,338 Z'},
+  {id:'goa',name:'Goa',onset:'June 8',info:'Among the wettest regions in India',color:'#16a34a',
+   path:'M 178,265 L 190,260 L 198,268 L 195,278 L 185,278 L 178,272 Z'},
+  {id:'andhra',name:'Andhra Pradesh',onset:'June 12',info:'Bay of Bengal branch brings initial rains',color:'#0369a1',
+   path:'M 268,256 L 285,245 L 302,235 L 318,228 L 335,222 L 348,218 L 358,225 L 365,240 L 368,256 L 365,272 L 358,286 L 348,298 L 335,308 L 322,315 L 308,318 L 295,315 L 282,308 L 272,298 L 266,284 L 264,270 Z'},
+  {id:'maharashtra',name:'Maharashtra',onset:'June 11',info:'Mumbai receives earliest heavy rains',color:'#0369a1',
+   path:'M 175,238 L 190,232 L 205,226 L 220,222 L 235,218 L 250,216 L 265,218 L 278,228 L 280,240 L 276,252 L 268,260 L 255,262 L 240,258 L 225,252 L 210,248 L 195,248 L 182,250 L 172,256 L 168,248 L 168,240 Z'},
+  {id:'westbengal',name:'West Bengal',onset:'June 15',info:'Bay of Bengal branch; Kolkata area',color:'#0369a1',
+   path:'M 355,218 L 372,212 L 385,208 L 398,205 L 408,212 L 412,225 L 408,238 L 398,245 L 385,248 L 372,245 L 360,238 L 352,228 Z'},
+  {id:'odisha',name:'Odisha',onset:'June 15',info:'Active LPS systems bring intense rain here',color:'#0369a1',
+   path:'M 335,222 L 355,218 L 368,225 L 375,240 L 372,256 L 365,268 L 352,278 L 338,282 L 325,278 L 312,268 L 305,255 L 308,240 L 318,230 Z'},
+  {id:'mp',name:'Madhya Pradesh',onset:'June 20',info:'Central India — core of monsoon trough zone',color:'#0e7490',
+   path:'M 178,215 L 195,208 L 215,204 L 235,200 L 255,198 L 272,200 L 285,208 L 295,218 L 298,230 L 292,240 L 278,246 L 262,248 L 248,245 L 232,240 L 218,238 L 205,240 L 190,242 L 178,238 L 172,228 Z'},
+  {id:'up',name:'Uttar Pradesh',onset:'June 25',info:'IGP — trough fluctuations control onset',color:'#0e7490',
+   path:'M 175,175 L 195,168 L 218,164 L 242,160 L 265,158 L 288,162 L 308,168 L 325,178 L 335,192 L 332,205 L 318,212 L 300,215 L 280,212 L 260,210 L 240,210 L 220,212 L 200,215 L 182,215 L 170,208 L 168,195 Z'},
+  {id:'rajasthan',name:'Rajasthan',onset:'July 1–15',info:'Most arid state; irregular and scanty monsoon',color:'#d97706',
+   path:'M 110,148 L 130,138 L 152,132 L 172,128 L 192,128 L 210,130 L 228,135 L 242,142 L 250,155 L 248,168 L 240,178 L 225,183 L 208,185 L 190,182 L 172,178 L 155,172 L 138,165 L 122,158 L 110,160 Z'},
+  {id:'punjab',name:'Punjab & Haryana',onset:'July 8',info:'Late onset; good when trough moves far north',color:'#d97706',
+   path:'M 148,115 L 168,108 L 192,106 L 212,108 L 228,118 L 235,130 L 230,142 L 215,148 L 195,150 L 175,148 L 158,142 L 145,132 L 142,120 Z'},
+  {id:'jk',name:'J&K / Ladakh',onset:'July 15',info:'Limited ISM penetration; western disturbances dominate winters',color:'#dc2626',
+   path:'M 138,55 L 158,48 L 180,44 L 202,42 L 220,46 L 236,54 L 248,64 L 252,78 L 245,92 L 232,98 L 215,100 L 198,98 L 180,92 L 162,84 L 148,72 L 138,62 Z'},
+  {id:'hp',name:'Himachal Pradesh',onset:'July 12',info:'Orographic rain from both branches',color:'#dc2626',
+   path:'M 188,100 L 205,96 L 222,98 L 235,106 L 238,118 L 228,128 L 212,130 L 196,126 L 184,118 L 180,108 Z'},
+  {id:'uttarakhand',name:'Uttarakhand',onset:'July 5',info:'Heavy orographic rain in Kumaon-Garhwal hills',color:'#d97706',
+   path:'M 242,108 L 260,104 L 278,106 L 290,115 L 292,128 L 282,136 L 265,138 L 250,132 L 238,122 L 236,112 Z'},
+  {id:'northeast',name:'NE India',onset:'June 5',info:'Wettest region in India — Mawsynram receives >11,000mm/year',color:'#16a34a',
+   path:'M 395,150 L 415,145 L 435,142 L 452,148 L 465,160 L 468,175 L 460,188 L 445,194 L 428,196 L 412,192 L 398,182 L 390,168 L 390,158 Z'},
+  {id:'gujarat',name:'Gujarat',onset:'June 20',info:'Arabian Sea branch; Saurashtra gets variable rain',color:'#0e7490',
+   path:'M 110,188 L 128,182 L 148,178 L 165,180 L 175,190 L 175,205 L 168,215 L 155,220 L 138,218 L 122,212 L 110,202 Z'},
+];
+
+function drawIndiaOnsetMap(){
+  const svg=document.getElementById('india-onset-map'); if(!svg)return;
+  const dark=isDark();
+  const ocn=dark?'#071828':'#c5dff0';
+  const lnd=dark?'rgba(255,255,255,.05)':'rgba(0,0,0,.04)';
+  let h='';
+  h+=`<rect x="0" y="0" width="500" height="560" fill="${ocn}"/>`;
+
+  onsetStates.forEach(s=>{
+    const opacity=dark?'.75':'.65';
+    h+=`<path d="${s.path}" fill="${s.color}" fill-opacity="${opacity}" stroke="${dark?'#000':'#fff'}" stroke-width=".8" stroke-opacity=".3" data-id="${s.id}" style="cursor:pointer;transition:fill-opacity .2s;"/>`;
+    h+=`<path d="${s.path}" fill="transparent" stroke="none" data-id="${s.id}" style="cursor:pointer;"/>`;
+  });
+
+  // Bay of Bengal label
+  h+=`<text x="440" y="280" fill="${dark?'rgba(255,255,255,.25)':'rgba(0,0,0,.25)'}" font-size="9" font-family="DM Mono,monospace">Bay of</text>`;
+  h+=`<text x="440" y="292" fill="${dark?'rgba(255,255,255,.25)':'rgba(0,0,0,.25)'}" font-size="9" font-family="DM Mono,monospace">Bengal</text>`;
+
+  // Arabian Sea label
+  h+=`<text x="50" y="310" fill="${dark?'rgba(255,255,255,.25)':'rgba(0,0,0,.25)'}" font-size="9" font-family="DM Mono,monospace">Arabian</text>`;
+  h+=`<text x="55" y="322" fill="${dark?'rgba(255,255,255,.25)':'rgba(0,0,0,.25)'}" font-size="9" font-family="DM Mono,monospace">Sea</text>`;
+
+  svg.innerHTML=h;
+
+  // Add hover tooltips
+  svg.querySelectorAll('path[data-id]').forEach(path=>{
+    path.addEventListener('mouseenter',function(e){
+      const state=onsetStates.find(s=>s.id===this.dataset.id);
+      if(!state)return;
+      const tooltip=document.getElementById('onset-tooltip');
+      document.getElementById('ot-region').textContent=state.name;
+      document.getElementById('ot-date').textContent='Normal onset: '+state.onset;
+      document.getElementById('ot-info').textContent=state.info;
+      tooltip.style.left=(e.offsetX+10)+'px';
+      tooltip.style.top=(e.offsetY-20)+'px';
+      tooltip.classList.add('visible');
+    });
+    path.addEventListener('mousemove',function(e){
+      const tooltip=document.getElementById('onset-tooltip');
+      tooltip.style.left=(e.offsetX+12)+'px';
+      tooltip.style.top=(e.offsetY-20)+'px';
+    });
+    path.addEventListener('mouseleave',()=>{
+      document.getElementById('onset-tooltip').classList.remove('visible');
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  ONSET COMPARE SVG
+// ═══════════════════════════════════════════════
+function drawOnsetCompare(){
+  const svg=document.getElementById('onset-compare-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=200;
+  const txt=tc(); const muted=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  // X axis = time May15 to Oct 15
+  // States on Y: Kerala, Mumbai, Delhi, Rajasthan
+  const states=['Kerala','Mumbai','Delhi','NW Rajasthan'];
+  const normalDates=[17,27,55,75]; // days from June 1
+  const earlyDates=[10,20,46,66];  // 2020 (early-ish)
+  const lateDates=[30,42,70,95];   // 2002 (late)
+  const padL=110,padT=25,cH=140,cW=W-padL-40;
+
+  states.forEach((s,i)=>{
+    const y=padT+i*(cH/4)+20;
+    h+=`<text x="${padL-8}" y="${y+4}" fill="${txt}" font-size="9" font-family="DM Mono,monospace" text-anchor="end">${s}</text>`;
+
+    const scX=d=>padL+(d/105)*cW;
+
+    // Normal
+    h+=`<circle cx="${scX(normalDates[i])}" cy="${y}" r="5" fill="#0369a1" opacity=".85"/>`;
+    // Early 2020
+    h+=`<circle cx="${scX(earlyDates[i])}" cy="${y}" r="5" fill="#16a34a" opacity=".85"/>`;
+    // Late 2002
+    h+=`<circle cx="${scX(lateDates[i])}" cy="${y}" r="5" fill="#dc2626" opacity=".85"/>`;
+
+    // Range bar
+    h+=`<line x1="${scX(earlyDates[i])}" y1="${y}" x2="${scX(lateDates[i])}" y2="${y}" stroke="${muted}" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>`;
+  });
+
+  // X axis labels
+  ['June 1','June 15','July 1','July 15','Aug 1','Sep 1','Oct 1'].forEach((lbl,i)=>{
+    const d=[0,14,30,45,61,91,120][i];
+    if(d>105) return;
+    const x=padL+(d/105)*cW;
+    h+=`<text x="${x}" y="${padT+cH+12}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${lbl}</text>`;
+    h+=`<line x1="${x}" y1="${padT+15}" x2="${x}" y2="${padT+cH}" stroke="${muted}" stroke-width=".5" opacity=".2"/>`;
+  });
+
+  // Legend
+  h+=`<circle cx="${padL}" cy="${padT-8}" r="5" fill="#0369a1"/>`;
+  h+=`<text x="${padL+10}" y="${padT-4}" fill="${txt}" font-size="8.5" font-family="DM Mono,monospace">Normal</text>`;
+  h+=`<circle cx="${padL+80}" cy="${padT-8}" r="5" fill="#16a34a"/>`;
+  h+=`<text x="${padL+90}" y="${padT-4}" fill="${txt}" font-size="8.5" font-family="DM Mono,monospace">2020 (early)</text>`;
+  h+=`<circle cx="${padL+190}" cy="${padT-8}" r="5" fill="#dc2626"/>`;
+  h+=`<text x="${padL+200}" y="${padT-4}" fill="${txt}" font-size="8.5" font-family="DM Mono,monospace">2002 (late)</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  MECHANISM SVG — Findlater Jet + branches
+// ═══════════════════════════════════════════════
+function drawMechanismSvg(){
+  const svg=document.getElementById('mechanism-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=320;
+  const ocn=dark?'#071828':'#c5dff0';
+  const lnd=dark?'#1e3228':'#c8d9c0';
+  const txt=tc(); const muted=mc();
+  let h='';
+
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${ocn}"/>`;
+
+  // Africa
+  h+=`<polygon points="65,35 110,28 125,75 128,135 120,175 108,182 90,178 72,160 62,120 58,75" fill="${lnd}"/>`;
+  h+=`<text x="78" y="215" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Africa/Somalia</text>`;
+
+  // Arabia
+  h+=`<polygon points="268,42 315,38 330,58 325,90 305,100 280,95 265,72" fill="${lnd}"/>`;
+
+  // India (simplified)
+  h+=`<polygon points="390,52 418,48 440,72 445,104 435,138 420,158 405,172 390,178 375,170 368,152 370,128 378,102 385,78" fill="${lnd}"/>`;
+  h+=`<text x="408" y="115" fill="${txt}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">India</text>`;
+
+  // Western Ghats mountain symbol
+  h+=`<polyline points="378,120 382,108 386,118 390,106 394,116 398,104 402,114" fill="none" stroke="${txt}" stroke-width="1.5" opacity=".5"/>`;
+  h+=`<text x="388" y="140" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">W.Ghats</text>`;
+
+  // NE India / Bay of Bengal
+  h+=`<polygon points="448,52 475,45 492,58 495,78 482,90 460,88 442,72" fill="${lnd}"/>`;
+
+  // Thar Desert (thermal low)
+  h+=`<ellipse cx="328" cy="88" rx="28" ry="18" fill="rgba(220,38,38,.15)" stroke="rgba(220,38,38,.4)" stroke-width="1" stroke-dasharray="4 3"/>`;
+  h+=`<text x="328" y="85" fill="#dc2626" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Thermal Low</text>`;
+  h+=`<text x="328" y="97" fill="#dc2626" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">Thar</text>`;
+
+  // Monsoon Trough
+  h+=`<path d="M 340,95 C 380,100 420,105 470,95" fill="none" stroke="#7c3aed" stroke-width="2" stroke-dasharray="6 4" opacity=".7"/>`;
+  h+=`<text x="405" y="115" fill="#7c3aed" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Monsoon Trough</text>`;
+
+  // Findlater Jet (main arrow from Somalia across Arabian Sea)
+  const jetPts=[[92,200],[100,185],[112,170],[132,158],[160,148],[195,138],[235,128],[278,120],[318,112],[350,106],[372,100]];
+  const jetPath='M '+jetPts.map(p=>p.join(',')).join(' L ');
+  h+=`<path d="${jetPath}" fill="none" stroke="#0284c7" stroke-width="3" opacity=".9" marker-end="url(#jetArr)"/>`;
+  h+=`<text x="240" y="155" fill="#0284c7" font-size="9" font-family="DM Mono,monospace">Findlater Jet (850 hPa · 30–40 m/s)</text>`;
+
+  // Arabian Sea Branch (splits at India tip, goes NW)
+  h+=`<path d="M 372,100 L 358,90 L 345,82 L 328,78" fill="none" stroke="#16a34a" stroke-width="2" opacity=".85" marker-end="url(#greenArr2)"/>`;
+  h+=`<text x="320" y="65" fill="#16a34a" font-size="8" font-family="DM Mono,monospace">AS Branch</text>`;
+
+  // Arabian Sea branch hitting Western Ghats
+  h+=`<path d="M 372,100 L 380,90 L 385,80" fill="none" stroke="#16a34a" stroke-width="2" opacity=".85" marker-end="url(#greenArr2)"/>`;
+
+  // BoB Branch (goes north-east)
+  h+=`<path d="M 445,145 L 455,130 L 465,112 L 472,95" fill="none" stroke="#0369a1" stroke-width="2" opacity=".85" marker-end="url(#blueArr2)"/>`;
+  h+=`<text x="468" y="88" fill="#0369a1" font-size="8" font-family="DM Mono,monospace">BoB Branch</text>`;
+
+  // Rain shadow
+  h+=`<text x="420" y="152" fill="${dark?'rgba(217,119,6,.6)':'rgba(180,83,9,.6)'}" font-size="7.5" font-family="DM Mono,monospace">Rain Shadow</text>`;
+
+  // Orographic lifting symbol
+  h+=`<text x="395" y="90" fill="#16a34a" font-size="9" font-family="DM Mono,monospace">↑ Lift</text>`;
+
+  // Labels
+  h+=`<text x="200" y="255" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Arabian Sea</text>`;
+  h+=`<text x="490" y="170" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Bay of</text>`;
+  h+=`<text x="490" y="182" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Bengal</text>`;
+
+  // Altitude scale
+  h+=`<rect x="${W-50}" y="20" width="8" height="120" fill="url(#altGrad)" rx="2"/>`;
+  h+=`<text x="${W-38}" y="30" fill="${muted}" font-size="8" font-family="DM Mono,monospace">High</text>`;
+  h+=`<text x="${W-38}" y="144" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Low</text>`;
+  h+=`<text x="${W-38}" y="90" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" transform="rotate(90,${W-38},90)">850 hPa</text>`;
+
+  h=`<defs>
+    <marker id="jetArr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0284c7"/></marker>
+    <marker id="greenArr2" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#16a34a"/></marker>
+    <marker id="blueArr2" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#0369a1"/></marker>
+    <linearGradient id="altGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dc2626"/><stop offset="1" stop-color="#0284c7"/></linearGradient>
+  </defs>`+h;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  ACTIVE / BREAK SVG
+// ═══════════════════════════════════════════════
+let currentABPhase='active';
+function setABPhase(phase){
+  currentABPhase=phase;
+  document.getElementById('ab-active').className='ab-btn'+(phase==='active'?' active-phase':'');
+  document.getElementById('ab-break').className='ab-btn'+(phase==='break'?' break-phase':'');
+  drawABSvg();
+  document.getElementById('ab-desc').innerHTML=phase==='active'
+    ?`<b>Active Phase:</b> The monsoon trough lies near its normal position across the Indo-Gangetic Plain. Cyclonic circulation in the Bay of Bengal feeds organised convection. Widespread rain over central India (MP, Chhattisgarh, Jharkhand, Odisha). Most of India's seasonal rainfall accumulates during active spells. Duration: 5–10 days typically.`
+    :`<b>Break Phase:</b> The monsoon trough shifts northward toward the Himalayan foothills. Central India experiences dry, sunny conditions. Intense rain concentrates over the Himalayan foothills (Uttarakhand, Himachal) and North-East India. West coast may remain active. Extended breaks (&gt;15 days) significantly reduce seasonal totals and can cause drought over central India.`;
+}
+
+function drawABSvg(){
+  const svg=document.getElementById('ab-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=260;
+  const isActive=currentABPhase==='active';
+  const ocn=dark?'#071828':'#c5dff0';
+  const lnd=dark?'#1e3228':'#c8d9c0';
+  const txt=tc(); const muted=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${ocn}"/>`;
+
+  // Simplified India
+  h+=`<polygon points="200,30 260,25 320,30 370,45 395,75 405,110 400,145 385,175 360,200 325,220 290,228 255,230 220,225 190,215 165,198 148,175 138,148 135,118 138,88 148,62 165,42" fill="${lnd}"/>`;
+  h+=`<text x="275" y="125" fill="${muted}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">India</text>`;
+
+  // Himalayan range (N boundary)
+  h+=`<path d="M 185,30 L 200,22 L 220,18 L 245,16 L 268,18 L 290,14 L 315,16 L 335,22 L 355,28 L 372,36" fill="none" stroke="${dark?'rgba(255,255,255,.3)':'rgba(0,0,0,.25)'}" stroke-width="2"/>`;
+  h+=`<text x="290" y="13" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Himalayas</text>`;
+
+  // Monsoon Trough position
+  const troughY=isActive?120:55;
+  const troughColor=isActive?'#7c3aed':'#dc2626';
+  h+=`<path d="M 150,${troughY+8} C 200,${troughY} 270,${troughY-5} 355,${troughY+5}" fill="none" stroke="${troughColor}" stroke-width="2.5" stroke-dasharray="7 4" opacity=".85"/>`;
+  h+=`<text x="252" y="${troughY-8}" fill="${troughColor}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Monsoon Trough (${isActive?'NORMAL position':'SHIFTED NORTH — break'})</text>`;
+
+  // Rain blobs
+  if(isActive){
+    // Active: rain over central India
+    h+=`<ellipse cx="270" cy="155" rx="60" ry="35" fill="rgba(37,99,235,.18)" stroke="#2563eb" stroke-width="1" opacity=".7"/>`;
+    h+=`<text x="270" y="148" fill="#2563eb" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Heavy Rain</text>`;
+    h+=`<text x="270" y="160" fill="#2563eb" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Central India</text>`;
+    // Also light rain east
+    h+=`<ellipse cx="375" cy="130" rx="28" ry="20" fill="rgba(37,99,235,.1)" stroke="#2563eb" stroke-width="1" stroke-dasharray="4 3" opacity=".6"/>`;
+    h+=`<text x="375" y="128" fill="#2563eb" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">BoB LPS</text>`;
+  } else {
+    // Break: rain over Himalayas and NE
+    h+=`<ellipse cx="290" cy="45" rx="65" ry="22" fill="rgba(37,99,235,.18)" stroke="#2563eb" stroke-width="1" opacity=".7"/>`;
+    h+=`<text x="290" y="42" fill="#2563eb" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Heavy Rain (Himalayan foothills)</text>`;
+    // NE
+    h+=`<ellipse cx="415" cy="80" rx="35" ry="22" fill="rgba(37,99,235,.15)" stroke="#2563eb" stroke-width="1" opacity=".7"/>`;
+    h+=`<text x="415" y="78" fill="#2563eb" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">NE India</text>`;
+    // Central India DRY
+    h+=`<ellipse cx="268" cy="155" rx="55" ry="30" fill="rgba(217,119,6,.12)" stroke="#d97706" stroke-width="1" stroke-dasharray="4 3" opacity=".7"/>`;
+    h+=`<text x="268" y="152" fill="#d97706" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">DRY — Drought Risk</text>`;
+  }
+
+  // Bay of Bengal
+  h+=`<text x="470" y="160" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Bay of</text>`;
+  h+=`<text x="470" y="172" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Bengal</text>`;
+  // Arabian Sea
+  h+=`<text x="65" y="170" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Arabian</text>`;
+  h+=`<text x="68" y="182" fill="${muted}" font-size="8" font-family="DM Mono,monospace">Sea</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  THERMAL MECHANISM SVG
+// ═══════════════════════════════════════════════
+function drawThermalSvg(){
+  const svg=document.getElementById('thermal-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=220;
+  const txt=tc(); const muted=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  // Land (left half) vs Ocean (right half)
+  h+=`<rect x="60" y="50" width="280" height="130" rx="3" fill="${dark?'rgba(217,119,6,.12)':'rgba(217,119,6,.1)'}" stroke="rgba(217,119,6,.35)" stroke-width="1.5"/>`;
+  h+=`<text x="200" y="45" fill="#d97706" font-size="10" font-family="DM Mono,monospace" text-anchor="middle">LAND (India — summer)</text>`;
+  h+=`<text x="200" y="108" fill="#dc2626" font-size="18" font-family="DM Mono,monospace" text-anchor="middle">45–48°C</text>`;
+  h+=`<text x="200" y="125" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Surface temp (Thar / NW India)</text>`;
+  h+=`<text x="200" y="160" fill="#dc2626" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">LOW PRESSURE</text>`;
+
+  h+=`<rect x="460" y="50" width="280" height="130" rx="3" fill="${dark?'rgba(2,132,199,.12)':'rgba(2,132,199,.1)'}" stroke="rgba(2,132,199,.35)" stroke-width="1.5"/>`;
+  h+=`<text x="600" y="45" fill="#0284c7" font-size="10" font-family="DM Mono,monospace" text-anchor="middle">INDIAN OCEAN</text>`;
+  h+=`<text x="600" y="108" fill="#0284c7" font-size="18" font-family="DM Mono,monospace" text-anchor="middle">27–29°C</text>`;
+  h+=`<text x="600" y="125" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">SST (Arabian Sea / BoB)</text>`;
+  h+=`<text x="600" y="160" fill="#0284c7" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">HIGH PRESSURE</text>`;
+
+  // Arrows (moisture flow)
+  h+=`<path d="M 460,115 L 380,115" fill="none" stroke="#16a34a" stroke-width="3" opacity=".85" marker-end="url(#moistArr)"/>`;
+  h+=`<text x="420" y="108" fill="#16a34a" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Moisture</text>`;
+  h+=`<text x="420" y="120" fill="#16a34a" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">inflow</text>`;
+
+  // Warm rising air
+  h+=`<path d="M 200,50 L 200,20" fill="none" stroke="#dc2626" stroke-width="2" opacity=".7" marker-end="url(#redArr)"/>`;
+  h+=`<text x="212" y="30" fill="#dc2626" font-size="8" font-family="DM Mono,monospace">Rising hot air</text>`;
+
+  // Temp difference
+  h+=`<text x="400" y="115" fill="${txt}" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">ΔT ≈ 18°C</text>`;
+
+  // Caption
+  h+=`<text x="${W/2}" y="210" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Land heats faster than ocean → pressure gradient → onshore SW flow → Indian Summer Monsoon</text>`;
+
+  h=`<defs>
+    <marker id="moistArr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#16a34a"/></marker>
+    <marker id="redArr" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#dc2626"/></marker>
+  </defs>`+h;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  ENSO-MONSOON TELECONNECTION SVG
+// ═══════════════════════════════════════════════
+function drawENSOMonsoonSvg(){
+  const svg=document.getElementById('enso-mon-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=240;
+  const ocn=dark?'#071828':'#c5dff0';
+  const lnd=dark?'#1e3228':'#c8d9c0';
+  const txt=tc(); const muted=mc();
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="${ocn}"/>`;
+
+  // Pacific Ocean warm pool (El Niño — shifted east)
+  h+=`<ellipse cx="560" cy="130" rx="110" ry="50" fill="rgba(232,69,69,.25)" stroke="#e84545" stroke-width="1.5" opacity=".8"/>`;
+  h+=`<text x="560" y="122" fill="#e84545" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">El Niño Warm Pool</text>`;
+  h+=`<text x="560" y="135" fill="#e84545" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">(eastern Pacific anomaly)</text>`;
+
+  // India (left)
+  h+=`<polygon points="130,55 158,50 180,65 188,95 182,125 168,148 150,160 130,162 112,150 105,128 108,100 115,75" fill="${lnd}"/>`;
+  h+=`<text x="148" y="108" fill="${muted}" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">India</text>`;
+
+  // Suppressed convection over India
+  h+=`<ellipse cx="148" cy="80" rx="42" ry="22" fill="rgba(217,119,6,.18)" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5 3" opacity=".8"/>`;
+  h+=`<text x="148" y="75" fill="#d97706" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">↓ Suppressed</text>`;
+  h+=`<text x="148" y="87" fill="#d97706" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">convection</text>`;
+
+  // Indonesian/Pacific rising
+  h+=`<ellipse cx="480" cy="80" rx="50" ry="25" fill="rgba(232,69,69,.15)" stroke="#e84545" stroke-width="1" opacity=".7"/>`;
+  h+=`<text x="480" y="75" fill="#e84545" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">↑ Anomalous rising</text>`;
+  h+=`<text x="480" y="87" fill="#e84545" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">air (Pacific)</text>`;
+
+  // Walker circulation disrupted (upper-level return flow)
+  h+=`<path d="M 490,62 C 450,30 350,22 260,30 C 220,34 195,42 180,58" fill="none" stroke="${dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.3)'}" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#wkArr)"/>`;
+  h+=`<text x="340" y="22" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Anomalous upper-level sinking over India</text>`;
+
+  // Somali Jet (weakened)
+  h+=`<path d="M 88,190 L 120,175 L 152,165 L 182,158" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="4 4" opacity=".6" marker-end="url(#wkArr2)"/>`;
+  h+=`<text x="130" y="205" fill="#0284c7" font-size="8" font-family="DM Mono,monospace">Weakened Somali Jet</text>`;
+
+  // Step labels
+  const steps=[
+    {x:490,y:40,txt:'1. El Niño warms E. Pacific',col:'#e84545'},
+    {x:340,y:42,txt:'2. Walker Circ. disrupted',col:`${muted}`},
+    {x:148,y:185,txt:'3. Weak cross-equatorial flow',col:'#0284c7'},
+    {x:148,y:200,txt:'4. Reduced moisture → drought',col:'#dc2626'},
+  ];
+  // (simplified — steps shown inline above)
+
+  // Legend
+  h+=`<text x="10" y="235" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace">Schematic: El Niño pathway to Indian monsoon suppression via Walker Circulation disruption</text>`;
+
+  h=`<defs>
+    <marker id="wkArr" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="${dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.3)'}"/></marker>
+    <marker id="wkArr2" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#0284c7" opacity=".7"/></marker>
+  </defs>`+h;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  ENSO HISTORY SVG (scatter plot ONI vs rainfall)
+// ═══════════════════════════════════════════════
+function drawENSOHistorySvg(){
+  const svg=document.getElementById('enso-history-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=220;
+  const txt=tc(); const muted=mc();
+  const padL=50,padT=15,cW=W-padL-30,cH=H-padT-30;
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  // Data: [oni, rainfallAnomaly, year, label?]
+  const data=[
+    [-2.0,31,1988,'1988'],[-1.5,12,2020,'2020'],[-1.2,8,2010,'2010'],
+    [-0.9,15,1975],[-0.8,5,1998],[-0.6,3,1964],
+    [0.0,2,1991],[0.1,-1,2000],[0.2,4,2005],[0.3,-3,2015],[0.4,1,2018],
+    [0.8,-8,1994],[0.9,2,1997,'1997 +IOD'],
+    [1.0,-10,1957],[1.2,-19,2002,'2002'],[1.4,-8,1965],
+    [1.7,-27,1987,'1987'],[1.8,-24,1972,'1972'],
+    [2.0,2,1997,'★1997'],[2.4,-5,1982],
+    [-0.5,10,1976],[-0.3,-2,2001],[0.5,-5,2009,'2009'],[0.6,-2,2023],
+  ];
+
+  const scX=oni=>padL+(oni+2.5)/5.5*cW;
+  const scY=ra=>padT+(20-ra)/40*cH;
+
+  // Grid
+  [-2,-1,0,1,2].forEach(v=>{
+    const x=scX(v);
+    h+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT+cH}" stroke="${muted}" stroke-width=".5" opacity=".25"/>`;
+    h+=`<text x="${x}" y="${padT+cH+12}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${v>0?'+'+v:v}</text>`;
+  });
+  [-20,-10,0,10,20].forEach(v=>{
+    const y=scY(v);
+    h+=`<line x1="${padL}" y1="${y}" x2="${padL+cW}" y2="${y}" stroke="${muted}" stroke-width=".5" opacity="${v===0?'.5':'.2'}" stroke-dasharray="${v===0?'none':'4 4'}"/>`;
+    h+=`<text x="${padL-4}" y="${y+4}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">${v>0?'+':''}${v}%</text>`;
+  });
+  // Axis labels
+  h+=`<text x="${padL+cW/2}" y="${H-2}" fill="${muted}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">ONI (°C) — negative=La Niña, positive=El Niño</text>`;
+
+  // Zero lines
+  h+=`<line x1="${scX(0)}" y1="${padT}" x2="${scX(0)}" y2="${padT+cH}" stroke="${muted}" stroke-width="1" opacity=".4"/>`;
+  h+=`<line x1="${padL}" y1="${scY(0)}" x2="${padL+cW}" y2="${scY(0)}" stroke="${muted}" stroke-width="1" opacity=".4"/>`;
+
+  // Trend line (rough negative correlation)
+  h+=`<line x1="${scX(-2.5)}" y1="${scY(18)}" x2="${scX(2.5)}" y2="${scY(-18)}" stroke="rgba(128,128,128,.3)" stroke-width="1.5" stroke-dasharray="8 4"/>`;
+
+  // Data points
+  data.forEach(d=>{
+    const oni=d[0],ra=d[1],yr=d[2],lbl=d[3];
+    const color=oni>0?`rgba(232,69,69,.${Math.min(9,5+Math.round(oni*2))})`:`rgba(33,150,243,.${Math.min(9,5+Math.round(-oni*2))})`;
+    const stroke=oni>0?'#e84545':'#2196f3';
+    h+=`<circle cx="${scX(oni)}" cy="${scY(ra)}" r="${lbl?6:4}" fill="${color}" stroke="${stroke}" stroke-width="1.2"/>`;
+    if(lbl){
+      h+=`<text x="${scX(oni)+8}" y="${scY(ra)+4}" fill="${txt}" font-size="8" font-family="DM Mono,monospace">${lbl}</text>`;
+    }
+  });
+
+  // Legend
+  h+=`<circle cx="${padL+10}" cy="${padT+8}" r="5" fill="rgba(232,69,69,.6)" stroke="#e84545" stroke-width="1.2"/>`;
+  h+=`<text x="${padL+20}" y="${padT+13}" fill="${txt}" font-size="8" font-family="DM Mono,monospace">El Niño year</text>`;
+  h+=`<circle cx="${padL+110}" cy="${padT+8}" r="5" fill="rgba(33,150,243,.6)" stroke="#2196f3" stroke-width="1.2"/>`;
+  h+=`<text x="${padL+120}" y="${padT+13}" fill="${txt}" font-size="8" font-family="DM Mono,monospace">La Niña year</text>`;
+  h+=`<text x="${padL}" y="${padT+25}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace">Y-axis: % anomaly vs LPA</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  INDIA ZONES MAP (Tab 5)
+// ═══════════════════════════════════════════════
+const ZONES={
+  nw:{name:'North-West India',states:'Rajasthan, Punjab, Haryana, Delhi, western UP, Himachal foothills',
+    rainfall:'200–700mm',desc:'The most arid zone for monsoon rainfall. West Rajasthan is hyper-arid (&lt;200mm/year). Rainfall comes primarily from July–August when the monsoon trough shifts northward. ENSO and IOD strongly influence this region — El Niño years often see near-zero rainfall in western Rajasthan. Agriculture heavily dependent on groundwater and canal irrigation.',
+    monthly:[5,10,12,15,25,38,120,110,45,18,5,3],color:'#dc2626'},
+  ne:{name:'North-East India',states:'Assam, Meghalaya, Tripura, Nagaland, Manipur, Mizoram, Arunachal',
+    rainfall:'2,000–11,000mm',desc:'The wettest region of India — and among the wettest on Earth. Mawsynram (Meghalaya) receives ~11,871mm/year average. The Bay of Bengal branch hits the Khasi Hills and Assam valley with intense orographic rainfall. Flooding is the annual challenge; the Brahmaputra and Barak rivers regularly inundate vast areas. Even La Niña years bring excess rainfall here.',
+    monthly:[20,25,55,180,380,580,620,480,310,125,30,15],color:'#0284c7'},
+  central:{name:'Central India',states:'Madhya Pradesh, Chhattisgarh, Jharkhand, Vidarbha (Maharashtra), Odisha',
+    rainfall:'900–1,400mm',desc:'The core of India\'s monsoon rainfall belt. The monsoon trough regularly passes over this region, bringing intense active spells. BoB depressions and cyclones track NW across this zone, delivering some of the highest 2-day rainfall totals. In break phases, this region goes completely dry. Agriculture includes rain-fed cotton, soybean, and rice.',
+    monthly:[12,15,18,12,14,145,280,260,180,45,15,10],color:'#16a34a'},
+  peninsula:{name:'Peninsular India',states:'Kerala, Tamil Nadu, Karnataka, Andhra Pradesh (coastal), Telangana',
+    rainfall:'600–3,000mm',desc:'Receives rainfall from both the SW monsoon (June–September) and NE monsoon (October–December, especially Tamil Nadu and Andhra). The Western Ghats create an extreme W-E gradient: west coast (Malabar, Konkan) receives 3,000–6,000mm; leeward Deccan receives 600–900mm. Tamil Nadu is unique — it receives most rainfall from NE monsoon, so SW monsoon deficits hurt it less.',
+    monthly:[28,35,40,38,45,285,165,130,120,185,240,85],color:'#0369a1'},
+  himalayan:{name:'Himalayan Belt',states:'Uttarakhand, Himachal Pradesh, J&K (southern slopes), Sikkim',
+    rainfall:'1,000–3,000mm',desc:'Receives orographic enhancement from both SW monsoon and western disturbances. Monsoon arrives in late June / early July but intensifies rapidly against the Himalayan barrier. Active-phase breaks are particularly intense here — Kedarnath (2013) and Chamoli (2021) disasters illustrate extreme rainfall concentration. Glacial meltwater combines with monsoon rain to amplify flood risk.',
+    monthly:[60,70,55,30,45,180,320,280,150,40,20,55],color:'#7c3aed'},
+};
+
+let currentZone='nw';
+function setZone(zone){
+  currentZone=zone;
+  Object.keys(ZONES).forEach(z=>{
+    document.getElementById('zbtn-'+z).classList.toggle('active',z===zone);
+  });
+  updateZoneDetail();
+  drawZonesMap();
+  drawZoneBarSvg();
+}
+
+function updateZoneDetail(){
+  const z=ZONES[currentZone];
+  document.getElementById('zd-title').textContent=z.name;
+  document.getElementById('zd-states').textContent=z.states;
+  document.getElementById('zd-rainfall').textContent=z.rainfall+'/yr';
+  document.getElementById('zd-desc').innerHTML=z.desc;
+}
+
+function drawZonesMap(){
+  const svg=document.getElementById('india-zones-map'); if(!svg)return;
+  const dark=isDark();
+  const ocn=dark?'#071828':'#c5dff0';
+  const muted=mc();
+
+  // Zone→states mapping
+  const zoneStates={
+    nw:['rajasthan','punjab','jk','hp','gujarat'],
+    ne:['northeast','westbengal'],
+    central:['mp','odisha','andhra'],
+    peninsula:['kerala','tamilnadu','karnataka','goa'],
+    himalayan:['uttarakhand','hp','jk'],
+  };
+
+  let h=`<rect x="0" y="0" width="500" height="560" fill="${ocn}"/>`;
+
+  onsetStates.forEach(s=>{
+    // Find which zone this state belongs to
+    let zColor='rgba(128,128,128,.2)';
+    let zStroke=dark?'rgba(255,255,255,.15)':'rgba(0,0,0,.15)';
+    Object.entries(zoneStates).forEach(([z,ids])=>{
+      if(ids.includes(s.id)){
+        const isActive=z===currentZone;
+        const zInfo=ZONES[z];
+        zColor=isActive
+          ?`${zInfo.color}cc`
+          :`${zInfo.color}44`;
+        zStroke=isActive?zInfo.color:dark?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)';
+      }
+    });
+    h+=`<path d="${s.path}" fill="${zColor}" stroke="${zStroke}" stroke-width="${currentZone===Object.keys(zoneStates).find(z=>zoneStates[z].includes(s.id))?'1.5':'0.8'}" data-zone="${Object.keys(zoneStates).find(z=>zoneStates[z].includes(s.id))}" style="cursor:pointer;transition:fill .3s;"/>`;
+  });
+
+  // Labels for each zone
+  [
+    {zone:'nw',x:155,y:165,label:'NW'},
+    {zone:'ne',x:420,y:175,label:'NE'},
+    {zone:'central',x:295,y:255,label:'Central'},
+    {zone:'peninsula',x:245,y:395,label:'Peninsula'},
+    {zone:'himalayan',x:240,y:95,label:'Himalayan'},
+  ].forEach(l=>{
+    const col=ZONES[l.zone].color;
+    const isActive=l.zone===currentZone;
+    h+=`<text x="${l.x}" y="${l.y}" fill="${col}" font-size="${isActive?11:8.5}" font-family="Bebas Neue,DM Mono,monospace" text-anchor="middle" font-weight="${isActive?'700':'400'}" opacity="${isActive?'1':'.6'}">${l.label}</text>`;
+  });
+
+  h+=`<text x="440" y="290" fill="${dark?'rgba(255,255,255,.22)':'rgba(0,0,0,.22)'}" font-size="8" font-family="DM Mono,monospace">Bay of Bengal</text>`;
+  h+=`<text x="50" y="320" fill="${dark?'rgba(255,255,255,.22)':'rgba(0,0,0,.22)'}" font-size="8" font-family="DM Mono,monospace">Arabian Sea</text>`;
+
+  svg.innerHTML=h;
+
+  svg.querySelectorAll('path[data-zone]').forEach(path=>{
+    path.addEventListener('click',()=>{
+      const z=path.getAttribute('data-zone');
+      if(z && ZONES[z]) setZone(z);
+    });
+    path.addEventListener('mouseenter',e=>{
+      const z=path.getAttribute('data-zone');
+      if(!z||!ZONES[z]) return;
+      const tooltip=document.getElementById('zone-tooltip');
+      document.getElementById('zt-region').textContent=ZONES[z].name;
+      document.getElementById('zt-info').textContent=ZONES[z].rainfall+' — click to explore';
+      tooltip.style.left=(e.offsetX+10)+'px';
+      tooltip.style.top=(e.offsetY-20)+'px';
+      tooltip.classList.add('visible');
+    });
+    path.addEventListener('mousemove',e=>{
+      const tooltip=document.getElementById('zone-tooltip');
+      tooltip.style.left=(e.offsetX+12)+'px';
+      tooltip.style.top=(e.offsetY-20)+'px';
+    });
+    path.addEventListener('mouseleave',()=>{
+      document.getElementById('zone-tooltip').classList.remove('visible');
+    });
+  });
+}
+
+function drawZoneBarSvg(){
+  const svg=document.getElementById('zone-bar-svg'); if(!svg)return;
+  const dark=isDark();
+  const z=ZONES[currentZone];
+  const W=700,H=120;
+  const txt=tc(); const muted=mc();
+  const months=['J','F','M','A','M','J','J','A','S','O','N','D'];
+  const padL=30,padT=10,cW=W-padL-20,cH=H-padT-28;
+  const max=Math.max(...z.monthly);
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  z.monthly.forEach((v,i)=>{
+    const bW=(cW/12)-4;
+    const bH=(v/max)*cH;
+    const x=padL+i*(cW/12)+2;
+    const y=padT+cH-bH;
+    const isMonson=i>=5&&i<=8;
+    const col=isMonson?z.color:(dark?'rgba(255,255,255,.2)':'rgba(0,0,0,.15)');
+    h+=`<rect x="${x}" y="${y}" width="${bW}" height="${bH}" fill="${col}" rx="2" opacity="${isMonson?'.85':'.5'}"/>`;
+    h+=`<text x="${x+bW/2}" y="${padT+cH+12}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${months[i]}</text>`;
+    if(v>20){
+      h+=`<text x="${x+bW/2}" y="${y-3}" fill="${isMonson?z.color:muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${v}</text>`;
+    }
+  });
+
+  h+=`<text x="${padL+cW/2}" y="${H-2}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Monthly rainfall (mm, approximate climatology) · JJAS highlighted</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  HISTORIC TIMELINE SVG
+// ═══════════════════════════════════════════════
+function drawHistoricTimeline(){
+  const svg=document.getElementById('historic-timeline-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=260;
+  const txt=tc(); const muted=mc();
+  const padL=45,padT=20,cW=W-padL-20,cH=H-padT-30;
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  // Events: [year, ONI, rainfallAnom, type]
+  // type: 'el'=El Niño drought, 'la'=La Niña flood, 'neutral'
+  const events=[
+    [1877,2.5,-20,'el','1877'],[1888,-1.5,8,'la'],
+    [1965,1.4,-8,'el'],[1972,1.8,-24,'el','1972'],[1975,-1.5,10,'la'],
+    [1982,2.1,-12,'el'],[1986,0.8,-5,'el'],
+    [1987,1.7,-27,'el','1987'],[1988,-2.0,31,'la','1988'],
+    [1994,0.8,2,'el','1994+IOD'],[1997,2.4,2,'el','★1997'],
+    [2002,1.2,-19,'el','2002'],[2009,1.0,-22,'el','2009'],
+    [2010,-1.5,12,'la','2010'],[2015,2.2,-14,'el'],
+    [2019,0.8,10,'el+iod','2019'],[2020,-0.9,12,'la','2020'],
+    [2022,-0.8,6,'la'],[2023,2.0,-2,'el'],
+  ];
+
+  const minYr=1870,maxYr=2025;
+  const scX=yr=>padL+(yr-minYr)/(maxYr-minYr)*cW;
+  const scY_oni=oni=>padT+cH/2-(oni/3)*cH/2;
+  const scY_ra=ra=>padT+cH/2-(ra/35)*cH/2;
+
+  // Zero line
+  h+=`<line x1="${padL}" y1="${padT+cH/2}" x2="${padL+cW}" y2="${padT+cH/2}" stroke="${muted}" stroke-width="1" opacity=".4"/>`;
+
+  // Year grid
+  [1900,1920,1940,1960,1980,2000,2020].forEach(yr=>{
+    const x=scX(yr);
+    h+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT+cH}" stroke="${muted}" stroke-width=".5" opacity=".15"/>`;
+    h+=`<text x="${x}" y="${padT+cH+12}" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${yr}</text>`;
+  });
+
+  // Rainfall anomaly bars
+  events.forEach(ev=>{
+    const [yr,oni,ra,type,lbl]=ev;
+    const x=scX(yr);
+    const mid=padT+cH/2;
+    const bH=Math.abs(ra)/35*(cH/2);
+    const col=ra<0?'rgba(220,38,38,.55)':'rgba(37,99,235,.55)';
+    h+=`<rect x="${x-4}" y="${ra<0?mid:mid-bH}" width="8" height="${bH}" fill="${col}" rx="1"/>`;
+  });
+
+  // ONI line
+  const oniPath='M '+events.map(ev=>`${scX(ev[0])},${scY_oni(ev[1])}`).join(' L ');
+  h+=`<path d="${oniPath}" fill="none" stroke="#e84545" stroke-width="1.5" opacity=".7"/>`;
+  events.forEach(ev=>{
+    const [yr,oni,ra,type,lbl]=ev;
+    const col=oni>0?'#e84545':'#2196f3';
+    h+=`<circle cx="${scX(yr)}" cy="${scY_oni(oni)}" r="3.5" fill="${col}" opacity=".8"/>`;
+    if(lbl){
+      h+=`<text x="${scX(yr)}" y="${scY_oni(oni)-7}" fill="${col}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${lbl}</text>`;
+    }
+  });
+
+  // Axis labels
+  h+=`<text x="${padL-4}" y="${padT+cH/2+4}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="end">0</text>`;
+  h+=`<text x="${padL-4}" y="${padT+10}" fill="#e84545" font-size="7.5" font-family="DM Mono,monospace" text-anchor="end">+2 ONI</text>`;
+  h+=`<text x="${padL-4}" y="${padT+cH-5}" fill="#2196f3" font-size="7.5" font-family="DM Mono,monospace" text-anchor="end">−2</text>`;
+
+  // Legend
+  h+=`<line x1="${padL}" y1="${padT+4}" x2="${padL+30}" y2="${padT+4}" stroke="#e84545" stroke-width="2"/>`;
+  h+=`<text x="${padL+35}" y="${padT+8}" fill="${txt}" font-size="7.5" font-family="DM Mono,monospace">ONI</text>`;
+  h+=`<rect x="${padL+80}" y="${padT}" width="10" height="8" fill="rgba(220,38,38,.55)" rx="1"/>`;
+  h+=`<text x="${padL+95}" y="${padT+8}" fill="${txt}" font-size="7.5" font-family="DM Mono,monospace">Drought (−LPA)</text>`;
+  h+=`<rect x="${padL+210}" y="${padT}" width="10" height="8" fill="rgba(37,99,235,.55)" rx="1"/>`;
+  h+=`<text x="${padL+225}" y="${padT+8}" fill="${txt}" font-size="7.5" font-family="DM Mono,monospace">Excess (+LPA)</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  FORECAST SVG — IMD system diagram
+// ═══════════════════════════════════════════════
+function drawForecastSvg(){
+  const svg=document.getElementById('forecast-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=800,H=280;
+  const txt=tc(); const muted=mc();
+  const sur=dark?'rgba(255,255,255,.07)':'rgba(0,0,0,.05)';
+  const brd=dark?'rgba(255,255,255,.15)':'rgba(0,0,0,.15)';
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  // Inputs (left column)
+  const inputs=[
+    {y:30,label:'ENSO / ONI',sub:'Niño 3.4 SST anomaly',col:'#e84545'},
+    {y:82,label:'Indian Ocean Dipole',sub:'DMI (western − eastern IO SST)',col:'#f59e0b'},
+    {y:134,label:'Eurasian Snow Cover',sub:'Feb–Mar extent; Blanford predictor',col:'#0284c7'},
+    {y:186,label:'PDO / MJO Phase',sub:'Multi-decadal & sub-seasonal state',col:'#7c3aed'},
+  ];
+
+  inputs.forEach(inp=>{
+    h+=`<rect x="10" y="${inp.y}" width="190" height="40" rx="3" fill="${sur}" stroke="${inp.col}" stroke-width="1.5" stroke-opacity=".5"/>`;
+    h+=`<text x="105" y="${inp.y+16}" fill="${inp.col}" font-size="9.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">${inp.label}</text>`;
+    h+=`<text x="105" y="${inp.y+30}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${inp.sub}</text>`;
+    h+=`<line x1="200" y1="${inp.y+20}" x2="250" y2="130" stroke="${inp.col}" stroke-width="1" opacity=".4" stroke-dasharray="4 3"/>`;
+  });
+
+  // Central model box
+  h+=`<rect x="250" y="80" width="190" height="100" rx="4" fill="${dark?'rgba(29,78,216,.15)':'rgba(29,78,216,.1)'}" stroke="#1d4ed8" stroke-width="1.5"/>`;
+  h+=`<text x="345" y="115" fill="#1d4ed8" font-size="11" font-family="Bebas Neue,monospace" text-anchor="middle" letter-spacing=".05em">IMD LRF System</text>`;
+  h+=`<text x="345" y="132" fill="${txt}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">CFS v2 + ECMWF SEAS5</text>`;
+  h+=`<text x="345" y="146" fill="${txt}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">+ UK Met GloSea6</text>`;
+  h+=`<text x="345" y="162" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Multi-model ensemble</text>`;
+
+  // Outputs (right)
+  const outputs=[
+    {y:40,label:'April LRF',sub:'AISMR % of LPA ± uncertainty',col:'#16a34a'},
+    {y:100,label:'June Update',sub:'Updated seasonal outlook',col:'#16a34a'},
+    {y:160,label:'ERP Bulletins',sub:'Active/break outlook 2–4 weeks',col:'#0369a1'},
+    {y:220,label:'District Forecast',sub:'GEFS-based 5-day (limited skill)',col:'#d97706'},
+  ];
+
+  outputs.forEach(out=>{
+    h+=`<rect x="550" y="${out.y}" width="200" height="40" rx="3" fill="${sur}" stroke="${out.col}" stroke-width="1.5" stroke-opacity=".5"/>`;
+    h+=`<text x="650" y="${out.y+16}" fill="${out.col}" font-size="9.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">${out.label}</text>`;
+    h+=`<text x="650" y="${out.y+30}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${out.sub}</text>`;
+    h+=`<line x1="440" y1="130" x2="550" y2="${out.y+20}" stroke="${out.col}" stroke-width="1" opacity=".4" stroke-dasharray="4 3" marker-end="url(#outArr)"/>`;
+  });
+
+  // Skill annotation
+  h+=`<text x="345" y="210" fill="${muted}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">Correlation skill r ≈ 0.6 (all-India)</text>`;
+  h+=`<text x="345" y="225" fill="${muted}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">District-level: r &lt; 0.3</text>`;
+
+  h+=`<text x="${W/2}" y="${H-5}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">IMD issues two forecasts: April (target: JJAS rainfall %LPA) and June update with higher skill</text>`;
+
+  h=`<defs><marker id="outArr" markerWidth="6" markerHeight="6" refX="5" refY="2.5" orient="auto"><polygon points="0 0,6 2.5,0 5" fill="${muted}" opacity=".6"/></marker></defs>`+h;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  PREDICTOR BAR CHART
+// ═══════════════════════════════════════════════
+function drawPredictorSvg(){
+  const svg=document.getElementById('predictor-svg'); if(!svg)return;
+  const dark=isDark();
+  const W=700,H=200;
+  const txt=tc(); const muted=mc();
+  const padL=165,padT=15,cW=W-padL-30,cH=H-padT-30;
+  let h='';
+  h+=`<rect x="0" y="0" width="${W}" height="${H}" fill="transparent"/>`;
+
+  const predictors=[
+    {name:'ENSO (ONI)',val:72,col:'#e84545'},
+    {name:'Indian Ocean Dipole',val:58,col:'#f59e0b'},
+    {name:'Equatorial Pacific SST',val:50,col:'#0284c7'},
+    {name:'Eurasian Snow Cover',val:38,col:'#7c3aed'},
+    {name:'PDO Index',val:28,col:'#0369a1'},
+    {name:'Somali Jet Index',val:45,col:'#16a34a'},
+  ];
+
+  predictors.forEach((p,i)=>{
+    const y=padT+i*(cH/predictors.length)+4;
+    const bH=cH/predictors.length-6;
+    const bW=(p.val/100)*cW;
+    h+=`<text x="${padL-6}" y="${y+bH/2+4}" fill="${txt}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="end">${p.name}</text>`;
+    h+=`<rect x="${padL}" y="${y}" width="${bW}" height="${bH}" fill="${p.col}" rx="2" opacity=".75"/>`;
+    h+=`<text x="${padL+bW+5}" y="${y+bH/2+4}" fill="${p.col}" font-size="8.5" font-family="DM Mono,monospace">${p.val}%</text>`;
+  });
+
+  h+=`<text x="${padL+cW/2}" y="${H-5}" fill="${muted}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Approximate relative predictive skill contribution (varies by model and year)</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+//  MASTER REDRAW
+// ═══════════════════════════════════════════════
+function redrawAll(){
+  drawOverviewSvg();
+  drawOnsetTimeline();
+  drawIndiaOnsetMap();
+  drawOnsetCompare();
+  drawMechanismSvg();
+  drawABSvg();
+  drawThermalSvg();
+  drawENSOMonsoonSvg();
+  drawENSOHistorySvg();
+  drawZonesMap();
+  drawZoneBarSvg();
+  drawHistoricTimeline();
+  drawForecastSvg();
+  drawPredictorSvg();
+}
+
+// ═══════════════════════════════════════════════
+//  INITIALISE
+// ═══════════════════════════════════════════════
+switchTab('overview');
+updateZoneDetail();
+redrawAll();
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

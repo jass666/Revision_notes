@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buddhism — Interactive Explainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --saffron: #d97706;
+  --maroon: #7f1d1d;
+  --gold: #ca8a04;
+  --ochre: #92400e;
+  --lotus: #f472b6;
+  --lotus-dim: #db2777;
+  --nirvana: #fef9f0;
+  --jade: #059669;
+  --sky: #0284c7;
+}
+[data-theme="dark"] {
+  --bg: #0f0a06;
+  --surface: #1a120a;
+  --surface2: #241810;
+  --border: #3d2a1a;
+  --text: #f5ede0;
+  --muted: #8a6a50;
+  --prose: #d4b896;
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  --glow: rgba(217,119,6,0.15);
+}
+[data-theme="light"] {
+  --bg: #fdf8f0;
+  --surface: #fff8ee;
+  --surface2: #fef3dc;
+  --border: #e8d5b0;
+  --text: #1a0a00;
+  --muted: #7a5c3a;
+  --prose: #3d2000;
+  --card-shadow: 0 4px 24px rgba(150,80,0,0.12);
+  --glow: rgba(217,119,6,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Mono',monospace;
+  min-height:100vh;
+  transition:background .3s,color .3s;
+  font-size:14px;
+  line-height:1.7;
+}
+/* NAV */
+.sticky-nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;gap:0;
+  padding:0 1rem;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;letter-spacing:.08em;
+  color:var(--saffron);
+  padding:.6rem 1rem .6rem 0;
+  white-space:nowrap;
+  border-right:1px solid var(--border);
+  margin-right:.5rem;
+  flex-shrink:0;
+}
+.tab{
+  font-family:'DM Mono',monospace;
+  font-size:.72rem;letter-spacing:.06em;
+  padding:.55rem .9rem;
+  border:none;background:transparent;
+  color:var(--muted);cursor:pointer;
+  white-space:nowrap;flex-shrink:0;
+  border-bottom:2px solid transparent;
+  transition:all .2s;
+  text-transform:uppercase;
+}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--saffron);border-bottom-color:var(--saffron)}
+.theme-btn{
+  margin-left:auto;flex-shrink:0;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:.35rem .7rem;border-radius:999px;
+  font-family:'DM Mono',monospace;font-size:.7rem;cursor:pointer;
+  transition:all .2s;letter-spacing:.05em;
+}
+.theme-btn:hover{border-color:var(--saffron);color:var(--saffron)}
+/* HERO */
+.hero{
+  text-align:center;
+  padding:3.5rem 1rem 2rem;
+  max-width:900px;margin:0 auto;
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:.72rem;letter-spacing:.18em;
+  color:var(--saffron);text-transform:uppercase;
+  margin-bottom:.8rem;
+}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,8vw,6rem);
+  letter-spacing:.06em;
+  line-height:1;
+  color:var(--text);
+  margin-bottom:.6rem;
+}
+.hero h1 span{color:var(--saffron)}
+.hero-sub{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:1.15rem;
+  color:var(--prose);
+  max-width:600px;margin:0 auto 1.5rem;
+}
+/* PHASE PANELS */
+.phase-panel{display:none}
+.phase-panel.visible{display:block}
+.panel-inner{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 4rem}
+/* SECTION HEADINGS */
+.sec-label{
+  font-family:'DM Mono',monospace;
+  font-size:.65rem;letter-spacing:.2em;
+  color:var(--saffron);text-transform:uppercase;
+  margin-bottom:.4rem;
+}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.6rem);
+  letter-spacing:.06em;
+  color:var(--text);
+  margin-bottom:.5rem;
+}
+.sec-sub{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--prose);
+  font-size:1rem;
+  margin-bottom:2rem;
+}
+/* BOXES */
+.box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.25rem 1.5rem;
+  margin-bottom:1rem;
+  box-shadow:var(--card-shadow);
+}
+.box-accent{border-left:3px solid var(--saffron)}
+.box h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.2rem;letter-spacing:.06em;
+  color:var(--saffron);margin-bottom:.4rem;
+}
+/* CALLOUT */
+.callout{
+  background:var(--glow);
+  border:1px solid var(--saffron);
+  border-radius:8px;
+  padding:1rem 1.25rem;
+  margin:1.5rem 0;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.95rem;
+  color:var(--prose);
+}
+.callout strong{color:var(--saffron);font-style:normal}
+/* CARDS GRID */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:1rem;
+  margin:1.5rem 0;
+}
+.impact-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.25rem;
+  box-shadow:var(--card-shadow);
+  transition:border-color .2s,transform .2s;
+}
+.impact-card:hover{border-color:var(--saffron);transform:translateY(-2px)}
+.impact-card .ic-icon{font-size:1.8rem;margin-bottom:.5rem}
+.impact-card .ic-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;letter-spacing:.06em;
+  color:var(--saffron);margin-bottom:.3rem;
+}
+.impact-card .ic-body{
+  font-size:.78rem;color:var(--prose);line-height:1.55;
+}
+/* MECH CARDS */
+.mech-card{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.mech-card-head{
+  background:var(--maroon);
+  padding:.6rem 1rem;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:.08em;
+  color:#fff;
+}
+.mech-card-body{padding:1rem;font-size:.8rem;color:var(--prose)}
+/* EXPANDABLE */
+.expand-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:.6rem;
+  overflow:hidden;
+}
+.expand-trigger{
+  width:100%;text-align:left;
+  background:none;border:none;cursor:pointer;
+  padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between;
+  color:var(--text);
+  font-family:'DM Mono',monospace;
+  font-size:.82rem;letter-spacing:.05em;
+  transition:background .2s;
+}
+.expand-trigger:hover{background:var(--surface2)}
+.expand-trigger .et-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.05rem;letter-spacing:.06em;
+  color:var(--saffron);
+}
+.expand-trigger .et-sub{
+  font-size:.72rem;color:var(--muted);margin-top:.15rem;
+}
+.expand-trigger .et-arrow{
+  color:var(--muted);font-size:.9rem;
+  transition:transform .3s;flex-shrink:0;
+}
+.expand-trigger.open .et-arrow{transform:rotate(180deg)}
+.expand-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease;
+}
+.expand-body-inner{
+  padding:1rem 1.25rem 1.25rem;
+  font-size:.8rem;color:var(--prose);
+  line-height:1.65;
+  border-top:1px solid var(--border);
+}
+/* TABLE */
+.comp-table{
+  width:100%;border-collapse:collapse;
+  font-size:.78rem;margin:1.5rem 0;
+}
+.comp-table th{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:.9rem;letter-spacing:.06em;
+  background:var(--maroon);color:#fff;
+  padding:.6rem .9rem;text-align:left;
+}
+.comp-table td{
+  padding:.6rem .9rem;
+  border-bottom:1px solid var(--border);
+  color:var(--prose);vertical-align:top;
+}
+.comp-table tr:nth-child(even) td{background:var(--surface2)}
+/* EVENT ITEMS */
+.event-item{
+  display:flex;gap:1rem;
+  padding:.9rem 0;
+  border-bottom:1px solid var(--border);
+}
+.event-item:last-child{border-bottom:none}
+.ei-year{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:.06em;
+  color:var(--saffron);
+  min-width:110px;flex-shrink:0;
+  padding-top:.1rem;
+}
+.ei-title{
+  font-family:'DM Mono',monospace;
+  font-size:.8rem;font-weight:500;
+  color:var(--text);margin-bottom:.2rem;
+}
+.ei-desc{font-size:.76rem;color:var(--prose)}
+/* FLASHCARD */
+.flashcard-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1rem;margin:1.5rem 0;
+}
+.flashcard{
+  height:160px;perspective:1000px;cursor:pointer;
+}
+.flashcard-inner{
+  width:100%;height:100%;
+  transform-style:preserve-3d;
+  transition:transform .5s;
+  position:relative;
+}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{
+  position:absolute;width:100%;height:100%;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:10px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:1rem;text-align:center;
+  box-shadow:var(--card-shadow);
+}
+.fc-front{
+  background:var(--surface);
+  border:1px solid var(--border);
+}
+.fc-front .fc-q{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.05rem;letter-spacing:.06em;
+  color:var(--saffron);margin-bottom:.4rem;
+}
+.fc-front .fc-hint{font-size:.7rem;color:var(--muted)}
+.fc-back{
+  background:var(--maroon);
+  border:1px solid #9d3535;
+  transform:rotateY(180deg);
+}
+.fc-back .fc-a{font-size:.78rem;color:#fff;line-height:1.5}
+/* UPSC Q&A */
+.qa-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:.75rem;
+  overflow:hidden;
+  cursor:pointer;
+}
+.qa-q{
+  padding:.9rem 1.1rem;
+  font-size:.8rem;color:var(--text);
+  display:flex;align-items:flex-start;gap:.6rem;
+}
+.qa-badge{
+  background:var(--maroon);
+  color:#fff;font-size:.65rem;
+  padding:.15rem .4rem;border-radius:4px;
+  font-family:'Bebas Neue',sans-serif;
+  letter-spacing:.06em;flex-shrink:0;margin-top:.05rem;
+}
+.qa-a{
+  max-height:0;overflow:hidden;transition:max-height .35s ease;
+  border-top:0 solid var(--border);
+}
+.qa-card.open .qa-a{
+  max-height:300px;
+  border-top-width:1px;
+}
+.qa-a-inner{padding:.9rem 1.1rem;font-size:.78rem;color:var(--prose);line-height:1.6}
+/* PILL LINKS */
+.pill-row{
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  margin-top:1rem;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:.3rem .75rem;
+  font-size:.72rem;color:var(--muted);
+  text-decoration:none;cursor:pointer;
+  transition:all .2s;
+  font-family:'DM Mono',monospace;
+  letter-spacing:.04em;
+}
+.pill:hover{border-color:var(--saffron);color:var(--saffron)}
+.pill:active{transform:scale(0.97)}
+/* BOTTOM PILLS */
+.bottom-pills{
+  text-align:center;
+  padding:2rem 1rem;
+  border-top:1px solid var(--border);
+}
+.bottom-pills .label{
+  font-size:.7rem;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;
+  margin-bottom:.75rem;
+}
+/* GRID LAYOUTS */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:1rem 0}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0}
+@media(max-width:640px){
+  .two-col,.three-col{grid-template-columns:1fr}
+  .cards-grid{grid-template-columns:1fr}
+  .flashcard-grid{grid-template-columns:1fr 1fr}
+}
+/* SVG containers */
+.svg-wrap{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  margin:1.5rem 0;
+}
+.svg-wrap svg{display:block;width:100%;height:auto}
+.svg-caption{
+  font-size:.72rem;color:var(--muted);
+  text-align:center;padding:.5rem;
+  border-top:1px solid var(--border);
+}
+/* Spoke highlight */
+.spoke-info{
+  background:var(--surface2);
+  border:1px solid var(--saffron);
+  border-radius:8px;
+  padding:.9rem 1.1rem;
+  margin-top:.75rem;
+  font-size:.8rem;
+  color:var(--prose);
+  min-height:60px;
+  transition:all .2s;
+}
+.spoke-info strong{color:var(--saffron);font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.06em}
+/* Tag strip */
+.tag-strip{display:flex;flex-wrap:wrap;gap:.4rem;margin:.75rem 0}
+.tag{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:4px;padding:.2rem .5rem;
+  font-size:.68rem;color:var(--muted);
+  font-family:'DM Mono',monospace;
+  display:inline-flex;align-items:center;gap:.25rem;
+  transition:all .18s;
+  user-select:none;-webkit-user-select:none;
+}
+.tag[data-tab]{
+  cursor:pointer;
+}
+.tag[data-tab]:hover{
+  transform:translateY(-1px);
+  box-shadow:0 3px 10px rgba(0,0,0,0.25);
+}
+.tag[data-tab]:active{transform:translateY(0)}
+.tag.accent{border-color:var(--saffron);color:var(--saffron)}
+.tag.accent[data-tab]:hover{background:rgba(217,119,6,0.12)}
+.tag.lotus{border-color:var(--lotus);color:var(--lotus)}
+.tag.lotus[data-tab]:hover{background:rgba(244,114,182,0.12)}
+.tag.jade{border-color:var(--jade);color:var(--jade)}
+.tag.jade[data-tab]:hover{background:rgba(5,150,105,0.12)}
+/* Divider */
+.divider{
+  height:1px;background:var(--border);
+  margin:2rem 0;
+}
+/* Ripple keyframe for tag taps */
+@keyframes ripple{
+  to{transform:scale(3);opacity:0}
+}
+/* Inline highlight */
+mark{
+  background:rgba(217,119,6,.15);
+  color:var(--saffron);
+  padding:.05em .25em;
+  border-radius:3px;
+  font-style:normal;
+}
+</style>
+</head>
+<body>
+
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-brand">☸ Buddhism</div>
+    <button class="tab active" onclick="switchTab(0)">Overview</button>
+    <button class="tab" onclick="switchTab(1)">The Buddha</button>
+    <button class="tab" onclick="switchTab(2)">Core Teachings</button>
+    <button class="tab" onclick="switchTab(3)">Schools</button>
+    <button class="tab" onclick="switchTab(4)">Spread</button>
+    <button class="tab" onclick="switchTab(5)">Councils</button>
+    <button class="tab" onclick="switchTab(6)">Art & Arch</button>
+    <button class="tab" onclick="switchTab(7)">UPSC Corner</button>
+    <button class="theme-btn" onclick="toggleTheme()">◑ Theme</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Ancient Indian History · Philosophy · World Religion</div>
+  <h1>☸ <span>Buddhism</span></h1>
+  <div class="hero-sub">From the forests of ancient India to a world religion spanning two and a half millennia — the path of awakening</div>
+  <div class="tag-strip" style="justify-content:center">
+    <span class="tag accent" data-tab="0" title="Overview">6th Century BCE</span>
+    <span class="tag accent" data-tab="4" title="Spread of Buddhism">Magadha, India</span>
+    <span class="tag accent" data-tab="1" title="The Buddha">Siddhartha Gautama</span>
+    <span class="tag lotus" data-tab="2" title="Core Teachings">Ahimsa</span>
+    <span class="tag lotus" data-tab="2" title="Core Teachings">Dharma</span>
+    <span class="tag jade" data-tab="7" title="UPSC Corner">UPSC GS-1</span>
+  </div>
+</div>
+
+<!-- ========== TAB 0: OVERVIEW ========== -->
+<div class="phase-panel visible" id="panel-0">
+<div class="panel-inner">
+  <div class="sec-label">Tab 01 — Origin & Identity</div>
+  <div class="sec-title">What is Buddhism?</div>
+  <div class="sec-sub">A path of liberation born from one man's search for the end of suffering</div>
+
+  <div class="box box-accent">
+    <p style="color:var(--prose);font-size:.82rem;line-height:1.7">
+      Buddhism is one of the world's major religions and philosophical traditions, founded in the 6th–5th century BCE in what is now Nepal and northeastern India. It centers on the teachings (Dhamma/Dharma) of Siddhartha Gautama — the <mark>Buddha</mark>, meaning "the Awakened One." With approximately 500 million adherents today, Buddhism is the fourth-largest religion globally, and one of the earliest missionary religions in history.
+    </p>
+  </div>
+
+  <div class="callout">
+    <strong>Why did Buddhism arise?</strong> The 6th century BCE was a period of intense intellectual ferment in India — what Karl Jaspers called the <em>Axial Age</em>. Buddhism emerged as a direct challenge to Vedic Brahmanical orthodoxy: its rigid caste system (varna/jati), expensive ritual sacrifices (yajnas), Brahmin monopoly on spiritual access, and the animal slaughter of Vedic rites. A rising merchant class (vaishyas), urban centres along the Gangetic plains, and a questioning intelligentsia created fertile ground for new thought.
+  </div>
+
+  <div class="sec-label" style="margin-top:2rem">The Three Jewels</div>
+  <div class="sec-title" style="font-size:1.8rem">Triratna — ত্রিরত্ন</div>
+  <div id="three-jewels-svg" class="svg-wrap"></div>
+
+  <div class="cards-grid">
+    <div class="impact-card">
+      <div class="ic-icon">☸</div>
+      <div class="ic-title">The Buddha</div>
+      <div class="ic-body">The historical teacher Siddhartha Gautama who attained enlightenment (Bodhi) and showed the path. Also refers to the potential of Buddhahood latent in all beings.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">📜</div>
+      <div class="ic-title">The Dhamma (Dharma)</div>
+      <div class="ic-body">The teachings and truths discovered by the Buddha — including the Four Noble Truths, the Eightfold Path, and the nature of reality. The cosmic law of existence.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🧘</div>
+      <div class="ic-title">The Sangha</div>
+      <div class="ic-body">The community of monks, nuns, and lay practitioners who follow the Dhamma. The Sangha preserves, transmits, and embodies the teachings across generations.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Historical Context</div>
+  <div class="sec-title" style="font-size:1.8rem">6th Century BCE India</div>
+  <div class="two-col">
+    <div>
+      <div class="box">
+        <h3>Political Landscape</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The Indian subcontinent was fragmented into the <mark>16 Mahajanapadas</mark> (great kingdoms). Magadha, Kosala, Vatsa, and Avanti were the most powerful. Urban centres like Rajagriha, Vaishali, and Shravasti were thriving mercantile hubs where new ideas flourished outside Brahmanical control.</p>
+      </div>
+      <div class="box">
+        <h3>Social Crisis</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The varna system had ossified into hereditary caste. Kshatriyas and Vaishyas resented Brahmin supremacy. The Shramana movement — wandering ascetics who questioned Vedic authority — was already active. Vardhamana Mahavira (Jainism's 24th Tirthankara) was a contemporary of the Buddha.</p>
+      </div>
+    </div>
+    <div>
+      <div class="box">
+        <h3>Intellectual Climate</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The <mark>Upanishadic tradition</mark> had already begun questioning ritual orthodoxy. Various philosophical schools debated the nature of soul (atman), fate (niyati), materialism (Charvaka/Lokayata), and scepticism. It was a marketplace of ideas — the Buddha entered this arena with a radical middle path.</p>
+      </div>
+      <div class="box">
+        <h3>Buddhist Critique of Vedic Orthodoxy</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">Buddhism rejected: the authority of the Vedas, the Brahmin caste's priestly monopoly, the efficacy of animal sacrifice, the concept of a permanent self (atman/soul), and the caste system as spiritually meaningful. It proclaimed that <mark>liberation is open to all</mark> regardless of birth.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Buddha vs Vedic Orthodoxy:</strong> Where Brahmins said "birth determines spiritual worth," the Buddha said <em>"by deeds, not by birth, does one become a Brahmin."</em> Where yajnas demanded animal sacrifice, Buddhism proclaimed ahimsa (non-violence). Where Vedas were revealed scripture for the twice-born, Buddha said "ehi passiko" — <em>come and see for yourself.</em>
+  </div>
+
+  <div class="sec-label" style="margin-top:2rem">The Shramana Tradition</div>
+  <div class="three-col">
+    <div class="mech-card">
+      <div class="mech-card-head">Jainism</div>
+      <div class="mech-card-body">Founded by Mahavira (contemporary of Buddha). Extreme asceticism, anekantavada (many-sided truth), total ahimsa. Shared critique of Brahminism.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-head">Ajivikas</div>
+      <div class="mech-card-body">Founded by Makkhali Gosala. Absolute determinism (niyati) — all beings undergo fixed cycles of rebirth over exactly 8.4 million great eons.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-head">Charvaka / Lokayata</div>
+      <div class="mech-card-body">Indian materialism. Denied afterlife, soul, karma. "Eat, drink and be merry." Direct perception as the only valid knowledge source.</div>
+    </div>
+  </div>
+
+  <div class="pill-row">
+    <span class="pill">🌧️ Open Monsoon Explainer</span>
+    <span class="pill">🌊 Open ENSO Explainer</span>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 1: THE BUDDHA ========== -->
+<div class="phase-panel" id="panel-1">
+<div class="panel-inner">
+  <div class="sec-label">Tab 02 — Life & Legend</div>
+  <div class="sec-title">The Life of Siddhartha Gautama</div>
+  <div class="sec-sub">Prince, ascetic, meditator — the making of an Awakened One</div>
+
+  <div class="box box-accent">
+    <p style="color:var(--prose);font-size:.82rem;line-height:1.7">
+      Siddhartha Gautama was born c. <mark>563 BCE</mark> (some traditions say 480 BCE) in Lumbini, in present-day Nepal, to King Suddhodana and Queen Mahamaya of the Shakya clan. A royal astrologer prophesied he would become either a universal monarch (chakravartin) or a great spiritual teacher. His father, preferring the former, shielded him from the world's suffering inside palace walls.
+    </p>
+  </div>
+
+  <div class="sec-label" style="margin-top:1.5rem">Interactive Life Timeline</div>
+  <div id="buddha-timeline-svg" class="svg-wrap"></div>
+  <div class="svg-caption">Hover over events to see details · Key sites of the Buddha's life journey</div>
+
+  <div class="divider"></div>
+  <div class="sec-label">The Four Sights</div>
+  <div class="sec-title" style="font-size:1.8rem">Nimitta — The Signs That Changed Everything</div>
+
+  <div class="cards-grid">
+    <div class="impact-card" style="border-color:#7f1d1d">
+      <div class="ic-icon">👴</div>
+      <div class="ic-title">Old Age (Jara)</div>
+      <div class="ic-body">Outside the palace, Siddhartha encountered a frail, bent old man — his first awareness that youth is transient and aging is universal.</div>
+    </div>
+    <div class="impact-card" style="border-color:#7f1d1d">
+      <div class="ic-icon">🤒</div>
+      <div class="ic-title">Sickness (Vyadhi)</div>
+      <div class="ic-body">He saw a man wracked by disease — the body's vulnerability and the suffering that sickness brings to all beings without exception.</div>
+    </div>
+    <div class="impact-card" style="border-color:#7f1d1d">
+      <div class="ic-icon">☠️</div>
+      <div class="ic-title">Death (Marana)</div>
+      <div class="ic-body">A corpse being carried to cremation — the inescapable end of all life, cutting through the illusion of permanence.</div>
+    </div>
+    <div class="impact-card" style="border-color:var(--jade)">
+      <div class="ic-icon">🧘</div>
+      <div class="ic-title">An Ascetic (Shramana)</div>
+      <div class="ic-body">A wandering monk — serene amid all suffering. A sign that liberation from the three woes was possible through the spiritual life.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="two-col">
+    <div>
+      <div class="sec-label">The Great Renunciation</div>
+      <div class="sec-title" style="font-size:1.6rem">Mahabhishkramana</div>
+      <p style="font-size:.8rem;color:var(--prose);line-height:1.65;margin-bottom:.8rem">
+        At age 29, one night Siddhartha gazed upon his sleeping wife Yashodhara and infant son Rahula, then silently left the palace. Riding his horse Kanthaka, accompanied by his charioteer Channa, he crossed the Anoma River, cut his hair, exchanged his royal garments for a monk's robe, and entered the homeless life.
+      </p>
+      <div class="callout" style="font-size:.78rem">He studied under two renowned teachers: <strong>Alara Kalama</strong> (who taught the state of nothingness) and <strong>Uddaka Ramaputta</strong> (who taught the state of neither-perception-nor-non-perception). Siddhartha mastered both — and found neither led to liberation.</div>
+    </div>
+    <div>
+      <div class="sec-label">Six Years of Austerity</div>
+      <div class="sec-title" style="font-size:1.6rem">Near-Fatal Asceticism</div>
+      <p style="font-size:.8rem;color:var(--prose);line-height:1.65;margin-bottom:.8rem">
+        Joining five other ascetics near Uruvela (modern Bodh Gaya), Siddhartha practiced extreme self-mortification — eating almost nothing, holding his breath, exposing himself to extreme heat and cold. He reportedly looked like a skeleton. Realizing this path was fruitless, he accepted a bowl of milk-rice from a village girl named Sujata.
+      </p>
+      <div class="callout" style="font-size:.78rem">His five companions, thinking he had abandoned the spiritual quest, left him in disgust. This rejection of both luxury AND extreme asceticism became the foundation of the <strong>Middle Path (Majjhima Patipada)</strong>.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">The Enlightenment</div>
+  <div class="sec-title">Bodhi — Full Awakening</div>
+
+  <div class="box" style="border-color:var(--gold)">
+    <h3 style="color:var(--gold)">📍 Bodh Gaya, Bihar · c. 528 BCE</h3>
+    <p style="font-size:.8rem;color:var(--prose);line-height:1.65;margin-top:.5rem">
+      Siddhartha sat beneath a Peepal tree (Ficus religiosa) — the Bodhi Tree — on the bank of the Niranjana River, resolving not to rise until he attained enlightenment. Through the night:
+    </p>
+    <div class="event-item" style="border-color:var(--border);margin-top:.5rem">
+      <div class="ei-year">First Watch</div>
+      <div><div class="ei-title">Purabheda Nana</div><div class="ei-desc">Recall of all past lives (jatismara) — full memory of countless rebirths across aeons.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">Second Watch</div>
+      <div><div class="ei-title">Dibba Cakkhu</div><div class="ei-desc">Divine eye — seeing the deaths and rebirths of all beings according to their karma.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">Third Watch</div>
+      <div><div class="ei-title">Asavakkhaya Nana</div><div class="ei-desc">Destruction of all mental defilements (asavas) — full liberation. The dawn broke, and Siddhartha was the Buddha.</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">First Sermon · Dhammachakkapavattana Sutta</div>
+  <div class="sec-title" style="font-size:1.8rem">Turning the Wheel of Dhamma</div>
+  <div class="callout">
+    The Buddha's first sermon at <strong>Deer Park, Sarnath</strong> (near Varanasi) to his five former companions — the <em>Pancavaggi</em>. He expounded the Four Noble Truths and the Eightfold Path, setting the Dhamma Wheel in motion. This event — <strong>Dhamma Chakra Pravartana</strong> — is considered the founding moment of Buddhism.
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <h3>Later Ministry — 45 Years</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The Buddha wandered the Gangetic plains for 45 years, teaching kings and commoners, Brahmins and outcasts. Key patrons: King <mark>Bimbisara</mark> of Magadha (donated the Veluvana monastery), King <mark>Prasenajit</mark> of Kosala, and the merchant <mark>Anathapindika</mark> (donated the Jetavana monastery at Shravasti).</p>
+    </div>
+    <div class="box">
+      <h3>Parinirvana · c. 483 BCE</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">At age 80, the Buddha died at <mark>Kushinagar</mark> (in present-day Uttar Pradesh) after eating a meal offered by the smith Cunda (traditionally "sukaramaddava" — possibly pork or mushroom). His last words: <em>"All conditioned things are impermanent — work out your salvation with diligence."</em></p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 2: CORE TEACHINGS ========== -->
+<div class="phase-panel" id="panel-2">
+<div class="panel-inner">
+  <div class="sec-label">Tab 03 — Philosophy</div>
+  <div class="sec-title">Core Teachings of the Buddha</div>
+  <div class="sec-sub">From suffering's diagnosis to the prescription for liberation</div>
+
+  <!-- FOUR NOBLE TRUTHS -->
+  <div class="sec-label">The Four Noble Truths</div>
+  <div class="sec-title" style="font-size:1.8rem">Cattāri Ariyasaccāni</div>
+  <p style="font-size:.8rem;color:var(--prose);margin-bottom:1rem">The foundation of all Buddhist teaching — structured like a physician's diagnosis: identify the disease, find its cause, establish that a cure exists, prescribe the treatment.</p>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">1. Dukkha — The Truth of Suffering</div><div class="et-sub">All conditioned existence involves suffering, dissatisfaction, imperfection</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p>Dukkha (Pali: suffering/unsatisfactoriness) exists in three forms:</p>
+        <br>
+        <p><mark>Dukkha-dukkha</mark> — Ordinary suffering: pain, illness, death, separation from loved ones, being with what one dislikes.</p>
+        <br>
+        <p><mark>Viparinama-dukkha</mark> — Suffering of change: pleasant experiences are impermanent; their ending causes suffering. Even joy contains the seed of sorrow.</p>
+        <br>
+        <p><mark>Sankhara-dukkha</mark> — Existential suffering: conditioned existence itself is fundamentally unsatisfactory. Even in the absence of obvious pain, existence is inherently subject to impermanence and thus unsatisfying.</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: Buddhism is often mischaracterized as "pessimistic." More accurately, it is diagnostic — it acknowledges suffering as a first step toward liberation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">2. Samudaya — The Truth of the Origin of Suffering</div><div class="et-sub">Craving (tanha) is the root cause — the thirst that perpetuates samsara</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p>The origin of suffering is <mark>tanha</mark> (Pali: craving/thirst), which manifests as:</p>
+        <br>
+        <p><strong>Kama-tanha</strong> — Sensory craving (craving for pleasant sights, sounds, smells, tastes, touches)</p>
+        <p><strong>Bhava-tanha</strong> — Craving for existence/becoming (the drive to perpetuate oneself)</p>
+        <p><strong>Vibhava-tanha</strong> — Craving for non-existence (nihilistic desire for annihilation)</p>
+        <br>
+        <p>Tanha leads to upadana (clinging/attachment), which fuels bhava (becoming), which perpetuates the cycle of birth, aging, and death (samsara).</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">Note: This is different from the Jain concept — Buddhism says craving (not the soul's contact with matter) is the binding force. The solution is not extreme asceticism but the Eightfold Path.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">3. Nirodha — The Truth of the Cessation of Suffering</div><div class="et-sub">Nirvana — the complete cessation of craving and its consequences</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p><mark>Nirvana</mark> (Pali: Nibbana) literally means "blowing out" — the extinguishing of the fires of greed, hatred, and delusion. It is NOT annihilation (that would be vibhava-tanha), but the cessation of conditioned existence and suffering.</p>
+        <br>
+        <p><strong>Two types of Nirvana:</strong></p>
+        <p><strong>Sopadhi-sesa Nibbana</strong> (Nirvana with remainder) — achieved while still living; the Buddha's state after enlightenment. Mental defilements extinguished but the body continues.</p>
+        <p><strong>Anupadisesa Nibbana</strong> (Nirvana without remainder) — at death; no rebirth. The Buddha's state at Parinirvana (final passing).</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: Buddhism does NOT posit an eternal heaven. Nirvana transcends the categories of existence and non-existence — it cannot be positively described, only approached via what it is not.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">4. Magga — The Truth of the Path to the Cessation of Suffering</div><div class="et-sub">The Noble Eightfold Path — the practical method of liberation</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p>The Fourth Noble Truth points to the <mark>Noble Eightfold Path</mark> — the Middle Way between sensual indulgence and extreme asceticism. Grouped into three training categories:</p>
+        <br>
+        <p><strong>Prajna (Wisdom):</strong> Right View, Right Intention</p>
+        <p><strong>Shila (Morality/Ethics):</strong> Right Speech, Right Action, Right Livelihood</p>
+        <p><strong>Samadhi (Meditation/Concentration):</strong> Right Effort, Right Mindfulness, Right Concentration</p>
+        <br>
+        <p>These are not sequential steps but simultaneous, mutually reinforcing aspects of a complete way of living.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <!-- EIGHTFOLD PATH WHEEL -->
+  <div class="sec-label">The Noble Eightfold Path</div>
+  <div class="sec-title" style="font-size:1.8rem">Aṭṭhaṅgika Magga — ☸</div>
+  <p style="font-size:.8rem;color:var(--prose);margin-bottom:.5rem">Hover / tap each spoke on the Dhamma Wheel to explore</p>
+  <div id="eightfold-svg" class="svg-wrap" style="max-width:600px;margin:0 auto"></div>
+  <div class="spoke-info" id="spoke-info">
+    <strong>☸ Hover a spoke</strong><br>
+    <span style="font-size:.75rem;color:var(--muted)">The Eightfold Path is the Buddha's practical guide to liberation — the Fourth Noble Truth in action.</span>
+  </div>
+
+  <div class="divider"></div>
+  <!-- THREE MARKS -->
+  <div class="sec-label">Three Marks of Existence</div>
+  <div class="sec-title" style="font-size:1.8rem">Tilakkhana — The Three Characteristics</div>
+  <div class="cards-grid">
+    <div class="impact-card" style="border-top:3px solid var(--saffron)">
+      <div class="ic-icon">🌊</div>
+      <div class="ic-title">Anicca — Impermanence</div>
+      <div class="ic-body">All conditioned phenomena are impermanent — constantly arising and passing away. Nothing in the universe is fixed or eternal. Resisting this truth is the root of suffering.</div>
+    </div>
+    <div class="impact-card" style="border-top:3px solid var(--maroon)">
+      <div class="ic-icon">🔥</div>
+      <div class="ic-title">Dukkha — Suffering</div>
+      <div class="ic-body">Unsatisfactoriness pervades conditioned existence. Even pleasant experiences are dukkha because they are impermanent and cannot fully satisfy the deeper longing for permanence.</div>
+    </div>
+    <div class="impact-card" style="border-top:3px solid var(--gold)">
+      <div class="ic-icon">🌀</div>
+      <div class="ic-title">Anatta — Non-Self</div>
+      <div class="ic-body">The most radical Buddhist doctrine — there is no permanent, unchanging self (contra the Upanishadic Atman). What we call "self" is a constantly changing flux of five aggregates (skandhas).</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>The Five Aggregates (Panchaskandha):</strong> What we call a "person" is actually a bundle of five constantly changing processes — <em>Form (Rupa), Sensation (Vedana), Perception (Sanna), Mental formations (Sankhara), Consciousness (Vinnana)</em>. None is a permanent self; none is "mine." Clinging to any as "I" is the fundamental delusion.
+  </div>
+
+  <div class="divider"></div>
+  <!-- DEPENDENT ORIGINATION -->
+  <div class="sec-label">Dependent Origination</div>
+  <div class="sec-title" style="font-size:1.8rem">Pratītyasamutpāda — 12-Link Chain</div>
+  <p style="font-size:.8rem;color:var(--prose);margin-bottom:.75rem">The Buddha's analysis of how suffering arises — and how it can be reversed. Each link conditions the next in a circular chain spanning three lifetimes.</p>
+  <div id="deporigin-svg" class="svg-wrap"></div>
+  <div class="svg-caption">The 12 Nidanas (links) of Dependent Origination — the engine of samsara</div>
+
+  <div class="divider"></div>
+  <!-- MIDDLE PATH -->
+  <div class="sec-label">The Middle Path</div>
+  <div class="sec-title" style="font-size:1.8rem">Majjhimā Paṭipadā</div>
+  <div id="middle-path-svg" class="svg-wrap"></div>
+  <div class="svg-caption">The Middle Way: between sensual indulgence and extreme asceticism</div>
+</div>
+</div>
+
+<!-- ========== TAB 3: SCHOOLS ========== -->
+<div class="phase-panel" id="panel-3">
+<div class="panel-inner">
+  <div class="sec-label">Tab 04 — Denominations</div>
+  <div class="sec-title">Schools & Sects of Buddhism</div>
+  <div class="sec-sub">Three great vehicles, divergent paths, one common origin</div>
+
+  <div class="callout">
+    After the Buddha's Parinirvana, differing interpretations of his teachings and monastic rules gradually led to schisms. The first major split came at the <strong>Second Council (Vaishali, c. 383 BCE)</strong> between the orthodox Sthaviravadins and the more progressive Mahasanghikas. Over centuries, 18 early schools emerged, eventually crystallizing into the three great traditions we know today.
+  </div>
+
+  <div id="schools-geo-svg" class="svg-wrap"></div>
+  <div class="svg-caption">Approximate geographical spread of Buddhist traditions · Asia</div>
+
+  <div class="sec-label" style="margin-top:2rem">Comparison Table</div>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th style="background:#6b1b1b">Theravada (Hinayana)</th>
+        <th style="background:#1b4d6b">Mahayana</th>
+        <th style="background:#2d1b6b">Vajrayana</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Meaning</td><td>Way of the Elders / "Lesser Vehicle"</td><td>"Great Vehicle"</td><td>"Diamond/Thunderbolt Vehicle"</td></tr>
+      <tr><td>Ideal</td><td>Arhat (personal liberation)</td><td>Bodhisattva (liberation for all beings)</td><td>Mahasiddha (tantric adept)</td></tr>
+      <tr><td>Key Texts</td><td>Pali Canon (Tipitaka)</td><td>Mahayana Sutras (Sanskrit): Prajnaparamita, Lotus Sutra, Vimalakirti</td><td>Tantras, Vajrayana texts</td></tr>
+      <tr><td>Language</td><td>Pali</td><td>Sanskrit, Chinese, Tibetan</td><td>Sanskrit, Tibetan</td></tr>
+      <tr><td>Deity Worship</td><td>Minimal — Buddha as a great teacher, not divine</td><td>Developed — celestial Buddhas (Amitabha, Vairochana), Bodhisattvas (Avalokitesvara, Manjushri, Tara)</td><td>Extensive — complex pantheons, mandalas, tantric deities</td></tr>
+      <tr><td>Monasticism</td><td>Central — monks and nuns follow strict Vinaya</td><td>Lay practitioners valued; Bodhisattva vow for all</td><td>Esoteric transmission through guru lineages</td></tr>
+      <tr><td>Emergence</td><td>3rd Century BCE; consolidated after 3rd Council</td><td>1st Century BCE – 1st Century CE</td><td>6th–7th Century CE in India, flourished in Tibet</td></tr>
+      <tr><td>Key Regions Today</td><td>Sri Lanka, Thailand, Myanmar, Cambodia, Laos</td><td>China, Japan, Korea, Vietnam, Taiwan</td><td>Tibet, Mongolia, Bhutan, parts of Nepal</td></tr>
+      <tr><td>Concept of Buddha</td><td>Historical figure, human who attained Nirvana</td><td>Eternal Buddha-principle; multiple Buddhas across time and space</td><td>Each being contains Buddha-nature; awakening in one lifetime possible</td></tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+  <div class="sec-label">Emergence Timeline</div>
+  <div id="schools-timeline-svg" class="svg-wrap"></div>
+  <div class="svg-caption">Historical development of Buddhist schools from the 3rd century BCE</div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Deep Dive — Theravada</div>
+  <div class="three-col">
+    <div class="box">
+      <h3>Arhat Ideal</h3>
+      <p style="font-size:.78rem;color:var(--prose)">The fully liberated saint who has destroyed all defilements and will not be reborn. Personal liberation is the goal. The Buddha was an exceptional Arhat.</p>
+    </div>
+    <div class="box">
+      <h3>Tipitaka</h3>
+      <p style="font-size:.78rem;color:var(--prose)">Three "baskets": Vinaya Pitaka (monastic rules), Sutta Pitaka (discourses), Abhidhamma Pitaka (philosophical analysis). In Pali — the closest to original teachings.</p>
+    </div>
+    <div class="box">
+      <h3>Vipassana</h3>
+      <p style="font-size:.78rem;color:var(--prose)">Insight meditation — direct observation of impermanence, suffering, and non-self in one's own experience. The core practice for liberation.</p>
+    </div>
+  </div>
+
+  <div class="sec-label" style="margin-top:1.5rem">Deep Dive — Mahayana</div>
+  <div class="three-col">
+    <div class="box">
+      <h3>Bodhisattva Ideal</h3>
+      <p style="font-size:.78rem;color:var(--prose)">The compassionate being who vows to attain Buddhahood for the sake of all sentient beings, deliberately postponing final Nirvana to help others. The Bodhisattva vow: <em>"May I attain Buddhahood for the benefit of all."</em></p>
+    </div>
+    <div class="box">
+      <h3>Shunyata</h3>
+      <p style="font-size:.78rem;color:var(--prose)">Emptiness — Nagarjuna's Madhyamaka philosophy. All phenomena are empty of inherent existence; they exist only in dependent relation to other phenomena. Even Nirvana and Samsara are empty.</p>
+    </div>
+    <div class="box">
+      <h3>Buddha-nature (Tathagatagarbha)</h3>
+      <p style="font-size:.78rem;color:var(--prose)">All beings possess the seed of Buddhahood within them. Liberation is not acquired from outside but realized within. This was revolutionary — salvation as innate potential.</p>
+    </div>
+  </div>
+
+  <div class="sec-label" style="margin-top:1.5rem">Deep Dive — Vajrayana</div>
+  <div class="three-col">
+    <div class="box">
+      <h3>Tantra</h3>
+      <p style="font-size:.78rem;color:var(--prose)">Esoteric practices using mantras, mandalas, mudras, and visualizations to transform ordinary consciousness. "Poison becomes medicine" — using desire to overcome desire.</p>
+    </div>
+    <div class="box">
+      <h3>Guru Lineage</h3>
+      <p style="font-size:.78rem;color:var(--prose)">Direct teacher-to-student transmission is essential. The guru (lama) is central — without authentic transmission, the practices are ineffective or dangerous.</p>
+    </div>
+    <div class="box">
+      <h3>Bardo & Rebirth</h3>
+      <p style="font-size:.78rem;color:var(--prose)">Tibetan Buddhism developed detailed maps of the intermediate state (bardo) between death and rebirth — elaborated in texts like the <em>Bardo Thodol</em> (Tibetan Book of the Dead).</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 4: SPREAD ========== -->
+<div class="phase-panel" id="panel-4">
+<div class="panel-inner">
+  <div class="sec-label">Tab 05 — Diffusion</div>
+  <div class="sec-title">The Spread of Buddhism</div>
+  <div class="sec-sub">From Magadha to the world — across land and sea, empire and mission</div>
+
+  <div id="spread-map-svg" class="svg-wrap"></div>
+  <div class="svg-caption">Routes of Buddhist expansion across Asia · 3rd century BCE – 8th century CE</div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Ashoka — The Great Propagator</div>
+  <div class="box box-accent">
+    <h3>Emperor Ashoka (r. c. 268–232 BCE) — Priyadarshi</h3>
+    <p style="font-size:.8rem;color:var(--prose);line-height:1.65;margin-top:.5rem">
+      After witnessing the carnage of the Kalinga War (~261 BCE) in which an estimated 100,000 were killed, Ashoka underwent a profound moral transformation and embraced Buddhism. He became the religion's greatest royal patron:
+    </p>
+    <div class="event-item">
+      <div class="ei-year">Dhamma Edicts</div>
+      <div><div class="ei-title">Rock Edicts & Pillar Edicts</div><div class="ei-desc">Inscribed in Prakrit (Brahmi/Kharosthi scripts) across his empire — propagating Dhamma (not explicitly Buddhist doctrine but Buddhist-influenced moral principles): ahimsa, respect for all religions, welfare of subjects.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">Dhamma Missions</div>
+      <div><div class="ei-title">Diplomatic Missionaries</div><div class="ei-desc">Sent missions to Greek kingdoms (Syria, Egypt, Macedonia, Cyrene, Epirus), Sri Lanka, Myanmar, and Southeast Asia. Rock Edict XIII lists these missions.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">Mahinda Mission</div>
+      <div><div class="ei-title">Sri Lanka — c. 247 BCE</div><div class="ei-desc">Ashoka's son Mahinda (or missionary Mahinda) brought Buddhism to Sri Lanka, where King Devanampiya Tissa accepted the faith. Sri Lanka became the heartland of Theravada Buddhism — it has never lost the tradition.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">Stupa Building</div>
+      <div><div class="ei-title">84,000 Stupas</div><div class="ei-desc">Traditional accounts credit Ashoka with building 84,000 stupas across his empire — likely exaggerated but indicative of massive patronage. He divided the relics of the Buddha among these stupas.</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="two-col">
+    <div>
+      <div class="sec-label">Northward — Silk Road</div>
+      <div class="sec-title" style="font-size:1.5rem">Central Asia to China</div>
+      <div class="event-item">
+        <div class="ei-year">1st–2nd CE</div>
+        <div><div class="ei-title">Central Asian Kingdoms</div><div class="ei-desc">Kushan Empire (Kanishka I, c. 127 CE) became a major Buddhist patron — his coins show both Indian and Greek-Buddhist figures. He convened the Fourth Buddhist Council in Kashmir. Buddhism spread to Bactria, Gandhara, Parthia.</div></div>
+      </div>
+      <div class="event-item">
+        <div class="ei-year">1st CE</div>
+        <div><div class="ei-title">China (Han Dynasty)</div><div class="ei-desc">Emperor Ming's legendary dream of a golden man (c. 67 CE) led to the first official Buddhist mission to China. Monks Kashyapa Matanga and Dharmaraksha brought the Sutra in Forty-Two Sections to Luoyang on white horses — giving name to the White Horse Temple.</div></div>
+      </div>
+      <div class="event-item">
+        <div class="ei-year">4th–7th CE</div>
+        <div><div class="ei-title">China — Full Assimilation</div><div class="ei-desc">Chinese pilgrims Faxian (399 CE) and Xuanzang (629–645 CE) traveled to India for scriptures. Chan (Zen) Buddhism developed as a Chinese synthesis. Buddhism reached Korea (4th CE) and Japan (6th CE).</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Southward — Sea Routes</div>
+      <div class="sec-title" style="font-size:1.5rem">Southeast Asia</div>
+      <div class="event-item">
+        <div class="ei-year">1st–3rd CE</div>
+        <div><div class="ei-title">Myanmar & Mainland SEA</div><div class="ei-desc">Trade routes carried Buddhism to the Mon kingdoms of lower Myanmar. The Pyu city-states in central Myanmar were Buddhist by the 2nd century CE.</div></div>
+      </div>
+      <div class="event-item">
+        <div class="ei-year">2nd–5th CE</div>
+        <div><div class="ei-title">Maritime Southeast Asia</div><div class="ei-desc">Indian merchants and monks brought Buddhism to Java (Borobudur — 9th CE is the world's largest Buddhist monument), Sumatra (Srivijaya Empire was a major Buddhist center), Cambodia (Angkor), and Thailand.</div></div>
+      </div>
+      <div class="event-item">
+        <div class="ei-year">7th CE →</div>
+        <div><div class="ei-title">Tibet</div><div class="ei-desc">Buddhism entered Tibet under King Songtsen Gampo (c. 617–650 CE). Padmasambhava (Guru Rinpoche) is credited with establishing Buddhism over indigenous Bon religion in the 8th century. Tibet became the world's great preserve of Vajrayana Buddhism.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Decline in India</div>
+  <div class="box" style="border-color:var(--maroon)">
+    <h3 style="color:var(--maroon)">Why Did Buddhism Decline in Its Homeland?</h3>
+    <p style="font-size:.8rem;color:var(--prose);line-height:1.65;margin-top:.5rem">Buddhism virtually disappeared from India by the 12th–13th centuries. Key factors:</p>
+    <div class="cards-grid" style="margin-top:.75rem">
+      <div class="mech-card"><div class="mech-card-head">Brahmanical Revival</div><div class="mech-card-body">The Gupta period (4th–6th CE) saw resurgent Hindu patronage. Adi Shankaracharya's (8th CE) Advaita Vedanta movement philosophically challenged Buddhism using Buddhist-style logic.</div></div>
+      <div class="mech-card"><div class="mech-card-head">Loss of Royal Patronage</div><div class="mech-card-body">Buddhism depended heavily on royal and merchant patronage. When Gupta and later rulers shifted to Shaivism/Vaishnavism, Buddhist monasteries lost funding.</div></div>
+      <div class="mech-card"><div class="mech-card-head">Destruction of Monasteries</div><div class="mech-card-body">Bakhtiyar Khilji's raids (c. 1193 CE) destroyed Nalanda, Vikramashila, and Odantapuri — the great Buddhist universities, burning vast libraries. Monk communities scattered.</div></div>
+      <div class="mech-card"><div class="mech-card-head">Absorption into Hinduism</div><div class="mech-card-body">The Buddha was incorporated into the Vaishnava tradition as the 9th avatar of Vishnu. Buddhism's distinctive identity blurred as it merged with popular Hinduism and Tantrism.</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 5: COUNCILS ========== -->
+<div class="phase-panel" id="panel-5">
+<div class="panel-inner">
+  <div class="sec-label">Tab 06 — Councils</div>
+  <div class="sec-title">Buddhist Councils</div>
+  <div class="sec-sub">How the Sangha preserved, debated, and transmitted the Dhamma</div>
+
+  <div class="callout">
+    After the Buddha's Parinirvana, his disciples convened periodically to compile, verify, and standardize his teachings and the monastic code. These councils were crucial for preserving the Dhamma in an oral tradition — and each became a flashpoint for doctrinal disputes that shaped Buddhist history.
+  </div>
+
+  <div id="councils-timeline-svg" class="svg-wrap"></div>
+  <div class="svg-caption">The Four Buddhist Councils — interactive timeline</div>
+
+  <div class="divider"></div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">First Council — Rajagriha · c. 483 BCE</div><div class="et-sub">Immediately after the Buddha's death · Convened by Mahakassapa</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p><strong>Venue:</strong> Sattapanni Cave, Rajagriha (modern Rajgir, Bihar) · <strong>Patron:</strong> King Ajatashatru of Magadha</p>
+        <br>
+        <p><strong>Convener:</strong> Mahakassapa (the senior most disciple after the Buddha's death)</p>
+        <br>
+        <p><strong>Participants:</strong> 500 Arahants (fully enlightened monks)</p>
+        <br>
+        <p><strong>Purpose and Outcome:</strong></p>
+        <p>• Ananda (the Buddha's personal attendant, famous for his memory) recited the Suttas — the discourses — which begin with "Evam me sutam" ("Thus have I heard"). He was admitted only after attaining Arahantship the night before the council.</p>
+        <p>• Upali recited the Vinaya — the monastic code. His recitation became the basis of the Vinaya Pitaka.</p>
+        <p>• No Abhidhamma was recited at this council (it developed later).</p>
+        <br>
+        <p><strong>Controversy:</strong> Purna objected that the Buddha had allowed minor rules to be abolished — but the majority decided to retain all rules as remembered by Upali, since the Buddha had not specified which were "minor."</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: First Council = Mahakassapa + Ananda + Upali + Rajagriha + Ajatashatru. This is the most frequently tested council.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">Second Council — Vaishali · c. 383 BCE</div><div class="et-sub">100 years after the First Council · The First Great Schism</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p><strong>Venue:</strong> Vaishali (modern Vaishali, Bihar) · <strong>Patron:</strong> King Kalasoka (Kakavarna)</p>
+        <br>
+        <p><strong>Convener:</strong> Elder Yasa (who objected to lax practices he observed among the Vajjian monks)</p>
+        <br>
+        <p><strong>Cause:</strong> The Vajjian monks of Vaishali were practicing 10 controversial acts, including:</p>
+        <p>• Accepting gold and silver (money)</p>
+        <p>• Eating after midday</p>
+        <p>• Drinking palm wine</p>
+        <p>• Using large seats and beds</p>
+        <br>
+        <p><strong>Outcome:</strong> The council declared all 10 practices unlawful. However, the Vajjian monks refused to accept the verdict and held their own counter-council with 10,000 monks — the <mark>Mahasanghika</mark> (Great Assembly). This is the first major schism in Buddhism, leading to 18 early schools and eventually to the Theravada-Mahayana split.</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: 2nd Council = Vaishali = Yasa = Kalasoka = Mahasanghika schism. 100 years after 1st Council.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">Third Council — Pataliputra · c. 250 BCE</div><div class="et-sub">Under Ashoka's patronage · Standardizing Theravada orthodoxy</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p><strong>Venue:</strong> Pataliputra (modern Patna, Bihar) · <strong>Patron:</strong> Emperor Ashoka</p>
+        <br>
+        <p><strong>Convener/Presider:</strong> Moggaliputta Tissa (chief elder, scholar)</p>
+        <br>
+        <p><strong>Participants:</strong> 1000 Arahants · Duration: 9 months</p>
+        <br>
+        <p><strong>Context:</strong> Ashoka's enormous generosity had attracted many non-Buddhists to the Sangha seeking material benefits, leading to corrupted teachings and practice. The council was called to purify the Sangha and settle doctrinal disputes.</p>
+        <br>
+        <p><strong>Outcome:</strong></p>
+        <p>• Expelled corrupt and heretical monks from the Sangha</p>
+        <p>• Finalized the Abhidhamma Pitaka — the philosophical analysis texts</p>
+        <p>• Completed the Tipitaka (all three baskets)</p>
+        <p>• Moggaliputta Tissa composed the <em>Kathavatthu</em> — refuting 252 heretical views</p>
+        <p>• Launched missionary expeditions to 9 regions including Sri Lanka (Mahinda), Myanmar, Thailand, Kashmir, Gandhara, and Greece</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: 3rd Council = Pataliputra = Ashoka = Moggaliputta Tissa = Abhidhamma = Missions. Most important for spread of Buddhism.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">Fourth Council — Kashmir · c. 72–78 CE</div><div class="et-sub">Under the Kushana Empire · Sarvastivada compilation</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p><strong>Venue:</strong> Kundalvana Monastery, Kashmir · <strong>Patron:</strong> Emperor Kanishka I (Kushana Empire)</p>
+        <br>
+        <p><strong>Presider:</strong> Vasumitra (president) with Ashvaghosha (famous poet-monk, author of Buddhacharita) as vice-president</p>
+        <br>
+        <p><strong>Participants:</strong> 500 monks · Duration: Several months</p>
+        <br>
+        <p><strong>Note:</strong> Theravada tradition does NOT recognize this council, as it was a Sarvastivada (one of the 18 early schools) council and was held in Sanskrit rather than Pali. A separate "Fourth Council" recognized by Theravadins was held in Sri Lanka under King Vattagamani Abhaya (c. 29–17 BCE) — where the Tipitaka was first written down in Pali on palm leaves.</p>
+        <br>
+        <p><strong>Outcome (Sarvastivada Council):</strong></p>
+        <p>• Compiled the Mahavibhasha — a massive commentary on the Abhidharma</p>
+        <p>• Inscribed the Tripitaka on copper plates stored in a stone box</p>
+        <p>• Cemented the Sarvastivada school's prominence in Northwest India and Central Asia</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: 4th Council = Kashmir = Kanishka = Vasumitra = Sarvastivada. NOT accepted by Theravada. Ashvaghosha was a participant.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:1.5rem">
+    <h3>Quick Recall — All Four Councils</h3>
+    <table class="comp-table" style="margin:0">
+      <thead><tr><th>Council</th><th>Location</th><th>BCE/CE</th><th>King</th><th>Presider</th><th>Key Outcome</th></tr></thead>
+      <tbody>
+        <tr><td>1st</td><td>Rajagriha</td><td>c. 483 BCE</td><td>Ajatashatru</td><td>Mahakassapa</td><td>Compilation of Suttas (Ananda) & Vinaya (Upali)</td></tr>
+        <tr><td>2nd</td><td>Vaishali</td><td>c. 383 BCE</td><td>Kalasoka</td><td>Yasa</td><td>10 lax practices debated; Mahasanghika schism</td></tr>
+        <tr><td>3rd</td><td>Pataliputra</td><td>c. 250 BCE</td><td>Ashoka</td><td>Moggaliputta Tissa</td><td>Abhidhamma added; Sangha purified; Missions sent</td></tr>
+        <tr><td>4th</td><td>Kashmir</td><td>c. 72–78 CE</td><td>Kanishka I</td><td>Vasumitra</td><td>Mahavibhasha; Sarvastivada consolidation</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 6: ART & ARCHITECTURE ========== -->
+<div class="phase-panel" id="panel-6">
+<div class="panel-inner">
+  <div class="sec-label">Tab 07 — Art & Architecture</div>
+  <div class="sec-title">Buddhist Art & Architecture</div>
+  <div class="sec-sub">In stone and fresco, the faith made visible across a continent</div>
+
+  <div class="two-col">
+    <div>
+      <div class="sec-label">Stupa Anatomy</div>
+      <div class="sec-title" style="font-size:1.6rem">The Sacred Mound</div>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6;margin-bottom:.75rem">
+        A stupa is a hemispherical mound used as a Buddhist reliquary — enshrining the remains of the Buddha, Arahants, or sacred objects. It is a three-dimensional mandala representing the cosmos and the path to liberation.
+      </p>
+    </div>
+    <div id="stupa-svg" class="svg-wrap"></div>
+  </div>
+
+  <div class="cards-grid" style="margin-top:.5rem">
+    <div class="impact-card">
+      <div class="ic-icon">🌐</div>
+      <div class="ic-title">Anda (Egg)</div>
+      <div class="ic-body">The solid hemispherical dome — represents the cosmic egg, the universe, or the Buddha's begging bowl overturned. Encloses the relic chamber.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">⬜</div>
+      <div class="ic-title">Harmika</div>
+      <div class="ic-body">The square railing at the apex of the anda — represents the abode of the gods (devaloka) or the realm of the 33 gods. The axis of the world passes through it.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">☂️</div>
+      <div class="ic-title">Chattra (Umbrella)</div>
+      <div class="ic-body">One or more discs above the harmika — symbols of royalty and honour paid to the sacred relic. Multiple chhatras indicate the height of sanctity.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🚪</div>
+      <div class="ic-title">Torana (Gateway)</div>
+      <div class="ic-body">Ornamental gateways at the four cardinal points — adorned with relief sculptures of Jataka tales, life of the Buddha, and auspicious motifs. The Sanchi toranas are world-famous.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">⚪</div>
+      <div class="ic-title">Vedika (Railing)</div>
+      <div class="ic-body">The stone railing that surrounds the stupa — originally in wood, later in stone. Defines the sacred precinct and the pradakshina path (circumambulation route).</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🔵</div>
+      <div class="ic-title">Medhi (Drum)</div>
+      <div class="ic-body">The cylindrical base platform on which the anda sits — raised in later stupas to allow pradakshina at different levels (as at Sanchi Stupa 1).</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Types of Buddhist Structures</div>
+  <div class="three-col">
+    <div class="mech-card">
+      <div class="mech-card-head">Stupa</div>
+      <div class="mech-card-body">Reliquary mound — focal point of worship. Sanchi (MP), Sarnath, Amaravati, Bharhut. Used for circumambulation (pradakshina), not interior worship.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-head">Chaitya</div>
+      <div class="mech-card-body">Prayer/assembly hall — barrel-vaulted, with a stupa at the apsidal end. Karle, Bhaja, Ajanta Caves 9 & 10. For communal worship and chanting.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-head">Vihara</div>
+      <div class="mech-card-body">Monastery — residential hall for monks. Cells around a central courtyard. Ajanta, Ellora, Nalanda, Ratnagiri. Living, studying, meditating spaces.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Key Sites</div>
+  <div class="cards-grid">
+    <div class="impact-card" style="border-top:3px solid var(--saffron)">
+      <div class="ic-title">Sanchi (Madhya Pradesh)</div>
+      <div class="ic-body">The Great Stupa (Stupa 1) — begun by Ashoka, expanded in Shunga and Satavahana periods. Famous four toranas with exquisite carvings. UNESCO World Heritage. Buddha not shown in human form — represented by symbols (footprint, wheel, parasol, empty throne).</div>
+    </div>
+    <div class="impact-card" style="border-top:3px solid var(--gold)">
+      <div class="ic-title">Ajanta Caves (Maharashtra)</div>
+      <div class="ic-body">30 rock-cut Buddhist caves (2nd BCE – 6th CE) with extraordinary frescoes — considered among the finest surviving examples of ancient Indian painting. Both Chaityas (prayer halls) and Viharas (monasteries). Rediscovered by British officer John Smith in 1819.</div>
+    </div>
+    <div class="impact-card" style="border-top:3px solid var(--lotus)">
+      <div class="ic-title">Ellora Caves (Maharashtra)</div>
+      <div class="ic-body">34 caves spanning Buddhist (1–12), Hindu (13–29), and Jain (30–34) traditions — a unique monument to India's religious pluralism. The Buddhist caves (5th–7th CE) include elaborate monasteries with two-storey viharas. UNESCO World Heritage.</div>
+    </div>
+    <div class="impact-card" style="border-top:3px solid var(--jade)">
+      <div class="ic-title">Nalanda (Bihar)</div>
+      <div class="ic-body">The world's first residential international university (5th–12th CE). Attracted students from China, Korea, Japan, Tibet, Mongolia, Sri Lanka. Library "Dharmaganja" ("Ocean of Truth") — destroyed by Bakhtiyar Khilji c. 1193 CE. Enrolled 10,000 students.</div>
+    </div>
+    <div class="impact-card" style="border-top:3px solid var(--saffron)">
+      <div class="ic-title">Sarnath (Uttar Pradesh)</div>
+      <div class="ic-body">Deer Park — site of the First Sermon. The Dhamekh Stupa marks where the Buddha preached. The Ashokan Pillar at Sarnath features the famous Lion Capital — adopted as India's national emblem and the Dharma Chakra on the national flag.</div>
+    </div>
+    <div class="impact-card" style="border-top:3px solid var(--ochre)">
+      <div class="ic-title">Bodhgaya (Bihar)</div>
+      <div class="ic-body">Site of the Buddha's enlightenment under the Bodhi Tree. The Mahabodhi Temple (UNESCO) stands where he attained enlightenment. The current Bodhi Tree is a direct descendant of the original. The most sacred site in Buddhism.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Art Styles — Aniconic vs Iconic</div>
+  <div class="two-col">
+    <div class="box">
+      <h3>Early Aniconic Phase (3rd–1st BCE)</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The Buddha was NOT depicted in human form — out of reverence. He was represented by symbols:</p>
+      <div class="tag-strip">
+        <span class="tag accent">☸ Dharma Wheel</span>
+        <span class="tag accent">👣 Footprints</span>
+        <span class="tag accent">🌳 Bodhi Tree</span>
+        <span class="tag accent">☂️ Parasol</span>
+        <span class="tag accent">🐴 Riderless Horse</span>
+        <span class="tag accent">🪑 Empty Throne</span>
+      </div>
+      <p style="font-size:.78rem;color:var(--prose);margin-top:.5rem">Bharhut and Sanchi carvings exemplify this period.</p>
+    </div>
+    <div class="box">
+      <h3>Iconic Phase — Gandhara vs Mathura</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">Human images of the Buddha emerged in the 1st–2nd centuries CE from two competing traditions:</p>
+      <div class="event-item" style="padding-top:.5rem">
+        <div class="ei-year" style="min-width:80px;font-size:.85rem">Gandhara</div>
+        <div><div class="ei-desc">Northwest India (modern Pakistan/Afghanistan). Greco-Roman influence from Alexander's successors — wavy hair, toga-like robes, idealized Apollonian features. Schist stone. Showed Buddhist scenes with Greek artistic vocabulary.</div></div>
+      </div>
+      <div class="event-item">
+        <div class="ei-year" style="min-width:80px;font-size:.85rem">Mathura</div>
+        <div><div class="ei-desc">Mathura (Uttar Pradesh). Indigenous Indian tradition — shaved head (or thin curls), translucent robes, robust physique, warm Indian aesthetic. Spotted red sandstone. More devotional, less formal than Gandhara.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>The 32 Marks of a Great Being (Mahapurusha Lakshana):</strong> Both Gandhara and Mathura artists incorporated traditional iconographic markers — the ushnisha (cranial protuberance), urna (mark between eyebrows), elongated earlobes (from heavy earrings before renunciation), webbed fingers, and the dhyana mudra (meditation gesture). These created a recognizable visual vocabulary for the Buddha image across all of Asia.
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 7: UPSC CORNER ========== -->
+<div class="phase-panel" id="panel-7">
+<div class="panel-inner">
+  <div class="sec-label">Tab 08 — Exam Prep</div>
+  <div class="sec-title">UPSC Corner ☸</div>
+  <div class="sec-sub">Flashcards, PYQs, and quick-recall for Civil Services Examination</div>
+
+  <div class="callout">
+    Buddhism is a recurring topic in UPSC GS-1 (History, Art & Culture) and Prelims. Key themes: councils and their patrons, schools comparison, art & architecture, decline, contemporary relevance. Tap/click flashcards to flip.
+  </div>
+
+  <div class="sec-label">Pali/Sanskrit Terms — Flashcards</div>
+  <div class="sec-title" style="font-size:1.5rem">Tap to Flip</div>
+  <div class="flashcard-grid" id="terms-cards"></div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Previous Year Questions (UPSC Prelims)</div>
+  <div class="sec-title" style="font-size:1.5rem">Click to Reveal Answers</div>
+  <div id="pyq-cards"></div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Key Rulers & Patronage</div>
+  <div class="sec-title" style="font-size:1.5rem">Royal Patrons of Buddhism</div>
+  <table class="comp-table">
+    <thead><tr><th>Ruler / Dynasty</th><th>Period</th><th>Contribution</th></tr></thead>
+    <tbody>
+      <tr><td>Bimbisara (Magadha)</td><td>c. 558–491 BCE</td><td>First royal patron; donated Veluvana monastery to the Buddha; converted to Buddhism</td></tr>
+      <tr><td>Ajatashatru (Magadha)</td><td>c. 491–461 BCE</td><td>Patron of 1st Buddhist Council; built stupa over the Buddha's relics at Rajagriha</td></tr>
+      <tr><td>Ashoka (Maurya)</td><td>c. 268–232 BCE</td><td>Greatest patron; Rock Edicts; 3rd Council; worldwide missions; 84,000 stupas; Dhamma policy</td></tr>
+      <tr><td>Kanishka I (Kushana)</td><td>c. 127 CE</td><td>4th Council in Kashmir; Gandhara Buddhist art; coins with Buddhist figures; Ashvaghosha's patronage</td></tr>
+      <tr><td>Harsha (Thanesar/Kanauj)</td><td>606–647 CE</td><td>Hosted Xuanzang; convened Buddhist assemblies at Kanauj and Prayag; built stupas and viharas</td></tr>
+      <tr><td>Pala Dynasty</td><td>750–1174 CE</td><td>Last great Buddhist dynasty in India; built Vikramashila and Odantapuri universities; patronized Vajrayana</td></tr>
+      <tr><td>Devanampiya Tissa (Sri Lanka)</td><td>c. 250 BCE</td><td>Accepted Buddhism from Mahinda; built the Thuparama stupa; Sri Lanka became Theravada heartland</td></tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+  <div class="sec-label">Quick Recall Grid</div>
+  <div class="three-col">
+    <div class="box">
+      <h3>Buddhist Symbols</h3>
+      <div class="tag-strip">
+        <span class="tag accent">☸ Dharma Chakra</span>
+        <span class="tag">🐟 Fish — Liberation</span>
+        <span class="tag">🪷 Lotus — Purity</span>
+        <span class="tag">☂️ Parasol — Royalty</span>
+        <span class="tag">🏺 Vase — Abundance</span>
+        <span class="tag">🐚 Conch — Teaching</span>
+        <span class="tag">∞ Knot — Interdependence</span>
+        <span class="tag">🐘 White Elephant — Queen Maya's dream</span>
+      </div>
+    </div>
+    <div class="box">
+      <h3>Key Mudras</h3>
+      <div class="event-item" style="padding:.3rem 0;border-bottom-color:var(--border)">
+        <div class="ei-year" style="min-width:100px;font-size:.75rem">Bhumisparsha</div><div class="ei-desc" style="font-size:.75rem">Earth-touching — moment of enlightenment</div>
+      </div>
+      <div class="event-item" style="padding:.3rem 0;border-bottom-color:var(--border)">
+        <div class="ei-year" style="min-width:100px;font-size:.75rem">Dhyana</div><div class="ei-desc" style="font-size:.75rem">Meditation — hands in lap</div>
+      </div>
+      <div class="event-item" style="padding:.3rem 0;border-bottom-color:var(--border)">
+        <div class="ei-year" style="min-width:100px;font-size:.75rem">Dharmachakra</div><div class="ei-desc" style="font-size:.75rem">Turning the wheel — first sermon</div>
+      </div>
+      <div class="event-item" style="padding:.3rem 0">
+        <div class="ei-year" style="min-width:100px;font-size:.75rem">Abhaya</div><div class="ei-desc" style="font-size:.75rem">Fear not — protection, reassurance</div>
+      </div>
+    </div>
+    <div class="box">
+      <h3>Important Texts</h3>
+      <div class="event-item" style="padding:.3rem 0;border-bottom-color:var(--border)">
+        <div class="ei-year" style="min-width:80px;font-size:.75rem">Buddhacharita</div><div class="ei-desc" style="font-size:.75rem">Ashvaghosha — biography of the Buddha in Sanskrit verse</div>
+      </div>
+      <div class="event-item" style="padding:.3rem 0;border-bottom-color:var(--border)">
+        <div class="ei-year" style="min-width:80px;font-size:.75rem">Milindapanha</div><div class="ei-desc" style="font-size:.75rem">Dialogue between King Milinda (Menander) and monk Nagasena</div>
+      </div>
+      <div class="event-item" style="padding:.3rem 0">
+        <div class="ei-year" style="min-width:80px;font-size:.75rem">Mahavamsa</div><div class="ei-desc" style="font-size:.75rem">Sri Lankan Pali chronicle — history of Buddhism in Lanka</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Cross-links to Related Topics</div>
+  <div class="pill-row">
+    <span class="pill">📎 Jainism</span>
+    <span class="pill">📎 Maurya Empire</span>
+    <span class="pill">📎 Gupta Period</span>
+    <span class="pill">📎 Ancient Indian History</span>
+    <span class="pill">📎 Kushana Empire</span>
+    <span class="pill">📎 Pala Dynasty</span>
+    <span class="pill">🌧️ Open Monsoon Explainer</span>
+    <span class="pill">🌊 Open ENSO Explainer</span>
+  </div>
+</div>
+</div>
+
+<!-- BOTTOM PILLS -->
+<div class="bottom-pills">
+  <div class="label">📎 Related Topics</div>
+  <div class="pill-row" style="justify-content:center">
+    <span class="pill">Maurya Empire</span>
+    <span class="pill">Jainism</span>
+    <span class="pill">Ancient India</span>
+    <span class="pill">Kushana Art</span>
+    <span class="pill">Silk Road</span>
+    <span class="pill">Gupta Period</span>
+  </div>
+</div>
+
+<script>
+// =================== THEME & TAB LOGIC ===================
+function toggleTheme(){
+  const h=document.documentElement;
+  h.dataset.theme=h.dataset.theme==='dark'?'light':'dark';
+  redrawAll();
+}
+function switchTab(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
+  document.querySelectorAll('.phase-panel').forEach((p,j)=>p.classList.toggle('visible',i===j));
+  redrawAll();
+}
+function toggleExpand(btn){
+  btn.classList.toggle('open');
+  const body=btn.nextElementSibling;
+  body.style.maxHeight=btn.classList.contains('open')?body.scrollHeight+'px':'0';
+}
+
+// =================== COLOR HELPERS ===================
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function dark(){return document.documentElement.dataset.theme==='dark'}
+
+// =================== SVG FACTORY ===================
+function makeSVG(w,h){
+  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  s.setAttribute('xmlns','http://www.w3.org/2000/svg');
+  return s;
+}
+function el(tag,attrs={}){
+  const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const[k,v] of Object.entries(attrs)) e.setAttribute(k,v);
+  return e;
+}
+function txt(content,attrs={}){
+  const t=el('text',attrs);
+  t.textContent=content;
+  return t;
+}
+function rect(x,y,w,h,attrs={}){return el('rect',{x,y,width:w,height:h,...attrs})}
+function circle(cx,cy,r,attrs={}){return el('circle',{cx,cy,r,...attrs})}
+function line(x1,y1,x2,y2,attrs={}){return el('line',{x1,y1,x2,y2,...attrs})}
+function poly(pts,attrs={}){return el('polygon',{points:pts,...attrs})}
+function path(d,attrs={}){return el('path',{d,...attrs})}
+
+// =================== THREE JEWELS SVG ===================
+function drawThreeJewels(){
+  const wrap=document.getElementById('three-jewels-svg');
+  if(!wrap) return;
+  const W=900,H=200;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'); const border=css('--border');
+  const saffron='#d97706'; const text=css('--text'); const muted=css('--muted'); const prose=css('--prose');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const jewels=[
+    {x:150,color:'#d97706',icon:'☸',title:'Buddha',sub:'The Awakened Teacher'},
+    {x:450,color:'#7f1d1d',icon:'📜',title:'Dhamma',sub:'The Teaching / Law'},
+    {x:750,color:'#ca8a04',icon:'🧘',title:'Sangha',sub:'The Community'},
+  ];
+  jewels.forEach(j=>{
+    const g=el('g');
+    g.appendChild(circle(j.x,100,60,{fill:j.color+'22',stroke:j.color,strokeWidth:'1.5'}));
+    const t=el('text',{x:j.x,y:90,textAnchor:'middle',fontSize:'28',fontFamily:'serif'});
+    t.textContent=j.icon; g.appendChild(t);
+    g.appendChild(txt(j.title,{x:j.x,y:120,textAnchor:'middle',fontSize:'18',fontFamily:"'Bebas Neue',sans-serif",fill:j.color,letterSpacing:'0.06em'}));
+    g.appendChild(txt(j.sub,{x:j.x,y:140,textAnchor:'middle',fontSize:'11',fontFamily:"'DM Mono',monospace",fill:muted}));
+    s.appendChild(g);
+  });
+  // connecting lines
+  [300,600].forEach(x=>{
+    s.appendChild(line(x-60,100,x+60,100,{stroke:border,strokeWidth:'1',strokeDasharray:'4,4'}));
+    s.appendChild(txt('+',{x:x,y:106,textAnchor:'middle',fontSize:'18',fill:muted}));
+  });
+  const label='तिरत्न — The Three Jewels — Triratna';
+  s.appendChild(txt(label,{x:W/2,y:185,textAnchor:'middle',fontSize:'11',fontFamily:"'DM Mono',monospace",fill:muted,letterSpacing:'0.1em'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== BUDDHA TIMELINE SVG ===================
+function drawBuddhaTimeline(){
+  const wrap=document.getElementById('buddha-timeline-svg');
+  if(!wrap) return;
+  const W=900,H=280;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const saffron='#d97706';const maroon='#7f1d1d';const text=css('--text');const muted=css('--muted');const prose=css('--prose');const border=css('--border');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const events=[
+    {x:80,year:'c.563 BCE',label:'Lumbini',sub:'Birth',icon:'🌸',color:'#f472b6'},
+    {x:220,year:'534 BCE',label:'Kapilavastu',sub:'Youth & Palace',icon:'👑',color:saffron},
+    {x:370,year:'534 BCE',label:'Anoma River',sub:'Great Renunciation',icon:'🐴',color:maroon},
+    {x:510,year:'528 BCE',label:'Uruvela',sub:'6 Yrs Asceticism',icon:'🔥',color:'#92400e'},
+    {x:640,year:'528 BCE',label:'Bodh Gaya',sub:'Enlightenment',icon:'☸',color:'#ca8a04'},
+    {x:770,year:'528 BCE',label:'Sarnath',sub:'First Sermon',icon:'📜',color:'#059669'},
+    {x:870,year:'483 BCE',label:'Kushinagar',sub:'Parinirvana',icon:'🌙',color:muted},
+  ];
+  // timeline line
+  s.appendChild(line(50,140,W-20,140,{stroke:border,strokeWidth:'1.5'}));
+  events.forEach((ev,i)=>{
+    const g=el('g',{style:'cursor:pointer'});
+    // dot
+    g.appendChild(circle(ev.x,140,8,{fill:ev.color,stroke:bg,strokeWidth:'2'}));
+    // stem alternating up/down
+    const up=i%2===0;
+    const y1=up?60:140,y2=up?140:220;
+    g.appendChild(line(ev.x,y1,ev.x,y2,{stroke:ev.color,strokeWidth:'1',strokeDasharray:'3,3'}));
+    // icon
+    const iy=up?45:235;
+    const it=el('text',{x:ev.x,y:iy+8,textAnchor:'middle',fontSize:'16',fontFamily:'serif'});
+    it.textContent=ev.icon; g.appendChild(it);
+    // label box
+    const by=up?75:155;
+    g.appendChild(rect(ev.x-50,by,100,14,{fill:ev.color+'11',rx:'3'}));
+    g.appendChild(txt(ev.label,{x:ev.x,y:by+10,textAnchor:'middle',fontSize:'10',fontFamily:"'Bebas Neue',sans-serif",fill:ev.color,letterSpacing:'0.05em'}));
+    g.appendChild(txt(ev.sub,{x:ev.x,y:by+22,textAnchor:'middle',fontSize:'8.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+    g.appendChild(txt(ev.year,{x:ev.x,y:by+33,textAnchor:'middle',fontSize:'8',fontFamily:"'DM Mono',monospace",fill:ev.color+'aa'}));
+    s.appendChild(g);
+  });
+  s.appendChild(txt('◄ Life of Siddhartha Gautama',{x:50,y:265,fontSize:'9',fontFamily:"'DM Mono',monospace",fill:muted,letterSpacing:'0.1em'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== EIGHTFOLD PATH WHEEL ===================
+const spokeData=[
+  {name:'Right View',pali:'Samma Ditthi',group:'Wisdom',color:'#d97706',desc:'Understanding the Four Noble Truths and the nature of reality — seeing things as they actually are, not as we want them to be.'},
+  {name:'Right Intention',pali:'Samma Sankappa',group:'Wisdom',color:'#d97706',desc:'Commitment to renunciation, non-ill-will, and non-cruelty. The mental resolve that aligns with the path of liberation.'},
+  {name:'Right Speech',pali:'Samma Vaca',group:'Morality',color:'#7f1d1d',desc:'Abstaining from lying, divisive speech, harsh speech, and idle chatter. Speaking truthfully, gently, helpfully, at the right time.'},
+  {name:'Right Action',pali:'Samma Kammanta',group:'Morality',color:'#7f1d1d',desc:'Abstaining from killing, stealing, and sexual misconduct. Acting in ways that are beneficial and non-harmful to oneself and others.'},
+  {name:'Right Livelihood',pali:'Samma Ajiva',group:'Morality',color:'#7f1d1d',desc:'Earning a living without causing harm — avoiding trades in weapons, living beings, meat, alcohol, or poison.'},
+  {name:'Right Effort',pali:'Samma Vayama',group:'Meditation',color:'#059669',desc:'The four great efforts: preventing unwholesome states from arising, abandoning those that have arisen, cultivating wholesome states, and maintaining them.'},
+  {name:'Right Mindfulness',pali:'Samma Sati',group:'Meditation',color:'#059669',desc:'Constant clear awareness of the four foundations: body, feelings, mind-states, and mental objects. The foundation of Vipassana meditation.'},
+  {name:'Right Concentration',pali:'Samma Samadhi',group:'Meditation',color:'#059669',desc:'Developing the four jhanas (meditative absorptions) — progressive deepening of one-pointed concentration that purifies the mind for insight.'},
+];
+function drawEightfoldWheel(){
+  const wrap=document.getElementById('eightfold-svg');
+  if(!wrap) return;
+  const W=600,H=500;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const border=css('--border');const text=css('--text');const muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const cx=300,cy=250,rimR=190,hubR=32,spokeL=130;
+  // outer rim
+  s.appendChild(circle(cx,cy,rimR,{fill:'none',stroke:css('--border'),strokeWidth:'14',opacity:'0.5'}));
+  s.appendChild(circle(cx,cy,rimR,{fill:'none',stroke:'#d97706',strokeWidth:'2'}));
+  // inner hub
+  s.appendChild(circle(cx,cy,hubR,{fill:'#d97706',opacity:'0.15'}));
+  s.appendChild(circle(cx,cy,hubR,{fill:'none',stroke:'#d97706',strokeWidth:'2'}));
+  const hw=el('text',{x:cx,y:cy+5,textAnchor:'middle',fontSize:'22',fontFamily:'serif'});
+  hw.textContent='☸'; s.appendChild(hw);
+
+  spokeData.forEach((sp,i)=>{
+    const angle=(i/8)*Math.PI*2 - Math.PI/2;
+    const x1=cx+Math.cos(angle)*hubR;
+    const y1=cy+Math.sin(angle)*hubR;
+    const x2=cx+Math.cos(angle)*(hubR+spokeL);
+    const y2=cy+Math.sin(angle)*(hubR+spokeL);
+    const xt=cx+Math.cos(angle)*(hubR+spokeL+28);
+    const yt=cy+Math.sin(angle)*(hubR+spokeL+28);
+    const g=el('g',{style:'cursor:pointer','data-spoke':i});
+    // spoke line
+    const ln=line(x1,y1,x2,y2,{stroke:sp.color,strokeWidth:'2.5',opacity:'0.7','data-spoke':i});
+    g.appendChild(ln);
+    // end dot
+    g.appendChild(circle(x2,y2,5,{fill:sp.color,'data-spoke':i}));
+    // label — split into two lines for long names
+    const words=sp.name.split(' ');
+    const isRight=xt>cx+10;
+    const anchor=isRight?'start':(xt<cx-10?'end':'middle');
+    const tg=el('g',{'data-spoke':i});
+    words.forEach((w,wi)=>{
+      const lt=el('text',{x:xt,y:yt+(wi-words.length/2+0.5)*12,textAnchor:anchor,fontSize:'9.5',fontFamily:"'DM Mono',monospace",fill:sp.color,'font-weight':'500','data-spoke':i});
+      lt.textContent=w; tg.appendChild(lt);
+    });
+    const pt=el('text',{x:xt,y:yt+(words.length/2+0.5)*12,textAnchor:anchor,fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:muted,'data-spoke':i});
+    pt.textContent=sp.pali; tg.appendChild(pt);
+    g.appendChild(tg);
+    // group label arc hint
+    if(i===0||i===2||i===5){
+      const grpColor=i===0?'#d97706':i===2?'#7f1d1d':'#059669';
+      const grpLabel=i===0?'WISDOM':i===2?'MORALITY':'MEDITATION';
+      const ga=i===0?1:(i===2?3:6);
+      const midAngle=((ga+0.5)/8)*Math.PI*2 - Math.PI/2;
+      const rx=cx+Math.cos(midAngle)*(rimR+22);
+      const ry=cy+Math.sin(midAngle)*(rimR+22);
+      const gt=el('text',{x:rx,y:ry,textAnchor:'middle',fontSize:'7',fontFamily:"'Bebas Neue',sans-serif",fill:grpColor,letterSpacing:'0.15em',opacity:'0.8'});
+      gt.textContent=grpLabel; s.appendChild(gt);
+    }
+    g.addEventListener('mouseenter',()=>highlightSpoke(i));
+    g.addEventListener('click',()=>highlightSpoke(i));
+    s.appendChild(g);
+  });
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+function highlightSpoke(i){
+  const sp=spokeData[i];
+  const info=document.getElementById('spoke-info');
+  if(info) info.innerHTML=`<strong>${sp.name}</strong> <span style="color:var(--muted);font-size:.72rem">· ${sp.group} · ${sp.pali}</span><br><span style="font-size:.78rem;color:var(--prose)">${sp.desc}</span>`;
+}
+
+// =================== DEPENDENT ORIGINATION ===================
+const nidanas=[
+  {label:'Avidya',sub:'Ignorance'},
+  {label:'Samskara',sub:'Mental Formations'},
+  {label:'Vijnana',sub:'Consciousness'},
+  {label:'Namarupa',sub:'Name & Form'},
+  {label:'Shadayatana',sub:'Six Sense Bases'},
+  {label:'Sparsha',sub:'Contact'},
+  {label:'Vedana',sub:'Sensation/Feeling'},
+  {label:'Tanha',sub:'Craving'},
+  {label:'Upadana',sub:'Clinging'},
+  {label:'Bhava',sub:'Becoming'},
+  {label:'Jati',sub:'Birth'},
+  {label:'Jara-Marana',sub:'Aging & Death'},
+];
+function drawDependentOrigin(){
+  const wrap=document.getElementById('deporigin-svg');
+  if(!wrap) return;
+  const W=900,H=420;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const border=css('--border');const saffron='#d97706';const muted=css('--muted');const prose=css('--prose');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const cx=450,cy=210,R=160;
+  const n=12;
+  // draw arrows along circle
+  nidanas.forEach((nd,i)=>{
+    const a1=(i/n)*Math.PI*2-Math.PI/2;
+    const a2=((i+1)/n)*Math.PI*2-Math.PI/2;
+    const x1=cx+Math.cos(a1)*R,y1=cy+Math.sin(a1)*R;
+    const x2=cx+Math.cos(a2)*R,y2=cy+Math.sin(a2)*R;
+    const col=`hsl(${30+(i*25)%60},70%,${dark()?55:40}%)`;
+    // arc segment
+    const laf=0,sf=1;
+    const dx=cx+Math.cos((a1+a2)/2)*R,dy=cy+Math.sin((a1+a2)/2)*R;
+    // arc arrow
+    s.appendChild(path(`M ${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2}`,{fill:'none',stroke:col,strokeWidth:'2',opacity:'0.7','marker-end':'url(#arrow'+i+')'}));
+    // node
+    const mx=cx+Math.cos(a1)*R,my=cy+Math.sin(a1)*R;
+    const ng=el('g');
+    ng.appendChild(circle(mx,my,18,{fill:col+'22',stroke:col,strokeWidth:'1.5'}));
+    ng.appendChild(txt(String(i+1),{x:mx,y:my+4,textAnchor:'middle',fontSize:'10',fontFamily:"'Bebas Neue',sans-serif",fill:col,letterSpacing:'0.05em'}));
+    // label outside
+    const lx=cx+Math.cos(a1)*(R+36),ly=cy+Math.sin(a1)*(R+36);
+    const anchor=lx>cx+10?'start':lx<cx-10?'end':'middle';
+    ng.appendChild(txt(nd.label,{x:lx,y:ly-4,textAnchor:anchor,fontSize:'8.5',fontFamily:"'Bebas Neue',sans-serif",fill:col,letterSpacing:'0.06em'}));
+    ng.appendChild(txt(nd.sub,{x:lx,y:ly+7,textAnchor:anchor,fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+    s.appendChild(ng);
+  });
+  // center label
+  s.appendChild(txt('Pratītyasamutpāda',{x:cx,y:cy-8,textAnchor:'middle',fontSize:'11',fontFamily:"'Bebas Neue',sans-serif",fill:saffron,letterSpacing:'0.06em'}));
+  s.appendChild(txt('12 Nidanas of Dependent',{x:cx,y:cy+5,textAnchor:'middle',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  s.appendChild(txt('Origination',{x:cx,y:cy+16,textAnchor:'middle',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== MIDDLE PATH SVG ===================
+function drawMiddlePath(){
+  const wrap=document.getElementById('middle-path-svg');
+  if(!wrap) return;
+  const W=900,H=180;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const border=css('--border');const saffron='#d97706';const maroon='#7f1d1d';const prose=css('--prose');const muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  // left extreme — indulgence
+  s.appendChild(rect(20,50,160,80,{fill:maroon+'22',stroke:maroon,strokeWidth:'1.5',rx:'6'}));
+  s.appendChild(txt('EXTREME',{x:100,y:78,textAnchor:'middle',fontSize:'10',fontFamily:"'Bebas Neue',sans-serif",fill:maroon,letterSpacing:'0.12em'}));
+  s.appendChild(txt('INDULGENCE',{x:100,y:92,textAnchor:'middle',fontSize:'13',fontFamily:"'Bebas Neue',sans-serif",fill:maroon,letterSpacing:'0.08em'}));
+  s.appendChild(txt('Sensual pleasure',{x:100,y:110,textAnchor:'middle',fontSize:'9',fontFamily:"'DM Mono',monospace",fill:muted}));
+  s.appendChild(txt('& luxury',{x:100,y:122,textAnchor:'middle',fontSize:'9',fontFamily:"'DM Mono',monospace",fill:muted}));
+  // right extreme — asceticism
+  s.appendChild(rect(720,50,160,80,{fill:maroon+'22',stroke:maroon,strokeWidth:'1.5',rx:'6'}));
+  s.appendChild(txt('EXTREME',{x:800,y:78,textAnchor:'middle',fontSize:'10',fontFamily:"'Bebas Neue',sans-serif",fill:maroon,letterSpacing:'0.12em'}));
+  s.appendChild(txt('ASCETICISM',{x:800,y:92,textAnchor:'middle',fontSize:'13',fontFamily:"'Bebas Neue',sans-serif",fill:maroon,letterSpacing:'0.08em'}));
+  s.appendChild(txt('Self-mortification',{x:800,y:110,textAnchor:'middle',fontSize:'9',fontFamily:"'DM Mono',monospace",fill:muted}));
+  s.appendChild(txt('& deprivation',{x:800,y:122,textAnchor:'middle',fontSize:'9',fontFamily:"'DM Mono',monospace",fill:muted}));
+  // center — middle path
+  s.appendChild(rect(340,30,220,120,{fill:saffron+'22',stroke:saffron,strokeWidth:'2',rx:'8'}));
+  s.appendChild(txt('☸',{x:450,y:70,textAnchor:'middle',fontSize:'24',fontFamily:'serif',fill:saffron}));
+  s.appendChild(txt('MIDDLE PATH',{x:450,y:90,textAnchor:'middle',fontSize:'14',fontFamily:"'Bebas Neue',sans-serif",fill:saffron,letterSpacing:'0.1em'}));
+  s.appendChild(txt('Majjhimā Paṭipadā',{x:450,y:105,textAnchor:'middle',fontSize:'9',fontFamily:"'DM Mono',monospace",fill:saffron+'bb'}));
+  s.appendChild(txt('The Noble Eightfold Path',{x:450,y:120,textAnchor:'middle',fontSize:'8.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  // arrows
+  [[200,90,330,90],[660,90,550,90]].forEach(([x1,y1,x2,y2])=>{
+    s.appendChild(line(x1,y1,x2,y2,{stroke:border,strokeWidth:'1.5',strokeDasharray:'5,4','marker-end':'none',opacity:'0.6'}));
+    const mx=(x1+x2)/2,my=y1;
+    s.appendChild(el('polygon',{points:`${x2},${y2} ${x2+(x1<x2?-1:1)*10},${y2-5} ${x2+(x1<x2?-1:1)*10},${y2+5}`,fill:border,opacity:'0.6'}));
+  });
+  s.appendChild(txt('← rejected',{x:265,y:82,textAnchor:'middle',fontSize:'8',fontFamily:"'DM Mono',monospace",fill:muted}));
+  s.appendChild(txt('rejected →',{x:635,y:82,textAnchor:'middle',fontSize:'8',fontFamily:"'DM Mono',monospace",fill:muted}));
+  s.appendChild(txt('"I found the Middle Path — neither torturing the body nor indulging the senses." — The Buddha, First Sermon',{x:W/2,y:168,textAnchor:'middle',fontSize:'8',fontFamily:"'Playfair Display',serif",fill:muted,fontStyle:'italic'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== SCHOOLS GEO MAP (simplified Asia) ===================
+function drawSchoolsGeo(){
+  const wrap=document.getElementById('schools-geo-svg');
+  if(!wrap) return;
+  const W=900,H=420;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const border=css('--border');const saffron='#d97706';const muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  // Background ocean
+  s.appendChild(rect(0,0,W,H,{fill:dark()?'#0f1a25':'#dbeafe',opacity:'0.3'}));
+  // Simplified India landmass
+  const india='M 380,120 L 420,115 L 460,120 L 490,140 L 500,170 L 490,200 L 470,230 L 450,280 L 430,320 L 410,340 L 390,310 L 370,270 L 360,230 L 355,190 L 360,160 L 370,140 Z';
+  s.appendChild(path(india,{fill:dark()?'#1a2a1a':'#d1fae5',stroke:'#059669',strokeWidth:'1.5',opacity:'0.6'}));
+  // Sri Lanka
+  s.appendChild(circle(430,360,12,{fill:dark()?'#1a2a1a':'#d1fae5',stroke:'#059669',strokeWidth:'1.5',opacity:'0.6'}));
+  // Southeast Asia
+  const sea='M 600,150 L 650,140 L 700,150 L 720,180 L 710,220 L 690,260 L 660,300 L 630,310 L 610,280 L 600,240 L 590,200 L 590,170 Z';
+  s.appendChild(path(sea,{fill:dark()?'#1a2218':'#ecfdf5',stroke:'#059669',strokeWidth:'1',opacity:'0.5'}));
+  // China
+  const china='M 550,60 L 650,50 L 750,70 L 800,100 L 810,130 L 780,150 L 730,145 L 680,140 L 640,140 L 600,130 L 570,110 L 545,85 Z';
+  s.appendChild(path(china,{fill:dark()?'#1a1a25':'#eff6ff',stroke:'#0284c7',strokeWidth:'1',opacity:'0.5'}));
+  // Tibet
+  const tibet='M 450,80 L 520,70 L 570,75 L 580,100 L 550,115 L 510,120 L 470,115 L 450,100 Z';
+  s.appendChild(path(tibet,{fill:dark()?'#1a1525':'#f5f3ff',stroke:'#7c3aed',strokeWidth:'1',opacity:'0.5'}));
+  // Central Asia
+  const ca='M 300,80 L 380,70 L 420,80 L 430,100 L 420,115 L 380,120 L 340,115 L 305,105 Z';
+  s.appendChild(path(ca,{fill:dark()?'#1a1a15':'#fefce8',stroke:'#ca8a04',strokeWidth:'1',opacity:'0.5'}));
+  // Korea/Japan
+  s.appendChild(circle(770,110,20,{fill:dark()?'#1a1a25':'#eff6ff',stroke:'#0284c7',strokeWidth:'1',opacity:'0.5'}));
+  s.appendChild(circle(810,130,15,{fill:dark()?'#1a1a25':'#eff6ff',stroke:'#0284c7',strokeWidth:'1',opacity:'0.5'}));
+
+  // LABELS
+  const labels=[
+    {x:430,y:200,text:'INDIA',sub:'Origin',color:'#059669'},
+    {x:430,y:360,text:'Sri Lanka',sub:'Theravada',color:'#059669'},
+    {x:655,y:225,text:'SE ASIA',sub:'Theravada',color:'#059669'},
+    {x:690,y:100,text:'CHINA',sub:'Mahayana',color:'#0284c7'},
+    {x:510,y:98,text:'TIBET',sub:'Vajrayana',color:'#7c3aed'},
+    {x:350,y:97,text:'CENTRAL ASIA',sub:'Mixed',color:'#ca8a04'},
+    {x:786,y:120,text:'Korea',sub:'Mahayana',color:'#0284c7'},
+  ];
+  labels.forEach(l=>{
+    s.appendChild(txt(l.text,{x:l.x,y:l.y,textAnchor:'middle',fontSize:'9',fontFamily:"'Bebas Neue',sans-serif",fill:l.color,letterSpacing:'0.08em'}));
+    s.appendChild(txt(l.sub,{x:l.x,y:l.y+11,textAnchor:'middle',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:l.color+'aa'}));
+  });
+  // Legend
+  const legend=[{color:'#059669',text:'Theravada'},{color:'#0284c7',text:'Mahayana'},{color:'#7c3aed',text:'Vajrayana'}];
+  legend.forEach((l,i)=>{
+    s.appendChild(rect(20,20+i*22,10,10,{fill:l.color,opacity:'0.6',rx:'2'}));
+    s.appendChild(txt(l.text,{x:36,y:30+i*22,fontSize:'10',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  s.appendChild(txt('Simplified map — approximate regional boundaries',{x:W/2,y:H-8,textAnchor:'middle',fontSize:'8',fontFamily:"'DM Mono',monospace",fill:muted,fontStyle:'italic'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== SCHOOLS TIMELINE ===================
+function drawSchoolsTimeline(){
+  const wrap=document.getElementById('schools-timeline-svg');
+  if(!wrap) return;
+  const W=900,H=200;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const border=css('--border');const muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  // time axis from 500 BCE to 800 CE
+  const t0=-500,t1=800,span=1300;
+  function tx(year){return 60+(year-t0)/span*(W-80)}
+  s.appendChild(line(60,100,W-20,100,{stroke:border,strokeWidth:'1.5'}));
+  // tick marks
+  [-500,-400,-300,-200,-100,0,100,200,300,400,500,600,700,800].forEach(yr=>{
+    const x=tx(yr);
+    s.appendChild(line(x,95,x,105,{stroke:border,strokeWidth:'1'}));
+    s.appendChild(txt(yr===0?'CE':(Math.abs(yr)+(yr<0?' BCE':' CE')),{x,y:120,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  const schools=[
+    {name:"Buddha's Ministry",start:-528,end:-483,y:55,color:'#d97706'},
+    {name:'Early Schools (18)',start:-383,end:0,y:65,color:'#92400e'},
+    {name:'Theravada',start:-250,end:800,y:75,color:'#059669'},
+    {name:'Mahayana emerges',start:-100,end:600,y:135,color:'#0284c7'},
+    {name:'Vajrayana',start:550,end:800,y:155,color:'#7c3aed'},
+    {name:'Chan/Zen (China)',start:500,end:800,y:165,color:'#0ea5e9'},
+  ];
+  schools.forEach(sc=>{
+    const x1=Math.max(tx(sc.start),60),x2=Math.min(tx(sc.end),W-20);
+    if(x2<x1) return;
+    s.appendChild(rect(x1,sc.y-7,x2-x1,14,{fill:sc.color+'33',stroke:sc.color,strokeWidth:'1.5',rx:'3'}));
+    if(x2-x1>80) s.appendChild(txt(sc.name,{x:(x1+x2)/2,y:sc.y+4,textAnchor:'middle',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:sc.color}));
+    else s.appendChild(txt(sc.name,{x:x2+4,y:sc.y+4,textAnchor:'start',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:sc.color}));
+  });
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== SPREAD MAP ===================
+function drawSpreadMap(){
+  const wrap=document.getElementById('spread-map-svg');
+  if(!wrap) return;
+  const W=900,H=400;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const border=css('--border');const saffron='#d97706';const muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  s.appendChild(rect(0,0,W,H,{fill:dark()?'#0f1a25':'#dbeafe',opacity:'0.25'}));
+  // Landmasses (rough)
+  const landmasses=[
+    {d:'M 150,60 L 250,55 L 320,70 L 370,80 L 390,100 L 400,120 L 420,110 L 460,115 L 500,130 L 530,120 L 570,60 L 650,50 L 760,65 L 830,100 L 840,130 L 810,150 L 750,145 L 700,150 L 660,300 L 630,310 L 600,280 L 590,240 L 595,200 L 615,170 L 600,150 L 560,160 L 520,160 L 490,175 L 480,200 L 465,250 L 445,310 L 420,340 L 400,320 L 380,280 L 365,230 L 355,190 L 358,155 L 370,130 L 350,125 L 310,120 L 270,115 L 220,125 L 180,140 L 155,120 Z',fill:dark()?'#1a2a1a':'#d1fae5'},
+    {d:'M 60,150 L 130,140 L 160,155 L 155,180 L 130,200 L 80,205 L 55,185 Z',fill:dark()?'#1a2a1a':'#d1fae5'},
+    {d:'M 430,355 L 455,350 L 460,370 L 445,380 L 428,375 Z',fill:dark()?'#1a2a1a':'#d1fae5'},
+  ];
+  landmasses.forEach(lm=>s.appendChild(path(lm.d,{fill:lm.fill,stroke:'#059669',strokeWidth:'1',opacity:'0.5'})));
+  // Key sites
+  const sites=[
+    {x:420,y:215,label:'Bodh Gaya',sub:'Origin',color:saffron},
+    {x:415,y:195,label:'Sarnath',sub:'1st Sermon',color:saffron},
+    {x:440,y:355,label:'Sri Lanka',sub:'Mahinda 247 BCE',color:'#059669'},
+    {x:240,y:95,label:'Bactria/Gandhara',sub:'Kushan',color:'#ca8a04'},
+    {x:700,y:100,label:'China',sub:'1st CE',color:'#0284c7'},
+    {x:580,y:250,label:'SE Asia',sub:'Sea Route',color:'#059669'},
+    {x:100,y:165,label:'W. Missions',sub:'Ashoka edicts',color:'#7c3aed'},
+    {x:510,y:90,label:'Tibet',sub:'7th CE',color:'#7c3aed'},
+  ];
+  sites.forEach(st=>{
+    s.appendChild(circle(st.x,st.y,5,{fill:st.color,opacity:'0.9'}));
+    s.appendChild(txt(st.label,{x:st.x+8,y:st.y-2,fontSize:'8.5',fontFamily:"'Bebas Neue',sans-serif",fill:st.color,letterSpacing:'0.06em'}));
+    s.appendChild(txt(st.sub,{x:st.x+8,y:st.y+8,fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  // spread routes as dotted paths
+  const routes=[
+    {d:'M 420,215 L 440,355',color:'#059669',label:'S'},
+    {d:'M 420,215 L 260,105',color:'#ca8a04',label:'NW'},
+    {d:'M 260,105 L 700,100',color:'#0284c7',label:'Silk Rd'},
+    {d:'M 420,215 Q 530,280 580,250',color:'#059669',label:'Sea'},
+    {d:'M 420,215 L 510,100',color:'#7c3aed',label:'Tibet'},
+    {d:'M 420,215 Q 280,160 100,165',color:'#7c3aed',label:'W'},
+  ];
+  routes.forEach(r=>{
+    s.appendChild(path(r.d,{fill:'none',stroke:r.color,strokeWidth:'1.5',strokeDasharray:'5,4',opacity:'0.7'}));
+  });
+  s.appendChild(txt('Simplified map of Buddhist expansion routes · 3rd BCE – 8th CE',{x:W/2,y:H-8,textAnchor:'middle',fontSize:'8',fontFamily:"'DM Mono',monospace",fill:muted,fontStyle:'italic'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== COUNCILS TIMELINE ===================
+function drawCouncilsTimeline(){
+  const wrap=document.getElementById('councils-timeline-svg');
+  if(!wrap) return;
+  const W=900,H=200;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const border=css('--border');const saffron='#d97706';const muted=css('--muted');const prose=css('--prose');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const t0=-490,t1=90,span=580;
+  function tx(yr){return 60+(yr-t0)/span*(W-80)}
+  s.appendChild(line(60,110,W-20,110,{stroke:border,strokeWidth:'1.5'}));
+  const ticks=[-490,-450,-400,-350,-300,-250,-200,-150,-100,-50,0,50,90];
+  ticks.forEach(yr=>{
+    const x=tx(yr);
+    s.appendChild(line(x,107,x,113,{stroke:border,strokeWidth:'1'}));
+    if(yr%100===0||yr===90) s.appendChild(txt(yr<0?Math.abs(yr)+' BCE':yr+' CE',{x,y:126,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  const councils=[
+    {yr:-483,label:'1st Council',sub:'Rajagriha',patron:'Ajatashatru',color:'#d97706',y:60},
+    {yr:-383,label:'2nd Council',sub:'Vaishali',patron:'Kalasoka',color:'#7f1d1d',y:80},
+    {yr:-250,label:'3rd Council',sub:'Pataliputra',patron:'Ashoka',color:'#059669',y:60},
+    {yr:75,label:'4th Council',sub:'Kashmir',patron:'Kanishka I',color:'#0284c7',y:80},
+  ];
+  councils.forEach(c=>{
+    const x=tx(c.yr);
+    s.appendChild(line(x,c.y,x,110,{stroke:c.color,strokeWidth:'1.5',strokeDasharray:'4,3'}));
+    s.appendChild(circle(x,110,6,{fill:c.color}));
+    s.appendChild(rect(x-45,c.y-24,90,22,{fill:c.color+'22',stroke:c.color,strokeWidth:'1.5',rx:'4'}));
+    s.appendChild(txt(c.label,{x,y:c.y-12,textAnchor:'middle',fontSize:'8.5',fontFamily:"'Bebas Neue',sans-serif",fill:c.color,letterSpacing:'0.06em'}));
+    s.appendChild(txt(c.sub,{x,y:c.y-3,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:c.color+'cc'}));
+    s.appendChild(txt(c.patron,{x,y:c.y+13,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+    s.appendChild(txt(Math.abs(c.yr)+(c.yr<0?' BCE':' CE'),{x,y:c.y+23,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:c.color+'aa'}));
+  });
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== STUPA SVG ===================
+function drawStupa(){
+  const wrap=document.getElementById('stupa-svg');
+  if(!wrap) return;
+  const W=380,H=380;
+  const s=makeSVG(W,H);
+  const bg=css('--surface');const border=css('--border');const saffron='#d97706';const muted=css('--muted');const prose=css('--prose');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const cx=190;
+  // Ground
+  s.appendChild(rect(50,340,280,8,{fill:muted,opacity:'0.3',rx:'2'}));
+  // Torana (gateway hint)
+  s.appendChild(line(80,220,80,280,{stroke:saffron,strokeWidth:'8',linecap:'round'}));
+  s.appendChild(line(300,220,300,280,{stroke:saffron,strokeWidth:'8'}));
+  s.appendChild(line(75,225,305,225,{stroke:saffron,strokeWidth:'8',linecap:'round'}));
+  s.appendChild(line(75,240,305,240,{stroke:saffron,strokeWidth:'6',linecap:'round',opacity:'0.6'}));
+  // Medhi/base drum
+  s.appendChild(rect(110,290,160,40,{fill:saffron+'33',stroke:saffron,strokeWidth:'2',rx:'3'}));
+  s.appendChild(txt('MEDHI',{x:cx,y:315,textAnchor:'middle',fontSize:'8',fontFamily:"'Bebas Neue',sans-serif",fill:saffron,letterSpacing:'0.1em'}));
+  // Vedika (railing)
+  s.appendChild(rect(90,280,200,12,{fill:'none',stroke:border,strokeWidth:'2',rx:'2'}));
+  for(let i=0;i<20;i++) s.appendChild(line(92+i*10,280,92+i*10,292,{stroke:border,strokeWidth:'1.5'}));
+  s.appendChild(txt('VEDIKA',{x:cx+120,y:289,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  // Anda (dome)
+  const domeD=`M 110,290 Q 110,170 ${cx},155 Q ${W-110},170 ${W-110},290`;
+  s.appendChild(path(domeD,{fill:saffron+'22',stroke:saffron,strokeWidth:'2'}));
+  s.appendChild(txt('ANDA',{x:cx,y:235,textAnchor:'middle',fontSize:'9',fontFamily:"'Bebas Neue',sans-serif",fill:saffron,letterSpacing:'0.1em'}));
+  s.appendChild(txt('(Dome)',{x:cx,y:248,textAnchor:'middle',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  // Harmika (square top of dome)
+  s.appendChild(rect(cx-22,130,44,25,{fill:saffron+'33',stroke:saffron,strokeWidth:'2',rx:'2'}));
+  s.appendChild(txt('HARMIKA',{x:cx,y:146,textAnchor:'middle',fontSize:'7',fontFamily:"'Bebas Neue',sans-serif",fill:saffron,letterSpacing:'0.06em'}));
+  // Yashti (central mast)
+  s.appendChild(line(cx,130,cx,85,{stroke:saffron,strokeWidth:'3'}));
+  // Chattra (umbrellas)
+  [100,88,78].forEach((y,i)=>{
+    const r=18-i*4;
+    s.appendChild(el('ellipse',{cx,cy:y,rx:r,ry:'4',fill:saffron+'44',stroke:saffron,strokeWidth:'1.5'}));
+  });
+  s.appendChild(txt('CHATTRA',{x:cx+30,y:92,textAnchor:'start',fontSize:'7',fontFamily:"'Bebas Neue',sans-serif",fill:saffron,letterSpacing:'0.06em'}));
+  s.appendChild(txt('TORANA',{x:50,y:215,textAnchor:'end',fontSize:'7',fontFamily:"'Bebas Neue',sans-serif",fill:saffron+'bb',letterSpacing:'0.06em'}));
+  // Relic chamber dot
+  s.appendChild(circle(cx,220,6,{fill:saffron,opacity:'0.6'}));
+  s.appendChild(txt('Relic',{x:cx-15,y:220,textAnchor:'end',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  s.appendChild(txt('Chamber',{x:cx-15,y:230,textAnchor:'end',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  s.appendChild(txt('STUPA — Cross Section',{x:cx,y:372,textAnchor:'middle',fontSize:'9',fontFamily:"'Bebas Neue',sans-serif",fill:muted,letterSpacing:'0.1em'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== FLASHCARDS (Terms) ===================
+const termCards=[
+  {q:'Dukkha',a:'Suffering, unsatisfactoriness — the First Noble Truth. All conditioned existence is marked by Dukkha.'},
+  {q:'Anicca',a:'Impermanence — one of the Three Marks of Existence. All conditioned phenomena constantly arise and pass away.'},
+  {q:'Anatta',a:'Non-self — no permanent, unchanging self (Atman) exists. The most radical Buddhist teaching, directly opposing Upanishadic Atman.'},
+  {q:'Tanha',a:'Craving/thirst — identified in the Second Noble Truth as the root cause of suffering. Three types: sensory, for-existence, for-annihilation.'},
+  {q:'Nirvana (Nibbana)',a:'Liberation — "blowing out" of greed, hatred, delusion. NOT annihilation. Final goal of Buddhist practice.'},
+  {q:'Samsara',a:'The cycle of birth, death, and rebirth. Perpetuated by karma and craving. Liberation (Nirvana) means escape from Samsara.'},
+  {q:'Karma',a:'Law of intentional action and its consequences. In Buddhism, karma is specifically about mental intention (cetana), unlike Jain karma (physical).'},
+  {q:'Pratityasamutpada',a:'Dependent Origination — "this arising, that arises." Everything exists in dependence on conditions. 12-link chain from ignorance to suffering.'},
+  {q:'Bodhisattva',a:'Mahayana ideal — being who delays Nirvana to help all sentient beings attain liberation. Contrast with Theravada Arhat.'},
+  {q:'Shunyata',a:'Emptiness — Nagarjuna\'s Madhyamaka: all phenomena are empty of inherent self-existence. Even Nirvana is empty.'},
+  {q:'Tipitaka',a:'Three Baskets — Pali Canon: Vinaya (monastic rules), Sutta (discourses), Abhidhamma (philosophy). The Theravada scripture.'},
+  {q:'Dhammachakrapravartana',a:'Turning of the Wheel of Dhamma — the Buddha\'s First Sermon at Sarnath to the five ascetics. Founding event of Buddhism.'},
+];
+function buildTermCards(){
+  const grid=document.getElementById('terms-cards');
+  if(!grid) return;
+  grid.innerHTML='';
+  termCards.forEach((c,i)=>{
+    const fc=document.createElement('div');
+    fc.className='flashcard';
+    fc.innerHTML=`<div class="flashcard-inner">
+      <div class="fc-front"><div class="fc-q">${c.q}</div><div class="fc-hint">Tap to reveal definition</div></div>
+      <div class="fc-back"><div class="fc-a">${c.a}</div></div>
+    </div>`;
+    fc.addEventListener('click',()=>fc.classList.toggle('flipped'));
+    grid.appendChild(fc);
+  });
+}
+
+// =================== PYQ CARDS ===================
+const pyqs=[
+  {yr:'2020',q:'Which of the following statements correctly explains the concept of "Buddha-nature" (Tathagatagarbha) in Mahayana Buddhism?',a:'All sentient beings possess the seed/potential of Buddhahood within them. Liberation is not acquired from outside but realized as an innate potential. This concept was central to Mahayana and supported the idea of universal liberation.'},
+  {yr:'2018',q:'The Buddhist philosophy holds that nothing is permanent and everything is in a state of flux. This concept refers to which of the Three Marks of Existence?',a:'Anicca (Impermanence). The Three Marks are: Anicca (impermanence), Dukkha (suffering/unsatisfactoriness), and Anatta (non-self). All conditioned phenomena share these three characteristics.'},
+  {yr:'2017',q:'Which Buddhist council was held under the patronage of Emperor Ashoka and resulted in the completion of the Tipitaka?',a:'The Third Buddhist Council, held at Pataliputra (modern Patna) c. 250 BCE under Emperor Ashoka, presided over by Moggaliputta Tissa. It finalized the Abhidhamma Pitaka, completing the Tipitaka, and launched missions to nine regions.'},
+  {yr:'2016',q:'The Gandhara school of Buddhist art showed strong Hellenistic (Greek) influence. Which of the following features is most characteristic of this influence?',a:'The Gandhara Buddha images featured wavy hair (like Apollo), toga-like robes, and idealized Greco-Roman facial features. This was a result of contact with Greek kingdoms (Bactria, Indo-Greeks) in the northwest. Contrast with Mathura style: shaved head, thin robes, indigenous Indian aesthetic.'},
+  {yr:'2015',q:'Mahinda, who is credited with introducing Buddhism to Sri Lanka, was the son/emissary of which ruler?',a:'Emperor Ashoka (of the Mauryan Empire). Mahinda is traditionally identified as Ashoka\'s son, who led the mission to Sri Lanka c. 247 BCE. King Devanampiya Tissa of Sri Lanka accepted Buddhism. This is noted in Rock Edict XIII and Sri Lankan chronicles (Mahavamsa, Dipavamsa).'},
+  {yr:'2014',q:'The "First Sermon" of the Buddha — Dhammachakkapavattana Sutta — was delivered at which location?',a:'Deer Park (Mrigadava/Isipatana) at Sarnath, near Varanasi (Uttar Pradesh). The five former companions (Pancavaggi) were his first audience. This event is called "Dhamma Chakra Pravartana" — Turning the Wheel of Law. The Dhamekh Stupa at Sarnath marks the spot.'},
+  {yr:'2013',q:'Which of the following is NOT a feature of Theravada Buddhism? (a) Pali language (b) Arhat ideal (c) Bodhisattva concept (d) Tipitaka',a:'(c) Bodhisattva concept — this belongs to Mahayana Buddhism. Theravada\'s ideal is the Arhat (personal liberation). Theravada uses Pali, follows the Tipitaka, and predominates in Sri Lanka, Thailand, Myanmar, Cambodia, and Laos.'},
+  {yr:'2012',q:'The Nalanda University was destroyed by which invader, causing irreparable loss to Buddhist learning in India?',a:'Bakhtiyar Khilji (c. 1193 CE), a general of the Delhi Sultanate. He destroyed Nalanda, Vikramashila, and Odantapuri — the great Buddhist universities of Bihar. The destruction of these institutions, combined with loss of royal patronage and Brahmanical revival, contributed to Buddhism\'s decline in India.'},
+];
+function buildPYQCards(){
+  const cont=document.getElementById('pyq-cards');
+  if(!cont) return;
+  cont.innerHTML='';
+  pyqs.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='qa-card';
+    card.innerHTML=`<div class="qa-q"><span class="qa-badge">UPSC ${q.yr}</span>${q.q}</div><div class="qa-a"><div class="qa-a-inner">${q.a}</div></div>`;
+    card.addEventListener('click',()=>card.classList.toggle('open'));
+    cont.appendChild(card);
+  });
+}
+
+// =================== REDRAW ALL ===================
+function redrawAll(){
+  drawThreeJewels();
+  drawBuddhaTimeline();
+  drawEightfoldWheel();
+  drawDependentOrigin();
+  drawMiddlePath();
+  drawSchoolsGeo();
+  drawSchoolsTimeline();
+  drawSpreadMap();
+  drawCouncilsTimeline();
+  drawStupa();
+}
+
+// =================== TAG CLICK NAVIGATION ===================
+function initTagNav(){
+  document.querySelectorAll('[data-tab]').forEach(tag=>{
+    tag.addEventListener('click',()=>{
+      const i=parseInt(tag.dataset.tab,10);
+      switchTab(i);
+      // scroll nav into view smoothly
+      document.querySelector('.sticky-nav').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    // also add ripple on tap for mobile feel
+    tag.addEventListener('pointerdown',function(e){
+      const r=document.createElement('span');
+      r.style.cssText=`position:absolute;border-radius:50%;background:currentColor;opacity:0.18;pointer-events:none;transform:scale(0);animation:ripple .4s ease-out forwards;width:60px;height:60px;left:${e.offsetX-30}px;top:${e.offsetY-30}px;`;
+      this.style.position='relative';this.style.overflow='hidden';
+      this.appendChild(r);
+      setTimeout(()=>r.remove(),500);
+    });
+  });
+}
+
+// =================== INIT ===================
+document.addEventListener('DOMContentLoaded',()=>{
+  buildTermCards();
+  buildPYQCards();
+  redrawAll();
+  initTagNav();
+});
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

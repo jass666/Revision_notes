@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATMOSPHERE — Earth's Air Engine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+  :root{--belts:#e84545;--winds:#ff9f1c;--cyclones:#9b59b6;--hurricanes:#dc2626;--airmass:#52b788;--thunder:#ffd60a;--tornado:#f97316;--fog:#78909c;--strato:#8b5cf6;--atriver:#3b82f6;--hadley:#e84545;--jet:#ffd60a;--ferrel:#52b788;--polar:#90e0ef;}
+  [data-theme="dark"]{--bg:#05101a;--surface:#0d1b2a;--surface2:#132438;--border:rgba(255,255,255,0.07);--text:#e8eaf0;--muted:#6b7280;--nav-bg:rgba(5,16,26,0.94);--table-hover:rgba(255,255,255,0.02);--prose:#c9d1e0;}
+  [data-theme="light"]{--bg:#eef4f9;--surface:#ffffff;--surface2:#ddeaf5;--border:rgba(0,0,0,0.08);--text:#1a202c;--muted:#64748b;--nav-bg:rgba(238,244,249,0.95);--table-hover:rgba(0,0,0,0.02);--prose:#374151;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;transition:background .3s,color .3s;}
+  header{padding:3rem 2rem 1.5rem;text-align:center;position:relative;border-bottom:1px solid var(--border);}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(232,69,69,.1) 0%,transparent 60%),radial-gradient(ellipse at 15% 80%,rgba(155,89,182,.07) 0%,transparent 50%);pointer-events:none;}
+  .eyebrow{font-size:.65rem;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:.75rem;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,6rem);letter-spacing:.04em;line-height:1;background:linear-gradient(135deg,#e84545 0%,#f97316 25%,#ffd60a 50%,#52b788 75%,#3b82f6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .subtitle{font-family:'Playfair Display',serif;font-style:italic;color:var(--muted);font-size:1rem;margin-top:.5rem;}
+  .theme-toggle{position:absolute;top:1.2rem;right:1.5rem;display:flex;align-items:center;gap:.5rem;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:.35rem .75rem;transition:all .2s;user-select:none;}
+  .theme-toggle:hover{opacity:.8;}
+  .theme-toggle-icon{font-size:.85rem;}
+  .theme-toggle-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  nav{display:flex;justify-content:center;gap:.4rem;padding:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:100;}
+  .tab{padding:.4rem .9rem;border-radius:2px;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'DM Mono',monospace;}
+  .tab:hover{border-color:rgba(128,128,128,.4);color:var(--text);}
+  .tab.active{color:#fff;}
+  .tab[data-panel="belts"].active{background:var(--belts);border-color:var(--belts);}
+  .tab[data-panel="winds"].active{background:#b06010;border-color:#b06010;}
+  .tab[data-panel="airmass"].active{background:var(--airmass);border-color:var(--airmass);}
+  .tab[data-panel="cyclones"].active{background:var(--cyclones);border-color:var(--cyclones);}
+  .tab[data-panel="hurricanes"].active{background:var(--hurricanes);border-color:var(--hurricanes);}
+  .tab[data-panel="thunder"].active{background:#7a6200;border-color:#7a6200;}
+  .tab[data-panel="tornado"].active{background:var(--tornado);border-color:var(--tornado);}
+  .tab[data-panel="fog"].active{background:#4b5563;border-color:#4b5563;}
+  .tab[data-panel="strato"].active{background:var(--strato);border-color:var(--strato);}
+  .tab[data-panel="atriver"].active{background:#1d4ed8;border-color:#1d4ed8;}
+  .tab[data-panel="cells"].active{background:var(--hadley);border-color:var(--hadley);}
+  .tab[data-panel="jets"].active{background:#7a6200;border-color:#7a6200;}
+  main{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+  .panel{display:none;}.panel.visible{display:block;animation:fadeUp .4s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .phase-label{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.05em;}
+  .phase-tag{font-size:.75rem;padding:.3rem .7rem;border-radius:2px;letter-spacing:.08em;}
+  .phase-desc{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--muted);margin-left:auto;font-style:italic;}
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;}
+  .box-title{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+  .vis-svg{width:100%;overflow:visible;}
+  .occ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:1.5rem;}
+  .occ-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;border-top:3px solid;}
+  .occ-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:.2rem;}
+  .occ-card-full{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+  .occ-card-body{font-size:.72rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .occ-card-body b{color:var(--text);}
+  .occ-stat-row{display:flex;gap:1rem;margin-top:.75rem;flex-wrap:wrap;}
+  .occ-stat{font-size:.65rem;color:var(--muted);}
+  .occ-stat b{color:var(--text);display:block;font-size:.8rem;}
+  .phase-bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+  @media(max-width:700px){.phase-bottom-row{grid-template-columns:1fr;}}
+  .mech-callout-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-physics-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.85rem;padding-bottom:.85rem;border-bottom:1px solid var(--border);}
+  .mech-physics-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .mech-physics-icon{font-size:1.2rem;flex-shrink:0;}
+  .mech-physics-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;}
+  .mech-physics-text{font-size:.72rem;line-height:1.55;color:var(--prose,var(--text));}
+  .mech-physics-text b{color:var(--text);}
+  .mini-map-box{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mini-map-container{width:100%;aspect-ratio:2/1;min-height:180px;border-radius:3px;overflow:hidden;background:var(--surface2);margin-top:.75rem;}
+  .mini-map-container svg{width:100%;height:100%;}
+  .mini-map-legend{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:.6rem;font-size:.6rem;color:var(--muted);}
+  .mini-map-legend span{display:flex;align-items:center;gap:.3rem;}
+  .mini-map-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .mech-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+  @media(max-width:640px){.mech-grid{grid-template-columns:1fr;}}
+  .mech-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.25rem;}
+  .mech-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em;margin-bottom:.6rem;}
+  .mech-card-body{font-size:.73rem;color:var(--prose,var(--muted));line-height:1.7;}
+  .mech-card-body b{color:var(--text);}
+  .callout{background:var(--surface2,var(--surface));border-left:3px solid;border-radius:0 3px 3px 0;padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.73rem;line-height:1.65;color:var(--prose,var(--muted));}
+  .callout b{color:var(--text);}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem;text-align:center;}
+  .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;margin-bottom:.25rem;}
+  .stat-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+  .scale-row{display:grid;grid-template-columns:64px 120px 1fr;gap:.75rem;padding:.65rem 0;border-bottom:1px solid var(--border);align-items:center;}
+  .scale-row:last-child{border-bottom:none;}
+  .scale-cat{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;text-align:center;}
+  .scale-wind{font-size:.7rem;font-weight:600;}
+  .scale-desc{font-size:.7rem;color:var(--prose,var(--muted));line-height:1.4;}
+  .event-item{display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--border);}
+  .event-item:last-child{border-bottom:none;}
+  .event-year{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;line-height:1;}
+  .event-name{font-size:.7rem;letter-spacing:.08em;margin-bottom:.25rem;font-weight:500;}
+  .event-desc{font-size:.72rem;color:var(--muted);line-height:1.55;}
+  .event-peak{font-size:.6rem;margin-top:.4rem;padding:.2rem .6rem;border-radius:1px;display:inline-block;letter-spacing:.08em;}
+  table{width:100%;border-collapse:collapse;font-size:.72rem;min-width:500px;}
+  th{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--border);}
+  td{padding:.6rem .75rem;border-bottom:1px solid var(--border);line-height:1.4;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--table-hover);}
+  .table-wrap{overflow-x:auto;}
+</style>
+</head>
+<body data-theme="dark">
+<header>
+  <button class="theme-toggle" onclick="toggleTheme()"><span class="theme-toggle-icon" id="themeIcon">☀️</span><span class="theme-toggle-label" id="themeLabel">Light</span></button>
+  <p class="eyebrow">Earth's Air Engine</p>
+  <h1>ATMOSPHERE</h1>
+  <p class="subtitle">Pressure Belts · Surface Winds · Air Masses & Fronts · Cyclones · Hurricanes · Thunderstorms · Tornadoes · Fog & Inversions · Stratosphere · Atmospheric Rivers · Atmospheric Cells · Jet Streams</p>
+</header>
+<nav>
+  <button class="tab" data-panel="belts">🌐 Pressure Belts</button>
+  <button class="tab" data-panel="winds">💨 Surface Winds</button>
+  <button class="tab" data-panel="airmass">🌡️ Air Masses & Fronts</button>
+  <button class="tab" data-panel="cyclones">🌀 Cyclones</button>
+  <button class="tab" data-panel="hurricanes">🌪️ Hurricanes</button>
+  <button class="tab" data-panel="thunder">⚡ Thunderstorms</button>
+  <button class="tab" data-panel="tornado">🌪 Tornadoes</button>
+  <button class="tab" data-panel="fog">🌫️ Fog & Inversions</button>
+  <button class="tab" data-panel="strato">🔵 Stratosphere</button>
+  <button class="tab" data-panel="atriver">🌊 Atmos. Rivers</button>
+  <button class="tab" data-panel="cells">🌡️ Atmos. Cells</button>
+  <button class="tab" data-panel="jets">💨 Jet Streams</button>
+</nav>
+<main>
+
+<!-- ══ PRESSURE BELTS ══ -->
+<div class="panel" id="panel-belts">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--belts)">Pressure Belts</span>
+    <span class="phase-tag" style="background:rgba(232,69,69,.15);color:var(--belts)">7 Alternating Bands</span>
+    <span class="phase-desc">The skeleton of global atmospheric circulation</span>
+  </div>
+  <div class="box"><p class="box-title">Global Pressure Belt Structure — Meridional Cross-Section</p>
+    <svg class="vis-svg" id="belts-svg" viewBox="0 0 800 320" height="320"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#90e0ef"><div class="occ-card-name" style="color:#90e0ef">Polar High</div><div class="occ-card-full">Cold-core anticyclone — 90°N & 90°S</div><div class="occ-card-body">Radiatively cooled dense air sinks at both poles. The <b>Antarctic High</b> sits atop a 2,300 m ice plateau — one of Earth's most persistent anticyclones (~1028 hPa). Drives katabatic drainage winds. The Arctic High is weaker, displaced by the warming Arctic Ocean. Cold, dry, stable air mass source region for polar easterlies.</div><div class="occ-stat-row"><div class="occ-stat"><b>~1020–1030 hPa</b>Typical pressure</div><div class="occ-stat"><b>Divergent</b>Surface flow</div></div></div>
+    <div class="occ-card" style="border-top-color:#52b788"><div class="occ-card-name" style="color:#52b788">Subpolar Low</div><div class="occ-card-full">Baroclinic storm belt — 60°N & 60°S</div><div class="occ-card-body">Where polar and mid-latitude air masses collide. <b>Baroclinic instability</b> generates intense extratropical cyclones in continuous succession. NH centres: <b>Aleutian Low</b> (NW Pacific) and <b>Icelandic Low</b> (N. Atlantic) — semi-permanent features. SH: the "Subantarctic Trough" is nearly continuous, feeding the roaring forties and furious fifties.</div><div class="occ-stat-row"><div class="occ-stat"><b>~985–1000 hPa</b>Mean pressure</div><div class="occ-stat"><b>Convergent</b>Surface flow</div></div></div>
+    <div class="occ-card" style="border-top-color:#f4a261"><div class="occ-card-name" style="color:#f4a261">Subtropical High</div><div class="occ-card-full">Hadley cell sink — 25–35°N & S</div><div class="occ-card-body">Air rising over the ITCZ spreads poleward and descends at ~30°, warming adiabatically — suppressing clouds. Creates the great <b>subtropical anticyclones</b>: Azores/Bermuda High, North & South Pacific Highs, South Atlantic High, Mascarene High, Australian High. All major hot deserts (Sahara, Arabian, Atacama, Namib, Australian) lie beneath these cells.</div><div class="occ-stat-row"><div class="occ-stat"><b>~1015–1025 hPa</b>Mean pressure</div><div class="occ-stat"><b>Horse Latitudes</b>Historically becalmed</div></div></div>
+    <div class="occ-card" style="border-top-color:#ffd60a"><div class="occ-card-name" style="color:#ffd60a">ITCZ</div><div class="occ-card-full">Intertropical Convergence Zone — ~5°N mean</div><div class="occ-card-body">Trade winds from both hemispheres converge and force violent convective uplift. Produces the world's heaviest rainfall (Amazon, Congo, Maritime SE Asia). <b>Migrates 5–15° seasonally</b> chasing the thermal equator. At the surface it is the Doldrums: calm, oppressively humid, punctuated by intense squalls. Upper-level Hadley outflow feeds subtropical highs.</div><div class="occ-stat-row"><div class="occ-stat"><b>~1008–1012 hPa</b>Trough pressure</div><div class="occ-stat"><b>~5°N</b>Annual mean position</div></div></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ Why Belts Alternate</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">☀️</span><div><div class="mech-physics-label">Differential Solar Heating</div><div class="mech-physics-text">Equatorial regions receive ~<b>2.5× more solar energy per m²</b> than poles, driving equatorial ascent and polar descent — the root of all pressure belt structure.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌀</span><div><div class="mech-physics-label">Coriolis Deflection</div><div class="mech-physics-text">Poleward upper-level outflow is deflected eastward, becoming nearly zonal by 30°. This <b>breaks single-cell circulation</b> and creates the three-cell structure with jets at each boundary.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">⬆️</span><div><div class="mech-physics-label">Adiabatic Warming in Sinking Air</div><div class="mech-physics-text">Air descending at 30° warms at <b>~10°C/km (dry adiabatic)</b>, becoming warm and dry. Relative humidity plummets — clouds evaporate, rain is suppressed. All major subtropical deserts sit here.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">Pressure Belts — Global Schematic</p>
+      <div class="mini-map-container"><svg id="belts-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#e84545"></i>Low / convergence</span><span><i style="background:#f4a261"></i>High / divergence</span><span><i style="background:#ffd60a"></i>ITCZ</span><span><i style="background:#90e0ef"></i>Polar high</span></div>
+    </div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-value" style="color:var(--belts)">7</div><div class="stat-label">Global pressure belts (4H + 3L)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#ffd60a">5°N</div><div class="stat-label">Mean ITCZ position</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#f4a261">~30°</div><div class="stat-label">Subtropical high latitude</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#90e0ef">1,084</div><div class="stat-label">hPa — record high (Mongolia 2001)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#9b59b6">870</div><div class="stat-label">hPa — record low (Typhoon Tip 1979)</div></div>
+  </div>
+</div>
+
+<!-- ══ SURFACE WINDS ══ -->
+<div class="panel" id="panel-winds">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--winds)">Surface Winds</span>
+    <span class="phase-tag" style="background:rgba(255,159,28,.15);color:var(--winds)">Coriolis-deflected belts</span>
+    <span class="phase-desc">Global belts + named regional winds</span>
+  </div>
+  <div class="box"><p class="box-title">Global Surface Wind Belts — By Latitude</p>
+    <svg class="vis-svg" id="winds-svg" viewBox="0 0 800 300" height="300"></svg></div>
+  <div class="box"><p class="box-title">Notable Named Regional Winds</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Wind</th><th>Region</th><th>Type</th><th>Speed</th><th>Key Characteristics</th></tr></thead>
+      <tbody>
+        <tr><td><b style="color:#f4a261">Chinook</b></td><td>Rocky Mtn east slopes</td><td>Foehn/orographic</td><td>Up to 160 km/h</td><td>Warm, dry; melts 1 m snow in hours; temperature rise 20°C in minutes; wildfire risk</td></tr>
+        <tr><td><b style="color:#f4a261">Foehn</b></td><td>Alps (Austria, Bavaria)</td><td>Foehn/orographic</td><td>60–120 km/h</td><td>Warm, dry; "Foehn sickness" (headaches); wildfire and avalanche risk; clear skies</td></tr>
+        <tr><td><b style="color:#00b4d8">Mistral</b></td><td>S. France / Gulf of Lion</td><td>Gap/katabatic hybrid</td><td>90–185 km/h</td><td>Cold, dry NW; funneled through Rhône valley; clears Mediterranean skies</td></tr>
+        <tr><td><b style="color:#00b4d8">Bora</b></td><td>Adriatic coast, Croatia</td><td>Katabatic gap wind</td><td>Up to 220 km/h</td><td>Cold, dry NE; most intense in winter; turns sea white with spray</td></tr>
+        <tr><td><b style="color:#e84545">Sirocco</b></td><td>N. Africa → Mediterranean</td><td>Warm-sector advection</td><td>50–100 km/h</td><td>Hot, humid, dust-laden; brings Saharan sand to Europe</td></tr>
+        <tr><td><b style="color:#e84545">Santa Ana</b></td><td>S. California</td><td>Downslope foehn</td><td>80–160 km/h</td><td>Hot, dry NE; extreme fire danger; relative humidity &lt;5%; ignites largest CA wildfires</td></tr>
+        <tr><td><b style="color:#ffd60a">Harmattan</b></td><td>W. Africa</td><td>Continental trade</td><td>15–50 km/h</td><td>Dry NE; drops humidity 80%→10%; thick dust haze; "The Doctor" — relief from coastal humidity</td></tr>
+        <tr><td><b style="color:#ffd60a">Khamsin</b></td><td>Egypt / Levant</td><td>Thermal/synoptic</td><td>50–140 km/h</td><td>Hot, dry, dusty S wind; 50 days/year; RH drops to 5–10%; can last days</td></tr>
+        <tr><td><b style="color:#90e0ef">Katabatic (Antarctica)</b></td><td>Antarctic plateau</td><td>Gravity drainage</td><td>Up to 327 km/h</td><td>Commonwealth Bay world-record mean wind; purely gravity-driven cold air drainage</td></tr>
+        <tr><td><b style="color:#9b59b6">Shamal</b></td><td>Persian Gulf / Iraq</td><td>Pressure gradient</td><td>30–70 km/h</td><td>NW summer wind; severe dust storms; disrupts aviation and shipping across the Gulf</td></tr>
+        <tr><td><b style="color:#9b59b6">Zonda</b></td><td>Andes east slopes (Argentina)</td><td>Foehn/orographic</td><td>50–120 km/h</td><td>Hot, dry; Cuyo region wildfire danger; equivalent of Chinook over the Andes</td></tr>
+        <tr><td><b style="color:#52b788">Meltemi (Etesian)</b></td><td>Aegean Sea</td><td>Pressure gradient</td><td>30–80 km/h</td><td>Reliable N–NW summer wind; thermal low over Turkey; clears Aegean pollution; sailing staple</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ Coriolis & Geostrophic Wind</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌀</span><div><div class="mech-physics-label">f = 2Ω sin(φ) — Zero at Equator, Max at Poles</div><div class="mech-physics-text">Deflects moving air <b>rightward in NH, leftward in SH</b>. Turns equatorward surface flow into NE (NH) and SE (SH) trade winds. At the equator Coriolis is zero — no deflection, hence trade-wind consistency breaks down.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🔁</span><div><div class="mech-physics-label">Geostrophic vs Surface Wind</div><div class="mech-physics-text">Free-atmosphere winds blow <b>parallel to isobars</b> (pressure gradient force = Coriolis). Surface friction breaks this balance — surface winds blow at <b>~30° across isobars toward low pressure</b> (Ekman layer deflection).</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🗺️</span><div><div class="mech-physics-label">Foehn Mechanism</div><div class="mech-physics-text">Air forced over mountains precipitates moisture on the windward side (cools at ~6°C/km saturated). On the leeward side it descends and warms at <b>~10°C/km dry</b> — netting a warmer, drier air mass. A Chinook can raise temperature 20°C in minutes.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">Global Wind Belts</p>
+      <div class="mini-map-container"><svg id="winds-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#ff9f1c"></i>Trade winds</span><span><i style="background:#52b788"></i>Westerlies</span><span><i style="background:#90e0ef"></i>Polar easterlies</span><span><i style="background:#ffd60a"></i>ITCZ</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AIR MASSES & FRONTS ══ -->
+<div class="panel" id="panel-airmass">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--airmass)">Air Masses & Fronts</span>
+    <span class="phase-tag" style="background:rgba(82,183,136,.15);color:var(--airmass)">6 Types · 4 Front Types</span>
+    <span class="phase-desc">The building blocks of mid-latitude weather</span>
+  </div>
+  <div class="box"><p class="box-title">Air Mass Source Regions — Global</p>
+    <svg class="vis-svg" id="airmass-svg" viewBox="0 0 800 280" height="280"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#ffd60a"><div class="occ-card-name" style="color:#a88000">cA — Continental Arctic</div><div class="occ-card-full">Source: Arctic ice pack, Antarctic interior</div><div class="occ-card-body">Extremely cold, bone-dry. Even colder than cP. Forms over ice-covered Arctic Ocean and Antarctic ice sheet. <b>Polar vortex outbreaks</b> deliver cA air to mid-latitudes: February 2021 Texas freeze (−18°C Dallas) was cA from a disrupted polar vortex. Wind chills −50°C or below. Brings ice fog and diamond dust.</div><div class="occ-stat-row"><div class="occ-stat"><b>Extreme cold & dry</b>Character</div><div class="occ-stat"><b>Deep winter</b>Season</div></div></div>
+    <div class="occ-card" style="border-top-color:#90e0ef"><div class="occ-card-name" style="color:#90e0ef">cP — Continental Polar</div><div class="occ-card-full">Source: Siberia, Canada in winter</div><div class="occ-card-body">Cold, dry, stable. The <b>Siberian High</b> (record −68°C at Oymyakon) is Earth's most intense cP source. When it advects equatorward it brings bitter cold outbreaks across Asia and North America. Very low dew points. In summer, continental heating transforms cP source regions into cT.</div><div class="occ-stat-row"><div class="occ-stat"><b>Cold & Dry</b>Character</div><div class="occ-stat"><b>Winter dominant</b>Season</div></div></div>
+    <div class="occ-card" style="border-top-color:#3b82f6"><div class="occ-card-name" style="color:#3b82f6">mP — Maritime Polar</div><div class="occ-card-full">Source: N. Pacific, N. Atlantic subpolar oceans</div><div class="occ-card-body">Cold, moist, unstable (ocean warms its base). <b>Primary rainmaker for Pacific NW USA, UK, Norway</b>. Modified as it tracks equatorward. Produces persistent stratus clouds and drizzle. Less cold than cP. Classic "maritime" climate — cool summers, mild winters, constant overcast.</div><div class="occ-stat-row"><div class="occ-stat"><b>Cold & Moist</b>Character</div><div class="occ-stat"><b>Year-round</b>Season</div></div></div>
+    <div class="occ-card" style="border-top-color:#e84545"><div class="occ-card-name" style="color:#e84545">cT — Continental Tropical</div><div class="occ-card-full">Source: Sahara, Arabian Peninsula, Australian interior</div><div class="occ-card-body">Hot, very dry, unstable at surface. Produces <b>heat waves and droughts</b> when advected poleward. Extreme temperatures — cT reaching Europe drove Spain/Portugal to 47°C in 2021. Very low relative humidity (&lt;5% in source regions). Associated with the Saharan Heat Low in summer.</div><div class="occ-stat-row"><div class="occ-stat"><b>Hot & Dry</b>Character</div><div class="occ-stat"><b>Summer dominant</b>Season</div></div></div>
+    <div class="occ-card" style="border-top-color:#f4a261"><div class="occ-card-name" style="color:#f4a261">mT — Maritime Tropical</div><div class="occ-card-full">Source: Subtropical oceans (Gulf of Mexico, S. Atlantic, NW Pacific)</div><div class="occ-card-body">Warm, moist, conditionally unstable. The <b>primary fuel for US severe weather</b>: Gulf of Mexico mT air surges northward via the Great Plains Low-Level Jet, clashing with cP to spawn tornadoes and supercells. Also drives Caribbean and SE Asian convection. High dew points (20–25°C).</div><div class="occ-stat-row"><div class="occ-stat"><b>Warm & Moist</b>Character</div><div class="occ-stat"><b>Spring/summer</b>Peak season</div></div></div>
+    <div class="occ-card" style="border-top-color:#52b788"><div class="occ-card-name" style="color:#52b788">mE — Maritime Equatorial</div><div class="occ-card-full">Source: Equatorial Pacific and Indian Oceans</div><div class="occ-card-body">Very warm, very moist, deeply unstable — the air mass of the ITCZ. Powers <b>tropical cyclogenesis</b> and the world's rainiest regions. Dew points of 25–28°C. Primary moisture source for Asian monsoon systems and Amazon basin convection. Nearly indistinguishable from mT in some classifications.</div><div class="occ-stat-row"><div class="occ-stat"><b>Hot & Very Moist</b>Character</div><div class="occ-stat"><b>Year-round equatorial</b>Season</div></div></div>
+  </div>
+  <div class="box"><p class="box-title">Frontal Types — Structure, Weather & Symbols</p>
+    <svg class="vis-svg" id="fronts-svg" viewBox="0 0 800 200" height="200"></svg></div>
+  <div class="mech-grid">
+    <div class="mech-card"><div class="mech-card-title" style="color:#00b4d8">Cold Front</div><div class="mech-card-body">Dense cold air <b>undercuts and lifts warm moist air steeply</b> (slope ~1:100). Rapid ascent triggers intense but narrow (50–100 km) precipitation — thunderstorms, squall lines. Passes quickly (hours). Post-frontal: cold, clear, sharp pressure rise. Surface winds veer sharply (S→W in NH). Heavy rain just ahead of the front line.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#e84545">Warm Front</div><div class="mech-card-body">Warm air rides up gently over retreating cold air (slope ~1:200). <b>Gradual layered precipitation 300–500 km ahead</b> — cirrus → altostratus → nimbostratus. Steady rain 12–36 hours. Post-frontal: warm, humid, foggy. Surface winds back (E→S in NH). Classic European grey-sky prolonged wet weather.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#9b59b6">Occluded Front</div><div class="mech-card-body">Cold front catches the warm front, lifting the warm sector aloft. <b>Cold occlusion</b>: advancing cold air is colder than retreating cold air. <b>Warm occlusion</b>: advancing cold air rides up over retreating cold air. Complex precipitation pattern; system weakens as thermal contrast is eliminated.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#52b788">Stationary Front</div><div class="mech-card-body">Neither air mass displaces the other. <b>Persistent flooding risk</b> as slow-moving precipitation hits the same area for days. The 2010 Pakistan floods involved a stationary front + monsoonal moisture. Often evolve into active warm or cold fronts when the synoptic pattern shifts.</div></div>
+  </div>
+  <div class="callout" style="border-color:#52b788"><b>Dryline:</b> A moisture boundary — not a temperature boundary — where dry continental air meets moist maritime tropical air across a sharp humidity gradient. Most pronounced on the US southern Great Plains in spring (dew point drops 15–20°C over a few km). The single most important trigger for supercell thunderstorm and tornado development in Tornado Alley.</div>
+</div>
+
+
+<!-- ══ CYCLONES ══ -->
+<div class="panel" id="panel-cyclones">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--cyclones)">Cyclones</span>
+    <span class="phase-tag" style="background:rgba(155,89,182,.15);color:var(--cyclones)">Low-Pressure Systems</span>
+    <span class="phase-desc">Extratropical · Bomb Cyclones · Polar Lows · MCVs</span>
+  </div>
+  <div class="box"><p class="box-title">Extratropical Cyclone — Frontal Structure Cross-Section</p>
+    <svg class="vis-svg" id="cyclone-svg" viewBox="0 0 800 280" height="280"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#52b788"><div class="occ-card-name" style="color:#52b788">Extratropical</div><div class="occ-card-full">Mid-Latitude Baroclinic Cyclone</div><div class="occ-card-body">Powered by <b>temperature contrast between polar and tropical air</b>. Develops along the polar front via baroclinic instability — small wave disturbances amplify by extracting available potential energy. Size: 1,000–3,000 km. Duration: days to weeks. Moves eastward at 500–1,000 km/day with the polar jet. Responsible for most NH winter precipitation.</div><div class="occ-stat-row"><div class="occ-stat"><b>1,000–3,000 km</b>Diameter</div><div class="occ-stat"><b>Baroclinic instability</b>Energy source</div></div></div>
+    <div class="occ-card" style="border-top-color:#ffd60a"><div class="occ-card-name" style="color:#a88000">Bomb Cyclone</div><div class="occ-card-full">Explosive Cyclogenesis — ≥24 hPa/24 hr</div><div class="occ-card-body">An extratropical cyclone whose central pressure drops <b>at least 24 hPa in 24 hours</b> (at 60°N, latitude-adjusted). Usually forms over warm ocean currents (Gulf Stream, Kuroshio) when cold continental air masses flood eastward. Produces hurricane-force winds, storm surges, blizzards. Becoming more frequent as SSTs warm.</div><div class="occ-stat-row"><div class="occ-stat"><b>≥24 hPa/24 hr</b>Deepening rate</div><div class="occ-stat"><b>Rapidly intensifying</b>Character</div></div></div>
+    <div class="occ-card" style="border-top-color:#00b4d8"><div class="occ-card-name" style="color:#00b4d8">Polar Low</div><div class="occ-card-full">Arctic/Antarctic Mesoscale Cyclone</div><div class="occ-card-body">Small (200–500 km), intense, rapidly developing cyclones over open polar seas in winter. Cold Arctic air streams over <b>relatively warm open water</b> — analogous to tropical cyclogenesis (CISK-like). Develop in &lt;24 hours. Hurricane-force winds. Severe hazard for Arctic shipping and oil platforms. Increasing with Arctic sea ice loss.</div><div class="occ-stat-row"><div class="occ-stat"><b>200–500 km</b>Diameter</div><div class="occ-stat"><b>&lt;24 hr</b>Development time</div></div></div>
+    <div class="occ-card" style="border-top-color:#9b59b6"><div class="occ-card-name" style="color:#9b59b6">Mesoscale Conv. Vortex</div><div class="occ-card-full">MCV — Mid-tropospheric Remnant Cyclone</div><div class="occ-card-body">Mid-tropospheric cyclones (600–700 hPa) embedded in or left over from Mesoscale Convective Systems. Persist 12–36 hours after parent convection. <b>Seed new thunderstorm development</b> at their edges. Size: 50–300 km. Most common over US Great Plains. Can occasionally intensify into tropical storms if they track offshore.</div><div class="occ-stat-row"><div class="occ-stat"><b>50–300 km</b>Diameter</div><div class="occ-stat"><b>600–700 hPa</b>Level</div></div></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ Norwegian Model Life Cycle</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">1️⃣</span><div><div class="mech-physics-label">Incipient Wave</div><div class="mech-physics-text">A small perturbation forms on the polar front. <b>Upper-level divergence ahead of a trough removes mass from the column</b>, lowering surface pressure. Warm and cold air begin wrapping around the nascent low.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">2️⃣</span><div><div class="mech-physics-label">Development & Deepening</div><div class="mech-physics-text">Fronts sharpen. The warm sector broadens. Pressure drops; winds strengthen. <b>Bomb cyclogenesis</b> if deepening exceeds 24 hPa/24 hr — driven by jet stream coupling and warm ocean SSTs beneath the storm track.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">3️⃣</span><div><div class="mech-physics-label">Occlusion & Decay</div><div class="mech-physics-text">The faster cold front catches the warm front, lifting warm air aloft. The <b>thermal contrast driving the storm is removed</b>. The system fills and weakens over 12–48 hours, leaving a cold occluded low.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">Cyclone Genesis Zones — Global</p>
+      <div class="mini-map-container"><svg id="cyclones-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#dc2626"></i>Tropical cyclone genesis</span><span><i style="background:#52b788"></i>Extratropical storm tracks</span><span><i style="background:#00b4d8"></i>Polar low regions</span></div>
+    </div>
+  </div>
+  <div class="box"><p class="box-title">Notable Extratropical Cyclones</p>
+    <div class="event-item"><div class="event-year" style="color:var(--cyclones)">1987</div><div><div class="event-name">Great Storm of 1987 — UK & France</div><div class="event-desc">Explosive cyclogenesis in the Bay of Biscay; pressure dropped to 953 hPa. 120 km/h gusts across SE England, 15 million trees felled, 22 deaths. Famously not forecast — a British forecaster told viewers "no hurricane" hours before it struck.</div><span class="event-peak" style="background:rgba(155,89,182,.12);color:var(--cyclones)">953 hPa minimum</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--cyclones)">1993</div><div><div class="event-name">Storm of the Century — Eastern USA</div><div class="event-desc">Perfect bomb cyclone, 960 hPa, covering the entire eastern seaboard simultaneously. Every major US East Coast airport shut at once. 200+ deaths, $6 billion damage. Record snow in Alabama, storm surge in Cuba, tornadoes in Florida — from a single system.</div><span class="event-peak" style="background:rgba(155,89,182,.12);color:var(--cyclones)">960 hPa · 200+ deaths</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--cyclones)">2022</div><div><div class="event-name">Bomb Cyclone — US East Coast (Jan 2022)</div><div class="event-desc">Deepened 59 hPa in 24 hours — more than double the bomb threshold. Blizzard conditions from Georgia to Maine, 150 km/h gusts at Cape Hatteras. One of the most rapidly intensifying extratropical cyclones ever recorded for the eastern seaboard.</div><span class="event-peak" style="background:rgba(155,89,182,.12);color:var(--cyclones)">59 hPa/24 hr deepening</span></div></div>
+  </div>
+</div>
+
+<!-- ══ HURRICANES ══ -->
+<div class="panel" id="panel-hurricanes">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--hurricanes)">Hurricanes</span>
+    <span class="phase-tag" style="background:rgba(220,38,38,.15);color:var(--hurricanes)">Tropical Cyclones</span>
+    <span class="phase-desc">Typhoons · Cyclones · The atmosphere's most powerful storms</span>
+  </div>
+  <div class="box"><p class="box-title">Hurricane Internal Structure — Vertical Cross-Section</p>
+    <svg class="vis-svg" id="hurricane-svg" viewBox="0 0 800 300" height="300"></svg></div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-value" style="color:var(--hurricanes)">870</div><div class="stat-label">hPa — record low (Typhoon Tip 1979)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#f4a261">≥26.5°C</div><div class="stat-label">SST needed for genesis</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#ffd60a">~90</div><div class="stat-label">Named storms per year globally</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#52b788">295 km/h</div><div class="stat-label">Sustained winds — Dorian 2019</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#00b4d8">5–15°</div><div class="stat-label">Min. latitude (Coriolis requirement)</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:#9b59b6">~90%</div><div class="stat-label">Deaths from surge & flooding, not wind</div></div>
+  </div>
+  <div class="box"><p class="box-title">Saffir-Simpson Hurricane Wind Scale</p>
+    <div class="scale-row"><div class="scale-cat" style="color:#52b788">TD</div><div class="scale-wind" style="color:#52b788">&lt; 63 km/h</div><div class="scale-desc">Tropical Depression. Organized convection, closed circulation. No formal naming. Can produce heavy rain far from centre.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#00b4d8">TS</div><div class="scale-wind" style="color:#00b4d8">63–118 km/h</div><div class="scale-desc">Tropical Storm — gets a name. Distinct spiral bands. Significant coastal flooding, tree damage, power outages.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#ffd60a">Cat 1</div><div class="scale-wind" style="color:#ffd60a">119–153 km/h</div><div class="scale-desc">Dangerous. Roof/fence damage, large branches break, coastal flooding. Power outages days to a week.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#f4a261">Cat 2</div><div class="scale-wind" style="color:#f4a261">154–177 km/h</div><div class="scale-desc">Extremely dangerous. Major roof/siding damage. Near-total power loss expected for weeks.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#e84545">Cat 3</div><div class="scale-wind" style="color:#e84545">178–208 km/h</div><div class="scale-desc">Devastating (Major Hurricane). Well-built homes suffer major damage. Power/water outage weeks to months.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#dc2626">Cat 4</div><div class="scale-wind" style="color:#dc2626">209–251 km/h</div><div class="scale-desc">Catastrophic. Most framed homes lose entire roof. Most trees snapped. Power loss months. e.g. Harvey (2017), Ida (2021).</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#9b59b6">Cat 5</div><div class="scale-wind" style="color:#9b59b6">&gt; 252 km/h</div><div class="scale-desc">Total catastrophe. Most homes destroyed. Months without power/water. e.g. Dorian (2019, 295 km/h), Patricia (2015, 345 km/h 1-min).</div></div>
+  </div>
+  <div class="mech-grid">
+    <div class="mech-card"><div class="mech-card-title" style="color:#dc2626">6 Formation Requirements</div><div class="mech-card-body"><b>1. SST ≥ 26.5°C</b> to ~50 m depth. <b>2. Atmospheric instability</b> throughout troposphere. <b>3. High mid-troposphere humidity</b> at ~500 hPa. <b>4. Coriolis force</b> — ≥5° from equator. <b>5. Low vertical wind shear</b> (&lt;10 m/s between 200–850 hPa). <b>6. Pre-existing disturbance</b> — tropical wave, MCS, or MCV. African Easterly Waves seed ~60% of Atlantic hurricanes.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#f4a261">Rapid Intensification</div><div class="mech-card-body">Defined as ≥35 km/h wind increase in 24 hours. <b>Increasingly frequent</b> as ocean heat content rises. Hurricane Michael (2018): Cat 1→Cat 5 in 36 hours. Patricia (2015): Cat 1→Cat 5 in 24 hours (945→879 hPa). A forecasting nightmare — impacts populated coastlines before evacuation is possible. Major contributor to hurricane mortality.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#00b4d8">Storm Surge — Primary Killer</div><div class="mech-card-body">An offshore dome of water pushed ashore by onshore winds + reduced pressure. <b>~90% of tropical cyclone deaths</b> are surge and flooding, not wind. Katrina: 8–9 m surge in Mississippi. Cyclone Bhola (1970, Bangladesh): 10 m surge, ~500,000 deaths. Bay of Bengal geometry makes it especially deadly — funnel-shaped, shallow continental shelf.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#9b59b6">Climate Change Effects</div><div class="mech-card-body">Warmer SSTs and higher moisture increase peak intensity (more Cat 4–5), rainfall rates (+~25% per 1°C SST rise), and storm stalling (Harvey 2017: 1,540 mm in 4 days over Texas). Genesis zones shifting poleward. Rapid intensification events increasing. Season lengthening. <b>The storm count may not change, but the most destructive end intensifies.</b></div></div>
+  </div>
+</div>
+
+
+<!-- ══ THUNDERSTORMS ══ -->
+<div class="panel" id="panel-thunder">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--thunder)">Thunderstorms</span>
+    <span class="phase-tag" style="background:rgba(255,214,10,.15);color:#a88000">~40,000 per day globally</span>
+    <span class="phase-desc">Single-cell · Multicell · Supercell · MCS · Derechoes</span>
+  </div>
+  <div class="box"><p class="box-title">Thunderstorm Types — Organizational Spectrum</p>
+    <svg class="vis-svg" id="thunder-svg" viewBox="0 0 800 280" height="280"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#52b788"><div class="occ-card-name" style="color:#52b788">Single-Cell</div><div class="occ-card-full">Air-mass / pop-up thunderstorm</div><div class="occ-card-body">Driven purely by surface heating — no organized wind shear. <b>Three stages: cumulus (growing), mature (updraft + downdraft coexist), dissipating (downdraft dominates)</b>. Lifespan: 30–60 minutes. Produces brief heavy rain, lightning, small hail. Common on summer afternoons in Florida (~100 storm-days/yr — world's most active region).</div><div class="occ-stat-row"><div class="occ-stat"><b>30–60 min</b>Lifespan</div><div class="occ-stat"><b>No shear</b>Environment</div></div></div>
+    <div class="occ-card" style="border-top-color:#f4a261"><div class="occ-card-name" style="color:#f4a261">Multicell Cluster</div><div class="occ-card-full">Self-propagating interacting cells</div><div class="occ-card-body">Multiple cells at different stages, with <b>new cells continuously forming along the gust front</b> of older dissipating cells. Moderate wind shear organizes them into an overall system. Hours-long duration. Produces large hail, strong winds, flooding rain. Most common thunderstorm type globally. US Corn Belt receives ~50% of growing-season rain from MCS clusters.</div><div class="occ-stat-row"><div class="occ-stat"><b>Hours</b>Lifespan</div><div class="occ-stat"><b>Moderate shear</b>Environment</div></div></div>
+    <div class="occ-card" style="border-top-color:#e84545"><div class="occ-card-name" style="color:#e84545">Supercell</div><div class="occ-card-full">Rotating thunderstorm with persistent mesocyclone</div><div class="occ-card-body">The most dangerous storm type. <b>Strong directional wind shear creates a rotating updraft (mesocyclone)</b> — a column of cyclonically rotating air 2–10 km wide extending 5–10 km above the surface. Produces the largest hail (&gt;10 cm), strongest straight-line winds, and nearly all significant (EF2+) tornadoes. Persists 2–6 hours, tracks 200–400 km. Recognizable by its rotating wall cloud and flat anvil.</div><div class="occ-stat-row"><div class="occ-stat"><b>2–6 hours</b>Lifespan</div><div class="occ-stat"><b>Strong directional shear</b>Environment</div></div></div>
+    <div class="occ-card" style="border-top-color:#3b82f6"><div class="occ-card-name" style="color:#3b82f6">Squall Line / MCS</div><div class="occ-card-full">Mesoscale Convective System — 100–2,000 km</div><div class="occ-card-body">Large organized complexes of thunderstorms sharing a common anvil and cold pool. <b>Squall line</b>: linear MCS with leading convective line and trailing stratiform rain. <b>Bow echo</b>: a curved squall line indicating a powerful rear-inflow jet — associated with derechoes. Derechoes produce ≥600 km swaths of damaging straight-line winds with hurricane intensity.</div><div class="occ-stat-row"><div class="occ-stat"><b>100–2,000 km</b>Size range</div><div class="occ-stat"><b>6–36 hours</b>Lifespan</div></div></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ Thunderstorm Physics</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">📐</span><div><div class="mech-physics-label">CAPE — Convective Available Potential Energy</div><div class="mech-physics-text">Measures energy a rising parcel can extract. <b>CAPE &gt;1,000 J/kg</b> = marginal severe; &gt;2,500 = significant; &gt;5,000 = extreme. US Great Plains regularly sees CAPE &gt;4,000 J/kg in spring when Gulf mT air clashes with dry Pacific air. CAPE = energy accelerating updrafts to 50–80 m/s in supercells.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">💧</span><div><div class="mech-physics-label">Latent Heat Release</div><div class="mech-physics-text">Water vapor condensing releases <b>~2,500 J/g</b> — the primary energy source for deep convection. A single large thunderstorm releases energy equivalent to ~10 Hiroshima bombs over its lifetime. This latent heat warms the column, increases buoyancy, accelerates the updraft, and drives more evaporation.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">⚡</span><div><div class="mech-physics-label">Lightning — Charge Separation</div><div class="mech-physics-text">Updrafts carry small ice crystals upward; downdrafts bring large graupel downward. Collisions <b>transfer charge</b> — graupel becomes negative (base), crystals positive (anvil). When electric field exceeds ~300 kV/m, lightning discharges. ~100 strikes/second globally. ~2,000 thunderstorms active at any moment on Earth.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">Global Lightning Density (schematic)</p>
+      <div class="mini-map-container"><svg id="thunder-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#ffd60a"></i>High (&gt;50 fl/km²/yr)</span><span><i style="background:#f4a261"></i>Moderate (10–50)</span><span><i style="background:#52b788"></i>Low (&lt;10)</span></div>
+    </div>
+  </div>
+  <div class="callout" style="border-color:#ffd60a"><b>Derecho:</b> A widespread, long-lived wind damage event (≥400 km, ≥26 m/s) associated with a band of rapidly moving bow-echo thunderstorms. The June 2012 Mid-Atlantic Derecho killed 22 people and caused $2.9 billion damage from Indiana to the Atlantic coast in 12 hours. Responsible for more tree damage across the eastern USA than any other weather phenomenon.</div>
+</div>
+
+<!-- ══ TORNADOES ══ -->
+<div class="panel" id="panel-tornado">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--tornado)">Tornadoes</span>
+    <span class="phase-tag" style="background:rgba(249,115,22,.15);color:var(--tornado)">~1,200 / yr in USA</span>
+    <span class="phase-desc">EF0 to EF5 · Supercell mesocyclone · Tornado Alley</span>
+  </div>
+  <div class="box"><p class="box-title">Tornado Formation — Supercell Mesocyclone Process</p>
+    <svg class="vis-svg" id="tornado-svg" viewBox="0 0 800 280" height="280"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#ffd60a"><div class="occ-card-name" style="color:#a88000">Convective Indices</div><div class="occ-card-full">CAPE · CIN · LI · K-Index · SRH</div><div class="occ-card-body"><b>CAPE</b> (J/kg): energy for convection (&gt;2,500 = significant severe weather). <b>CIN</b>: the "cap" — must be overcome for storms to fire. <b>LI (Lifted Index)</b>: &lt;−6 = extreme instability. <b>K-Index</b>: thunderstorm probability from temperature and humidity profile. <b>SRH (Storm Relative Helicity)</b>: wind shear vector rotation (&gt;300 m²/s² = supercell/tornado risk). Core tools for severe weather forecasting.</div><div class="occ-stat-row"><div class="occ-stat"><b>CAPE &gt;2,500</b>Significant severe</div><div class="occ-stat"><b>SRH &gt;300</b>Tornado risk</div></div></div>
+  </div>
+  <div class="box"><p class="box-title">Enhanced Fujita Scale (EF-Scale)</p>
+    <div class="scale-row"><div class="scale-cat" style="color:#52b788">EF0</div><div class="scale-wind" style="color:#52b788">105–137 km/h</div><div class="scale-desc">Gale. Light damage — broken branches, shallow-rooted trees pushed over, minor roof damage. ~29% of all US tornadoes.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#ffd60a">EF1</div><div class="scale-wind" style="color:#ffd60a">138–177 km/h</div><div class="scale-desc">Moderate. Roofs stripped, mobile homes overturned, moving cars pushed off roads. ~40% of US tornadoes.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#f4a261">EF2</div><div class="scale-wind" style="color:#f4a261">178–217 km/h</div><div class="scale-desc">Significant. Roofs torn off, large trees uprooted, boxcars overturned, small missiles generated. ~18% of US tornadoes.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#e84545">EF3</div><div class="scale-wind" style="color:#e84545">218–266 km/h</div><div class="scale-desc">Severe. Well-built homes destroyed, trains overturned, trees debarked, heavy cars lifted and thrown. ~8% of US tornadoes.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#dc2626">EF4</div><div class="scale-wind" style="color:#dc2626">267–322 km/h</div><div class="scale-desc">Devastating. Well-built homes leveled to slabs, cars thrown ~100 m, significant missiles generated. ~2% of US tornadoes.</div></div>
+    <div class="scale-row"><div class="scale-cat" style="color:#9b59b6">EF5</div><div class="scale-wind" style="color:#9b59b6">&gt; 322 km/h</div><div class="scale-desc">Incredible. Strong frame homes swept clean, reinforced concrete structures damaged, automobile-sized missiles. &lt;0.1% of tornadoes. e.g. El Reno 2013 (4.2 km wide — widest ever recorded).</div></div>
+  </div>
+  <div class="mech-grid">
+    <div class="mech-card"><div class="mech-card-title" style="color:var(--tornado)">Formation Ingredients</div><div class="mech-card-body"><b>1. Wind shear</b> — speed (winds accelerate with height) AND directional (direction rotates with height, e.g. SE→SW→W). Creates horizontal vorticity tubes. <b>2. CAPE</b> — strong updrafts tilt vortex tubes vertical, creating the mesocyclone. <b>3. Low LCL (&lt;1,000 m)</b> — low cloud base shortens path from mesocyclone to surface. <b>4. CIN cap</b> — prevents premature convection, allowing instability to build before explosive storms fire along the dryline.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#52b788">Tornado Alley & Global Hot Spots</div><div class="mech-card-body">US Great Plains sees ~75% of world tornadoes — a unique geography: <b>Rocky Mountains block Pacific moisture; Gulf of Mexico delivers warm moist mT air; jet stream provides shear; flat terrain gives storms free rein</b>. "Dixie Alley" (SE USA) is deadlier per storm — higher population density, hilly terrain, nighttime tornadoes. Other hotspots: Bangladesh (1989 tornado: ~1,300 deaths), Argentina, South Africa, NE Europe.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#ffd60a">Waterspouts & Landspouts</div><div class="mech-card-body"><b>Waterspouts:</b> Weak (EF0–EF1) tornadoes over water, often non-supercellular. Common over Florida Keys (~500–600/yr). Formed by stretching of low-level convergence zones. <b>Landspouts:</b> Columnar vortices extending from cumulus without a mesocyclone. Typically EF0–EF1. Both indicate powerful local low-level convergence even without supercell organization.</div></div>
+    <div class="mech-card"><div class="mech-card-title" style="color:#9b59b6">Record Events</div><div class="mech-card-body"><b>Widest:</b> El Reno, Oklahoma (2013) — 4.2 km wide. <b>Longest track:</b> Tri-State Tornado (1925) — 352 km through MO/IL/IN; 695 deaths; EF5. <b>Deadliest single:</b> Bangladesh 1989 — ~1,300 deaths. <b>Deadliest US outbreak:</b> Super Outbreak (Apr 25–28, 2011) — 358 tornadoes across 21 states; 321 deaths; 11 EF5s including Joplin (EF5, 161 deaths in 38 minutes).</div></div>
+  </div>
+</div>
+
+
+<!-- ══ FOG & INVERSIONS ══ -->
+<div class="panel" id="panel-fog">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--fog)">Fog & Inversions</span>
+    <span class="phase-tag" style="background:rgba(120,144,156,.15);color:var(--fog)">Boundary Layer Phenomena</span>
+    <span class="phase-desc">When the sky meets the ground</span>
+  </div>
+  <div class="box"><p class="box-title">Fog Types & Boundary Layer Structure</p>
+    <svg class="vis-svg" id="fog-svg" viewBox="0 0 800 260" height="260"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#78909c"><div class="occ-card-name" style="color:#78909c">Radiation Fog</div><div class="occ-card-full">Nocturnal surface cooling fog</div><div class="occ-card-body">Forms on <b>clear nights with calm winds</b> when the surface radiates heat to space, cooling below the dew point. Most common in valleys (cold air pools). Classic examples: Central Valley California (Tule fog), Po Valley Italy, Thames Valley London. <b>Typically burns off 1–3 hours after sunrise</b> as solar heating re-evaporates droplets from above.</div><div class="occ-stat-row"><div class="occ-stat"><b>Clear + calm + moist</b>Required conditions</div><div class="occ-stat"><b>Burns off by noon</b>Typical lifecycle</div></div></div>
+    <div class="occ-card" style="border-top-color:#3b82f6"><div class="occ-card-name" style="color:#3b82f6">Advection Fog</div><div class="occ-card-full">Horizontal transport over cold surface</div><div class="occ-card-body">Warm, moist air moves horizontally over a cold surface, chilling to its dew point. <b>San Francisco Bay fog</b>: Pacific air moves over the cold California upwelling (Humboldt extension), condenses, and is drawn inland through the Golden Gate. <b>Grand Banks fog</b>: Gulf Stream air over the cold Labrador Current. Can persist days, not just nights.</div><div class="occ-stat-row"><div class="occ-stat"><b>Warm air / cold surface</b>Key contrast</div><div class="occ-stat"><b>Days-persistent</b>Duration</div></div></div>
+    <div class="occ-card" style="border-top-color:#52b788"><div class="occ-card-name" style="color:#52b788">Upslope / Orographic Fog</div><div class="occ-card-full">Adiabatic cooling as air rises terrain</div><div class="occ-card-body">Moist air forced upslope cools at <b>10°C/km (dry adiabatic)</b> until it reaches the dew point — the Lifting Condensation Level (LCL). Fog forms exactly at that altitude. Common on windward mountain slopes and in the Smoky Mountains. Ground-level cloud for those inside the terrain — the same as low stratus from outside.</div><div class="occ-stat-row"><div class="occ-stat"><b>LCL = fog base</b>Physics</div><div class="occ-stat"><b>Windward slopes</b>Location</div></div></div>
+    <div class="occ-card" style="border-top-color:#f4a261"><div class="occ-card-name" style="color:#f4a261">Steam / Evaporation Fog</div><div class="occ-card-full">Cold air over warm water</div><div class="occ-card-body">The reverse of advection fog — <b>cold air flows over warm water</b>, rapid evaporation immediately saturates the surface layer. Produces "sea smoke" on Arctic seas and Great Lakes in autumn. Shallow (1–10 m thick) but visually spectacular. Distinct from advection fog — the water surface is warmer than the air above it.</div><div class="occ-stat-row"><div class="occ-stat"><b>Cold air / warm water</b>Key contrast</div><div class="occ-stat"><b>1–10 m thick</b>Typical depth</div></div></div>
+    <div class="occ-card" style="border-top-color:#9b59b6"><div class="occ-card-name" style="color:#9b59b6">Freezing Fog</div><div class="occ-card-full">Supercooled liquid droplets below 0°C</div><div class="occ-card-body">Fog with temperatures below 0°C — droplets remain liquid (supercooled) until they contact a surface and <b>instantly freeze as glaze ice or rime</b>. Spectacular ice-encrusted landscapes but extremely hazardous for aviation (windshield/engine icing) and road surfaces (black ice). Common in high-elevation valleys (Scottish Highlands, Rocky Mountain valleys).</div><div class="occ-stat-row"><div class="occ-stat"><b>Below 0°C</b>Temperature</div><div class="occ-stat"><b>Rime / glaze ice</b>Primary hazard</div></div></div>
+    <div class="occ-card" style="border-top-color:#ffd60a"><div class="occ-card-name" style="color:#a88000">Subsidence Inversion</div><div class="occ-card-full">Descending air creates warm lid</div><div class="occ-card-body">Air sinking in the subtropical high warms adiabatically, creating a layer <b>warmer than the air below</b> — a temperature inversion that caps pollutants and moisture. <b>Los Angeles marine inversion</b>: cool marine air undercuts warm subsiding air at ~800 m, trapping smog. The pre-1956 London "pea soupers" were SO₂ pollution trapped under winter inversions.</div><div class="occ-stat-row"><div class="occ-stat"><b>Subtropical high</b>Driver</div><div class="occ-stat"><b>Pollution trap</b>Key hazard</div></div></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ Boundary Layer Dynamics</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌡️</span><div><div class="mech-physics-label">Environmental vs Adiabatic Lapse Rates</div><div class="mech-physics-text">Normal atmosphere cools ~6.5°C/km (ELR). Dry air rises and cools at 10°C/km (DALR); saturated air at 6°C/km (SALR). <b>When ELR &gt; DALR: absolutely unstable</b> — superadiabatic surface heating, explosive convection. When ELR &lt; DALR: stable — suppresses convection, traps fog and pollutants below.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🏙️</span><div><div class="mech-physics-label">Urban Heat Island & Fog</div><div class="mech-physics-text">Cities are 2–5°C warmer than surrounding rural areas due to waste heat, dark surfaces, lack of vegetation. <b>Urban heat islands suppress radiation fog within the city</b> while rural surroundings fog up. Paradoxically, UHI moist warm air rising at night can fog the cooler suburban fringe.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌫️</span><div><div class="mech-physics-label">Fog vs Mist vs Haze vs Smog</div><div class="mech-physics-text"><b>Fog:</b> visibility &lt;1 km (liquid droplets). <b>Mist:</b> visibility 1–2 km. <b>Haze:</b> dry particles (dust, smoke, pollution). <b>Photochemical smog</b> (LA-type: ozone + NOx + sunlight). <b>Sulfurous smog</b> (London-type: SO₂ + fog). Only altitude distinguishes fog from low stratus cloud.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">World's Foggiest Places & Inversion Zones</p>
+      <div class="mini-map-container"><svg id="fog-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#78909c"></i>Advection fog zones</span><span><i style="background:#3b82f6"></i>Radiation fog valleys</span><span><i style="background:#f4a261"></i>Subsidence inversions</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STRATOSPHERE ══ -->
+<div class="panel" id="panel-strato">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--strato)">Stratosphere</span>
+    <span class="phase-tag" style="background:rgba(139,92,246,.15);color:var(--strato)">12–50 km altitude</span>
+    <span class="phase-desc">Polar Vortex · SSW Events · Ozone Layer · QBO</span>
+  </div>
+  <div class="box"><p class="box-title">Stratospheric Layer Structure — Altitude Cross-Section</p>
+    <svg class="vis-svg" id="strato-svg" viewBox="0 0 800 300" height="300"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#8b5cf6"><div class="occ-card-name" style="color:#8b5cf6">Polar Vortex</div><div class="occ-card-full">Stratospheric Circumpolar Cyclone — 15–50 km</div><div class="occ-card-body">A large, persistent cyclonic circulation centered on the pole in the <b>stratosphere</b> (not the tropospheric jet often confused with it). In winter: cold (−70°C at 30 km), tight, strong. Summer: weakens and warms. The Antarctic vortex is stronger and more symmetric than the Arctic. <b>The ozone hole forms inside the Antarctic polar vortex</b> — cold temperatures enable PSCs where ozone-destroying reactions occur.</div><div class="occ-stat-row"><div class="occ-stat"><b>15–50 km</b>Altitude</div><div class="occ-stat"><b>−70°C</b>Winter core temperature</div></div></div>
+    <div class="occ-card" style="border-top-color:#dc2626"><div class="occ-card-name" style="color:#dc2626">Sudden Stratospheric Warming</div><div class="occ-card-full">SSW — Polar Vortex Disruption Events</div><div class="occ-card-body">Tropospheric Rossby waves propagate upward and deposit momentum, <b>decelerating and disrupting the polar vortex</b>. The polar stratosphere warms 30–50°C in days. The weakened/split vortex signal descends into the troposphere over 2–6 weeks, causing Arctic cold outbreaks. February 2021 Texas freeze (−18°C Dallas, $195B damage) followed an SSW. ~6 major SSW events per decade in the NH.</div><div class="occ-stat-row"><div class="occ-stat"><b>30–50°C</b>Warming in days</div><div class="occ-stat"><b>2–6 weeks</b>Surface impact lag</div></div></div>
+    <div class="occ-card" style="border-top-color:#00b4d8"><div class="occ-card-name" style="color:#00b4d8">Quasi-Biennial Oscillation</div><div class="occ-card-full">QBO — Tropical Stratospheric Wind Oscillation</div><div class="occ-card-body">The tropical stratosphere (20–30 km) experiences alternating <b>easterly and westerly winds that descend and reverse every ~28 months</b>. Driven by equatorial atmospheric waves (Kelvin and Rossby-gravity waves) depositing momentum. The QBO modulates polar vortex strength: westerly QBO → stronger vortex → fewer cold outbreaks. Easterly QBO → more SSW events. Also influences Atlantic hurricane activity.</div><div class="occ-stat-row"><div class="occ-stat"><b>~28 months</b>Period</div><div class="occ-stat"><b>20–30 km</b>Altitude</div></div></div>
+    <div class="occ-card" style="border-top-color:#52b788"><div class="occ-card-name" style="color:#52b788">Ozone Layer</div><div class="occ-card-full">O₃ — 15–35 km altitude peak</div><div class="occ-card-body">Absorbs <b>97–99% of UV-B radiation</b>. The Antarctic ozone hole (spring Sep–Nov) was caused by CFCs releasing chlorine catalytically destroying ozone inside the cold polar vortex. The <b>Montreal Protocol (1987)</b> has led to recovery — projected to reach pre-1980 levels by ~2065. The ozone hole also intensified the SH westerlies by cooling the polar stratosphere.</div><div class="occ-stat-row"><div class="occ-stat"><b>15–35 km</b>Peak altitude</div><div class="occ-stat"><b>~2065</b>Projected recovery</div></div></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ Stratosphere–Troposphere Coupling</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">📡</span><div><div class="mech-physics-label">Rossby Wave Upward Propagation</div><div class="mech-physics-text">Large-amplitude planetary Rossby waves generated by topography and land-sea heating contrasts <b>propagate upward from troposphere into stratosphere</b> in winter (when background westerly flow permits). They break in the stratosphere, decelerating the polar vortex — the SSW trigger.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">⬇️</span><div><div class="mech-physics-label">Downward Signal — 2–6 Week Lead Time</div><div class="mech-physics-text">After SSW, the weakened polar vortex signal propagates downward over 2–6 weeks via wave-mean flow interaction, reaching the tropopause and weakening the tropospheric polar jet — shifting it equatorward. This gives <b>useful 2–6 week extended-range forecast skill</b> for winter cold outbreaks.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🧊</span><div><div class="mech-physics-label">Polar Stratospheric Clouds (PSCs)</div><div class="mech-physics-text">Form only when stratospheric temperatures drop below −78°C (Type I) or −85°C (Type II pure ice). Exist uniquely inside the tight Antarctic polar vortex. PSCs provide surfaces for <b>heterogeneous reactions that convert CFCs to active chlorine</b>, which destroys ozone on spring UV exposure. Also produce spectacular nacreous (mother-of-pearl) clouds.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">Stratospheric Features — Schematic</p>
+      <div class="mini-map-container"><svg id="strato-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#8b5cf6"></i>Polar vortex</span><span><i style="background:#dc2626"></i>SSW disruption</span><span><i style="background:#00b4d8"></i>QBO tropical band</span><span><i style="background:#52b788"></i>Ozone layer max</span></div>
+    </div>
+  </div>
+  <div class="box"><p class="box-title">Notable SSW & Polar Vortex Events</p>
+    <div class="event-item"><div class="event-year" style="color:var(--strato)">1963</div><div><div class="event-name">First Major NH SSW — Theoretical Milestone</div><div class="event-desc">The first well-documented major sudden stratospheric warming. Polar stratosphere warmed 40°C in 7 days. Led to the theoretical framework for understanding stratosphere–troposphere coupling and polar vortex dynamics that underpins modern extended-range forecasting.</div><span class="event-peak" style="background:rgba(139,92,246,.12);color:var(--strato)">+40°C in 7 days</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--strato)">2009</div><div><div class="event-name">Major SSW → UK "Big Freeze" Winter</div><div class="event-desc">A strong January 2009 SSW preceded the coldest December in the UK since 1981. The weakened polar vortex allowed persistent negative NAO (North Atlantic Oscillation) conditions, bringing the "Beast from the East" easterly airflow to Western Europe for weeks.</div><span class="event-peak" style="background:rgba(139,92,246,.12);color:var(--strato)">Coldest UK Dec since 1981</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--strato)">2021</div><div><div class="event-name">SSW → Texas Freeze — February 2021</div><div class="event-desc">An SSW in late December 2020 preceded the February 2021 polar vortex disruption that sent Arctic air into Texas. Dallas reached −18°C. The state's power grid failed catastrophically — designed for summer heat, not winter cold. 246 deaths, $195 billion in damage — the costliest US winter storm in history.</div><span class="event-peak" style="background:rgba(139,92,246,.12);color:var(--strato)">−18°C Dallas · $195B damage</span></div></div>
+  </div>
+</div>
+
+<!-- ══ ATMOSPHERIC RIVERS ══ -->
+<div class="panel" id="panel-atriver">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--atriver)">Atmos. Rivers</span>
+    <span class="phase-tag" style="background:rgba(59,130,246,.15);color:var(--atriver)">Flying Rivers of Vapor</span>
+    <span class="phase-desc">AR Scale · IVT · Orographic Enhancement · Climate Change</span>
+  </div>
+  <div class="box"><p class="box-title">Atmospheric River — Structure & Orographic Landfall</p>
+    <svg class="vis-svg" id="atriver-svg" viewBox="0 0 800 270" height="270"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#3b82f6"><div class="occ-card-name" style="color:#3b82f6">Atmospheric River</div><div class="occ-card-full">Narrow filament of concentrated water vapor transport</div><div class="occ-card-body">A narrow corridor (typically <b>400–600 km wide, 2,000–4,000 km long</b>) of concentrated water vapor transport at 850–700 hPa. At any moment ~4–5 ARs circle each hemisphere, carrying ~<b>90% of all poleward water vapor transport</b> in mid-latitudes. A single large AR carries more water than 7.5× the Amazon River's discharge. Named by Zhu and Newell (1994).</div><div class="occ-stat-row"><div class="occ-stat"><b>400–600 km</b>Typical width</div><div class="occ-stat"><b>7.5× Amazon</b>Max vapor flux</div></div></div>
+    <div class="occ-card" style="border-top-color:#52b788"><div class="occ-card-name" style="color:#52b788">AR1–AR5 Scale</div><div class="occ-card-full">Ralph et al. Scale — Intensity × Duration</div><div class="occ-card-body"><b>AR1–AR2:</b> Mostly beneficial — replenish water supplies and snowpack (W. US, Norway, Chile). <b>AR3:</b> Equal beneficial and hazardous. <b>AR4–AR5:</b> Primarily hazardous — catastrophic flooding, landslides, infrastructure damage. Classified by integrated vapor transport (IVT) magnitude and duration at landfall. California's 2023 sequence (9 consecutive ARs) caused $9 billion damage.</div><div class="occ-stat-row"><div class="occ-stat"><b>AR1→AR5</b>Scale range</div><div class="occ-stat"><b>IVT ≥250 kg/m/s</b>AR threshold</div></div></div>
+    <div class="occ-card" style="border-top-color:#ffd60a"><div class="occ-card-name" style="color:#a88000">Convective Indices</div><div class="occ-card-full">CAPE · CIN · LI · K-Index · SRH</div><div class="occ-card-body"><b>CAPE</b> (J/kg): energy for convection (&gt;2,500 = significant severe weather). <b>CIN</b>: the "cap" — must be overcome for storms to fire. <b>LI (Lifted Index)</b>: &lt;−6 = extreme instability. <b>K-Index</b>: thunderstorm probability from temperature and humidity profile. <b>SRH (Storm Relative Helicity)</b>: wind shear vector rotation (&gt;300 m²/s² = supercell/tornado risk). Core tools for severe weather forecasting.</div><div class="occ-stat-row"><div class="occ-stat"><b>CAPE &gt;2,500</b>Significant severe</div><div class="occ-stat"><b>SRH &gt;300</b>Tornado risk</div></div></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ AR Formation & Climate Change</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">💧</span><div><div class="mech-physics-label">Integrated Vapor Transport (IVT)</div><div class="mech-physics-text">ARs identified by <b>IVT ≥250 kg/m/s</b>. Strong ARs exceed 1,000 kg/m/s. IVT = vertically integrated product of specific humidity × wind speed. ARs form on the warm, moist conveyor belt ahead of extratropical cyclones, drawing subtropical moisture poleward in a narrow jet-like filament.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🏔️</span><div><div class="mech-physics-label">Orographic Enhancement</div><div class="mech-physics-text">When an AR hits a mountain range head-on (Sierra Nevada, Cascades, Norwegian Alps, New Zealand Alps, Andes), orographic lifting forces rapid condensation. <b>Rainfall rates of 50–100 mm/hour are possible</b>, 24-hour totals of 200–500 mm. The combination of AR intensity and topographic angle determines whether the event is merely wet or catastrophic.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌡️</span><div><div class="mech-physics-label">Clausius-Clapeyron & Future ARs</div><div class="mech-physics-text">A warmer atmosphere holds ~<b>7% more water vapor per 1°C warming</b>. ARs are becoming wetter and more intense even if frequency stays constant. Projected: AR4/AR5 (hazardous) events increase; AR1/AR2 (beneficial) decrease proportionally. Western US and Europe face intensifying AR-driven flooding even as droughts deepen between events.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">Major AR Corridors — Global</p>
+      <div class="mini-map-container"><svg id="atriver-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#3b82f6"></i>Primary AR corridors</span><span><i style="background:#f97316"></i>Bomb cyclone genesis zones</span><span><i style="background:#52b788"></i>Key AR landfall zones</span></div>
+    </div>
+  </div>
+  <div class="callout" style="border-color:#3b82f6"><b>Pineapple Express:</b> A particularly intense AR originating near Hawaii and the subtropical Pacific, transporting warm tropical moisture directly to the US West Coast and Pacific Northwest. Can deliver 200–400 mm rain in 24–48 hours. Responsible for California's January 2023 deluge (9 ARs in 3 weeks, $9B damage) and the Great Flood of 1862 (Sacramento underwater for months — an estimated AR5 event lasting 43 days).</div>
+  <div class="box"><p class="box-title">Extreme Precipitation Events — ARs & Bomb Cyclones</p>
+    <div class="event-item"><div class="event-year" style="color:var(--atriver)">1861–62</div><div><div class="event-name">Great Flood of California — AR5 Predecessor</div><div class="event-desc">A series of ARs struck California for 43 consecutive days. Sacramento was underwater for months; the Central Valley became an inland sea 480 km long × 32 km wide. Estimated to be an AR5-equivalent event that would cause ~$1 trillion in damage today.</div><span class="event-peak" style="background:rgba(59,130,246,.12);color:var(--atriver)">43-day AR sequence</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--atriver)">2017</div><div><div class="event-name">Oroville Dam Crisis — AR + Snowmelt</div><div class="event-desc">A powerful AR dumped 230 mm in 3 days on saturated Northern California. Lake Oroville filled beyond capacity; the concrete spillway failed catastrophically. 188,000 evacuated — the largest evacuation in California history. $1.1 billion damage.</div><span class="event-peak" style="background:rgba(59,130,246,.12);color:var(--atriver)">188,000 evacuated</span></div></div>
+    <div class="event-item"><div class="event-year" style="color:var(--atriver)">2023</div><div><div class="event-name">California AR Sequence — January 2023</div><div class="event-desc">Nine consecutive ARs struck California over 3 weeks, driven by successive bomb cyclones in the N. Pacific. $9 billion in damage, 22 deaths, massive landslides. Some mountain areas received 200–300% of annual average precipitation in a single month — ending a 3-year drought.</div><span class="event-peak" style="background:rgba(59,130,246,.12);color:var(--atriver)">9 ARs in 3 weeks · $9B</span></div></div>
+  </div>
+</div>
+
+<!-- ══ ATMOSPHERIC CELLS ══ -->
+<div class="panel" id="panel-cells">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--hadley)">Atmos. Cells</span>
+    <span class="phase-tag" style="background:rgba(232,69,69,.15);color:var(--hadley)">Hadley · Ferrel · Polar</span>
+    <span class="phase-desc">The atmosphere's meridional heat engine</span>
+  </div>
+  <div class="box"><p class="box-title">Meridional Atmospheric Circulation — Northern Hemisphere Cross-Section</p>
+    <svg class="vis-svg" id="cells-svg" viewBox="0 0 800 320" height="320" style="border-radius:3px;"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#e84545"><div class="occ-card-name" style="color:#e84545">Hadley Cell</div><div class="occ-card-full">Tropics — 0–30° latitude</div><div class="occ-card-body">Rising moist air at the ITCZ creates tropical rainforests. Descending dry air at ~30° creates the world's major deserts (Sahara, Arabian, Atacama, Australian). The <b>most energetic of the three cells</b> — directly thermally driven by solar heating of the equatorial surface.</div><div class="occ-stat-row"><div class="occ-stat"><b>0–30°</b>Latitude</div><div class="occ-stat"><b>Thermally direct</b>Type</div></div></div>
+    <div class="occ-card" style="border-top-color:#52b788"><div class="occ-card-name" style="color:#52b788">Ferrel Cell</div><div class="occ-card-full">Mid-latitudes — 30–60° latitude</div><div class="occ-card-body">An indirect (thermally indirect) cell. Rising air at ~60° meets the polar front, creating mid-latitude cyclones. Descending at ~30°. Driven by Hadley and Polar cells. <b>Weather in the mid-latitudes is dominated by baroclinic eddies</b> rather than the cell's own overturning.</div><div class="occ-stat-row"><div class="occ-stat"><b>30–60°</b>Latitude</div><div class="occ-stat"><b>Thermally indirect</b>Type</div></div></div>
+    <div class="occ-card" style="border-top-color:#90e0ef"><div class="occ-card-name" style="color:#90e0ef">Polar Cell</div><div class="occ-card-full">High latitudes — 60–90°</div><div class="occ-card-body">Cold dense air sinks at the poles and flows equatorward as polar easterlies. Rising at ~60° where it meets warmer air — driving the polar front and polar vortex. <b>The weakest of the three cells</b>. The Antarctic polar cell is stronger and more persistent than the Arctic equivalent.</div><div class="occ-stat-row"><div class="occ-stat"><b>60–90°</b>Latitude</div><div class="occ-stat"><b>Thermally direct</b>Type</div></div></div>
+    <div class="occ-card" style="border-top-color:#ffd60a"><div class="occ-card-name" style="color:#a88000">ITCZ Migration</div><div class="occ-card-full">Seasonal north–south shift of the convergence zone</div><div class="occ-card-body">The Inter-Tropical Convergence Zone migrates north in JJA (driving Indian and African monsoons) and south in DJF (driving Australian monsoon). <b>Chases the thermal equator</b> — the zone of maximum surface heating. Over land it migrates further than over ocean.</div><div class="occ-stat-row"><div class="occ-stat"><b>5–15°</b>Seasonal migration range</div><div class="occ-stat"><b>~5°N</b>Annual mean</div></div></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ Why Three Cells?</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌡️</span><div><div class="mech-physics-label">Differential Solar Heating</div><div class="mech-physics-text">The tropics receive far more solar radiation per unit area than the poles. This <b>creates a temperature gradient</b> that drives atmospheric circulation to redistribute heat — the fundamental engine of all weather.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌀</span><div><div class="mech-physics-label">Coriolis Deflection</div><div class="mech-physics-text">On a rotating Earth, poleward-moving air is deflected eastward by the Coriolis effect. By ~30° latitude the flow becomes nearly zonal, <b>preventing a single large cell</b> from reaching the pole. This forces the three-cell structure.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">⚡</span><div><div class="mech-physics-label">Baroclinic Instability</div><div class="mech-physics-text">In the mid-latitudes (Ferrel cell zone), the large temperature gradient creates <b>baroclinic instability</b>: the atmosphere breaks into cyclones and anticyclones that transfer heat poleward far more efficiently than a smooth overturning cell could.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">Atmospheric Cell Boundaries & Surface Winds</p>
+      <div class="mini-map-container"><svg id="cells-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#e84545"></i>Hadley cell</span><span><i style="background:#52b788"></i>Ferrel cell</span><span><i style="background:#90e0ef"></i>Polar cell</span><span><i style="background:#ffd60a"></i>ITCZ</span></div>
+    </div>
+  </div>
+  <div class="box"><p class="box-title">Hadley Cell Expansion — Observed & Projected</p>
+    <svg class="vis-svg" id="hadley-expand-svg" viewBox="0 0 800 180" height="180"></svg></div>
+</div>
+
+<!-- ══ JET STREAMS ══ -->
+<div class="panel" id="panel-jets">
+  <div class="section-header">
+    <span class="phase-label" style="color:var(--jet)">Jet Streams</span>
+    <span class="phase-tag" style="background:rgba(255,214,10,.15);color:#8a7000">100–400 km/h</span>
+    <span class="phase-desc">Rivers of wind at the tropopause</span>
+  </div>
+  <div class="box"><p class="box-title">Polar & Subtropical Jet Streams — Vertical & Horizontal Structure</p>
+    <svg class="vis-svg" id="jet-svg" viewBox="0 0 800 300" height="300" style="border-radius:3px;"></svg></div>
+  <div class="occ-grid">
+    <div class="occ-card" style="border-top-color:#ffd60a"><div class="occ-card-name" style="color:#a88000">Polar Jet</div><div class="occ-card-full">Tropopause level — 50–60° latitude · 7–12 km altitude</div><div class="occ-card-body">The dominant jet of mid-latitudes. Exists where the temperature contrast between polar and tropical air is sharpest. <b>Speeds of 100–400 km/h.</b> Meanders in large Rossby waves — when wavy, it traps persistent weather patterns (heat waves, cold outbreaks). Strongest in winter when the equator-to-pole gradient is greatest.</div><div class="occ-stat-row"><div class="occ-stat"><b>100–400 km/h</b>Speed range</div><div class="occ-stat"><b>50–60°</b>Latitude</div></div></div>
+    <div class="occ-card" style="border-top-color:#f4a261"><div class="occ-card-name" style="color:#f4a261">Subtropical Jet</div><div class="occ-card-full">Upper troposphere — 25–35° latitude · 10–14 km altitude</div><div class="occ-card-body">Formed by the poleward outflow from the Hadley cell reaching the tropopause and being deflected eastward. <b>More continuous and less wavy</b> than the polar jet. Plays a key role in monsoon onset — its northward migration in spring triggers the South Asian monsoon retreat of the Mascarene High.</div><div class="occ-stat-row"><div class="occ-stat"><b>50–200 km/h</b>Speed range</div><div class="occ-stat"><b>25–35°</b>Latitude</div></div></div>
+    <div class="occ-card" style="border-top-color:#dc2626"><div class="occ-card-name" style="color:#dc2626">Rossby Waves</div><div class="occ-card-full">Planetary-scale meanders in the jet stream</div><div class="occ-card-body">The jet meanders due to conservation of <b>potential vorticity</b>. Air displaced poleward gains relative anticyclonic vorticity; displaced equatorward gains cyclonic vorticity — creating westward-propagating waves superimposed on the eastward jet. When phase speed equals mean jet speed, waves become <b>quasi-stationary → blocking highs</b>.</div><div class="occ-stat-row"><div class="occ-stat"><b>Wavenumber 5–8</b>Blocking-prone</div><div class="occ-stat"><b>Westward propagation</b>Phase</div></div></div>
+    <div class="occ-card" style="border-top-color:#9b59b6"><div class="occ-card-name" style="color:#9b59b6">Arctic Amplification</div><div class="occ-card-full">Polar warming → weaker jet → more extreme weather</div><div class="occ-card-body">The Arctic is warming <b>3–4× faster</b> than the global mean, reducing the equator-to-pole temperature gradient that drives the polar jet. A weaker gradient → weaker, wavier jet → more persistent quasi-stationary Rossby wave patterns. Evidence links this to more frequent heat waves, cold outbreaks, floods, and droughts. Scientific debate is ongoing but the signal is strengthening.</div><div class="occ-stat-row"><div class="occ-stat"><b>3–4×</b>Arctic warming amplification</div><div class="occ-stat"><b>Wavier jet</b>Projected response</div></div></div>
+  </div>
+  <div class="phase-bottom-row">
+    <div class="mech-callout-box"><p class="box-title">⚙️ Thermal Wind & Rossby Waves</p>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌡️</span><div><div class="mech-physics-label">Thermal Wind Balance</div><div class="mech-physics-text">Jet streams exist because of <b>temperature gradients</b>. The thermal wind equation states that wind speed increases with altitude wherever there is a horizontal temperature gradient. Where the polar front is sharpest, the jet is fastest.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🌊</span><div><div class="mech-physics-label">Rossby Waves</div><div class="mech-physics-text">The jet meanders due to conservation of <b>potential vorticity</b>. Air displaced poleward gains relative anticyclonic vorticity; displaced equatorward gains cyclonic vorticity. This creates westward-propagating planetary Rossby waves superimposed on the eastward jet.</div></div></div>
+      <div class="mech-physics-item"><span class="mech-physics-icon">🔄</span><div><div class="mech-physics-label">Blocking & Quasi-Resonance</div><div class="mech-physics-text">When Rossby wave phase speed matches the mean jet speed, waves become <b>quasi-stationary</b>. High-amplitude stationary Rossby waves (wavenumbers 5–8) can cause persistent blocking highs — the thermodynamic fingerprint of extreme weather events.</div></div></div>
+    </div>
+    <div class="mini-map-box"><p class="box-title">Jet Stream Paths — Winter vs Summer</p>
+      <div class="mini-map-container"><svg id="jets-mini" viewBox="0 0 900 450" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="mini-map-legend"><span><i style="background:#ffd60a"></i>Polar jet (winter)</span><span><i style="background:#f4a261"></i>Polar jet (summer)</span><span><i style="background:#90e0ef"></i>Subtropical jet</span></div>
+    </div>
+  </div>
+  <div class="box"><p class="box-title">Polar Vortex — Stratospheric Connection</p>
+    <div class="mech-grid">
+      <div class="mech-card"><div class="mech-card-title" style="color:var(--polar)">Strong Polar Vortex</div><div class="mech-card-body">A tight, cold, symmetrical stratospheric polar vortex keeps the tropospheric polar jet strong and <b>meridionally constrained</b>. Cold Arctic air stays locked in the Arctic. Mid-latitudes experience mild winters. North America and Europe warm.</div></div>
+      <div class="mech-card"><div class="mech-card-title" style="color:var(--hurricanes)">Sudden Stratospheric Warming (SSW)</div><div class="mech-card-body">Rossby waves propagate from the troposphere into the stratosphere, depositing westerly momentum and <b>disrupting or splitting the polar vortex</b>. Within 1–4 weeks, the disrupted vortex descends into the troposphere, causing extreme cold outbreaks. SSW events precede ~60% of US winter cold extremes.</div></div>
+    </div>
+  </div>
+</div>
+
+</main>
+<script>
+function toggleTheme(){
+  const b=document.body,d=b.dataset.theme==='dark';
+  b.dataset.theme=d?'light':'dark';
+  document.getElementById('themeIcon').textContent=d?'🌙':'☀️';
+  document.getElementById('themeLabel').textContent=d?'Dark':'Light';
+  redrawAll();
+}
+function switchPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const p=document.getElementById('panel-'+name);
+  if(p)p.classList.add('visible');
+  const t=document.querySelector(`.tab[data-panel="${name}"]`);
+  if(t)t.classList.add('active');
+  redrawAll();
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchPanel(t.dataset.panel)));
+const D=()=>document.body.dataset.theme==='dark';
+const TC=()=>D()?'#e8eaf0':'#1a202c';
+const MC=()=>D()?'#6b7280':'#64748b';
+
+function worldBase(){
+  const d=D(),o=d?'#04111e':'#c0daf5',l=d?'#132438':'#a8c8a0';
+  let h=`<rect x="0" y="0" width="900" height="450" fill="${o}"/>`;
+  h+=`<polygon points="30,20 180,15 200,65 190,130 170,200 135,245 85,275 42,265 22,215 18,145 22,72" fill="${l}"/>`;
+  h+=`<polygon points="120,265 190,258 215,295 225,365 205,415 165,435 132,430 112,395 102,335 108,290" fill="${l}"/>`;
+  h+=`<polygon points="215,10 265,8 275,30 270,70 250,90 225,85 210,60 212,30" fill="${l}"/>`;
+  h+=`<polygon points="382,12 445,12 458,42 446,102 436,135 455,162 450,205 425,225 405,245 375,262 352,242 342,202 352,152 362,102 372,52" fill="${l}"/>`;
+  h+=`<polygon points="373,262 452,258 475,295 485,362 465,415 425,435 385,430 362,395 352,332 358,290" fill="${l}"/>`;
+  h+=`<polygon points="472,12 655,9 728,32 755,72 765,122 745,155 705,162 665,152 645,122 622,92 592,72 562,62 530,52 500,42 482,32" fill="${l}"/>`;
+  h+=`<polygon points="655,235 735,228 762,262 775,315 745,345 695,350 652,325 632,285" fill="${l}"/>`;
+  h+=`<ellipse cx="720" cy="380" rx="80" ry="55" fill="${l}"/>`;
+  h+=`<rect x="0" y="432" width="900" height="18" fill="${l}" opacity=".4"/>`;
+  return h;
+}
+
+function drawBelts(){
+  const s=document.getElementById('belts-svg');if(!s)return;
+  const W=800,H=320,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const pL=130,pR=60,cW=W-pL-pR;
+  const belts=[
+    {lat:'90°N',y:.04,lbl:'Polar High',P:'H',col:'#90e0ef',press:'~1025 hPa'},
+    {lat:'60°N',y:.20,lbl:'Subpolar Low',P:'L',col:'#52b788',press:'~992 hPa'},
+    {lat:'30°N',y:.36,lbl:'Subtropical High',P:'H',col:'#f4a261',press:'~1018 hPa'},
+    {lat:'0°',  y:.50,lbl:'ITCZ (Equatorial Low)',P:'L',col:'#ffd60a',press:'~1010 hPa'},
+    {lat:'30°S',y:.64,lbl:'Subtropical High',P:'H',col:'#f4a261',press:'~1018 hPa'},
+    {lat:'60°S',y:.80,lbl:'Subpolar Low',P:'L',col:'#52b788',press:'~990 hPa'},
+    {lat:'90°S',y:.96,lbl:'Polar High',P:'H',col:'#90e0ef',press:'~1028 hPa'},
+  ];
+  [[0,.12,'#90e0ef',.06],[.12,.28,'#52b788',.05],[.28,.43,'#f4a261',.07],[.43,.57,'#ffd60a',.08],[.57,.72,'#f4a261',.07],[.72,.88,'#52b788',.05],[.88,1,'#90e0ef',.06]].forEach(([y1,y2,c,o])=>
+    h+=`<rect x="${pL}" y="${y1*H}" width="${cW}" height="${(y2-y1)*H}" fill="${c}" opacity="${o}"/>`);
+  [{y:.08,d:1,c:'#90e0ef',l:'Polar Easterlies'},{y:.28,d:-1,c:'#52b788',l:'Westerlies'},{y:.43,d:1,c:'#ff9f1c',l:'NE Trades'},{y:.57,d:-1,c:'#ff9f1c',l:'SE Trades'},{y:.72,d:1,c:'#52b788',l:'Westerlies'},{y:.88,d:-1,c:'#90e0ef',l:'Polar Easterlies'}].forEach(w=>{
+    const y=w.y*H;
+    for(let x=pL+40;x<pL+cW-20;x+=80){
+      const dx=w.d*45,tip=x+dx;
+      h+=`<path d="M${x},${y} L${tip},${y}" fill="none" stroke="${w.c}" stroke-width="1.5" stroke-dasharray="6 4" opacity=".4"/>`;
+      h+=`<polygon points="${tip},${y} ${tip-w.d*10},${y-4} ${tip-w.d*10},${y+4}" fill="${w.c}" opacity=".4"/>`;
+    }
+    h+=`<text x="${pL+cW*.5}" y="${y-5}" fill="${w.c}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle" opacity=".8">${w.l}</text>`;
+  });
+  belts.forEach(b=>{
+    const y=b.y*H,hc=b.P==='H'?b.col:'#e84545';
+    h+=`<line x1="${pL}" y1="${y}" x2="${pL+cW}" y2="${y}" stroke="${b.col}" stroke-width="${b.P==='L'?2:1.5}" opacity=".8"/>`;
+    h+=`<text x="${pL-8}" y="${y+4}" fill="${m}" font-size="9" font-family="DM Mono,monospace" text-anchor="end">${b.lat}</text>`;
+    h+=`<circle cx="${pL+22}" cy="${y}" r="12" fill="${d?'rgba(0,0,0,.4)':'rgba(255,255,255,.7)'}" stroke="${hc}" stroke-width="1.5"/>`;
+    h+=`<text x="${pL+22}" y="${y+4}" fill="${hc}" font-size="11" font-family="Bebas Neue,sans-serif" text-anchor="middle">${b.P}</text>`;
+    h+=`<text x="${pL+cW+8}" y="${y+4}" fill="${b.col}" font-size="8" font-family="DM Mono,monospace">${b.press}</text>`;
+    h+=`<text x="${pL+cW*.52}" y="${y-8}" fill="${b.col}" font-size="9.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">${b.lbl}</text>`;
+  });
+  h+=`<line x1="${pL}" y1="0" x2="${pL}" y2="${H}" stroke="${d?'rgba(255,255,255,.1)':'rgba(0,0,0,.08)'}" stroke-width="1"/>`;
+  s.innerHTML=h;
+}
+
+function drawWinds(){
+  const s=document.getElementById('winds-svg');if(!s)return;
+  const W=800,H=300,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const pL=60;
+  [{lat:'90°N',y:.02,col:'#90e0ef',nm:'Polar High (H)',belt:true},{lat:'75°N',y:.10,col:'#90e0ef',nm:'Polar Easterlies ←'},
+   {lat:'60°N',y:.20,col:'#52b788',nm:'Subpolar Low (L)',belt:true},{lat:'50°N',y:.29,col:'#52b788',nm:'Prevailing Westerlies →'},
+   {lat:'30°N',y:.40,col:'#f4a261',nm:'Subtropical High (H) — Horse Latitudes',belt:true},
+   {lat:'15°N',y:.49,col:'#ff9f1c',nm:'NE Trade Winds ↙'},{lat:'0°',y:.55,col:'#ffd60a',nm:'ITCZ / Doldrums',belt:true},
+   {lat:'15°S',y:.62,col:'#ff9f1c',nm:'SE Trade Winds ↖'},
+   {lat:'30°S',y:.71,col:'#f4a261',nm:'Subtropical High (H)',belt:true},{lat:'50°S',y:.80,col:'#52b788',nm:'Roaring Forties / Westerlies →'},
+   {lat:'60°S',y:.88,col:'#52b788',nm:'Subpolar Low (L)',belt:true},{lat:'80°S',y:.95,col:'#90e0ef',nm:'Polar Easterlies / Katabatic ←'}
+  ].forEach(z=>{
+    const y=z.y*H;
+    h+=`<line x1="${pL}" y1="${y}" x2="${W-10}" y2="${y}" stroke="${z.col}" stroke-width="${z.belt?1.8:1}" stroke-dasharray="${z.belt?'':'10 5'}" opacity="${z.belt?.85:.55}"/>`;
+    h+=`<text x="${pL-5}" y="${y+4}" fill="${m}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="end">${z.lat}</text>`;
+    h+=`<text x="${pL+10}" y="${y-4}" fill="${z.col}" font-size="8.5" font-family="DM Mono,monospace" font-weight="${z.belt?'600':'400'}">${z.nm}</text>`;
+  });
+  h+=`<line x1="${pL}" y1="0" x2="${pL}" y2="${H}" stroke="${d?'rgba(255,255,255,.1)':'rgba(0,0,0,.08)'}" stroke-width="1"/>`;
+  s.innerHTML=h;
+}
+
+function drawAirmass(){
+  const s=document.getElementById('airmass-svg');if(!s)return;
+  const W=800,H=280,d=D(),m=MC();
+  let h=worldBase().replace('width="900" height="450"',`width="${W}" height="${H}"`);
+  // Scale world map coords to W×H from 900×450
+  const sx=W/900,sy=H/450;
+  h=worldBase();
+  // Overlay air masses
+  [{cx:90,cy:80,rx:65,ry:40,col:'#a88000',lbl:'cA',sub:'Arctic'},{cx:100,cy:210,rx:60,ry:45,col:'#90e0ef',lbl:'cP',sub:'Canada'},{cx:280,cy:75,rx:50,ry:35,col:'#a88000',lbl:'cA',sub:'Greenland'},{cx:420,cy:100,rx:75,ry:48,col:'#90e0ef',lbl:'cP',sub:'Siberian'},{cx:420,cy:300,rx:65,ry:45,col:'#e84545',lbl:'cT',sub:'Saharan'},{cx:600,cy:110,rx:80,ry:48,col:'#90e0ef',lbl:'cP',sub:'Asian cP'},{cx:185,cy:315,rx:55,ry:38,col:'#f4a261',lbl:'mT',sub:'Gulf mT'},{cx:720,cy:295,rx:60,ry:40,col:'#f4a261',lbl:'mT',sub:'Pac mT'},{cx:78,cy:310,rx:48,ry:34,col:'#3b82f6',lbl:'mP',sub:'N.Pac'},{cx:365,cy:178,rx:50,ry:34,col:'#3b82f6',lbl:'mP',sub:'N.Atl'},{cx:560,cy:310,rx:45,ry:32,col:'#52b788',lbl:'mE',sub:'Indian'}].forEach(a=>{
+    h+=`<ellipse cx="${a.cx}" cy="${a.cy}" rx="${a.rx}" ry="${a.ry}" fill="${a.col}" opacity="${d?.15:.12}" stroke="${a.col}" stroke-width="1.5"/>`;
+    h+=`<text x="${a.cx}" y="${a.cy-3}" fill="${a.col}" font-size="10" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">${a.lbl}</text>`;
+    h+=`<text x="${a.cx}" y="${a.cy+10}" fill="${a.col}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${a.sub}</text>`;
+  });
+  s.innerHTML=h;
+}
+
+function drawFronts(){
+  const s=document.getElementById('fronts-svg');if(!s)return;
+  const W=800,H=200,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const gy=H-20;
+  h+=`<line x1="10" y1="${gy}" x2="${W-10}" y2="${gy}" stroke="${m}" stroke-width="1.5"/>`;
+  [{x:10,w:185,col:'#00b4d8',title:'COLD FRONT',prec:'Heavy / brief',slope:.35},
+   {x:205,w:185,col:'#e84545',title:'WARM FRONT',prec:'Steady / prolonged',slope:.14},
+   {x:400,w:185,col:'#9b59b6',title:'OCCLUDED',prec:'Decreasing',slope:.22},
+   {x:595,w:185,col:'#52b788',title:'STATIONARY',prec:'Persistent / days',slope:0}
+  ].forEach(p=>{
+    h+=`<rect x="${p.x}" y="20" width="${p.w}" height="${H-30}" fill="${p.col}" opacity="${d?.05:.04}" rx="3"/>`;
+    h+=`<text x="${p.x+p.w/2}" y="34" fill="${p.col}" font-size="9.5" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">${p.title}</text>`;
+    h+=`<line x1="${p.x+5}" y1="${gy}" x2="${p.x+p.w-5}" y2="${gy}" stroke="${m}" stroke-width="1"/>`;
+    const fx=p.x+p.w*.3,tx=p.x+p.w-12;
+    if(p.slope>0){
+      const ty=gy-(tx-fx)*p.slope;
+      h+=`<line x1="${fx}" y1="${gy}" x2="${tx}" y2="${Math.max(ty,38)}" stroke="${p.col}" stroke-width="2.5" opacity=".85"/>`;
+      for(let i=1;i<4;i++){
+        const px=fx+(tx-fx)*i/4,py=gy-(px-fx)*p.slope;
+        if(p.col==='#00b4d8') h+=`<polygon points="${px},${py} ${px-5},${py-9} ${px+5},${py-9}" fill="${p.col}" opacity=".75"/>`;
+        else if(p.col==='#e84545') h+=`<circle cx="${px}" cy="${py}" r="5" fill="${p.col}" opacity=".75"/>`;
+        else {h+=`<polygon points="${px},${py} ${px-5},${py-9} ${px+5},${py-9}" fill="${p.col}" opacity=".65"/>`;h+=`<circle cx="${px+18}" cy="${py-(18)*p.slope}" r="5" fill="${p.col}" opacity=".65"/>`;}
+      }
+    } else {
+      h+=`<line x1="${p.x+12}" y1="${gy-2}" x2="${p.x+p.w-12}" y2="${gy-2}" stroke="${p.col}" stroke-width="2.5" stroke-dasharray="12 6" opacity=".8"/>`;
+      for(let i=0;i<3;i++){const px=p.x+30+i*50;h+=`<polygon points="${px},${gy-2} ${px-5},${gy-11} ${px+5},${gy-11}" fill="${p.col}" opacity=".6"/>`;h+=`<circle cx="${px+15}" cy="${gy-2}" r="5" fill="${p.col}" opacity=".6"/>`;}
+    }
+    // Clouds
+    for(let i=0;i<4;i++){const cx=p.x+15+i*40,cy=gy-45-i*(p.col==='#e84545'?10:4);h+=`<ellipse cx="${cx}" cy="${Math.max(cy,40)}" rx="16" ry="7" fill="${d?'rgba(255,255,255,.06)':'rgba(180,200,220,.2)'}" stroke="${d?'rgba(255,255,255,.09)':'rgba(140,170,200,.25)'}" stroke-width="1"/>`;}
+    h+=`<text x="${p.x+p.w/2}" y="${gy+14}" fill="${p.col}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${p.prec}</text>`;
+  });
+  s.innerHTML=h;
+}
+
+function drawCyclone(){
+  const s=document.getElementById('cyclone-svg');if(!s)return;
+  const W=800,H=280,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const gy=H-25,lx=W/2;
+  h+=`<line x1="20" y1="${gy}" x2="${W-20}" y2="${gy}" stroke="${m}" stroke-width="1.5"/>`;
+  h+=`<circle cx="${lx}" cy="${gy}" r="10" fill="${d?'rgba(155,89,182,.25)':'rgba(130,60,180,.15)'}" stroke="#9b59b6" stroke-width="2"/>`;
+  h+=`<text x="${lx}" y="${gy+4}" fill="#9b59b6" font-size="9" font-family="Bebas Neue,sans-serif" text-anchor="middle">L</text>`;
+  // Cold front (steep, going left)
+  h+=`<path d="M${lx},${gy} Q${lx-80},${gy-60} ${lx-200},${gy-145}" fill="none" stroke="#00b4d8" stroke-width="3"/>`;
+  for(let i=1;i<5;i++){const px=lx-i*40,py=gy-i*29;h+=`<polygon points="${px},${py} ${px-7},${py-11} ${px+7},${py-11}" fill="#00b4d8" opacity=".8"/>`;}
+  h+=`<text x="${lx-175}" y="${gy-150}" fill="#00b4d8" font-size="9" font-family="DM Mono,monospace" font-weight="600">Cold Front — slope ~1:100</text>`;
+  // Warm front (gentle, going right)
+  h+=`<path d="M${lx},${gy} Q${lx+120},${gy-30} ${lx+290},${gy-72}" fill="none" stroke="#e84545" stroke-width="3"/>`;
+  for(let i=1;i<6;i++){const px=lx+i*46,py=gy-i*12;h+=`<circle cx="${px}" cy="${py}" r="6" fill="#e84545" opacity=".8"/>`;}
+  h+=`<text x="${lx+245}" y="${gy-80}" fill="#e84545" font-size="9" font-family="DM Mono,monospace" font-weight="600">Warm Front — slope ~1:200</text>`;
+  // Warm sector
+  h+=`<rect x="${lx+18}" y="${gy-25}" width="145" height="20" fill="${d?'rgba(244,162,97,.06)':'rgba(244,162,97,.04)'}" rx="2"/>`;
+  h+=`<text x="${lx+90}" y="${gy-11}" fill="#f4a261" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">Warm Sector</text>`;
+  // Precip zones
+  h+=`<rect x="${lx-195}" y="${gy-138}" width="92" height="115" fill="${d?'rgba(0,180,216,.06)':'rgba(0,150,200,.04)'}" rx="3"/>`;
+  h+=`<text x="${lx-150}" y="${gy-125}" fill="#00b4d8" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Heavy convective</text>`;
+  h+=`<rect x="${lx+58}" y="${gy-68}" width="185" height="63}" fill="${d?'rgba(232,69,69,.05)':'rgba(200,50,50,.04)'}" rx="3"/>`;
+  h+=`<text x="${lx+150}" y="${gy-56}" fill="#e84545" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Steady stratiform</text>`;
+  h+=`<text x="${lx+150}" y="${gy-45}" fill="#e84545" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">300–500 km ahead</text>`;
+  // Jet
+  const jy=H*.14;
+  h+=`<path d="M${lx-230},${jy} L${lx+230},${jy}" fill="none" stroke="#ffd60a" stroke-width="2" stroke-dasharray="10 5" opacity=".6"/>`;
+  h+=`<polygon points="${lx+230},${jy} ${lx+222},${jy-4} ${lx+222},${jy+4}" fill="#ffd60a" opacity=".6"/>`;
+  h+=`<text x="${lx+240}" y="${jy+4}" fill="#ffd60a" font-size="8" font-family="DM Mono,monospace">Polar Jet →</text>`;
+  s.innerHTML=h;
+}
+
+function drawHurricane(){
+  const s=document.getElementById('hurricane-svg');if(!s)return;
+  const W=800,H=300,d=D(),m=MC(),cx=W/2,base=H-20,top=22;
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  h+=`<rect x="0" y="${base}" width="${W}" height="${H-base}" fill="${d?'#04111e':'#a8d5f5'}" opacity=".6"/>`;
+  h+=`<text x="12" y="${base+13}" fill="#00b4d8" font-size="8" font-family="DM Mono,monospace">Ocean SST ≥ 26.5°C</text>`;
+  [280,200,130].forEach((r,i)=>{const op=.06+.09*(1-i/3);h+=`<path d="M${cx-r},${base} Q${cx-r},${base-r*.6} ${cx},${top+40-i*10} Q${cx+r},${base-r*.6} ${cx+r},${base}" fill="${d?`rgba(180,30,30,${op})`:`rgba(200,60,60,${op})`}" stroke="#dc2626" stroke-width="1.2" opacity=".7"/>`});
+  const ew=70;
+  h+=`<path d="M${cx-ew},${base} Q${cx-ew},${base-35} ${cx-ew*.3},${base-250} Q${cx},${top+8} ${cx+ew*.3},${base-250} Q${cx+ew},${base-35} ${cx+ew},${base}" fill="${d?'rgba(220,38,38,.22)':'rgba(220,50,50,.18)'}" stroke="#dc2626" stroke-width="2.5" opacity=".9"/>`;
+  h+=`<text x="${cx+ew+10}" y="${base-200}" fill="#dc2626" font-size="8.5" font-family="DM Mono,monospace" font-weight="600">Eyewall (max winds)</text>`;
+  h+=`<text x="${cx+ew+10}" y="${base-188}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace">15–17 km tall</text>`;
+  const er=32;
+  h+=`<path d="M${cx-er},${base} Q${cx-er},${base-30} ${cx-er*.25},${base-232} Q${cx},${top+18} ${cx+er*.25},${base-232} Q${cx+er},${base-30} ${cx+er},${base}" fill="${d?'rgba(0,0,0,.55)':'rgba(255,255,255,.85)'}" stroke="#ffd60a" stroke-width="1.5"/>`;
+  h+=`<text x="${cx}" y="${base-125}" fill="#ffd60a" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">EYE — calm, warm</text>`;
+  h+=`<text x="${cx}" y="${base-113}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">subsidence within</text>`;
+  const oy=top+10;
+  h+=`<path d="M${cx-180},${oy} L${cx-ew-10},${oy}" fill="none" stroke="#00b4d8" stroke-width="2" stroke-dasharray="6 4" opacity=".8"/>`;
+  h+=`<polygon points="${cx-180},${oy} ${cx-172},${oy-4} ${cx-172},${oy+4}" fill="#00b4d8" opacity=".8"/>`;
+  h+=`<path d="M${cx+ew+10},${oy} L${cx+180},${oy}" fill="none" stroke="#00b4d8" stroke-width="2" stroke-dasharray="6 4" opacity=".8"/>`;
+  h+=`<polygon points="${cx+180},${oy} ${cx+172},${oy-4} ${cx+172},${oy+4}" fill="#00b4d8" opacity=".8"/>`;
+  h+=`<text x="${cx}" y="${oy-6}" fill="#00b4d8" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Upper outflow — anticyclonic, ~200 hPa</text>`;
+  [[cx-320,cx-285],[cx+285,cx+320]].forEach(([x1,x2])=>{
+    const dr=x1<cx?1:-1;
+    h+=`<path d="M${x1},${base-5} L${x2},${base-5}" fill="none" stroke="#f4a261" stroke-width="2" opacity=".8"/>`;
+    h+=`<polygon points="${x2},${base-5} ${x2-dr*8},${base-9} ${x2-dr*8},${base-1}" fill="#f4a261" opacity=".8"/>`;
+  });
+  h+=`<text x="${cx}" y="${base+14}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">← Typical diameter 500–800 km →</text>`;
+  s.innerHTML=h;
+}
+
+function drawThunder(){
+  const s=document.getElementById('thunder-svg');if(!s)return;
+  const W=800,H=280,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const gy=H-20;
+  h+=`<line x1="10" y1="${gy}" x2="${W-10}" y2="${gy}" stroke="${m}" stroke-width="1.5"/>`;
+  [{x:20,w:170,top:H*.35,col:'#52b788',title:'SINGLE-CELL',sub:'Air-mass 30–60 min'},
+   {x:200,w:200,top:H*.2,col:'#f4a261',title:'MULTICELL',sub:'Moderate shear, hours'},
+   {x:410,w:200,top:H*.07,col:'#e84545',title:'SUPERCELL',sub:'Strong shear, 2–6 hrs',rotate:true},
+   {x:620,w:160,top:H*.10,col:'#3b82f6',title:'SQUALL LINE',sub:'MCS 100–2,000 km'}
+  ].forEach(c=>{
+    h+=`<path d="M${c.x},${gy} Q${c.x},${gy-60} ${c.x+c.w*.2},${c.top+40} Q${c.x+c.w*.5},${c.top} ${c.x+c.w*.8},${c.top+40} Q${c.x+c.w},${gy-60} ${c.x+c.w},${gy}" fill="${c.col}" opacity="${d?.14:.11}" stroke="${c.col}" stroke-width="1.5"/>`;
+    if(c.top<H*.15) h+=`<path d="M${c.x+c.w*.1},${c.top+28} Q${c.x+c.w*.5},${c.top-12} ${c.x+c.w+35},${c.top+18}" fill="none" stroke="${c.col}" stroke-width="2" stroke-dasharray="8 4" opacity=".6"/>`;
+    const ux=c.x+c.w*.35;
+    h+=`<line x1="${ux}" y1="${gy-5}" x2="${ux}" y2="${c.top+50}" stroke="${c.col}" stroke-width="2.5" opacity=".7"/>`;
+    h+=`<polygon points="${ux},${c.top+46} ${ux-5},${c.top+56} ${ux+5},${c.top+56}" fill="${c.col}" opacity=".7"/>`;
+    const dx=c.x+c.w*.65;
+    h+=`<line x1="${dx}" y1="${c.top+70}" x2="${dx}" y2="${gy-5}" stroke="${m}" stroke-width="2" opacity=".35" stroke-dasharray="5 3"/>`;
+    h+=`<polygon points="${dx},${gy-5} ${dx-4},${gy-14} ${dx+4},${gy-14}" fill="${m}" opacity=".35"/>`;
+    if(c.rotate) h+=`<text x="${c.x+c.w*.5}" y="${c.top+72}" fill="${c.col}" font-size="24" text-anchor="middle" opacity=".5">↺</text>`;
+    h+=`<text x="${c.x+c.w*.5}" y="${c.top-9}" fill="${c.col}" font-size="9.5" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">${c.title}</text>`;
+    h+=`<text x="${c.x+c.w*.5}" y="${gy+14}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${c.sub}</text>`;
+    if(c.col==='#e84545'){const sx=c.x+100,sy=H*.45;h+=`<polyline points="${sx},${sy} ${sx-8},${sy+20} ${sx+4},${sy+20} ${sx-6},${sy+40}" fill="none" stroke="#ffd60a" stroke-width="2.5" opacity=".8"/>`;}
+  });
+  s.innerHTML=h;
+}
+
+function drawTornado(){
+  const s=document.getElementById('tornado-svg');if(!s)return;
+  const W=800,H=280,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const gy=H-15;
+  h+=`<line x1="10" y1="${gy}" x2="${W-10}" y2="${gy}" stroke="${m}" stroke-width="1.5"/>`;
+  // Supercell cloud left panel
+  h+=`<text x="220" y="16" fill="#e84545" font-size="9.5" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">SUPERCELL CROSS-SECTION</text>`;
+  h+=`<path d="M40,${gy} Q40,${gy-80} 80,${H*.12} Q220,${H*.04} ${W*.5-30},${H*.12} Q${W*.5},${gy-80} ${W*.5},${gy}" fill="${d?'rgba(232,69,69,.12)':'rgba(200,50,50,.1)'}" stroke="#e84545" stroke-width="1.5"/>`;
+  h+=`<path d="M80,${H*.12} Q220,${H*.02} ${W*.5+60},${H*.10}" fill="none" stroke="#e84545" stroke-width="2" stroke-dasharray="8 4" opacity=".6"/>`;
+  // Updraft
+  h+=`<line x1="220" y1="${gy-5}" x2="220" y2="${H*.15}" stroke="#f97316" stroke-width="3" opacity=".8"/>`;
+  h+=`<polygon points="220,${H*.15} 215,${H*.15+12} 225,${H*.15+12}" fill="#f97316" opacity=".8"/>`;
+  h+=`<text x="236" y="${H*.28}" fill="#f97316" font-size="8" font-family="DM Mono,monospace">Updraft 50–80 m/s</text>`;
+  // Mesocyclone
+  h+=`<circle cx="200" cy="${H*.45}" r="40" fill="none" stroke="#9b59b6" stroke-width="2" stroke-dasharray="6 4" opacity=".75"/>`;
+  h+=`<text x="200" y="${H*.45+4}" fill="#9b59b6" font-size="22" text-anchor="middle" opacity=".7">↺</text>`;
+  h+=`<text x="200" y="${H*.45+22}" fill="#9b59b6" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Mesocyclone</text>`;
+  // Wall cloud & funnel
+  h+=`<ellipse cx="200" cy="${gy-35}" rx="35" ry="18" fill="${d?'rgba(155,89,182,.2)':'rgba(130,60,180,.15)'}" stroke="#9b59b6" stroke-width="1.5"/>`;
+  h+=`<text x="200" y="${gy-32}" fill="#9b59b6" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Wall cloud</text>`;
+  h+=`<path d="M185,${gy-17} Q192,${gy-8} 197,${gy}" fill="${d?'rgba(155,89,182,.3)':'rgba(130,60,180,.2)'}" stroke="#9b59b6" stroke-width="2"/>`;
+  h+=`<path d="M215,${gy-17} Q208,${gy-8} 203,${gy}" fill="${d?'rgba(155,89,182,.3)':'rgba(130,60,180,.2)'}" stroke="#9b59b6" stroke-width="2"/>`;
+  h+=`<text x="200" y="${gy+14}" fill="#9b59b6" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">TORNADO</text>`;
+  // Wind shear indicators
+  [[70,gy-8,'→',10],[70,gy-45,'→→',13],[70,gy-85,'→→→',17],[70,gy-125,'→→→→',22]].forEach(([x,y,sym,fs])=>
+    h+=`<text x="${x}" y="${y}" fill="#52b788" font-size="${fs}" font-family="DM Mono,monospace" opacity=".5">${sym}</text>`);
+  h+=`<text x="55" y="${gy+14}" fill="#52b788" font-size="7.5" font-family="DM Mono,monospace">Wind shear ↑</text>`;
+  // Divider
+  h+=`<line x1="${W*.52}" y1="20" x2="${W*.52}" y2="${H-8}" stroke="${d?'rgba(255,255,255,.08)':'rgba(0,0,0,.07)'}" stroke-width="1" stroke-dasharray="6 4"/>`;
+  // Right: US geography
+  h+=`<text x="${W*.76}" y="16" fill="#f97316" font-size="9.5" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">US TORNADO HOT SPOTS</text>`;
+  h+=`<path d="M${W*.55+10},${H*.2} Q${W*.55+80},${H*.15} ${W*.55+180},${H*.18} Q${W*.55+240},${H*.3} ${W*.55+230},${H*.72} Q${W*.55+150},${H*.82} ${W*.55+60},${H*.84} Q${W*.55+10},${H*.76} ${W*.55+10},${H*.2}" fill="${d?'rgba(30,60,40,.3)':'rgba(160,200,150,.3)'}" stroke="${d?'rgba(82,183,136,.4)':'rgba(60,140,80,.5)'}" stroke-width="1.5"/>`;
+  const rx=W*.55;
+  h+=`<path d="M${rx+85},${H*.25} Q${rx+110},${H*.35} ${rx+120},${H*.57} Q${rx+132},${H*.68} ${rx+148},${H*.72} Q${rx+162},${H*.67} ${rx+156},${H*.46} Q${rx+146},${H*.3} ${rx+116},${H*.22} Z" fill="${d?'rgba(249,115,22,.15)':'rgba(249,115,22,.12)'}" stroke="#f97316" stroke-width="1.5"/>`;
+  h+=`<text x="${rx+120}" y="${H*.46}" fill="#f97316" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Tornado Alley</text>`;
+  h+=`<path d="M${rx+120},${H*.57} Q${rx+152},${H*.67} ${rx+190},${H*.72} Q${rx+210},${H*.66} ${rx+198},${H*.58} Q${rx+172},${H*.5} ${rx+142},${H*.53} Z" fill="${d?'rgba(220,38,38,.1)':'rgba(220,38,38,.08)'}" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="5 3"/>`;
+  h+=`<text x="${rx+173}" y="${H*.64}" fill="#dc2626" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Dixie Alley</text>`;
+  h+=`<text x="${rx+120}" y="${gy-18}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">~1,200/yr · 75% of global total</text>`;
+  s.innerHTML=h;
+}
+
+function drawFog(){
+  const s=document.getElementById('fog-svg');if(!s)return;
+  const W=800,H=260,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const gy=H-15;
+  h+=`<line x1="10" y1="${gy}" x2="${W-10}" y2="${gy}" stroke="${m}" stroke-width="1.5"/>`;
+  [{x:15,w:180,col:'#78909c',title:'RADIATION',sub:'Clear night, calm\nvalley floor',base:gy-55},
+   {x:205,w:178,col:'#3b82f6',title:'ADVECTION',sub:'Warm air over\ncold sea/land',base:gy-70},
+   {x:393,w:178,col:'#52b788',title:'UPSLOPE',sub:'Moist air rises\nto LCL altitude',base:gy-90},
+   {x:581,w:178,col:'#f4a261',title:'STEAM / EVAP',sub:'Cold air over\nwarm water',base:gy-40}
+  ].forEach(tp=>{
+    if(tp.title==='UPSLOPE') h+=`<polygon points="${tp.x},${gy} ${tp.x+tp.w},${gy-100} ${tp.x+tp.w},${gy}" fill="${d?'rgba(82,183,136,.08)':'rgba(60,140,80,.06)'}" stroke="#52b788" stroke-width="1" opacity=".5"/>`;
+    if(tp.title==='STEAM / EVAP'){h+=`<rect x="${tp.x}" y="${gy-14}" width="${tp.w}" height="16" fill="${d?'rgba(0,100,180,.25)':'rgba(0,120,220,.18)'}" opacity=".7"/>`;h+=`<text x="${tp.x+tp.w/2}" y="${gy+12}" fill="#00b4d8" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Warm water</text>`;}
+    h+=`<rect x="${tp.x+5}" y="${tp.base}" width="${tp.w-10}" height="${gy-tp.base-14}" fill="${tp.col}" opacity="${d?.13:.09}" rx="3"/>`;
+    for(let i=0;i<5;i++){const fx=tp.x+14+i*((tp.w-18)/4),fy=tp.base+10+i%2*10;h+=`<ellipse cx="${fx}" cy="${fy}" rx="17" ry="7" fill="${tp.col}" opacity="${d?.1:.07}"/>`;}
+    h+=`<text x="${tp.x+tp.w/2}" y="${tp.base-9}" fill="${tp.col}" font-size="9.5" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">${tp.title}</text>`;
+    tp.sub.split('\n').forEach((line,i)=>h+=`<text x="${tp.x+6}" y="${tp.base+20+i*12}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace">${line}</text>`);
+    h+=`<text x="${tp.x+tp.w/2}" y="${gy-5}" fill="${tp.col}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Vis &lt;1 km</text>`;
+  });
+  // Subsidence inversion callout
+  const iy=H*.32;
+  h+=`<line x1="${W-175}" y1="${iy}" x2="${W-8}" y2="${iy}" stroke="#ffd60a" stroke-width="1.5" stroke-dasharray="8 4" opacity=".6"/>`;
+  h+=`<text x="${W-92}" y="${iy-5}" fill="#ffd60a" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Subsidence Inversion lid</text>`;
+  h+=`<rect x="${W-175}" y="${iy+4}" width="167" height="${gy-iy-20}" fill="${d?'rgba(255,214,10,.05)':'rgba(200,160,0,.04)'}" rx="2"/>`;
+  h+=`<text x="${W-92}" y="${iy+24}" fill="#ffd60a" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Pollution / fog</text>`;
+  h+=`<text x="${W-92}" y="${iy+36}" fill="#ffd60a" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">trapped below</text>`;
+  s.innerHTML=h;
+}
+
+function drawStrato(){
+  const s=document.getElementById('strato-svg');if(!s)return;
+  const W=800,H=300,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const pL=55,pR=30,pT=20,pB=35,cW=W-pL-pR,cH=H-pT-pB;
+  const scA=a=>pT+cH-(a/55)*cH;
+  [[0,12,'#00b4d8','Troposphere',.06],[12,50,'#8b5cf6','Stratosphere',.07]].forEach(([a0,a1,col,lbl,op])=>{
+    h+=`<rect x="${pL}" y="${scA(a1)}" width="${cW}" height="${scA(a0)-scA(a1)}" fill="${col}" opacity="${op}"/>`;
+    h+=`<text x="${pL+cW-5}" y="${scA((a0+a1)/2)+4}" fill="${col}" font-size="9" font-family="Bebas Neue,sans-serif" text-anchor="end" letter-spacing=".08em" opacity=".5">${lbl}</text>`;
+  });
+  [0,10,20,30,40,50].forEach(alt=>{
+    const y=scA(alt);
+    h+=`<line x1="${pL-4}" y1="${y}" x2="${pL}" y2="${y}" stroke="${m}" stroke-width="1"/>`;
+    h+=`<text x="${pL-7}" y="${y+4}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">${alt}</text>`;
+    if(alt>0) h+=`<line x1="${pL}" y1="${y}" x2="${pL+cW}" y2="${y}" stroke="${d?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)'}" stroke-width="1"/>`;
+  });
+  h+=`<text x="14" y="${pT+cH/2+4}" fill="${m}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle" transform="rotate(-90,14,${pT+cH/2})">Altitude (km)</text>`;
+  h+=`<line x1="${pL}" y1="${scA(12)}" x2="${pL+cW}" y2="${scA(12)}" stroke="${d?'rgba(255,255,255,.2)':'rgba(0,0,0,.15)'}" stroke-width="1.5" stroke-dasharray="8 5"/>`;
+  h+=`<text x="${pL+10}" y="${scA(12)-5}" fill="${m}" font-size="8" font-family="DM Mono,monospace">Tropopause ~12 km</text>`;
+  h+=`<line x1="${pL}" y1="${scA(50)}" x2="${pL+cW}" y2="${scA(50)}" stroke="${d?'rgba(255,255,255,.1)':'rgba(0,0,0,.08)'}" stroke-width="1" stroke-dasharray="10 6"/>`;
+  // Polar Vortex
+  const pvY=scA(35),pvH=scA(15)-scA(35);
+  h+=`<rect x="${pL}" y="${pvY}" width="${cW*.34}" height="${pvH}" fill="${d?'rgba(139,92,246,.12)':'rgba(130,60,180,.08)'}" rx="3"/>`;
+  h+=`<text x="${pL+cW*.17}" y="${pvY+pvH/2+3}" fill="#8b5cf6" font-size="9" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">POLAR VORTEX</text>`;
+  h+=`<text x="${pL+cW*.17}" y="${pvY+pvH/2+16}" fill="#8b5cf6" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">−70°C / ~15–50 km</text>`;
+  // SSW arrow
+  h+=`<path d="M${pL+cW*.3},${pvY+12} Q${pL+cW*.5},${scA(22)} ${pL+cW*.5},${scA(14)}" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="7 3" opacity=".8"/>`;
+  h+=`<polygon points="${pL+cW*.5},${scA(14)} ${pL+cW*.5-5},${scA(14)+10} ${pL+cW*.5+5},${scA(14)+10}" fill="#dc2626" opacity=".8"/>`;
+  h+=`<text x="${pL+cW*.56}" y="${scA(22)}" fill="#dc2626" font-size="8" font-family="DM Mono,monospace">SSW disruption</text>`;
+  h+=`<text x="${pL+cW*.56}" y="${scA(22)+11}" fill="#dc2626" font-size="8" font-family="DM Mono,monospace">descends 2–6 wks →</text>`;
+  // QBO
+  const qbY=scA(30),qbH=scA(20)-scA(30);
+  h+=`<rect x="${pL+cW*.6}" y="${qbY}" width="${cW*.38}" height="${qbH}" fill="${d?'rgba(0,180,216,.1)':'rgba(0,150,200,.07)'}" rx="3"/>`;
+  h+=`<text x="${pL+cW*.79}" y="${qbY+qbH/2-2}" fill="#00b4d8" font-size="8.5" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">QBO</text>`;
+  h+=`<text x="${pL+cW*.79}" y="${qbY+qbH/2+11}" fill="#00b4d8" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">~28 month cycle</text>`;
+  // Ozone
+  const ozY=scA(30),ozB=scA(15);
+  h+=`<rect x="${pL+cW*.36}" y="${ozY}" width="${cW*.22}" height="${ozB-ozY}" fill="${d?'rgba(82,183,136,.15)':'rgba(60,160,80,.1)'}" rx="3"/>`;
+  h+=`<text x="${pL+cW*.47}" y="${(ozY+ozB)/2+3}" fill="#52b788" font-size="9" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".05em">OZONE</text>`;
+  h+=`<text x="${pL+cW*.47}" y="${(ozY+ozB)/2+16}" fill="#52b788" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">15–35 km</text>`;
+  // Polar jet troposphere
+  h+=`<ellipse cx="${pL+cW*.45}" cy="${scA(11)}" rx="${cW*.06}" ry="12" fill="${d?'rgba(255,214,10,.1)':'rgba(180,130,0,.08)'}" stroke="#ffd60a" stroke-width="1.5"/>`;
+  h+=`<text x="${pL+cW*.53}" y="${scA(11)+4}" fill="#ffd60a" font-size="8" font-family="DM Mono,monospace">Polar Jet (trop.)</text>`;
+  h+=`<line x1="${pL}" y1="${pT+cH}" x2="${pL+cW}" y2="${pT+cH}" stroke="${m}" stroke-width="1.5"/>`;
+  h+=`<line x1="${pL}" y1="${pT}" x2="${pL}" y2="${pT+cH}" stroke="${d?'rgba(255,255,255,.12)':'rgba(0,0,0,.1)'}" stroke-width="1"/>`;
+  s.innerHTML=h;
+}
+
+function drawAtriver(){
+  const s=document.getElementById('atriver-svg');if(!s)return;
+  const W=800,H=270,d=D(),m=MC();
+  let h=`<rect width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  h+=`<rect x="0" y="${H*.42}" width="${W*.34}" height="${H*.58}" fill="${d?'#04111e':'#c0daf5'}" opacity=".7"/>`;
+  h+=`<text x="${W*.17}" y="${H*.83}" fill="#00b4d8" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Subtropical Pacific</text>`;
+  h+=`<text x="${W*.17}" y="${H*.83+12}" fill="#00b4d8" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">Moisture Source</text>`;
+  h+=`<polygon points="${W*.7},${H} ${W*.72},${H*.25} ${W*.74},${H*.09} ${W*.76},${H*.28} ${W*.78},${H*.14} ${W*.80},${H*.30} ${W},${H}" fill="${d?'#132438':'#a0b090'}" opacity=".8"/>`;
+  h+=`<text x="${W*.76}" y="${H*.07}" fill="${m}" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle">Sierra Nevada</text>`;
+  h+=`<rect x="${W*.65}" y="0" width="8" height="${H}" fill="${d?'#1a3a30':'#a0b090'}" opacity=".5"/>`;
+  h+=`<text x="${W*.63}" y="${H*.55}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">Coast</text>`;
+  const at=H*.14,ab=H*.56;
+  h+=`<path d="M0,${at} Q${W*.3},${at-10} ${W*.65},${at} L${W*.72},${at+20} Q${W*.35},${ab} 0,${ab} Z" fill="${d?'rgba(59,130,246,.18)':'rgba(59,130,246,.14)'}" stroke="#3b82f6" stroke-width="2"/>`;
+  for(let i=0;i<5;i++){const x1=W*.05+i*W*.11,y1=at+15+i*5;h+=`<path d="M${x1},${y1} L${x1+W*.09},${y1}" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="8 4" opacity=".7"/>`;h+=`<polygon points="${x1+W*.09},${y1} ${x1+W*.09-8},${y1-4} ${x1+W*.09-8},${y1+4}" fill="#3b82f6" opacity=".7"/>`;}
+  h+=`<text x="${W*.35}" y="${(at+ab)/2+4}" fill="#3b82f6" font-size="10" font-family="Bebas Neue,sans-serif" text-anchor="middle" letter-spacing=".06em">ATMOSPHERIC RIVER</text>`;
+  h+=`<text x="${W*.35}" y="${(at+ab)/2+18}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">IVT: 500–1,200 kg/m/s  ·  Width: 400–600 km</text>`;
+  h+=`<path d="M${W*.67},${ab} Q${W*.69},${H*.3} ${W*.73},${H*.11}" fill="none" stroke="#52b788" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<polygon points="${W*.73},${H*.11} ${W*.73-5},${H*.11+10} ${W*.73+5},${H*.11+10}" fill="#52b788" opacity=".8"/>`;
+  h+=`<text x="${W*.85}" y="${H*.24}" fill="#52b788" font-size="8.5" font-family="DM Mono,monospace">Orographic lift</text>`;
+  h+=`<text x="${W*.85}" y="${H*.24+12}" fill="#52b788" font-size="8.5" font-family="DM Mono,monospace">50–200 mm/hr</text>`;
+  h+=`<text x="${W*.05}" y="${at-8}" fill="#3b82f6" font-size="8.5" font-family="DM Mono,monospace">Origin: tropical/subtropical moisture (Pineapple Express)</text>`;
+  h+=`<text x="${W*.32}" y="${H-5}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">← 2,000–4,000 km length →</text>`;
+  s.innerHTML=h;
+}
+
+// MINI MAPS
+function drawBeltsMini(){
+  const s=document.getElementById('belts-mini');if(!s)return;
+  let h=worldBase();const W=900,H=450;
+  [[0,.08,'#90e0ef','Polar H'],[.08,.22,'#52b788','Subpolar L'],[.22,.38,'#f4a261','Subtrop H'],[.38,.62,'#ffd60a','ITCZ'],[.62,.78,'#f4a261','Subtrop H'],[.78,.92,'#52b788','Subpolar L'],[.92,1,'#90e0ef','Polar H']].forEach(([y1,y2,c,l])=>{
+    h+=`<rect x="0" y="${y1*H}" width="${W}" height="${(y2-y1)*H}" fill="${c}" opacity="${D()?.07:.05}"/>`;
+    h+=`<text x="8" y="${(y1+y2)/2*H+4}" fill="${c}" font-size="8" font-family="DM Mono,monospace" opacity=".8">${l}</text>`;
+  });
+  h+=`<line x1="0" y1="${H*.5}" x2="${W}" y2="${H*.5}" stroke="#ffd60a" stroke-width="2" stroke-dasharray="10 6" opacity=".6"/>`;
+  s.innerHTML=h;
+}
+function drawWindsMini(){
+  const s=document.getElementById('winds-mini');if(!s)return;
+  let h=worldBase();const W=900,H=450;
+  [[.08,'#90e0ef','←','Polar E.'],[.27,'#52b788','→','Westerlies'],[.43,'#ff9f1c','↙','NE Trades'],[.5,'#ffd60a','·','Doldrums'],[.57,'#ff9f1c','↖','SE Trades'],[.73,'#52b788','→','Westerlies'],[.92,'#90e0ef','←','Polar E.']].forEach(([yf,col,dir,lbl])=>{
+    const y=yf*H;
+    for(let x=50;x<W-20;x+=80)h+=`<text x="${x}" y="${y+5}" fill="${col}" font-size="13" font-family="DM Mono,monospace" text-anchor="middle" opacity=".33">${dir}</text>`;
+    h+=`<text x="8" y="${y+4}" fill="${col}" font-size="8" font-family="DM Mono,monospace" opacity=".8">${lbl}</text>`;
+  });
+  s.innerHTML=h;
+}
+function drawCyclonesMini(){
+  const s=document.getElementById('cyclones-mini');if(!s)return;
+  let h=worldBase();const W=900,H=450;
+  [{cx:160,cy:232,r:20,lbl:'E.Pac'},{cx:280,cy:220,r:22,lbl:'Gulf'},{cx:365,cy:215,r:18,lbl:'Carib'},{cx:540,cy:230,r:18,lbl:'N.Indian'},{cx:625,cy:228,r:15,lbl:'Bay B.'},{cx:700,cy:215,r:28,lbl:'W.Pac'},{cx:548,cy:320,r:18,lbl:'S.Indian'},{cx:718,cy:350,r:15,lbl:'S.Pac'}].forEach(b=>{
+    h+=`<circle cx="${b.cx}" cy="${b.cy}" r="${b.r}" fill="rgba(220,38,38,.18)" stroke="#dc2626" stroke-width="1.5" opacity=".8"/>`;
+    h+=`<text x="${b.cx}" y="${b.cy+b.r+12}" fill="#dc2626" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">${b.lbl}</text>`;
+  });
+  h+=`<path d="M0,200 Q200,180 400,162 Q600,142 760,125" fill="none" stroke="#52b788" stroke-width="2.5" stroke-dasharray="10 5" opacity=".6"/>`;
+  h+=`<path d="M0,340 Q200,322 400,310 Q620,300 900,290" fill="none" stroke="#52b788" stroke-width="2.5" stroke-dasharray="10 5" opacity=".6"/>`;
+  h+=`<ellipse cx="200" cy="58" rx="80" ry="24" fill="rgba(0,180,216,.08)" stroke="#00b4d8" stroke-width="1" stroke-dasharray="5 3" opacity=".6"/>`;
+  h+=`<text x="200" y="62" fill="#00b4d8" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Polar Lows</text>`;
+  s.innerHTML=h;
+}
+function drawThunderMini(){
+  const s=document.getElementById('thunder-mini');if(!s)return;
+  let h=worldBase();
+  [{cx:282,cy:242,r:42,col:'#ffd60a',lbl:'Amazon'},{cx:422,cy:235,r:36,col:'#ffd60a',lbl:'Congo'},{cx:268,cy:180,r:28,col:'#f4a261',lbl:'SE USA'},{cx:560,cy:228,r:30,col:'#ffd60a',lbl:'Bay of Beng.'},{cx:682,cy:213,r:25,col:'#f4a261',lbl:'Philippines'},{cx:450,cy:180,r:22,col:'#f4a261',lbl:'Sahel'},{cx:713,cy:362,r:20,col:'#52b788',lbl:'N. Aus.'}].forEach(sp=>{
+    h+=`<circle cx="${sp.cx}" cy="${sp.cy}" r="${sp.r}" fill="${sp.col}" opacity="${D()?.17:.13}" stroke="${sp.col}" stroke-width="1.5"/>`;
+    h+=`<text x="${sp.cx}" y="${sp.cy+4}" fill="${sp.col}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${sp.lbl}</text>`;
+  });
+  h+=`<text x="12" y="18" fill="${TC()}" font-size="8.5" font-family="DM Mono,monospace">Lightning density — schematic (TRMM-based)</text>`;
+  s.innerHTML=h;
+}
+function drawFogMini(){
+  const s=document.getElementById('fog-mini');if(!s)return;
+  let h=worldBase();
+  [{cx:85,cy:192,rx:50,ry:24,col:'#78909c',lbl:'Grand Banks'},{cx:85,cy:232,rx:40,ry:20,col:'#78909c',lbl:'SF Bay'},{cx:570,cy:300,rx:44,ry:22,col:'#78909c',lbl:'Benguela'},{cx:400,cy:145,rx:42,ry:18,col:'#78909c',lbl:'NW Europe'}].forEach(z=>{
+    h+=`<ellipse cx="${z.cx}" cy="${z.cy}" rx="${z.rx}" ry="${z.ry}" fill="${z.col}" opacity="${D()?.18:.14}" stroke="${z.col}" stroke-width="1"/>`;
+    h+=`<text x="${z.cx}" y="${z.cy+4}" fill="${z.col}" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">${z.lbl}</text>`;
+  });
+  [{cx:260,cy:148,rx:70,ry:22,col:'#f4a261',lbl:'Bermuda High'},{cx:85,cy:148,rx:55,ry:20,col:'#f4a261',lbl:'NE Pac High'},{cx:432,cy:288,rx:60,ry:22,col:'#f4a261',lbl:'SE Atl High'},{cx:720,cy:362,rx:55,ry:20,col:'#f4a261',lbl:'Aus High'}].forEach(z=>{
+    h+=`<ellipse cx="${z.cx}" cy="${z.cy}" rx="${z.rx}" ry="${z.ry}" fill="${z.col}" opacity="${D()?.1:.07}" stroke="${z.col}" stroke-width="1" stroke-dasharray="5 3"/>`;
+    h+=`<text x="${z.cx}" y="${z.cy+4}" fill="${z.col}" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">${z.lbl}</text>`;
+  });
+  s.innerHTML=h;
+}
+function drawStratoMini(){
+  const s=document.getElementById('strato-mini');if(!s)return;
+  const d=D(),W=900,H=450,m=MC();
+  let h=`<rect x="0" y="0" width="${W}" height="${H}" fill="${d?'#050c18':'#dce8f5'}"/>`;
+  const tH=H*.4,sT=H*.05;
+  h+=`<rect x="0" y="${H-tH}" width="${W}" height="${tH}" fill="${d?'rgba(0,180,216,.06)':'rgba(0,150,200,.05)'}"/>`;
+  h+=`<rect x="0" y="${sT}" width="${W}" height="${H-tH-sT}" fill="${d?'rgba(139,92,246,.07)':'rgba(130,60,180,.05)'}"/>`;
+  h+=`<line x1="0" y1="${H-tH}" x2="${W}" y2="${H-tH}" stroke="${d?'rgba(255,255,255,.15)':'rgba(0,0,0,.12)'}" stroke-width="1.5" stroke-dasharray="8 5"/>`;
+  h+=`<text x="${W-10}" y="${H-tH-5}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">Tropopause</text>`;
+  h+=`<circle cx="${W*.12}" cy="${H*.18}" r="85" fill="${d?'rgba(139,92,246,.12)':'rgba(130,60,180,.08)'}" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="8 4"/>`;
+  h+=`<text x="${W*.12}" y="${H*.18+4}" fill="#8b5cf6" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Arctic PV</text>`;
+  h+=`<circle cx="${W*.12}" cy="${H*.85}" r="80" fill="${d?'rgba(139,92,246,.12)':'rgba(130,60,180,.08)'}" stroke="#8b5cf6" stroke-width="2"/>`;
+  h+=`<text x="${W*.12}" y="${H*.85+4}" fill="#8b5cf6" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Antarctic PV</text>`;
+  h+=`<path d="M${W*.3},${H*.25} Q${W*.5},${H*.4} ${W*.45},${H*.55}" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 3" opacity=".75"/>`;
+  h+=`<polygon points="${W*.45},${H*.55} ${W*.45-5},${H*.55-8} ${W*.45+5},${H*.55-8}" fill="#dc2626" opacity=".75"/>`;
+  h+=`<text x="${W*.52}" y="${H*.42}" fill="#dc2626" font-size="8" font-family="DM Mono,monospace">SSW signal</text>`;
+  h+=`<text x="${W*.52}" y="${H*.42+11}" fill="#dc2626" font-size="8" font-family="DM Mono,monospace">descends</text>`;
+  h+=`<rect x="${W*.35}" y="${H*.12}" width="${W*.3}" height="${H*.2}" fill="${d?'rgba(0,180,216,.1)':'rgba(0,150,200,.08)'}" stroke="#00b4d8" stroke-width="1.5" rx="4"/>`;
+  h+=`<text x="${W*.5}" y="${H*.21+4}" fill="#00b4d8" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">QBO (20–30 km)</text>`;
+  h+=`<rect x="${W*.35}" y="${H*.3}" width="${W*.3}" height="${H*.15}" fill="${d?'rgba(82,183,136,.12)':'rgba(60,160,80,.1)'}" stroke="#52b788" stroke-width="1" rx="3"/>`;
+  h+=`<text x="${W*.5}" y="${H*.37+4}" fill="#52b788" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">Ozone Layer</text>`;
+  h+=`<text x="${W*.75}" y="${H*.22}" fill="${m}" font-size="8.5" font-family="DM Mono,monospace">Stratosphere</text>`;
+  h+=`<text x="${W*.75}" y="${H*.75}" fill="${m}" font-size="8.5" font-family="DM Mono,monospace">Troposphere</text>`;
+  s.innerHTML=h;
+}
+function drawAtriverMini(){
+  const s=document.getElementById('atriver-mini');if(!s)return;
+  let h=worldBase();const W=900,H=450;
+  [{pts:'M85,200 Q120,190 200,200 Q250,205 272,215',col:'#3b82f6'},{pts:'M430,200 Q470,190 530,196 Q560,200 572,212',col:'#3b82f6'},{pts:'M832,262 Q856,252 882,256',col:'#3b82f6'},{pts:'M430,312 Q462,306 502,308 Q522,310 538,315',col:'#3b82f6'},{pts:'M82,318 Q106,312 140,314',col:'#3b82f6'}].forEach(c=>{
+    h+=`<path d="${c.pts}" fill="none" stroke="${c.col}" stroke-width="12" opacity="${D()?.2:.16}" stroke-linecap="round"/>`;
+    h+=`<path d="${c.pts}" fill="none" stroke="${c.col}" stroke-width="2.5" opacity=".7" stroke-linecap="round"/>`;
+  });
+  [{cx:330,cy:150,r:20,lbl:'NW Atlantic'},{cx:720,cy:170,r:18,lbl:'NW Pacific'},{cx:370,cy:342,r:16,lbl:'S. Atlantic'}].forEach(b=>{
+    h+=`<circle cx="${b.cx}" cy="${b.cy}" r="${b.r}" fill="rgba(249,115,22,.15)" stroke="#f97316" stroke-width="1.5"/>`;
+    h+=`<text x="${b.cx}" y="${b.cy+b.r+12}" fill="#f97316" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">${b.lbl}</text>`;
+  });
+  [{cx:100,cy:205,lbl:'CA/PNW'},{cx:455,cy:140,lbl:'UK/Norway'},{cx:840,cy:260,lbl:'NZ/SE Aus'}].forEach(z=>{
+    h+=`<circle cx="${z.cx}" cy="${z.cy}" r="8" fill="#52b788" opacity=".7"/>`;
+    h+=`<text x="${z.cx}" y="${z.cy+18}" fill="#52b788" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">${z.lbl}</text>`;
+  });
+  s.innerHTML=h;
+}
+
+function redrawAll(){
+  // Aliases for currents-style draw functions
+  const dark=D, tc=TC, mc=MC;
+  const landFill=()=>D()?'#132438':'#a8c8a0';
+
+  drawBelts();drawWinds();drawAirmass();drawFronts();drawCyclone();
+  drawHurricane();drawThunder();drawTornado();drawFog();drawStrato();drawAtriver();
+  drawBeltsMini();drawWindsMini();drawCyclonesMini();drawThunderMini();
+  drawFogMini();drawStratoMini();drawAtriverMini();
+  drawCells();drawHadleyExpand();drawJets();drawCellsMini();drawJetsMini();
+}
+
+function drawCells(){
+  const s=document.getElementById('cells-svg');if(!s)return;
+  const W=800,H=320,d=D();
+  const t=TC(),m=MC();
+  let h=`<rect x="0" y="0" width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const eY=H*0.92,tropoY=H*0.12,midY=(eY+tropoY)/2;
+  // Cell boundaries at bottom
+  const bds=[{x:0,w:W,c:d?'#04111e':'#c8ddf0'}];
+  // Hadley NH (center to 30°)
+  const hR=W*0.37,hL=W*0.5;
+  [{y1:tropoY,y2:eY,x1:hL,x2:hR,col:'#e84545'},{y1:tropoY,y2:eY,x1:W-hR,x2:W-hL,col:'#e84545'}].forEach(b=>{
+    h+=`<rect x="${Math.min(b.x1,b.x2)}" y="${b.y1}" width="${Math.abs(b.x2-b.x1)}" height="${b.y2-b.y1}" fill="${b.col}" opacity="${d?.06:.04}" rx="0"/>`;
+  });
+  // Equator line
+  h+=`<line x1="0" y1="${eY}" x2="${W}" y2="${eY}" stroke="${d?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)'}" stroke-width="1.5" stroke-dasharray="10 6"/>`;
+  h+=`<text x="${W/2}" y="${eY+13}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Equator</text>`;
+  // Tropopause
+  h+=`<line x1="0" y1="${tropoY}" x2="${W}" y2="${tropoY}" stroke="${d?'rgba(255,255,255,.12)':'rgba(0,0,0,.1)'}" stroke-width="1.5" stroke-dasharray="8 5"/>`;
+  h+=`<text x="${W-8}" y="${tropoY-4}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">Tropopause ~12 km</text>`;
+  // HADLEY CELL NH
+  h+=`<path d="M ${hL},${eY-5} Q ${hL+20},${midY} ${hL+30},${tropoY+15}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M ${hL+30},${tropoY+15} Q ${hL+40},${tropoY+10} ${hR+15},${tropoY+12}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M ${hR+15},${tropoY+12} Q ${hR+5},${midY} ${hR},${eY-5}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M ${hR},${eY-5} Q ${(hR+hL)/2},${eY-10} ${hL},${eY-5}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".8"/>`;
+  // FERREL CELL NH
+  const fR=W*0.17,fL=W*0.37;
+  h+=`<path d="M ${fL},${eY-5} Q ${fL-10},${midY+15} ${fR+10},${tropoY+20}" fill="none" stroke="#52b788" stroke-width="2" stroke-dasharray="8 4" opacity=".75"/>`;
+  h+=`<path d="M ${fR+10},${tropoY+20} Q ${fR},${tropoY+16} ${fR-5},${tropoY+18}" fill="none" stroke="#52b788" stroke-width="2" stroke-dasharray="8 4" opacity=".75"/>`;
+  h+=`<path d="M ${fR-5},${tropoY+18} Q ${fR-12},${midY} ${fR},${eY-5}" fill="none" stroke="#52b788" stroke-width="2" stroke-dasharray="8 4" opacity=".75"/>`;
+  h+=`<path d="M ${fR},${eY-5} Q ${(fR+fL)/2},${eY-8} ${fL},${eY-5}" fill="none" stroke="#52b788" stroke-width="2" stroke-dasharray="8 4" opacity=".75"/>`;
+  // HADLEY SH mirror
+  const shL=W-hL,shR=W-hR;
+  h+=`<path d="M ${shL},${eY-5} Q ${shL-20},${midY} ${shL-30},${tropoY+15}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M ${shL-30},${tropoY+15} Q ${shL-40},${tropoY+10} ${shR-15},${tropoY+12}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M ${shR-15},${tropoY+12} Q ${shR-5},${midY} ${shR},${eY-5}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<path d="M ${shR},${eY-5} Q ${(shR+shL)/2},${eY-10} ${shL},${eY-5}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".8"/>`;
+  // FERREL SH mirror
+  const sfL=W-fL,sfR=W-fR;
+  h+=`<path d="M ${sfL},${eY-5} Q ${sfL+10},${midY+15} ${sfR-10},${tropoY+20}" fill="none" stroke="#52b788" stroke-width="2" stroke-dasharray="8 4" opacity=".75"/>`;
+  h+=`<path d="M ${sfR-10},${tropoY+20} Q ${sfR},${tropoY+16} ${sfR+5},${tropoY+18}" fill="none" stroke="#52b788" stroke-width="2" stroke-dasharray="8 4" opacity=".75"/>`;
+  h+=`<path d="M ${sfR+5},${tropoY+18} Q ${sfR+12},${midY} ${sfR},${eY-5}" fill="none" stroke="#52b788" stroke-width="2" stroke-dasharray="8 4" opacity=".75"/>`;
+  h+=`<path d="M ${sfR},${eY-5} Q ${(sfR+sfL)/2},${eY-8} ${sfL},${eY-5}" fill="none" stroke="#52b788" stroke-width="2" stroke-dasharray="8 4" opacity=".75"/>`;
+  // POLAR NH
+  h+=`<path d="M ${fR},${eY-5} Q ${fR-25},${midY+15} ${fR-50},${tropoY+20}" fill="none" stroke="#90e0ef" stroke-width="1.8" opacity=".7"/>`;
+  h+=`<path d="M ${fR-50},${tropoY+20} Q ${8},${tropoY+16} ${4},${tropoY+18}" fill="none" stroke="#90e0ef" stroke-width="1.8" opacity=".7"/>`;
+  h+=`<path d="M ${4},${tropoY+18} Q ${2},${midY} ${5},${eY-5}" fill="none" stroke="#90e0ef" stroke-width="1.8" opacity=".7"/>`;
+  h+=`<path d="M ${5},${eY-5} Q ${fR/2},${eY-8} ${fR},${eY-5}" fill="none" stroke="#90e0ef" stroke-width="1.8" opacity=".7"/>`;
+  // POLAR SH mirror
+  h+=`<path d="M ${sfR},${eY-5} Q ${sfR+25},${midY+15} ${sfR+50},${tropoY+20}" fill="none" stroke="#90e0ef" stroke-width="1.8" opacity=".7"/>`;
+  h+=`<path d="M ${sfR+50},${tropoY+20} Q ${W-8},${tropoY+16} ${W-4},${tropoY+18}" fill="none" stroke="#90e0ef" stroke-width="1.8" opacity=".7"/>`;
+  h+=`<path d="M ${W-4},${tropoY+18} Q ${W-2},${midY} ${W-5},${eY-5}" fill="none" stroke="#90e0ef" stroke-width="1.8" opacity=".7"/>`;
+  h+=`<path d="M ${W-5},${eY-5} Q ${sfR+(W-sfR)/2},${eY-8} ${sfR},${eY-5}" fill="none" stroke="#90e0ef" stroke-width="1.8" opacity=".7"/>`;
+  // Jet stream markers
+  [{x:fL,label:'Polar Jet\n~60°N'},{x:hR,label:'Subtropical Jet\n~30°N'},{x:shL,label:'Subtropical Jet\n~30°S'},{x:sfL,label:'Polar Jet\n~60°S'}].forEach(j=>{
+    h+=`<ellipse cx="${j.x}" cy="${tropoY+12}" rx="16" ry="7" fill="${d?'rgba(255,214,10,.22)':'rgba(200,160,0,.18)'}" stroke="#ffd60a" stroke-width="1.5"/>`;
+    h+=`<text x="${j.x}" y="${tropoY+16}" fill="#ffd60a" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">JET</text>`;
+  });
+  // ITCZ
+  h+=`<rect x="${hL-20}" y="${eY-22}" width="40" height="13" rx="2" fill="#ffd60a" opacity=".85"/>`;
+  h+=`<text x="${hL}" y="${eY-13}" fill="#000" font-size="8" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">ITCZ</text>`;
+  // Cell labels
+  [{x:(hR+hL)/2,label:'HADLEY',color:'#e84545'},{x:(fR+fL)/2,label:'FERREL',color:'#52b788'},{x:fR/2,label:'POLAR',color:'#90e0ef'},
+   {x:(shR+shL)/2,label:'HADLEY',color:'#e84545'},{x:sfL+(W-sfL)/2,label:'FERREL',color:'#52b788'},{x:sfR+(W-sfR)/2,label:'POLAR',color:'#90e0ef'}].forEach(l=>{
+    h+=`<text x="${l.x}" y="${midY}" fill="${l.color}" font-size="10.5" font-family="Bebas Neue,sans-serif" letter-spacing=".05em" text-anchor="middle" opacity=".8">${l.label}</text>`;
+    h+=`<text x="${l.x}" y="${midY+13}" fill="${l.color}" font-size="7" font-family="DM Mono,monospace" text-anchor="middle" opacity=".7">CELL</text>`;
+  });
+  // Surface wind labels
+  [{x:(hR+hL)/2,label:'NE Trades',color:'#ff9f1c'},{x:(fR+fL)/2,label:'Westerlies',color:'#52b788'},{x:fR/2,label:'Polar E.',color:'#90e0ef'},
+   {x:(shR+shL)/2,label:'SE Trades',color:'#ff9f1c'},{x:sfL+(W-sfL)/2,label:'Westerlies',color:'#52b788'},{x:sfR+(W-sfR)/2,label:'Polar E.',color:'#90e0ef'}].forEach(s=>{
+    h+=`<text x="${s.x}" y="${eY-10}" fill="${s.color}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">${s.label}</text>`;
+  });
+  // Legend
+  [{stroke:'#e84545',label:'Hadley Cell'},{stroke:'#52b788',label:'Ferrel Cell',dash:'6 3'},{stroke:'#90e0ef',label:'Polar Cell'},{stroke:'#ff9f1c',label:'Trade Winds'},{stroke:'#ffd60a',label:'Jet Streams'}].forEach((l,i)=>{
+    const lx=10+i*145,ly=14;
+    h+=`<line x1="${lx}" y1="${ly}" x2="${lx+20}" y2="${ly}" stroke="${l.stroke}" stroke-width="2"${l.dash?` stroke-dasharray="${l.dash}"`:''}/>`;
+    h+=`<text x="${lx+25}" y="${ly+4}" fill="${t}" font-size="7.5" font-family="DM Mono,monospace">${l.label}</text>`;
+  });
+  s.innerHTML=h;
+}
+
+function drawHadleyExpand(){
+  const s=document.getElementById('hadley-expand-svg');if(!s)return;
+  const W=800,H=180,d=D();
+  const t=TC(),m=MC();
+  const padL=50,padR=20,padT=20,padB=35;
+  const cW=W-padL-padR,cH=H-padT-padB;
+  let h=`<rect x="0" y="0" width="${W}" height="${H}" fill="${d?'#0d1b2a':'#f0f6fc'}" rx="3"/>`;
+  const yrs=[1979,1985,1990,1995,2000,2005,2010,2015,2020,2024,2040,2060,2080,2100];
+  const vals=[0,0.08,0.15,0.22,0.28,0.35,0.42,0.48,0.54,0.58,0.8,1.05,1.35,1.6];
+  const xMin=1979,xMax=2100,yMin=-0.1,yMax=1.8;
+  const scX=x=>padL+(x-xMin)/(xMax-xMin)*cW;
+  const scY=y=>padT+cH-(y-yMin)/(yMax-yMin)*cH;
+  [0,0.5,1.0,1.5].forEach(v=>{
+    const y=scY(v);
+    h+=`<line x1="${padL}" y1="${y}" x2="${padL+cW}" y2="${y}" stroke="${d?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)'}" stroke-width="1"/>`;
+    h+=`<text x="${padL-6}" y="${y+4}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">+${v}°</text>`;
+  });
+  const obsYrs=yrs.filter((_,i)=>yrs[i]<=2024);
+  const obsVals=vals.filter((_,i)=>yrs[i]<=2024);
+  const projYrs=yrs.filter((_,i)=>yrs[i]>=2024);
+  const projVals=vals.filter((_,i)=>yrs[i]>=2024);
+  const obsPath='M '+obsYrs.map((y,i)=>`${scX(y)},${scY(obsVals[i])}`).join(' L ');
+  h+=`<path d="${obsPath}" fill="none" stroke="#e84545" stroke-width="2.5" opacity=".9"/>`;
+  const projPath='M '+projYrs.map((y,i)=>`${scX(y)},${scY(projVals[i])}`).join(' L ');
+  h+=`<path d="${projPath}" fill="none" stroke="#e84545" stroke-width="2" stroke-dasharray="8 5" opacity=".7"/>`;
+  const uHi=projYrs.map((y,i)=>`${scX(y)},${scY(projVals[i]+0.25+i*0.05)}`).join(' ');
+  const uLo=projYrs.map((y,i)=>`${scX(y)},${scY(projVals[i]-0.15)}`).reverse().join(' ');
+  h+=`<polygon points="${uHi} ${uLo}" fill="${d?'rgba(232,69,69,.1)':'rgba(232,69,69,.08)'}" stroke="none"/>`;
+  const nowX=scX(2024);
+  h+=`<line x1="${nowX}" y1="${padT}" x2="${nowX}" y2="${padT+cH}" stroke="${d?'rgba(255,255,255,.2)':'rgba(0,0,0,.15)'}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  h+=`<text x="${nowX}" y="${padT+10}" fill="${t}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">Now</text>`;
+  [1979,1990,2000,2010,2024,2050,2075,2100].forEach(yr=>{
+    h+=`<text x="${scX(yr)}" y="${padT+cH+14}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${yr}</text>`;
+  });
+  h+=`<text x="${W/2}" y="${H-4}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Hadley cell poleward edge expansion from 1979 baseline (°lat) — RCP8.5 projection</text>`;
+  s.innerHTML=h;
+}
+
+function drawJets(){
+  const s=document.getElementById('jet-svg');if(!s)return;
+  const W=800,H=300,d=D();
+  const t=TC(),m=MC();
+  let h=`<rect x="0" y="0" width="${W}" height="${H}" fill="${d?'#080f1a':'#eef4fa'}" rx="3"/>`;
+  const alts=[0,2,4,6,8,10,12,14];
+  const maxAlt=16;
+  const scAlt=a=>(H-30)-(a/maxAlt)*(H-50);
+  const padL=50;
+  alts.forEach(a=>{
+    const y=scAlt(a);
+    h+=`<line x1="${padL}" y1="${y}" x2="${W-10}" y2="${y}" stroke="${d?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)'}" stroke-width="1"/>`;
+    h+=`<text x="${padL-6}" y="${y+4}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">${a} km</text>`;
+  });
+  const sY=scAlt(0);
+  h+=`<rect x="${padL}" y="${sY}" width="${W-padL-10}" height="6" fill="${d?'#1a3a5c':'#a8c8e8'}" opacity=".7"/>`;
+  const tropoY=scAlt(12);
+  h+=`<path d="M ${padL},${tropoY-8} Q ${W/2},${tropoY-12} ${W-15},${tropoY+4}" fill="none" stroke="${d?'rgba(255,255,255,.18)':'rgba(0,0,0,.12)'}" stroke-width="1.5" stroke-dasharray="10 6"/>`;
+  h+=`<text x="${W-12}" y="${tropoY}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">Tropopause</text>`;
+  const polJetY=scAlt(10),polJetX=padL+200;
+  h+=`<ellipse cx="${polJetX}" cy="${polJetY}" rx="60" ry="20" fill="${d?'rgba(255,214,10,.2)':'rgba(200,150,0,.2)'}" stroke="#ffd60a" stroke-width="2" opacity=".9"/>`;
+  h+=`<text x="${polJetX}" y="${polJetY+4}" fill="#ffd60a" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Polar Jet</text>`;
+  h+=`<text x="${polJetX}" y="${polJetY+15}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">~50–60°N · 100–400 km/h</text>`;
+  const subJetY=scAlt(12.5),subJetX=padL+500;
+  h+=`<ellipse cx="${subJetX}" cy="${subJetY}" rx="55" ry="16" fill="${d?'rgba(244,162,97,.2)':'rgba(200,120,60,.15)'}" stroke="#f4a261" stroke-width="2" opacity=".9"/>`;
+  h+=`<text x="${subJetX}" y="${subJetY+4}" fill="#f4a261" font-size="9" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Subtropical Jet</text>`;
+  h+=`<text x="${subJetX}" y="${subJetY+14}" fill="${m}" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">~25–35°N · 50–200 km/h</text>`;
+  const windProfile=[{alt:0,speed:.02},{alt:1,speed:.05},{alt:2,speed:.1},{alt:3,speed:.15},{alt:4,speed:.2},{alt:5,speed:.25},{alt:6,speed:.3},{alt:7,speed:.4},{alt:8,speed:.55},{alt:9,speed:.7},{alt:10,speed:1.0},{alt:11,speed:.75},{alt:12,speed:.5},{alt:13,speed:.35},{alt:14,speed:.2}];
+  const spdScale=v=>(v*180);
+  const wPath='M '+windProfile.map(p=>`${padL+spdScale(p.speed)},${scAlt(p.alt)}`).join(' L ');
+  h+=`<path d="${wPath}" fill="none" stroke="#ffd60a" stroke-width="2" opacity=".6"/>`;
+  h+=`<ellipse cx="${padL+80}" cy="${scAlt(13)}" rx="55" ry="24" fill="${d?'rgba(144,224,239,.12)':'rgba(100,180,220,.1)'}" stroke="#90e0ef" stroke-width="1.5" stroke-dasharray="5 4" opacity=".8"/>`;
+  h+=`<text x="${padL+80}" y="${scAlt(13)+4}" fill="#90e0ef" font-size="8.5" font-family="DM Mono,monospace" text-anchor="middle" font-weight="600">Polar Vortex</text>`;
+  h+=`<text x="${padL+80}" y="${scAlt(13)+15}" fill="${m}" font-size="7" font-family="DM Mono,monospace" text-anchor="middle">Stratosphere ~20–30 km</text>`;
+  const rwY=scAlt(10)+2,rwPoints=[];
+  for(let xi=0;xi<=600;xi+=10){const x=padL+xi;rwPoints.push(`${x},${rwY+25*Math.sin(xi/60*Math.PI)}`);}
+  h+=`<polyline points="${rwPoints.join(' ')}" fill="none" stroke="#ffd60a" stroke-width="1.5" stroke-dasharray="4 3" opacity=".5"/>`;
+  h+=`<text x="${padL+310}" y="${rwY-30}" fill="${m}" font-size="8" font-family="DM Mono,monospace">← Rossby wave meander</text>`;
+  h+=`<path d="M ${padL+90},${scAlt(13)} Q ${padL+110},${scAlt(11)} ${padL+140},${scAlt(10)}" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  h+=`<polygon points="${padL+143},${scAlt(10)-3} ${padL+137},${scAlt(10)+3} ${padL+145},${scAlt(10)+5}" fill="#dc2626" opacity=".7"/>`;
+  h+=`<text x="${padL+155}" y="${scAlt(11)+4}" fill="#dc2626" font-size="7.5" font-family="DM Mono,monospace">SSW descent</text>`;
+  [{x:padL+80,label:'90°N'},{x:padL+220,label:'60°N'},{x:padL+380,label:'45°N'},{x:padL+520,label:'30°N'},{x:padL+660,label:'15°N'}].forEach(l=>{
+    h+=`<text x="${l.x}" y="${sY+14}" fill="${m}" font-size="8" font-family="DM Mono,monospace" text-anchor="middle">${l.label}</text>`;
+  });
+  s.innerHTML=h;
+}
+
+function drawCellsMini(){
+  const s=document.getElementById('cells-mini');if(!s)return;
+  const d=D();
+  let h=worldBase();
+  const W=900,H=450;
+  const bands=[
+    {y1:0,y2:H*0.16,color:d?'rgba(144,224,239,.08)':'rgba(100,180,220,.08)'},
+    {y1:H*0.16,y2:H*0.35,color:d?'rgba(82,183,136,.08)':'rgba(60,150,100,.08)'},
+    {y1:H*0.35,y2:H*0.53,color:d?'rgba(232,69,69,.08)':'rgba(200,50,50,.07)'},
+    {y1:H*0.53,y2:H*0.65,color:d?'rgba(255,214,10,.08)':'rgba(200,150,0,.06)'},
+    {y1:H*0.65,y2:H*0.78,color:d?'rgba(232,69,69,.08)':'rgba(200,50,50,.07)'},
+    {y1:H*0.78,y2:H*0.9,color:d?'rgba(82,183,136,.08)':'rgba(60,150,100,.08)'},
+    {y1:H*0.9,y2:H,color:d?'rgba(144,224,239,.08)':'rgba(100,180,220,.08)'},
+  ];
+  bands.forEach(b=>{h+=`<rect x="0" y="${b.y1}" width="${W}" height="${b.y2-b.y1}" fill="${b.color}"/>`;});
+  const itczY=H*0.59;
+  h+=`<line x1="0" y1="${itczY}" x2="${W}" y2="${itczY}" stroke="#ffd60a" stroke-width="2" stroke-dasharray="8 5" opacity=".6"/>`;
+  h+=`<text x="10" y="${itczY-4}" fill="#ffd60a" font-size="8" font-family="DM Mono,monospace">ITCZ</text>`;
+  [{y:H*0.32,color:'#ffd60a',label:'Polar Jet 60°N'},{y:H*0.72,color:'#ffd60a',label:'Polar Jet 60°S'}].forEach(j=>{
+    h+=`<line x1="0" y1="${j.y}" x2="${W}" y2="${j.y}" stroke="${j.color}" stroke-width="2" stroke-dasharray="6 4" opacity=".5"/>`;
+    h+=`<text x="${W-10}" y="${j.y-4}" fill="${j.color}" font-size="8" font-family="DM Mono,monospace" text-anchor="end">${j.label}</text>`;
+  });
+  s.innerHTML=h;
+}
+
+function drawJetsMini(){
+  const s=document.getElementById('jets-mini');if(!s)return;
+  const d=D();
+  let h=worldBase();
+  const W=900,H=450;
+  const wjPts=[];
+  for(let x=0;x<=W;x+=20){wjPts.push(`${x},${H*0.32+30*Math.sin(x/130*Math.PI)}`);}
+  h+=`<polyline points="${wjPts.join(' ')}" fill="none" stroke="#ffd60a" stroke-width="2.5" opacity=".8"/>`;
+  h+=`<text x="${W-8}" y="${H*0.32-8}" fill="#ffd60a" font-size="8" font-family="DM Mono,monospace" text-anchor="end">Polar Jet (winter)</text>`;
+  const sjPts=[];
+  for(let x=0;x<=W;x+=20){sjPts.push(`${x},${H*0.22+12*Math.sin(x/150*Math.PI+1)}`);}
+  h+=`<polyline points="${sjPts.join(' ')}" fill="none" stroke="#f4a261" stroke-width="2" stroke-dasharray="8 5" opacity=".7"/>`;
+  h+=`<text x="${W-8}" y="${H*0.22-8}" fill="#f4a261" font-size="8" font-family="DM Mono,monospace" text-anchor="end">Polar Jet (summer)</text>`;
+  h+=`<line x1="0" y1="${H*0.42}" x2="${W}" y2="${H*0.42}" stroke="#90e0ef" stroke-width="2" stroke-dasharray="10 6" opacity=".6"/>`;
+  h+=`<text x="10" y="${H*0.42-5}" fill="#90e0ef" font-size="8" font-family="DM Mono,monospace">Subtropical Jet ~30°N</text>`;
+  h+=`<line x1="0" y1="${H*0.78}" x2="${W}" y2="${H*0.78}" stroke="#ffd60a" stroke-width="2" stroke-dasharray="6 4" opacity=".6"/>`;
+  h+=`<text x="10" y="${H*0.78-5}" fill="#ffd60a" font-size="8" font-family="DM Mono,monospace">Polar Jet SH</text>`;
+  s.innerHTML=h;
+}
+switchPanel('belts');
+redrawAll();
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

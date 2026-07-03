@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jainism — Interactive Explainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --amber: #b45309;
+  --maroon: #7f1d1d;
+  --gold: #ca8a04;
+  --ochre: #92400e;
+  --lotus: #f472b6;
+  --lotus-dim: #db2777;
+  --nirvana: #fef9f0;
+  --jade: #059669;
+  --sky: #0284c7;
+  --accent: #d97706;
+}
+[data-theme="dark"] {
+  --bg: #080c06;
+  --surface: #111a0e;
+  --surface2: #182414;
+  --border: #2a3d22;
+  --text: #eef5e8;
+  --muted: #6a8a58;
+  --prose: #c0d8a0;
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  --glow: rgba(107,167,49,0.13);
+}
+[data-theme="light"] {
+  --bg: #f5faee;
+  --surface: #edf5e0;
+  --surface2: #e0edcc;
+  --border: #c0d8a0;
+  --text: #0a1a04;
+  --muted: #4a7030;
+  --prose: #1e3d10;
+  --card-shadow: 0 4px 24px rgba(40,100,10,0.10);
+  --glow: rgba(107,167,49,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Mono',monospace;
+  min-height:100vh;
+  transition:background .3s,color .3s;
+  font-size:14px;
+  line-height:1.7;
+}
+/* NAV */
+.sticky-nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;gap:0;
+  padding:0 1rem;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;letter-spacing:.08em;
+  color:var(--accent);
+  padding:.6rem 1rem .6rem 0;
+  white-space:nowrap;
+  border-right:1px solid var(--border);
+  margin-right:.5rem;
+  flex-shrink:0;
+}
+.tab{
+  font-family:'DM Mono',monospace;
+  font-size:.72rem;letter-spacing:.06em;
+  padding:.55rem .9rem;
+  border:none;background:transparent;
+  color:var(--muted);cursor:pointer;
+  white-space:nowrap;flex-shrink:0;
+  border-bottom:2px solid transparent;
+  transition:all .2s;
+  text-transform:uppercase;
+}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.theme-btn{
+  margin-left:auto;flex-shrink:0;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:.35rem .7rem;border-radius:999px;
+  font-family:'DM Mono',monospace;font-size:.7rem;cursor:pointer;
+  transition:all .2s;letter-spacing:.05em;
+}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+/* HERO */
+.hero{
+  text-align:center;
+  padding:3.5rem 1rem 2rem;
+  max-width:900px;margin:0 auto;
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:.72rem;letter-spacing:.18em;
+  color:var(--accent);text-transform:uppercase;
+  margin-bottom:.8rem;
+}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,8vw,6rem);
+  letter-spacing:.06em;
+  line-height:1;
+  color:var(--text);
+  margin-bottom:.6rem;
+}
+.hero h1 span{color:var(--accent)}
+.hero-sub{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:1.15rem;
+  color:var(--prose);
+  max-width:600px;margin:0 auto 1.5rem;
+}
+/* PHASE PANELS */
+.phase-panel{display:none}
+.phase-panel.visible{display:block}
+.panel-inner{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 4rem}
+/* SECTION HEADINGS */
+.sec-label{
+  font-family:'DM Mono',monospace;
+  font-size:.65rem;letter-spacing:.2em;
+  color:var(--accent);text-transform:uppercase;
+  margin-bottom:.4rem;
+}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.6rem);
+  letter-spacing:.06em;
+  color:var(--text);
+  margin-bottom:.5rem;
+}
+.sec-sub{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--prose);
+  font-size:1rem;
+  margin-bottom:2rem;
+}
+/* BOXES */
+.box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.25rem 1.5rem;
+  margin-bottom:1rem;
+  box-shadow:var(--card-shadow);
+}
+.box-accent{border-left:3px solid var(--accent)}
+.box h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.2rem;letter-spacing:.06em;
+  color:var(--accent);margin-bottom:.4rem;
+}
+/* CALLOUT */
+.callout{
+  background:var(--glow);
+  border:1px solid var(--accent);
+  border-radius:8px;
+  padding:1rem 1.25rem;
+  margin:1.5rem 0;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:.95rem;
+  color:var(--prose);
+}
+.callout strong{color:var(--accent);font-style:normal}
+/* CARDS GRID */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:1rem;
+  margin:1.5rem 0;
+}
+.impact-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.25rem;
+  box-shadow:var(--card-shadow);
+  transition:border-color .2s,transform .2s;
+}
+.impact-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.impact-card .ic-icon{font-size:1.8rem;margin-bottom:.5rem}
+.impact-card .ic-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;letter-spacing:.06em;
+  color:var(--accent);margin-bottom:.3rem;
+}
+.impact-card .ic-body{
+  font-size:.78rem;color:var(--prose);line-height:1.55;
+}
+/* MECH CARDS */
+.mech-card{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.mech-card-head{
+  background:#1a3d12;
+  padding:.6rem 1rem;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:.08em;
+  color:#c8e8a0;
+}
+.mech-card-body{padding:1rem;font-size:.8rem;color:var(--prose)}
+/* EXPANDABLE */
+.expand-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:.6rem;
+  overflow:hidden;
+}
+.expand-trigger{
+  width:100%;text-align:left;
+  background:none;border:none;cursor:pointer;
+  padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between;
+  color:var(--text);
+  font-family:'DM Mono',monospace;
+  font-size:.82rem;letter-spacing:.05em;
+  transition:background .2s;
+}
+.expand-trigger:hover{background:var(--surface2)}
+.expand-trigger .et-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.05rem;letter-spacing:.06em;
+  color:var(--accent);
+}
+.expand-trigger .et-sub{
+  font-size:.72rem;color:var(--muted);margin-top:.15rem;
+}
+.expand-trigger .et-arrow{
+  color:var(--muted);font-size:.9rem;
+  transition:transform .3s;flex-shrink:0;
+}
+.expand-trigger.open .et-arrow{transform:rotate(180deg)}
+.expand-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease;
+}
+.expand-body-inner{
+  padding:1rem 1.25rem 1.25rem;
+  font-size:.8rem;color:var(--prose);
+  line-height:1.65;
+  border-top:1px solid var(--border);
+}
+/* TABLE */
+.comp-table{
+  width:100%;border-collapse:collapse;
+  font-size:.78rem;margin:1.5rem 0;
+}
+.comp-table th{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:.9rem;letter-spacing:.06em;
+  background:#1a3d12;color:#c8e8a0;
+  padding:.6rem .9rem;text-align:left;
+}
+.comp-table td{
+  padding:.6rem .9rem;
+  border-bottom:1px solid var(--border);
+  color:var(--prose);vertical-align:top;
+}
+.comp-table tr:nth-child(even) td{background:var(--surface2)}
+/* EVENT ITEMS */
+.event-item{
+  display:flex;gap:1rem;
+  padding:.9rem 0;
+  border-bottom:1px solid var(--border);
+}
+.event-item:last-child{border-bottom:none}
+.ei-year{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:.06em;
+  color:var(--accent);
+  min-width:110px;flex-shrink:0;
+  padding-top:.1rem;
+}
+.ei-title{
+  font-family:'DM Mono',monospace;
+  font-size:.8rem;font-weight:500;
+  color:var(--text);margin-bottom:.2rem;
+}
+.ei-desc{font-size:.76rem;color:var(--prose)}
+/* FLASHCARD */
+.flashcard-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1rem;margin:1.5rem 0;
+}
+.flashcard{
+  height:160px;perspective:1000px;cursor:pointer;
+}
+.flashcard-inner{
+  width:100%;height:100%;
+  transform-style:preserve-3d;
+  transition:transform .5s;
+  position:relative;
+}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{
+  position:absolute;width:100%;height:100%;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:10px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:1rem;text-align:center;
+  box-shadow:var(--card-shadow);
+}
+.fc-front{
+  background:var(--surface);
+  border:1px solid var(--border);
+}
+.fc-front .fc-q{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.05rem;letter-spacing:.06em;
+  color:var(--accent);margin-bottom:.4rem;
+}
+.fc-front .fc-hint{font-size:.7rem;color:var(--muted)}
+.fc-back{
+  background:#1a3d12;
+  border:1px solid #2d6820;
+  transform:rotateY(180deg);
+}
+.fc-back .fc-a{font-size:.78rem;color:#c8e8a0;line-height:1.5}
+/* UPSC Q&A */
+.qa-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:.75rem;
+  overflow:hidden;
+  cursor:pointer;
+}
+.qa-q{
+  padding:.9rem 1.1rem;
+  font-size:.8rem;color:var(--text);
+  display:flex;align-items:flex-start;gap:.6rem;
+}
+.qa-badge{
+  background:#1a3d12;
+  color:#c8e8a0;font-size:.65rem;
+  padding:.15rem .4rem;border-radius:4px;
+  font-family:'Bebas Neue',sans-serif;
+  letter-spacing:.06em;flex-shrink:0;margin-top:.05rem;
+}
+.qa-a{
+  max-height:0;overflow:hidden;transition:max-height .35s ease;
+  border-top:0 solid var(--border);
+}
+.qa-card.open .qa-a{
+  max-height:300px;
+  border-top-width:1px;
+}
+.qa-a-inner{padding:.9rem 1.1rem;font-size:.78rem;color:var(--prose);line-height:1.6}
+/* PILL LINKS */
+.pill-row{
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  margin-top:1rem;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:.3rem .75rem;
+  font-size:.72rem;color:var(--muted);
+  text-decoration:none;cursor:pointer;
+  transition:all .2s;
+  font-family:'DM Mono',monospace;
+  letter-spacing:.04em;
+}
+.pill:hover{border-color:var(--accent);color:var(--accent)}
+.pill:active{transform:scale(0.97)}
+/* GRID LAYOUTS */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:1rem 0}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0}
+@media(max-width:640px){
+  .two-col,.three-col{grid-template-columns:1fr}
+  .cards-grid{grid-template-columns:1fr}
+  .flashcard-grid{grid-template-columns:1fr 1fr}
+}
+/* SVG containers */
+.svg-wrap{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  margin:1.5rem 0;
+}
+.svg-wrap svg{display:block;width:100%;height:auto}
+.svg-caption{
+  font-size:.72rem;color:var(--muted);
+  text-align:center;padding:.5rem;
+  border-top:1px solid var(--border);
+}
+/* Spoke highlight */
+.spoke-info{
+  background:var(--surface2);
+  border:1px solid var(--accent);
+  border-radius:8px;
+  padding:.9rem 1.1rem;
+  margin-top:.75rem;
+  font-size:.8rem;
+  color:var(--prose);
+  min-height:60px;
+  transition:all .2s;
+}
+.spoke-info strong{color:var(--accent);font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.06em}
+/* Tag strip */
+.tag-strip{display:flex;flex-wrap:wrap;gap:.4rem;margin:.75rem 0}
+.tag{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:4px;padding:.2rem .5rem;
+  font-size:.68rem;color:var(--muted);
+  font-family:'DM Mono',monospace;
+  display:inline-flex;align-items:center;gap:.25rem;
+  transition:all .18s;
+  user-select:none;-webkit-user-select:none;
+}
+.tag[data-tab]{cursor:pointer;}
+.tag[data-tab]:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,0.25);}
+.tag[data-tab]:active{transform:translateY(0)}
+.tag.accent{border-color:var(--accent);color:var(--accent)}
+.tag.accent[data-tab]:hover{background:rgba(107,167,49,0.12)}
+.tag.lotus{border-color:var(--lotus);color:var(--lotus)}
+.tag.lotus[data-tab]:hover{background:rgba(244,114,182,0.12)}
+.tag.jade{border-color:var(--jade);color:var(--jade)}
+.tag.jade[data-tab]:hover{background:rgba(5,150,105,0.12)}
+/* Divider */
+.divider{height:1px;background:var(--border);margin:2rem 0;}
+/* Ripple */
+@keyframes ripple{to{transform:scale(3);opacity:0}}
+/* Inline highlight */
+mark{
+  background:rgba(107,167,49,.18);
+  color:#7aba3a;
+  padding:.05em .25em;
+  border-radius:3px;
+  font-style:normal;
+}
+</style>
+</head>
+<body>
+
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-brand">🕊 Jainism</div>
+    <button class="tab active" onclick="switchTab(0)">Overview</button>
+    <button class="tab" onclick="switchTab(1)">Mahavira</button>
+    <button class="tab" onclick="switchTab(2)">Core Teachings</button>
+    <button class="tab" onclick="switchTab(3)">Sects</button>
+    <button class="tab" onclick="switchTab(4)">Spread</button>
+    <button class="tab" onclick="switchTab(5)">Councils</button>
+    <button class="tab" onclick="switchTab(6)">Art & Arch</button>
+    <button class="tab" onclick="switchTab(7)">UPSC Corner</button>
+    <button class="theme-btn" onclick="toggleTheme()">◑ Theme</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Ancient Indian History · Philosophy · World Religion</div>
+  <h1>🕊 <span>Jainism</span></h1>
+  <div class="hero-sub">One of the world's oldest living religions — a radical philosophy of non-violence, liberation of the soul, and absolute ethics</div>
+  <div class="tag-strip" style="justify-content:center">
+    <span class="tag accent" data-tab="0" title="Overview">6th Century BCE</span>
+    <span class="tag accent" data-tab="4" title="Spread">Magadha, India</span>
+    <span class="tag accent" data-tab="1" title="Mahavira">Vardhamana Mahavira</span>
+    <span class="tag lotus" data-tab="2" title="Core Teachings">Ahimsa</span>
+    <span class="tag lotus" data-tab="2" title="Core Teachings">Anekantavada</span>
+    <span class="tag jade" data-tab="7" title="UPSC Corner">UPSC GS-1</span>
+  </div>
+</div>
+
+<!-- ========== TAB 0: OVERVIEW ========== -->
+<div class="phase-panel visible" id="panel-0">
+<div class="panel-inner">
+  <div class="sec-label">Tab 01 — Origin & Identity</div>
+  <div class="sec-title">What is Jainism?</div>
+  <div class="sec-sub">A path of total liberation through absolute non-violence and conquest of the self</div>
+
+  <div class="box box-accent">
+    <p style="color:var(--prose);font-size:.82rem;line-height:1.7">
+      Jainism is one of the world's oldest continuously practiced religions, originating in the Gangetic plains of ancient India. Its name derives from <mark>Jina</mark> ("conqueror") — one who has conquered the passions and achieved liberation. It centers on the attainment of <mark>Moksha</mark> (liberation of the soul) through ethical living, asceticism, and the three jewels of Right Faith, Right Knowledge, and Right Conduct. With approximately <mark>4–5 million adherents</mark> today, Jainism punches far above its demographic weight in philosophy, art, commerce, and ethics.
+    </p>
+  </div>
+
+  <div class="callout">
+    <strong>Why did Jainism arise?</strong> The 6th century BCE was India's Axial Age — a period of radical intellectual ferment. Jainism arose as part of the <em>Shramana movement</em>, a broad current of wandering ascetics who rejected Vedic Brahmanical authority, the caste system's spiritual monopoly, and the violence of animal sacrifices (yajnas). Its radical insistence on <em>ahimsa</em> (non-violence) toward all living beings was a direct indictment of Vedic ritual killing and Kshatriya warfare culture.
+  </div>
+
+  <div class="sec-label" style="margin-top:2rem">The Three Jewels (Triratna)</div>
+  <div class="sec-title" style="font-size:1.8rem">Ratnatraya — रत्नत्रय</div>
+  <div id="three-jewels-svg" class="svg-wrap"></div>
+
+  <div class="cards-grid">
+    <div class="impact-card">
+      <div class="ic-icon">👁</div>
+      <div class="ic-title">Samyak Darshana</div>
+      <div class="ic-body">Right Faith — correct perception and reverence for the Jinas (enlightened beings) and the Jain truth. The foundational attitude of trust in the Jain path.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">📖</div>
+      <div class="ic-title">Samyak Jnana</div>
+      <div class="ic-body">Right Knowledge — correct, undistorted understanding of the nature of the soul, the universe, and the path of liberation. Free from doubt and perversity.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🕊</div>
+      <div class="ic-title">Samyak Charitra</div>
+      <div class="ic-body">Right Conduct — ethical behaviour embodied in the Five Vows (Pancha Mahavrata for monks, Anuvrata for laity). The practical expression of Jain values.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Historical Context</div>
+  <div class="sec-title" style="font-size:1.8rem">6th Century BCE India</div>
+  <div class="two-col">
+    <div>
+      <div class="box">
+        <h3>Political Landscape</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The subcontinent was divided into the <mark>16 Mahajanapadas</mark> (great republics and kingdoms). Magadha (capital Rajagriha) was rising to dominance. Vaishali, where Mahavira was born, was a flourishing democratic republic of the Vrijji confederacy — a cosmopolitan centre of trade and ideas.</p>
+      </div>
+      <div class="box">
+        <h3>Social Tensions</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The varna system had calcified. Kshatriyas and Vaishyas — warriors and merchants — resented Brahmin supremacy in ritual and social life. Jainism appealed particularly to the <mark>Vaishya merchant class</mark>, offering a spiritual path that valued non-violence (compatible with trade, not animal husbandry or warfare) and rejected caste as a spiritual determinant.</p>
+      </div>
+    </div>
+    <div>
+      <div class="box">
+        <h3>Shramana Movement</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">Jainism claims tremendous antiquity — Mahavira was the <mark>24th Tirthankara</mark>, not the founder. The 23rd, <mark>Parshvanatha</mark> (c. 9th–8th century BCE), is historically attested; his followers were already established when Mahavira was born. Jainism thus predates Buddhism in institutional form, even if both reached maturity simultaneously.</p>
+      </div>
+      <div class="box">
+        <h3>Jain Critique of Vedic Orthodoxy</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">Jainism rejected: Vedic authority, Brahmin caste privilege, animal sacrifice (himsa), the concept of a creator God (Jainism is atheistic — <mark>anishvara-vada</mark>), and the idea that karma is merely ritual action. Jain karma is a <em>physical substance</em> that literally sticks to the soul — a unique metaphysical claim.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Jainism's Unique Position:</strong> Unlike Buddhism, Jainism asserts a <em>permanent, individual soul (jiva)</em> that is distinct from matter (ajiva). Unlike Vedanta, the soul is not Brahman — each soul is unique and independent. Unlike theistic traditions, there is <em>no creator God</em>. The Tirthankaras are perfected humans who achieved liberation — models to emulate, not gods to pray to.
+  </div>
+
+  <div class="sec-label" style="margin-top:2rem">The Shramana Tradition</div>
+  <div class="three-col">
+    <div class="mech-card">
+      <div class="mech-card-head">Buddhism</div>
+      <div class="mech-card-body">Founded by Siddhartha Gautama (contemporary of Mahavira). Middle Path, impermanence, no-self (anatta). Rejected extreme asceticism. Shared critique of Brahminism.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-head">Ajivikas</div>
+      <div class="mech-card-body">Founded by Makkhali Gosala (a former disciple of Mahavira). Absolute determinism (niyati) — all beings are fixed on a cosmic wheel of exactly 8.4 million great eons of rebirth.</div>
+    </div>
+    <div class="mech-card">
+      <div class="mech-card-head">Charvaka / Lokayata</div>
+      <div class="mech-card-body">Indian materialism. Denied afterlife, soul, karma, ahimsa obligations. "Eat, drink, and be merry." Direct perception as the only valid pramana (source of knowledge).</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 1: MAHAVIRA ========== -->
+<div class="phase-panel" id="panel-1">
+<div class="panel-inner">
+  <div class="sec-label">Tab 02 — Life & Legend</div>
+  <div class="sec-title">The Life of Vardhamana Mahavira</div>
+  <div class="sec-sub">Prince, ascetic, conqueror of the self — the 24th and last Tirthankara</div>
+
+  <div class="box box-accent">
+    <p style="color:var(--prose);font-size:.82rem;line-height:1.7">
+      Vardhamana — later known as <mark>Mahavira</mark> ("Great Hero") — was born c. <mark>599 BCE</mark> (some traditions say 540 BCE) in <mark>Kundagrama</mark> (Vaishali, modern Bihar) to King Siddhartha of the Jnatrika Kshatriya clan and Queen Trishala. Astrological omens and prophetic dreams at his birth — the <em>Fourteen Great Dreams</em> — foretold that he would become either a world-emperor (chakravartin) or a great spiritual liberator (Tirthankara).
+    </p>
+  </div>
+
+  <div class="sec-label" style="margin-top:1.5rem">Interactive Life Timeline</div>
+  <div id="mahavira-timeline-svg" class="svg-wrap"></div>
+  <div class="svg-caption">Key events in the life of Vardhamana Mahavira — from royal birth to final liberation</div>
+
+  <div class="divider"></div>
+  <div class="two-col">
+    <div>
+      <div class="sec-label">The Great Renunciation</div>
+      <div class="sec-title" style="font-size:1.6rem">Diksha — Initiation into Asceticism</div>
+      <p style="font-size:.8rem;color:var(--prose);line-height:1.65;margin-bottom:.8rem">
+        At age <mark>30</mark>, after the death of his parents (who undertook the Jain rite of <em>santhara</em> — fasting unto death), Mahavira sought and received permission from the Jnatrika clan council to renounce worldly life. He donated all his possessions, pulled out his hair in five handfuls (<em>panchashti</em> — a Jain initiation rite still practiced today), and became a wandering naked ascetic. He abandoned all clothing — unlike the monks of Parshvanatha, who wore a single white cloth.
+      </p>
+      <div class="callout" style="font-size:.78rem">He initially wandered for 13 months with another monk, then chose <strong>complete solitude</strong> — no companion, no shelter, no possessions, no speech unless necessary. He endured extraordinary hardships: village dogs bit him, children pelted him with stones, farmers tied a yoke to his neck.</div>
+    </div>
+    <div>
+      <div class="sec-label">Twelve Years of Austerity</div>
+      <div class="sec-title" style="font-size:1.6rem">Sadhana — The Path of Hardship</div>
+      <p style="font-size:.8rem;color:var(--prose);line-height:1.65;margin-bottom:.8rem">
+        For <mark>12 years and 6 months</mark>, Mahavira practiced the most extreme asceticism in ancient Indian history. He observed long fasts (sometimes up to 6 months of minimal eating). He endured heat, cold, insects, and violence without reaction. He practiced total non-violence — moving carefully to avoid harming even microscopic beings. He meditated in forests, cremation grounds, and abandoned houses.
+      </p>
+      <div class="callout" style="font-size:.78rem">Unlike the Buddha, Mahavira <strong>did not</strong> abandon extreme asceticism — he saw it as the necessary burning away of accumulated karma. The body's suffering was the soul's purification. This is the fundamental difference between Jain and Buddhist methods.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">The Enlightenment</div>
+  <div class="sec-title">Kevala Jnana — Omniscience</div>
+
+  <div class="box" style="border-color:var(--gold)">
+    <h3 style="color:var(--gold)">📍 Jrimbhikagrama, Bihar · c. 557 BCE</h3>
+    <p style="font-size:.8rem;color:var(--prose);line-height:1.65;margin-top:.5rem">
+      On the bank of the Rijuvalika River, under a sala tree, Mahavira attained <mark>Kevala Jnana</mark> — perfect, omniscient, infinite knowledge encompassing all things in all times. Unlike the Buddha's Bodhi (awakening from ignorance), Kevala Jnana in Jainism means the soul is fully freed from the obscuring karmas that had blocked its infinite, natural capacity for knowledge.
+    </p>
+    <div class="event-item" style="margin-top:.5rem">
+      <div class="ei-year">Precondition</div>
+      <div><div class="ei-title">Kshapaka Shreni</div><div class="ei-desc">The soul climbs the ladder of spiritual purity (gunasthana), burning away the four "knowledge-obscuring" karmas through meditation and austerity.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">The Moment</div>
+      <div><div class="ei-title">Kevala Jnana</div><div class="ei-desc">Infinite knowledge, infinite perception (darshana), infinite bliss, and infinite energy simultaneously manifest. Mahavira becomes a Jina — a conqueror. The 24th Tirthankara.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">After</div>
+      <div><div class="ei-title">30 Years of Teaching</div><div class="ei-desc">Mahavira taught for 30 years, establishing the fourfold Jain Sangha: monks (sadhus), nuns (sadhvis), laymen (shravaka), laywomen (shravika).</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="two-col">
+    <div class="box">
+      <h3>Key Patrons & Disciples</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">King <mark>Shrenik (Bimbisara)</mark> of Magadha was a devoted lay follower. His son <mark>Ajatashatru</mark> also supported Jainism. The merchant community — especially in Magadha, Anga, and Videha — formed Jainism's most loyal lay patrons. Mahavira's 11 chief disciples (<mark>Ganadharas</mark>) included Indrabhuti Gautama, Agnibhuti, and Vayubhuti.</p>
+    </div>
+    <div class="box">
+      <h3>Nirvana · 527 BCE</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">Mahavira attained final liberation (<mark>Moksha</mark> / Nirvana) at <mark>Pavapuri</mark> (modern Pawapuri, Bihar) at age 72. He died in the Jain manner — complete fasting (<em>santhara</em> or <em>sallekhana</em>). His death is celebrated as <mark>Diwali</mark> in the Jain tradition — the festival of lights marks the "light of knowledge" that was extinguished from the world at his passing.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Mahavira vs. the Buddha — A Critical Comparison:</strong> Both were Kshatriya princes; both renounced the world at age 29–30; both lived in the same region at the same time (they may have met, though no confirmed record exists); both rejected Brahmin authority and caste. But Mahavira embraced extreme asceticism while Buddha rejected it. Mahavira affirmed a permanent soul (jiva); Buddha denied a permanent self (anatta). Mahavira's karma is physical substance; Buddha's karma is mental intention.
+  </div>
+
+  <div class="sec-label" style="margin-top:1.5rem">The 24 Tirthankaras</div>
+  <div class="sec-title" style="font-size:1.8rem">The Ford-Makers</div>
+  <p style="font-size:.8rem;color:var(--prose);margin-bottom:1rem">The Tirthankaras are the 24 liberated beings who, in each cosmic cycle, re-establish the Jain path for humanity. "Tirthankara" means "ford-maker" — one who creates a ford (tirtha) across the ocean of suffering.</p>
+
+  <div id="tirthankara-svg" class="svg-wrap"></div>
+  <div class="svg-caption">The 24 Tirthankaras of the current cosmic cycle — select key ones shown · All attained Kevala Jnana</div>
+
+  <div class="two-col" style="margin-top:1rem">
+    <div class="box">
+      <h3>Rishabhadeva (Adinatha) — 1st Tirthankara</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The first Tirthankara of the current cosmic cycle — a legendary figure considered by Jains to have lived in primordial times. He is mentioned in Hindu texts (Bhagavata Purana, Vishnu Purana) and even the Rigveda (some scholars argue), giving Jainism its claim to being the oldest of all Indian religions. His symbol is the <mark>bull</mark>.</p>
+    </div>
+    <div class="box">
+      <h3>Parshvanatha — 23rd Tirthankara</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The most historically attested pre-Mahavira Tirthankara, traditionally dated c. <mark>872–772 BCE</mark> (9th–8th century BCE). He taught a fourfold restraint: non-violence, non-lying, non-stealing, non-possession. Mahavira later added a 5th vow: <mark>celibacy (brahmacharya)</mark>. Parshvanatha's symbol is the serpent. His followers — the Nirgrantha Shramanas — were already active when Mahavira was born.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 2: CORE TEACHINGS ========== -->
+<div class="phase-panel" id="panel-2">
+<div class="panel-inner">
+  <div class="sec-label">Tab 03 — Philosophy</div>
+  <div class="sec-title">Core Teachings of Jainism</div>
+  <div class="sec-sub">A complete metaphysical system — soul, matter, karma, and the path to liberation</div>
+
+  <!-- FIVE VOWS -->
+  <div class="sec-label">The Five Great Vows</div>
+  <div class="sec-title" style="font-size:1.8rem">Pancha Mahavrata</div>
+  <p style="font-size:.8rem;color:var(--prose);margin-bottom:1rem">The ethical core of Jain monastic life. Lay Jains observe the "lesser vows" (Anuvrata) — modified versions of the same five. All are in service of one supreme value: <mark>Ahimsa</mark>.</p>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">1. Ahimsa — Non-Violence</div><div class="et-sub">The supreme vow — no harm to any living being in thought, word, or deed</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p><mark>Ahimsa paramo dharma</mark> — "Non-violence is the supreme religion." Jain ahimsa is the most radical in the world. Monks carry a <em>rajoharan</em> (soft broom) to sweep insects from their path. They wear a <em>mukha-patti</em> (mouth cloth) to avoid inhaling tiny insects. They do not eat after sunset (to avoid insects attracted to lamps).</p>
+        <br>
+        <p>Jains classify life into 5 categories by number of senses:</p>
+        <p>• <strong>Ekendriya</strong> — 1-sense beings (plants, earth, water, fire, air bodies) — minimum harm unavoidable</p>
+        <p>• <strong>Dvindriya</strong> — 2-sense beings (worms, leeches)</p>
+        <p>• <strong>Trindriya</strong> — 3-sense beings (lice, ants)</p>
+        <p>• <strong>Chaturindriya</strong> — 4-sense beings (flies, mosquitoes)</p>
+        <p>• <strong>Panchendriya</strong> — 5-sense beings (animals, humans) — harming these is most severely condemned</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: Jain ahimsa directly influenced Gandhi's satyagraha. Gandhi acknowledged Jainism as the most profound formulation of non-violence in human history. The Jain merchant community of Gujarat was Gandhi's early support base.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">2. Satya — Non-Lying</div><div class="et-sub">Complete truthfulness in speech — avoiding harmful, false, or hurtful words</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p>Satya means speaking only what is true, beneficial, and not harmful. In cases of conflict between truth and ahimsa — where speaking truth would lead to greater violence — <strong>ahimsa takes precedence</strong>. This reflects the deeply integrated nature of Jain ethics.</p>
+        <br>
+        <p>This vow is related to the epistemological principle of <mark>Anekantavada</mark> — the many-sided nature of reality. Because absolute truth about any complex matter can only be perceived from all angles simultaneously (as a Jina does), humans must speak with epistemic humility, using <em>syat</em> ("perhaps") qualifiers.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">3. Asteya — Non-Stealing</div><div class="et-sub">Not taking anything not freely given — material, intellectual, or otherwise</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p>Monks must not take anything without explicit permission — even water, food, or shelter. Lay Jains apply this as avoiding dishonest business practices, tax evasion, and misappropriation. In broader Jain ethics, this supports a strong tradition of <mark>business integrity</mark> — Jain merchants historically maintained a reputation for scrupulous honesty in trade.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">4. Brahmacharya — Celibacy</div><div class="et-sub">Complete sexual continence for monks; fidelity in marriage for laity</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p>This was the 5th vow added by Mahavira to the original four of Parshvanatha. For Jain monks, it means complete sexual abstinence. The rationale: sexual activity involves violence (against microscopic beings), attachment (which binds karma), and passion (which is a primary source of karma-influx). Celibacy is thus simultaneously an ethical and a soteriological requirement.</p>
+        <br>
+        <p>For lay Jains, the equivalent lesser vow is fidelity within marriage and avoidance of sexual indulgence outside it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">5. Aparigraha — Non-Possession</div><div class="et-sub">Complete renunciation of all possessions — the root attack on attachment</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p>Jain monks (Digambara) renounce all possessions including clothing. Shvetambara monks retain one white cloth and a begging bowl. For lay Jains, the equivalent vow is <em>parigraha-parimana</em> — limiting one's possessions to what is genuinely needed. This has produced, paradoxically, a community of extremely wealthy merchants who donate lavishly to build temples and support the Sangha.</p>
+        <br>
+        <p>Jain charitable institutions (<em>panjrapoles</em> — animal shelters; hospitals; educational institutions) represent the lay community's expression of this vow — redistributing wealth rather than accumulating it without limit.</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: The Digambara-Shvetambara split centers primarily on this vow — whether clothing constitutes "possession" and whether women can achieve liberation without first being reborn as men.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <!-- KARMA PHILOSOPHY -->
+  <div class="sec-label">Jain Metaphysics</div>
+  <div class="sec-title" style="font-size:1.8rem">The Soul, Karma & Liberation</div>
+  <p style="font-size:.8rem;color:var(--prose);margin-bottom:.5rem">Jainism has the most elaborately developed karma theory in any Indian tradition — and it is radically physical.</p>
+
+  <div id="karma-svg" class="svg-wrap" style="max-width:600px;margin:0 auto"></div>
+  <div class="spoke-info" id="karma-info">
+    <strong>🔮 Hover a concept</strong><br>
+    <span style="font-size:.75rem;color:var(--muted)">Jain cosmology maps the journey of the soul from bondage to liberation through a precise physical theory of karmic matter.</span>
+  </div>
+
+  <div class="divider"></div>
+  <div class="two-col">
+    <div>
+      <div class="box">
+        <h3>The Six Dravyas (Substances)</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">Jain ontology recognizes six fundamental substances: <mark>Jiva</mark> (soul/living), <mark>Pudgala</mark> (matter), <mark>Dharma</mark> (principle of motion), <mark>Adharma</mark> (principle of rest), <mark>Akasha</mark> (space), and <mark>Kala</mark> (time). The universe is eternal — it was never created and will never be destroyed. There is no creator God.</p>
+      </div>
+      <div class="box">
+        <h3>Karma as Physical Matter</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">Unlike Buddhism (where karma = intention) or Hinduism (where karma = action's ritual/moral consequence), Jain karma consists of <mark>actual microscopic particles (pudgala)</mark> that attach to the soul through passions (kashaya). These particles literally weigh down, colour, and obscure the soul's innate infinite capacities. Liberation = complete removal of all karmic matter.</p>
+      </div>
+    </div>
+    <div>
+      <div class="box">
+        <h3>Anekantavada — Many-Sided Truth</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">Perhaps Jainism's most intellectually sophisticated contribution to philosophy. Reality is complex and multi-dimensional — no single perspective captures the complete truth. Two doctrines express this: <mark>Syadvada</mark> (conditional predication — "perhaps it is…") and <mark>Nayavada</mark> (doctrine of partial standpoints). Each claim is true from a certain angle (naya) but not absolutely.</p>
+      </div>
+      <div class="box">
+        <h3>The 14 Gunasthanas</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">The soul's journey to liberation is mapped across <mark>14 stages of spiritual development</mark> (gunasthanas) — from total ignorance (mithyadrishti) to the state of omniscience with body (sayogi-kevalin) and finally bodiless liberation (siddha). Each stage is characterized by precise degrees of karma suppression or elimination. A uniquely systematic spiritual developmental map.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <!-- ANEKANTAVADA -->
+  <div class="sec-label">The Blind Men & the Elephant</div>
+  <div class="sec-title" style="font-size:1.8rem">Anekantavada — अनेकान्तवाद</div>
+  <div class="callout">
+    The famous Jain parable: several blind men each touch a different part of an elephant and disagree on what it is — a wall (flank), a rope (tail), a tree trunk (leg). Each is <em>partially right</em> from their standpoint. Only the one who can see the whole elephant knows the complete truth. <strong>Anekantavada says all finite beings are like the blind men — only an omniscient Jina sees the elephant whole.</strong>
+  </div>
+
+  <div class="cards-grid">
+    <div class="impact-card">
+      <div class="ic-icon">🔀</div>
+      <div class="ic-title">Syadvada</div>
+      <div class="ic-body">The doctrine of conditional predication. Every statement must be qualified with "syat" (perhaps/in some sense). "Syat asti" (in some sense, it is); "syat nasti" (in some sense, it is not). Seven-fold predication (saptabhangi) systematizes all possible qualified statements.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">👁</div>
+      <div class="ic-title">Nayavada</div>
+      <div class="ic-body">The doctrine of partial standpoints (nayas). A naya is a particular perspective that illuminates one aspect of reality. Nayas include: dravyarthika (substance perspective), paryayarthika (modification perspective), and several more. All nayas together give a fuller picture.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🤫</div>
+      <div class="ic-title">Avaktavyata</div>
+      <div class="ic-body">The inexpressible — one of the seven predicates in saptabhangi. Reality in its totality transcends language. The Jina's omniscient knowledge cannot be fully conveyed in human speech. A sophisticated epistemological humility built into the system.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 3: SECTS ========== -->
+<div class="phase-panel" id="panel-3">
+<div class="panel-inner">
+  <div class="sec-label">Tab 04 — Schisms & Schools</div>
+  <div class="sec-title">Jain Sects & Schools</div>
+  <div class="sec-sub">Two major traditions divided on robes, scripture, and the liberation of women</div>
+
+  <div id="sects-timeline-svg" class="svg-wrap"></div>
+  <div class="svg-caption">Timeline of major Jain sects and their divergence · c. 300 BCE to present</div>
+
+  <div class="divider"></div>
+  <div class="two-col">
+    <div>
+      <div class="box" style="border-top:3px solid var(--accent)">
+        <h3>🤍 Shvetambara ("White-Robed")</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6;margin-bottom:.7rem">
+          Monks wear a white cloth. Named from Sanskrit <em>shveta</em> (white) + <em>ambara</em> (cloth). Predominantly found in <mark>Gujarat and Rajasthan</mark>.
+        </p>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6;margin-bottom:.7rem"><strong>Key differences from Digambara:</strong></p>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">• Monks retain a white cloth and begging bowl<br>• Women can attain moksha in a female body<br>• Accept the canonical Agama texts as authentic<br>• Tirthankara images shown with eyes open and clothed<br>• Mallibai (19th Tirthankara) was a woman (disputed by Digambaras)</p>
+        <p style="font-size:.76rem;color:var(--muted);margin-top:.7rem">Major sub-sects: Sthanakvasi, Terapanthi, Murtipujaka</p>
+      </div>
+    </div>
+    <div>
+      <div class="box" style="border-top:3px solid #555">
+        <h3>◼ Digambara ("Sky-Clad")</h3>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6;margin-bottom:.7rem">
+          Monks go completely naked — "clothed in sky." From Sanskrit <em>dik</em> (direction/sky) + <em>ambara</em>. Predominantly in <mark>Karnataka, Maharashtra, and Madhya Pradesh</mark>.
+        </p>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6;margin-bottom:.7rem"><strong>Key differences from Shvetambara:</strong></p>
+        <p style="font-size:.79rem;color:var(--prose);line-height:1.6">• Complete nudity is mandatory for full liberation<br>• Women cannot attain moksha without first being reborn as men<br>• The original Agamas are lost — rely on later texts<br>• Tirthankara images are unclothed with downcast eyes<br>• The 19th Tirthankara (Mallinatha) was male</p>
+        <p style="font-size:.76rem;color:var(--muted);margin-top:.7rem">Major sub-sects: Bisapanthi, Terapanthi (Digambara variety)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:.5rem">
+    <h3>Origin of the Schism</h3>
+    <p style="font-size:.79rem;color:var(--prose);line-height:1.6">According to tradition, a severe <mark>12-year famine</mark> struck Magadha c. 300 BCE. Bhadrabahu, a senior monk, led a group southward to Karnataka (<mark>Shravanabelagola</mark>) to survive. When they returned, the monks who had stayed behind had relaxed the nudity rule and accepted white cloth due to circumstances. The returned group refused to accept this compromise — and the Digambara-Shvetambara schism was born. The Shvetambara version disputes this narrative, saying the divergence was always present as a minor variation.</p>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Comparative Overview</div>
+  <table class="comp-table">
+    <thead><tr><th>Aspect</th><th>Digambara</th><th>Shvetambara</th></tr></thead>
+    <tbody>
+      <tr><td>Monk's dress</td><td>Completely naked (sky-clad)</td><td>White single cloth</td></tr>
+      <tr><td>Women's liberation</td><td>Impossible — must be reborn male</td><td>Possible in female body</td></tr>
+      <tr><td>Original scriptures</td><td>Lost — rely on later texts (Shatkhandagama, Kasayapahuda)</td><td>Preserved as 45 Agamas</td><td></td></tr>
+      <tr><td>19th Tirthankara</td><td>Mallinatha (male)</td><td>Mallibai (female)</td></tr>
+      <tr><td>Image style</td><td>Unclothed, downcast eyes</td><td>Clothed, open eyes, ornaments</td></tr>
+      <tr><td>Monk eats with</td><td>Cupped palms only</td><td>Begging bowl</td></tr>
+      <tr><td>Geographic base</td><td>Karnataka, Maharashtra, MP</td><td>Gujarat, Rajasthan</td></tr>
+      <tr><td>Famous sites</td><td>Shravanabelagola, Mudabidri</td><td>Palitana, Ranakpur, Dilwara</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- ========== TAB 4: SPREAD ========== -->
+<div class="phase-panel" id="panel-4">
+<div class="panel-inner">
+  <div class="sec-label">Tab 05 — Geographic Spread</div>
+  <div class="sec-title">The Spread of Jainism</div>
+  <div class="sec-sub">From the Gangetic heartland to Gujarat, Karnataka, and the global diaspora</div>
+
+  <div id="spread-svg" class="svg-wrap"></div>
+  <div class="svg-caption">Spread of Jainism from its Magadha origins across India</div>
+
+  <div class="divider"></div>
+  <div class="cards-grid">
+    <div class="impact-card">
+      <div class="ic-icon">🏛</div>
+      <div class="ic-title">Magadha & Anga (6th–4th c. BCE)</div>
+      <div class="ic-body">The heartland of Jainism — modern Bihar. Rajagriha (Rajgir), Vaishali, Champanagari, and Pataliputra were major Jain centres. Kings Bimbisara and Ajatashatru were lay followers. Chandragupta Maurya converted to Jainism at the end of his life.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🗿</div>
+      <div class="ic-title">Karnataka (3rd c. BCE onward)</div>
+      <div class="ic-body">The Bhadrabahu migration during the great famine established Karnataka as the Digambara heartland. Shravanabelagola — site of the massive Bahubali statue — became the most sacred Digambara pilgrimage site. Ganga, Hoysala, and Rashtrakuta kings patronized Jainism.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🕌</div>
+      <div class="ic-title">Gujarat & Rajasthan (Medieval)</div>
+      <div class="ic-body">The Shvetambara heartland. The Solanki (Chaulukya) dynasty of Gujarat was a major Jain patron. The Dilwara temples (Mt. Abu) and Palitana temple complex on Shatrunjaya Hill were built during this period — among the most magnificent religious architecture in India.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">💼</div>
+      <div class="ic-title">Global Diaspora (Modern)</div>
+      <div class="ic-body">The Jain diaspora has spread to the UK, USA, Canada, East Africa, and Southeast Asia — concentrated in commerce and trade. Despite being only ~4 million globally, Jains have among the highest literacy rates, per-capita income, and charitable giving of any community in India.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Royal Patronage Timeline</div>
+  <div class="box">
+    <div class="event-item">
+      <div class="ei-year">c. 540–490 BCE</div>
+      <div><div class="ei-title">Bimbisara & Ajatashatru (Magadha)</div><div class="ei-desc">Both Haryanka kings are described in Jain texts as lay followers and patrons of Mahavira, attending his discourses and supporting the Sangha.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">c. 297 BCE</div>
+      <div><div class="ei-title">Chandragupta Maurya</div><div class="ei-desc">The Mauryan empire's founder reportedly abdicated, migrated to Shravanabelagola with Bhadrabahu, and practiced the Jain rite of sallekhana (fasting unto death). Confirmed in Digambara tradition and some historical sources.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">c. 4th–2nd c. BCE</div>
+      <div><div class="ei-title">Nanda & Kalinga Kingdoms</div><div class="ei-desc">Kharvela of Kalinga (c. 1st c. BCE) — whose Hathigumpha inscription is a key historical source — was a devoted Jain patron who conducted military campaigns in Magadha partly to recover a Jain idol taken earlier.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">7th–12th c. CE</div>
+      <div><div class="ei-title">Ganga, Rashtrakuta & Solanki Dynasties</div><div class="ei-desc">The Ganga kings of Karnataka (who commissioned the Bahubali statue at Shravanabelagola) and the Solanki kings of Gujarat (who built Dilwara temples) represented the high tide of royal Jain patronage in art and architecture.</div></div>
+    </div>
+    <div class="event-item">
+      <div class="ei-year">16th–17th c. CE</div>
+      <div><div class="ei-title">Mughal Period</div><div class="ei-desc">Akbar was influenced by Jain scholars — particularly Hiravijaya Suri, whom he summoned to his court in 1583. He issued farmans banning animal slaughter during Paryushana (Jain holy season). Jahangir also showed interest in Jain philosophy.</div></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Why didn't Jainism spread beyond India?</strong> Unlike Buddhism, Jainism never developed a missionary impulse. The extreme requirements of the monastic path (nudity, carrying no water, eating from palms) made monastic mobility nearly impossible. The lay community's tight integration with specific commercial communities also limited geographic expansion. Jainism spread primarily through the movement of Jain merchant families rather than missionary monks.
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 5: COUNCILS ========== -->
+<div class="phase-panel" id="panel-5">
+<div class="panel-inner">
+  <div class="sec-label">Tab 06 — Councils & Scriptures</div>
+  <div class="sec-title">Jain Councils & the Agamas</div>
+  <div class="sec-sub">The preservation and loss of Mahavira's teachings across centuries</div>
+
+  <div id="councils-timeline-svg" class="svg-wrap"></div>
+  <div class="svg-caption">Timeline of Jain councils and scripture compilation</div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">First Council — Pataliputra · c. 300 BCE</div><div class="et-sub">Compilation of the original Agamas · Following Bhadrabahu's departure</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p><strong>Venue:</strong> Pataliputra (modern Patna, Bihar) · <strong>Presider:</strong> Sthulabhadra</p>
+        <br>
+        <p><strong>Context:</strong> A severe 12-year famine struck Magadha around this time. Bhadrabahu, the last monk who knew all 14 Purvas (original teachings) by heart, left for the south with a group of monks. Sthulabhadra stayed in Magadha with the remaining Sangha.</p>
+        <br>
+        <p><strong>Outcome:</strong> Sthulabhadra convened a council to compile and preserve the teachings. The result was the <mark>12 Angas</mark> — the primary Jain canonical texts. However, Sthulabhadra knew only 10 of the 14 Purvas himself; complete knowledge was with Bhadrabahu, who refused to share the last 4 with Sthulabhadra (due to a disciplinary dispute).</p>
+        <br>
+        <p><strong>Significance:</strong> This is the moment Digambaras point to as the beginning of scriptural corruption — the monks who remained behind had compromised their vows (wearing cloth during the famine). Their compilation was therefore considered tainted. Shvetambaras accept these Agamas as authoritative.</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: 1st Council = Pataliputra = Sthulabhadra = 12 Angas compilation. Contemporary with the first Buddhist schism (also at Pataliputra under Ashoka).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="expand-card">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      <div><div class="et-title">Second Council — Vallabhi · c. 453–466 CE</div><div class="et-sub">Final canonization of Shvetambara Agamas · Devanandi's compilation</div></div>
+      <span class="et-arrow">▼</span>
+    </button>
+    <div class="expand-body">
+      <div class="expand-body-inner">
+        <p><strong>Venue:</strong> Vallabhi (Valabhi, modern Vala, Gujarat) · <strong>Presider:</strong> Devanandi (also called Devarddhi Ganimashramana)</p>
+        <br>
+        <p><strong>Context:</strong> A second council had been held at Mathura (c. 300 CE), but the texts remained in oral form. By the 5th century CE, the monks who had memorized entire Agamas were dying — the tradition was at risk of complete loss.</p>
+        <br>
+        <p><strong>Outcome:</strong> The Agamas were <mark>written down for the first time</mark> — a critical moment parallel to the Sri Lanka writing of the Theravada Tipitaka (c. 1st c. BCE). <mark>45 texts</mark> were canonized as the Shvetambara Agama corpus:</p>
+        <p>• 12 Angas (primary texts)</p>
+        <p>• 12 Upangas (secondary texts)</p>
+        <p>• 10 Prakirnakas (miscellaneous texts)</p>
+        <p>• 6 Chedasutras (monastic discipline)</p>
+        <p>• 4 Mula-sutras (basic texts)</p>
+        <p>• 1 Nandi-sutra and 1 Anuyogadvaras (auxiliary)</p>
+        <br>
+        <p><strong>Digambara rejection:</strong> Digambaras reject all these texts as inauthentic. They hold that the original Purvas and Angas are entirely lost, and they rely on later texts — <em>Shatkhandagama</em> and <em>Kasayapahuda</em> — compiled by Pushpadanta and Bhutabali (c. 1st–2nd century CE).</p>
+        <br>
+        <p style="color:var(--muted);font-size:.75rem">UPSC Note: 2nd Council = Vallabhi = Devanandi = written Agamas. This is the event that cemented the Shvetambara scriptural canon.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:1.5rem">
+    <h3>Quick Recall — Jain Councils</h3>
+    <table class="comp-table" style="margin:0">
+      <thead><tr><th>Council</th><th>Location</th><th>Date</th><th>Presider</th><th>Key Outcome</th></tr></thead>
+      <tbody>
+        <tr><td>1st</td><td>Pataliputra</td><td>c. 300 BCE</td><td>Sthulabhadra</td><td>12 Angas compiled; Shvetambara-Digambara split begins</td></tr>
+        <tr><td>Mathura Council</td><td>Mathura</td><td>c. 300 CE</td><td>Skandila</td><td>Oral recitation; no written text; Shvetambara tradition only</td></tr>
+        <tr><td>2nd (Vallabhi)</td><td>Vallabhi, Gujarat</td><td>c. 453/466 CE</td><td>Devanandi</td><td>Agamas written; 45 texts canonized (Shvetambara only)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Key Scriptures</div>
+  <div class="cards-grid">
+    <div class="impact-card">
+      <div class="ic-icon">📚</div>
+      <div class="ic-title">Acharanga Sutra</div>
+      <div class="ic-body">The oldest Jain text in the Agama canon — describes monastic rules and Mahavira's life in archaic Ardhamagadhi Prakrit. Deeply important as a source for the history of Jain asceticism.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">📜</div>
+      <div class="ic-title">Tattvartha Sutra</div>
+      <div class="ic-body">By Umasvati (c. 2nd–5th century CE) — the only text accepted by both Digambara and Shvetambara as authoritative. The most systematic exposition of Jain philosophy in Sanskrit. The "Bible of Jainism."</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🏛</div>
+      <div class="ic-title">Shatkhandagama</div>
+      <div class="ic-body">The primary Digambara canonical text — compiled by Pushpadanta and Bhutabali (c. 1st–2nd century CE). Six-volume work on Jain cosmology, karma theory, and the nature of the soul.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">📖</div>
+      <div class="ic-title">Kalpasutra</div>
+      <div class="ic-body">Shvetambara text by Bhadrabahu — contains biographies of the last four Tirthankaras (especially Mahavira) and is ritually recited during Paryushana. Key source for Mahavira's life history.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 6: ART & ARCH ========== -->
+<div class="phase-panel" id="panel-6">
+<div class="panel-inner">
+  <div class="sec-label">Tab 07 — Art & Architecture</div>
+  <div class="sec-title">Jain Art & Architecture</div>
+  <div class="sec-sub">Among the most exquisite religious art in the world — in marble, bronze, and carved stone</div>
+
+  <div class="two-col">
+    <div>
+      <div class="sec-label">The Jain Temple</div>
+      <div class="sec-title" style="font-size:1.6rem">Derasar & Basadi</div>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6;margin-bottom:.75rem">
+        Jain temples (<em>derasar</em> in Shvetambara terminology, <em>basadi</em> in Digambara) are among the finest examples of Indian temple architecture. The <mark>Dilwara temples</mark> at Abu Road, Rajasthan (11th–13th century CE) are considered among the most beautiful buildings in the world — their white marble carved to lace-like intricacy.
+      </p>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6;margin-bottom:.75rem">
+        The <mark>Ranakpur Chaumukha Temple</mark> (15th century CE, Rajasthan) features 1,444 intricately carved marble pillars — no two alike. The <mark>Palitana temple complex</mark> (Shatrunjaya Hill, Gujarat) contains over 900 temples on a single hill — the largest temple complex in the world.
+      </p>
+    </div>
+    <div id="temple-svg" class="svg-wrap"></div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Iconic Monuments</div>
+  <div class="cards-grid">
+    <div class="impact-card">
+      <div class="ic-icon">🗿</div>
+      <div class="ic-title">Gommateshvara / Bahubali</div>
+      <div class="ic-body">At Shravanabelagola, Karnataka — a monolithic granite statue 57 feet tall, erected c. 981 CE by the Ganga king Chamundaraya. The world's largest free-standing stone statue at the time. Mahāmastakābhiṣeka (head-anointment ceremony) held every 12 years.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🏛</div>
+      <div class="ic-title">Dilwara Temples, Mt. Abu</div>
+      <div class="ic-body">Five marble temples built by Solanki-era merchant ministers (11th–13th century CE). Vimala Vasahi (1031 CE) and Luna Vasahi (1230 CE) are the most famous — their ceilings carved with flowers, figures, and geometric patterns to an almost unbelievable delicacy.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">⛰</div>
+      <div class="ic-title">Palitana, Gujarat</div>
+      <div class="ic-body">Shatrunjaya Hill — the holiest Shvetambara pilgrimage site. 900+ temples built between the 11th and 19th centuries. Pilgrims climb 3,700 steps. Dying on this hill is considered auspicious. In 2014, the city of Palitana declared itself vegetarian — the first city in the world to do so by law.</div>
+    </div>
+    <div class="impact-card">
+      <div class="ic-icon">🎨</div>
+      <div class="ic-title">Jain Manuscript Paintings</div>
+      <div class="ic-body">An extraordinary tradition of illustrated manuscripts — particularly the Kalpasutra and Kalakacharya Katha. The Shvetambara style (12th–16th century CE) is distinctive: flat, angular figures, rich gold backgrounds, extended "projecting eye" (a eye extends beyond the profile face) — a uniquely Jain artistic convention.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Tirthankara Iconography</div>
+  <div class="sec-title" style="font-size:1.8rem">How to Identify a Jina Image</div>
+  <div class="two-col">
+    <div class="box">
+      <h3>Shvetambara Style</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">• Eyes open, slightly smiling<br>• Clothed in simple white garment<br>• Decorated with jewelry and ornaments<br>• Seated or standing with attendants (Yaksha/Yakshi)<br>• Each Tirthankara identified by their <em>lanchana</em> (symbol): bull (Rishabha), crescent (Neminatha), serpent (Parshva), lion (Mahavira)</p>
+    </div>
+    <div class="box">
+      <h3>Digambara Style</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.6">• Eyes half-closed, meditating<br>• Completely naked — no clothing or ornaments<br>• Serene, otherworldly expression<br>• Elongated earlobes (from heavy earrings worn as a prince, now empty)<br>• Arms hanging straight down (kayotsarga — body abandonment posture)<br>• Same lanchana system for identification</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== TAB 7: UPSC CORNER ========== -->
+<div class="phase-panel" id="panel-7">
+<div class="panel-inner">
+  <div class="sec-label">Tab 08 — Exam Preparation</div>
+  <div class="sec-title">UPSC Corner</div>
+  <div class="sec-sub">Flashcards, previous year questions, and high-yield comparison tables</div>
+
+  <div class="sec-label">Flashcards — Key Terms</div>
+  <div class="sec-title" style="font-size:1.6rem">Tap to Flip</div>
+  <div class="flashcard-grid" id="terms-cards"></div>
+
+  <div class="divider"></div>
+  <div class="sec-label">Previous Year Questions</div>
+  <div class="sec-title" style="font-size:1.6rem">UPSC Prelims — Tap to Reveal Answer</div>
+  <div id="pyq-cards"></div>
+
+  <div class="divider"></div>
+  <div class="sec-label">High-Yield Comparison</div>
+  <div class="sec-title" style="font-size:1.8rem">Jainism vs Buddhism — The Essentials</div>
+  <table class="comp-table">
+    <thead><tr><th>Feature</th><th>Jainism</th><th>Buddhism</th></tr></thead>
+    <tbody>
+      <tr><td>Founder</td><td>24th Tirthankara Mahavira (traditional); Parshvanatha preceded</td><td>Siddhartha Gautama (the Buddha)</td></tr>
+      <tr><td>Approximate founding</td><td>c. 599 BCE (Mahavira's birth)</td><td>c. 563 BCE (Buddha's birth)</td></tr>
+      <tr><td>Soul (Atman)</td><td>Yes — permanent individual jiva; each soul is unique</td><td>No — anatta (no permanent self)</td></tr>
+      <tr><td>God / Creator</td><td>No creator God (anishvara-vada); Tirthankaras are perfected humans</td><td>No creator God; Buddha is a teacher not a god</td></tr>
+      <tr><td>Karma</td><td>Physical particles (pudgala) that stick to the soul</td><td>Mental intention (cetana) — not physical</td></tr>
+      <tr><td>Liberation path</td><td>Extreme austerity + non-violence + knowledge</td><td>Middle Path — Eightfold Path</td></tr>
+      <tr><td>Asceticism</td><td>Essential and embraced (especially Digambara)</td><td>Rejected — Middle Way avoids extremes</td></tr>
+      <tr><td>Ahimsa</td><td>Absolute — most rigorous in any tradition</td><td>Important but more contextual</td></tr>
+      <tr><td>Epistemology</td><td>Anekantavada — multi-perspectivalism</td><td>Dependent Origination — relational truth</td></tr>
+      <tr><td>Spread</td><td>Remained largely within India</td><td>Major world religion; spread across Asia</td></tr>
+      <tr><td>Scriptures</td><td>Agamas (Shvetambara); debated by Digambaras</td><td>Tipitaka (Pali Canon); various Mahayana sutras</td></tr>
+      <tr><td>Community base</td><td>Merchant/Vaishya communities (Gujarat, Rajasthan)</td><td>Originally Kshatriya; spread to all classes</td></tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+  <div class="sec-label">Memory Aids</div>
+  <div class="two-col">
+    <div class="box">
+      <h3>Five Vows — Mnemonic</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.7"><strong>A</strong>himsa (non-violence)<br><strong>S</strong>atya (non-lying)<br><strong>A</strong>steya (non-stealing)<br><strong>B</strong>rahmacharya (celibacy)<br><strong>A</strong>parigraha (non-possession)<br><br>Mnemonic: <mark>"A Snake Always Bites Aggressively"</mark> → Ahimsa, Satya, Asteya, Brahmacharya, Aparigraha</p>
+    </div>
+    <div class="box">
+      <h3>Key Dates — Fast Track</h3>
+      <p style="font-size:.79rem;color:var(--prose);line-height:1.7">
+        <strong>599 BCE</strong> — Mahavira born (Kundagrama/Vaishali)<br>
+        <strong>569 BCE</strong> — Diksha (renunciation) at age 30<br>
+        <strong>557 BCE</strong> — Kevala Jnana (enlightenment)<br>
+        <strong>527 BCE</strong> — Nirvana at Pavapuri (age 72)<br>
+        <strong>c. 300 BCE</strong> — 1st Council (Pataliputra); Digambara split<br>
+        <strong>c. 297 BCE</strong> — Chandragupta Maurya converts to Jainism<br>
+        <strong>c. 1st c. BCE</strong> — Kharvela of Kalinga (Hathigumpha)<br>
+        <strong>981 CE</strong> — Bahubali statue at Shravanabelagola<br>
+        <strong>1031 CE</strong> — Dilwara Vimala Vasahi temple built<br>
+        <strong>c. 453/466 CE</strong> — 2nd Council (Vallabhi); Agamas written
+      </p>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+// =================== THEME ===================
+function toggleTheme(){
+  const h=document.documentElement;
+  h.dataset.theme=h.dataset.theme==='dark'?'light':'dark';
+  setTimeout(redrawAll,50);
+}
+
+// =================== TAB SWITCHING ===================
+function switchTab(i){
+  document.querySelectorAll('.phase-panel').forEach((p,idx)=>{
+    p.classList.toggle('visible',idx===i);
+  });
+  document.querySelectorAll('.tab').forEach((t,idx)=>{
+    t.classList.toggle('active',idx===i);
+  });
+  setTimeout(redrawAll,50);
+}
+
+// =================== EXPAND/COLLAPSE ===================
+function toggleExpand(btn){
+  const body=btn.nextElementSibling;
+  const open=btn.classList.toggle('open');
+  body.style.maxHeight=open?(body.scrollHeight+40)+'px':'0';
+}
+
+// =================== SVG HELPERS ===================
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function makeSVG(w,h){
+  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  s.setAttribute('width',w);s.setAttribute('height',h);
+  return s;
+}
+function el(tag,attrs){
+  const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));
+  return e;
+}
+function rect(x,y,w,h,attrs){return el('rect',{x,y,width:w,height:h,...attrs})}
+function circle(cx,cy,r,attrs){return el('circle',{cx,cy,r,...attrs})}
+function txt(t,attrs){
+  const e=el('text',attrs);e.textContent=t;return e;
+}
+function line(x1,y1,x2,y2,attrs){return el('line',{x1,y1,x2,y2,...attrs})}
+function path(d,attrs){return el('path',{d,...attrs})}
+
+// =================== THREE JEWELS SVG ===================
+function drawThreeJewels(){
+  const wrap=document.getElementById('three-jewels-svg');
+  if(!wrap) return;
+  const W=700,H=230;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'),border=css('--border'),accent='#d97706',muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const jewels=[
+    {x:140,icon:'👁',label:'SAMYAK',label2:'DARSHANA',sub:'Right Faith',color:'#22c55e'},
+    {x:350,icon:'📖',label:'SAMYAK',label2:'JNANA',sub:'Right Knowledge',color:accent},
+    {x:560,icon:'🕊',label:'SAMYAK',label2:'CHARITRA',sub:'Right Conduct',color:'#3b82f6'},
+  ];
+  jewels.forEach(j=>{
+    // Circle — icon only inside
+    s.appendChild(circle(j.x,80,42,{fill:j.color+'22',stroke:j.color,strokeWidth:'2'}));
+    const ic=el('text',{x:j.x,y:92,textAnchor:'middle',fontSize:'30',fontFamily:'serif'});
+    ic.textContent=j.icon;s.appendChild(ic);
+    // Labels below circle
+    s.appendChild(txt(j.label,{x:j.x,y:140,textAnchor:'middle',fontSize:'9',fontFamily:"'Bebas Neue',sans-serif",fill:j.color,letterSpacing:'0.08em'}));
+    s.appendChild(txt(j.label2,{x:j.x,y:153,textAnchor:'middle',fontSize:'9',fontFamily:"'Bebas Neue',sans-serif",fill:j.color,letterSpacing:'0.08em'}));
+    s.appendChild(txt(j.sub,{x:j.x,y:167,textAnchor:'middle',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  // Connectors between circles
+  [0,1].forEach(i=>{
+    const a=jewels[i],b=jewels[i+1];
+    s.appendChild(line(a.x+42,80,b.x-42,80,{stroke:border,strokeWidth:'1',strokeDasharray:'4,3'}));
+  });
+  s.appendChild(txt('Right Faith · Right Knowledge · Right Conduct — the complete path to Moksha',{x:W/2,y:205,textAnchor:'middle',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== MAHAVIRA TIMELINE ===================
+function drawMahaviraTimeline(){
+  const wrap=document.getElementById('mahavira-timeline-svg');
+  if(!wrap) return;
+  const W=900,H=240;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'),border=css('--border'),accent='#d97706',muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const axisY=120;
+  const events=[
+    {yr:599,label:'BIRTH',sub1:'Kundagrama',sub2:'Vaishali',top:true,color:accent},
+    {yr:569,label:'DIKSHA',sub1:'Renunciation',sub2:'Age 30',top:false,color:'#22c55e'},
+    {yr:557,label:'KEVALA JNANA',sub1:'Omniscience',sub2:'Age 42',top:true,color:'#f472b6'},
+    {yr:527,label:'NIRVANA',sub1:'Pavapuri',sub2:'Age 72',top:false,color:'#3b82f6'},
+  ];
+  const pad=100;
+  const tx=yr=>pad+(599-yr)/(599-527)*(W-pad*2);
+  s.appendChild(line(pad,axisY,W-pad,axisY,{stroke:border,strokeWidth:'2'}));
+  events.forEach(c=>{
+    const x=tx(c.yr);
+    const bW=108,bH=46;
+    const bY=c.top?axisY-bH-28:axisY+28;
+    s.appendChild(line(x,c.top?bY+bH:bY,x,axisY,{stroke:c.color,strokeWidth:'1.5',strokeDasharray:'4,3'}));
+    s.appendChild(circle(x,axisY,6,{fill:c.color}));
+    s.appendChild(rect(x-bW/2,bY,bW,bH,{fill:c.color+'18',stroke:c.color,strokeWidth:'1.5',rx:'5'}));
+    s.appendChild(txt(c.label,{x,y:bY+15,textAnchor:'middle',fontSize:'8.5',fontFamily:"'Bebas Neue',sans-serif",fill:c.color,letterSpacing:'0.06em'}));
+    s.appendChild(txt(c.sub1,{x,y:bY+28,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:c.color+'cc'}));
+    s.appendChild(txt(c.sub2,{x,y:bY+40,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:c.color+'99'}));
+    s.appendChild(txt(c.yr+' BCE',{x,y:axisY+(c.top?16:-8),textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== TIRTHANKARA SVG ===================
+function drawTirthankaras(){
+  const wrap=document.getElementById('tirthankara-svg');
+  if(!wrap) return;
+  const W=900,H=200;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'),border=css('--border'),accent='#d97706',muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const tirts=[
+    {n:1,name:'Rishabhadeva',symbol:'🐂',color:'#f59e0b'},
+    {n:8,name:'Chandraprabha',symbol:'🌙',color:'#a78bfa'},
+    {n:16,name:'Shantinatha',symbol:'🦌',color:'#34d399'},
+    {n:22,name:'Neminatha',symbol:'🐚',color:'#60a5fa'},
+    {n:23,name:'Parshvanatha',symbol:'🐍',color:'#f472b6'},
+    {n:24,name:'Mahavira',symbol:'🦁',color:accent},
+  ];
+  const cx=W/(tirts.length+1);
+  tirts.forEach((t,i)=>{
+    const x=cx*(i+1);
+    s.appendChild(circle(x,90,42,{fill:t.color+'22',stroke:t.color,strokeWidth:'2'}));
+    const ic=el('text',{x,y:84,textAnchor:'middle',fontSize:'26',fontFamily:'serif'});
+    ic.textContent=t.symbol;s.appendChild(ic);
+    s.appendChild(txt('#'+t.n,{x,y:103,textAnchor:'middle',fontSize:'8',fontFamily:"'Bebas Neue',sans-serif",fill:t.color}));
+    const words=t.name.split('a').join('a'); // just use full name
+    s.appendChild(txt(t.name,{x,y:148,textAnchor:'middle',fontSize:'7.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+    if(i<tirts.length-1){
+      const nx=cx*(i+2);
+      s.appendChild(line(x+42,90,nx-42,90,{stroke:border,strokeWidth:'1',strokeDasharray:'3,4',opacity:'0.5'}));
+    }
+  });
+  s.appendChild(txt('24 TIRTHANKARAS — SELECT KEY FORD-MAKERS OF THE CURRENT COSMIC CYCLE',{x:W/2,y:175,textAnchor:'middle',fontSize:'8',fontFamily:"'Bebas Neue',sans-serif",fill:muted,letterSpacing:'0.09em'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== KARMA WHEEL (Interactive) ===================
+const karmaNodes=[
+  {id:'jiva',label:'JIVA',sub:'The Soul',x:300,y:140,color:'#22c55e',info:'The Jiva (soul) is the fundamental living substance — eternal, conscious, and capable of infinite knowledge, bliss, and energy. In its pure state (siddha), it floats above the universe. In its bound state, it is weighed down by karmic matter.'},
+  {id:'asrava',label:'ASRAVA',sub:'Karma Influx',x:150,y:80,color:'#f97316',info:'Asrava means the influx of karmic matter into the soul. It occurs through the soul\'s activities (yoga) — actions of mind, speech, and body — combined with passions (kashaya) like anger, pride, greed, and deceit.'},
+  {id:'bandha',label:'BANDHA',sub:'Karma Bondage',x:450,y:80,color:'#ef4444',info:'Bandha is the actual bonding of karmic particles to the soul. Four factors determine the nature of bondage: the type (prakriti), quantity (pradesha), duration (sthiti), and intensity (anubhava) of karma.'},
+  {id:'samvara',label:'SAMVARA',sub:'Karma Stoppage',x:100,y:210,color:'#3b82f6',info:'Samvara is the stopping of fresh karmic influx. Achieved through the Three Jewels (right faith, knowledge, conduct), the Five Vows, careful vigilance (gupti), and ten virtues (yati-dharma). The monk\'s whole life is aimed at samvara.'},
+  {id:'nirjara',label:'NIRJARA',sub:'Karma Shedding',x:500,y:210,color:'#a78bfa',info:'Nirjara is the shedding of previously accumulated karma — either by waiting for it to bear fruit (savipaka) or by austerities that burn it off prematurely (avipaka). The extreme austerities of Jain monks are specifically aimed at accelerating nirjara.'},
+  {id:'moksha',label:'MOKSHA',sub:'Liberation',x:300,y:280,color:'#fbbf24',info:'Moksha is the complete freedom of the soul from all karmic matter. The liberated soul (Siddha) rises to Siddhashila — the apex of the universe — and dwells there in eternal, infinite knowledge, bliss, energy, and perception. There is no rebirth.'},
+];
+function drawKarmaWheel(){
+  const wrap=document.getElementById('karma-svg');
+  if(!wrap) return;
+  const W=600,H=360;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'),border=css('--border'),muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const connections=[['jiva','asrava'],['jiva','bandha'],['jiva','samvara'],['jiva','nirjara'],['asrava','bandha'],['samvara','nirjara'],['samvara','moksha'],['nirjara','moksha']];
+  connections.forEach(([a,b])=>{
+    const na=karmaNodes.find(n=>n.id===a),nb=karmaNodes.find(n=>n.id===b);
+    s.appendChild(line(na.x,na.y,nb.x,nb.y,{stroke:border,strokeWidth:'1.5',strokeDasharray:'5,4',opacity:'0.5'}));
+  });
+  karmaNodes.forEach(n=>{
+    const g=el('g',{style:'cursor:pointer'});
+    g.appendChild(circle(n.x,n.y,36,{fill:n.color+'22',stroke:n.color,strokeWidth:'2'}));
+    g.appendChild(txt(n.label,{x:n.x,y:n.y-3,textAnchor:'middle',fontSize:'8',fontFamily:"'Bebas Neue',sans-serif",fill:n.color,letterSpacing:'0.06em'}));
+    g.appendChild(txt(n.sub,{x:n.x,y:n.y+9,textAnchor:'middle',fontSize:'6.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+    g.addEventListener('mouseenter',()=>{
+      document.getElementById('karma-info').innerHTML=`<strong>${n.label} — ${n.sub}</strong><br>${n.info}`;
+    });
+    s.appendChild(g);
+  });
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== SECTS TIMELINE ===================
+function drawSectsTimeline(){
+  const wrap=document.getElementById('sects-timeline-svg');
+  if(!wrap) return;
+  const W=900,H=250;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'),border=css('--border'),accent='#d97706',muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const axisY=125;
+  const events=[
+    {yr:599,label:'MAHAVIRA',sub:'Birth of Jainism',top:true,color:accent},
+    {yr:300,label:'1ST COUNCIL',sub:'Pataliputra',top:false,color:'#f97316'},
+    {yr:100,label:'KHARVELA',sub:'Hathigumpha',top:true,color:'#22c55e'},
+    {yr:-300,label:'2ND COUNCIL',sub:'Vallabhi (453 CE)',top:false,color:'#3b82f6'},
+    {yr:-500,label:'DILWARA',sub:'Temples (1031 CE)',top:true,color:'#a78bfa'},
+    {yr:-527,label:'BAHUBALI',sub:'Statue (981 CE)',top:false,color:'#f472b6'},
+  ];
+  const pad=70;
+  const tx=yr=>pad+(650-yr)/(650-(-600))*(W-pad*2);
+  s.appendChild(line(pad,axisY,W-pad,axisY,{stroke:border,strokeWidth:'2'}));
+  events.forEach(c=>{
+    const x=tx(c.yr);
+    const bW=104,bH=38;
+    const bY=c.top?axisY-bH-22:axisY+22;
+    s.appendChild(line(x,c.top?bY+bH:bY,x,axisY,{stroke:c.color,strokeWidth:'1.5',strokeDasharray:'4,3'}));
+    s.appendChild(circle(x,axisY,5,{fill:c.color}));
+    s.appendChild(rect(x-bW/2,bY,bW,bH,{fill:c.color+'18',stroke:c.color,strokeWidth:'1.5',rx:'4'}));
+    s.appendChild(txt(c.label,{x,y:bY+14,textAnchor:'middle',fontSize:'8',fontFamily:"'Bebas Neue',sans-serif",fill:c.color,letterSpacing:'0.05em'}));
+    s.appendChild(txt(c.sub,{x,y:bY+27,textAnchor:'middle',fontSize:'6.5',fontFamily:"'DM Mono',monospace",fill:c.color+'cc'}));
+    const yrLabel=c.yr>0?c.yr+' BCE':(Math.abs(c.yr)+' CE');
+    s.appendChild(txt(yrLabel,{x,y:axisY+(c.top?16:-8),textAnchor:'middle',fontSize:'6.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== SPREAD MAP SVG ===================
+function drawSpreadSvg(){
+  const wrap=document.getElementById('spread-svg');
+  if(!wrap) return;
+  const W=800,H=400;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'),border=css('--border'),accent='#d97706',muted=css('--muted'),prose=css('--prose');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  // Simple India outline suggestion
+  s.appendChild(rect(180,40,440,320,{fill:'none',stroke:border,strokeWidth:'1',rx:'8',opacity:'0.4'}));
+  // Origin marker
+  const origin={x:480,y:160,label:'MAGADHA/VAISHALI',sub:'Origin ~600 BCE'};
+  s.appendChild(circle(origin.x,origin.y,12,{fill:accent,opacity:'0.9'}));
+  s.appendChild(txt(origin.label,{x:origin.x+18,y:origin.y-4,fontSize:'8',fontFamily:"'Bebas Neue',sans-serif",fill:accent,letterSpacing:'0.06em'}));
+  s.appendChild(txt(origin.sub,{x:origin.x+18,y:origin.y+8,fontSize:'6.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  // Spread points
+  const pts=[
+    {x:480,y:270,label:'KALINGA',sub:'Kharvela ~1st c. BCE',color:'#22c55e'},
+    {x:520,y:300,label:'KARNATAKA',sub:'Digambara heartland',color:'#3b82f6'},
+    {x:260,y:200,label:'GUJARAT',sub:'Shvetambara base',color:'#f472b6'},
+    {x:300,y:160,label:'RAJASTHAN',sub:'Dilwara temples',color:'#a78bfa'},
+    {x:440,y:140,label:'MATHURA',sub:'Council ~300 CE',color:'#fbbf24'},
+  ];
+  pts.forEach(p=>{
+    s.appendChild(line(origin.x,origin.y,p.x,p.y,{stroke:p.color,strokeWidth:'1.5',strokeDasharray:'5,4',opacity:'0.6'}));
+    s.appendChild(circle(p.x,p.y,8,{fill:p.color+'44',stroke:p.color,strokeWidth:'2'}));
+    s.appendChild(txt(p.label,{x:p.x+(p.x<origin.x?-12:12),y:p.y-4,textAnchor:p.x<origin.x?'end':'start',fontSize:'7.5',fontFamily:"'Bebas Neue',sans-serif",fill:p.color,letterSpacing:'0.05em'}));
+    s.appendChild(txt(p.sub,{x:p.x+(p.x<origin.x?-12:12),y:p.y+7,textAnchor:p.x<origin.x?'end':'start',fontSize:'6.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  s.appendChild(txt('SPREAD OF JAINISM — MAJOR CENTRES',{x:W/2,y:380,textAnchor:'middle',fontSize:'9',fontFamily:"'Bebas Neue',sans-serif",fill:muted,letterSpacing:'0.1em'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== COUNCILS TIMELINE ===================
+function drawCouncilsTimeline(){
+  const wrap=document.getElementById('councils-timeline-svg');
+  if(!wrap) return;
+  const W=800,H=220;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'),border=css('--border'),accent='#d97706',muted=css('--muted');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const axisY=110;
+  const events=[
+    {yr:300,label:'1ST COUNCIL',sub1:'Pataliputra',sub2:'Sthulabhadra',top:true,color:accent},
+    {yr:0,label:'MATHURA COUNCIL',sub1:'Skandila',sub2:'c. 300 CE',top:false,color:'#3b82f6'},
+    {yr:-453,label:'2ND COUNCIL',sub1:'Vallabhi',sub2:'Devanandi',top:true,color:'#22c55e'},
+  ];
+  const pad=100;
+  const tx=yr=>pad+(400-yr)/(400-(-550))*(W-pad*2);
+  s.appendChild(line(pad,axisY,W-pad,axisY,{stroke:border,strokeWidth:'2'}));
+  events.forEach(c=>{
+    const x=tx(c.yr);
+    const bW=120,bH=44;
+    const bY=c.top?axisY-bH-22:axisY+22;
+    s.appendChild(line(x,c.top?bY+bH:bY,x,axisY,{stroke:c.color,strokeWidth:'1.5',strokeDasharray:'4,3'}));
+    s.appendChild(circle(x,axisY,7,{fill:c.color}));
+    s.appendChild(rect(x-bW/2,bY,bW,bH,{fill:c.color+'18',stroke:c.color,strokeWidth:'1.5',rx:'5'}));
+    s.appendChild(txt(c.label,{x,y:bY+15,textAnchor:'middle',fontSize:'8.5',fontFamily:"'Bebas Neue',sans-serif",fill:c.color,letterSpacing:'0.06em'}));
+    s.appendChild(txt(c.sub1,{x,y:bY+28,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:c.color+'cc'}));
+    s.appendChild(txt(c.sub2,{x,y:bY+40,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:c.color+'99'}));
+    const yrLabel=c.yr>0?c.yr+' BCE':(Math.abs(c.yr)+' CE');
+    s.appendChild(txt(yrLabel,{x,y:axisY+(c.top?18:-10),textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  });
+  s.appendChild(txt('JAIN COUNCILS & SCRIPTURE TIMELINE',{x:W/2,y:208,textAnchor:'middle',fontSize:'9',fontFamily:"'Bebas Neue',sans-serif",fill:muted,letterSpacing:'0.1em'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== TEMPLE SVG ===================
+function drawTempleSvg(){
+  const wrap=document.getElementById('temple-svg');
+  if(!wrap) return;
+  const W=380,H=380;
+  const s=makeSVG(W,H);
+  const bg=css('--surface'),border=css('--border'),accent='#d97706',muted=css('--muted'),prose=css('--prose');
+  s.appendChild(rect(0,0,W,H,{fill:bg}));
+  const cx=190;
+  // Base platform
+  s.appendChild(rect(60,310,260,20,{fill:accent+'22',stroke:accent,strokeWidth:'2',rx:'3'}));
+  s.appendChild(txt('JAGATI (Platform)',{x:cx,y:325,textAnchor:'middle',fontSize:'7.5',fontFamily:"'Bebas Neue',sans-serif",fill:accent,letterSpacing:'0.08em'}));
+  // Mandapa (hall)
+  s.appendChild(rect(100,250,180,60,{fill:accent+'18',stroke:accent,strokeWidth:'2',rx:'3'}));
+  s.appendChild(txt('MANDAPA (Hall)',{x:cx,y:284,textAnchor:'middle',fontSize:'7.5',fontFamily:"'Bebas Neue',sans-serif",fill:accent}));
+  // Garbhagriha walls
+  s.appendChild(rect(150,170,80,80,{fill:accent+'22',stroke:accent,strokeWidth:'2'}));
+  s.appendChild(txt('GARBHAGRIHA',{x:cx,y:208,textAnchor:'middle',fontSize:'7',fontFamily:"'Bebas Neue',sans-serif",fill:accent}));
+  s.appendChild(txt('(Sanctum)',{x:cx,y:220,textAnchor:'middle',fontSize:'6.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  // Jina symbol inside
+  const jinaTxt=el('text',{x:cx,y:198,textAnchor:'middle',fontSize:'22',fontFamily:'serif'});
+  jinaTxt.textContent='🕊'; s.appendChild(jinaTxt);
+  // Shikhara (tower)
+  const shikD=`M 150,170 L 140,130 L 145,100 L ${cx},65 L ${W-145},100 L ${W-140},130 L ${W-150},170`;
+  s.appendChild(path(shikD,{fill:accent+'22',stroke:accent,strokeWidth:'2'}));
+  s.appendChild(txt('SHIKHARA',{x:cx,y:120,textAnchor:'middle',fontSize:'7.5',fontFamily:"'Bebas Neue',sans-serif",fill:accent,letterSpacing:'0.08em'}));
+  s.appendChild(txt('(Tower)',{x:cx,y:133,textAnchor:'middle',fontSize:'6.5',fontFamily:"'DM Mono',monospace",fill:muted}));
+  // Amalaka & Kalasha
+  s.appendChild(el('ellipse',{cx,cy:63,rx:'22',ry:'8',fill:accent+'33',stroke:accent,strokeWidth:'1.5'}));
+  s.appendChild(txt('AMALAKA',{x:cx+30,y:65,textAnchor:'start',fontSize:'7',fontFamily:"'Bebas Neue',sans-serif",fill:accent}));
+  s.appendChild(el('ellipse',{cx,cy:49,rx:'10',ry:'6',fill:accent+'44',stroke:accent,strokeWidth:'1.5'}));
+  s.appendChild(txt('KALASHA',{x:cx+30,y:51,textAnchor:'start',fontSize:'7',fontFamily:"'Bebas Neue',sans-serif",fill:accent}));
+  // Entrance torana
+  s.appendChild(line(130,250,130,290,{stroke:accent,strokeWidth:'6'}));
+  s.appendChild(line(250,250,250,290,{stroke:accent,strokeWidth:'6'}));
+  s.appendChild(line(125,255,255,255,{stroke:accent,strokeWidth:'5'}));
+  s.appendChild(txt('TORANA',{x:cx,y:244,textAnchor:'middle',fontSize:'7',fontFamily:"'DM Mono',monospace",fill:muted}));
+  s.appendChild(txt('JAIN TEMPLE — Schematic Cross Section',{x:cx,y:372,textAnchor:'middle',fontSize:'9',fontFamily:"'Bebas Neue',sans-serif",fill:muted,letterSpacing:'0.08em'}));
+  wrap.innerHTML=''; wrap.appendChild(s);
+}
+
+// =================== FLASHCARDS (Terms) ===================
+const termCards=[
+  {q:'Ahimsa',a:'Non-violence — the supreme vow in Jainism (ahimsa paramo dharma). Most radical formulation in any tradition: extended to all living beings including plants, microorganisms, and earth-bodies.'},
+  {q:'Anekantavada',a:'Many-sided truth — Jainism\'s distinctive epistemology. Reality is complex; no single perspective captures all truth. Related doctrines: Syadvada (conditional predication) and Nayavada (partial standpoints).'},
+  {q:'Tirthankara',a:'"Ford-maker" — one who creates a ford (tirtha) across the ocean of suffering. The 24 enlightened beings who re-establish the Jain path in each cosmic cycle. Not gods but perfected humans.'},
+  {q:'Jiva',a:'Soul/living substance — the fundamental conscious entity in Jain metaphysics. Eternal, unique to each individual, possessing infinite knowledge, bliss, and energy in its pure state.'},
+  {q:'Kevala Jnana',a:'Omniscience — the perfect, infinite knowledge attained upon complete liberation of the soul from the four knowledge-obscuring karmas. What Mahavira attained under the sala tree at age 42.'},
+  {q:'Sallekhana',a:'Voluntary fasting unto death — the Jain death rite. Practiced by monks and laity when the body can no longer support spiritual practice. Not considered suicide (no passion involved). Mahavira\'s parents and Chandragupta Maurya both practiced it.'},
+  {q:'Moksha (Jain)',a:'Complete liberation of the soul from all karmic matter. The liberated soul (Siddha) rises to Siddhashila at the apex of the universe, dwelling in eternal omniscience and bliss. No rebirth — permanent liberation.'},
+  {q:'Syadvada',a:'Doctrine of conditional predication (also Saptabhangi — seven-fold predication). Every claim must be qualified: "syat asti" (perhaps it is), "syat nasti" (perhaps it is not), etc. Seven possible qualified statements about any proposition.'},
+  {q:'Karma (Jain)',a:'In Jainism, karma consists of actual microscopic material particles (pudgala) that stick to the soul through passions and activity. Unique — unlike Buddhism (mental intention) or Hinduism (moral consequence).'},
+  {q:'Digambara',a:'"Sky-clad" — Jain sect whose monks go completely naked. Believe women cannot achieve liberation without rebirth as a man. Hold that the original Agamas are lost. Predominate in Karnataka and South India.'},
+  {q:'Shvetambara',a:'"White-robed" — Jain sect whose monks wear a single white cloth. Accept women\'s liberation in a female body. Accept the 45 Agamas compiled at Vallabhi (453/466 CE). Predominate in Gujarat and Rajasthan.'},
+  {q:'Pancha Mahavrata',a:'Five Great Vows for Jain monks: Ahimsa (non-violence), Satya (non-lying), Asteya (non-stealing), Brahmacharya (celibacy), Aparigraha (non-possession). Parshvanatha taught the first four; Mahavira added celibacy.'},
+];
+function buildTermCards(){
+  const grid=document.getElementById('terms-cards');
+  if(!grid) return;
+  grid.innerHTML='';
+  termCards.forEach((c,i)=>{
+    const fc=document.createElement('div');
+    fc.className='flashcard';
+    fc.innerHTML=`<div class="flashcard-inner">
+      <div class="fc-front"><div class="fc-q">${c.q}</div><div class="fc-hint">Tap to reveal definition</div></div>
+      <div class="fc-back"><div class="fc-a">${c.a}</div></div>
+    </div>`;
+    fc.addEventListener('click',()=>fc.classList.toggle('flipped'));
+    grid.appendChild(fc);
+  });
+}
+
+// =================== PYQ CARDS ===================
+const pyqs=[
+  {yr:'2022',q:'Which of the following best describes the Jain philosophical doctrine of Anekantavada?',a:'Anekantavada is the doctrine of many-sidedness of reality — the view that reality is complex and cannot be fully described from any single standpoint. Related doctrines: Syadvada (conditional predication using "syat" qualifiers) and Nayavada (partial standpoints). Each statement is true from a particular angle (naya) but not absolutely. The Saptabhangi (seven-fold predication) systematizes all possible qualified statements about any proposition.'},
+  {yr:'2020',q:'Which Jain text is accepted as authoritative by BOTH major Jain sects — Digambara and Shvetambara?',a:'The Tattvartha Sutra (Tattvarthadhigama Sutra) by Umasvati (c. 2nd–5th century CE) — written in Sanskrit. It is the most systematic exposition of Jain philosophy and the only canonical text accepted by both major sects. Sometimes called the "Bible of Jainism." Key content: the six dravyas, nine tattvas (categories of reality), karma theory, and the path to liberation.'},
+  {yr:'2018',q:'The famous Gommateshvara (Bahubali) statue at Shravanabelagola was commissioned by which ruler?',a:'Chamundaraya, a minister and general of the Ganga king Rachamalla IV of Karnataka, commissioned the statue around 981 CE. It is a monolithic granite statue 57 feet tall, carved from a single rock. The Mahamastakabhisheka (great head-anointment ceremony) is held every 12 years. Shravanabelagola became the center of Digambara Jainism after Chandragupta Maurya (and Bhadrabahu) migrated there c. 297 BCE.'},
+  {yr:'2016',q:'What was the significance of the first Jain Council held at Pataliputra (c. 300 BCE)?',a:'The council was held under the presidency of Sthulabhadra to compile and preserve the teachings of Mahavira after a severe 12-year famine. The 12 Angas were compiled. However, Bhadrabahu — who knew all 14 Purvas — had left for Karnataka and refused to share the last 4 Purvas with Sthulabhadra (due to disciplinary concerns). This became the seed of the Digambara-Shvetambara schism: Digambaras say the compiled texts were corrupted by monks who had compromised their vows; Shvetambaras accept them.'},
+  {yr:'2015',q:'Chandragupta Maurya\'s connection to Jainism relates to which practice?',a:'According to Jain tradition (especially Digambara), Chandragupta Maurya abdicated his throne in his final years, migrated with Bhadrabahu to Shravanabelagola in Karnataka, and practiced sallekhana (voluntary fasting unto death) there around 297 BCE. This is confirmed by the Digambara tradition and some inscriptional evidence. Note: Buddhist sources say Chandragupta converted to Buddhism — the Jain claim is considered more historically plausible by many scholars.'},
+  {yr:'2013',q:'Which Mughal emperor was significantly influenced by Jain scholarship and issued edicts protecting animals during Jain holy festivals?',a:'Emperor Akbar was profoundly influenced by Hiravijaya Suri, the Shvetambara Jain monk he summoned to his court in 1583 CE. After their discussions, Akbar issued farmans (royal decrees) banning animal slaughter for several days each year (during Paryushana), prohibiting fishing in certain months, and freeing caged birds. He also granted tax exemptions to Jain pilgrimage sites. This is one of the most documented cases of Jain influence on Mughal imperial policy.'},
+  {yr:'2012',q:'The "Hathigumpha inscription" of Kharvela of Kalinga is significant for Jain history because:',a:'The Hathigumpha inscription (Elephant Cave inscription) at Udayagiri, Odisha, composed by King Kharvela of Kalinga (c. 1st century BCE), is one of the earliest substantial historical inscriptions in India. It records his military campaigns, including an expedition to Magadha specifically to recover a Jain statue/idol that had been taken from Kalinga. It documents royal patronage of Jainism and provides important chronological data for the Mauryan and post-Mauryan period.'},
+  {yr:'2011',q:'The Dilwara temples at Abu Road (Rajasthan) were primarily built during which dynasty\'s rule, and are famous for what distinctive feature?',a:'The Dilwara temples were built primarily under the Solanki (Chaulukya) dynasty of Gujarat and their wealthy minister-patrons. The Vimala Vasahi temple (1031 CE) was commissioned by Vimala Shah, a Solanki minister. The Luna Vasahi temple (1230 CE) was built by the brothers Vastupal and Tejpal. They are world-famous for their extraordinary white marble carving — ceilings with carved lotus medallions, intricate pillars, domes with hanging carved pendants — worked to lace-like delicacy.'},
+];
+function buildPYQCards(){
+  const cont=document.getElementById('pyq-cards');
+  if(!cont) return;
+  cont.innerHTML='';
+  pyqs.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='qa-card';
+    card.innerHTML=`<div class="qa-q"><span class="qa-badge">UPSC ${q.yr}</span>${q.q}</div><div class="qa-a"><div class="qa-a-inner">${q.a}</div></div>`;
+    card.addEventListener('click',()=>card.classList.toggle('open'));
+    cont.appendChild(card);
+  });
+}
+
+// =================== REDRAW ALL ===================
+function redrawAll(){
+  drawThreeJewels();
+  drawMahaviraTimeline();
+  drawTirthankaras();
+  drawKarmaWheel();
+  drawSectsTimeline();
+  drawSpreadSvg();
+  drawCouncilsTimeline();
+  drawTempleSvg();
+}
+
+// =================== TAG CLICK NAVIGATION ===================
+function initTagNav(){
+  document.querySelectorAll('[data-tab]').forEach(tag=>{
+    tag.addEventListener('click',()=>{
+      const i=parseInt(tag.dataset.tab,10);
+      switchTab(i);
+      document.querySelector('.sticky-nav').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    tag.addEventListener('pointerdown',function(e){
+      const r=document.createElement('span');
+      r.style.cssText=`position:absolute;border-radius:50%;background:currentColor;opacity:0.18;pointer-events:none;transform:scale(0);animation:ripple .4s ease-out forwards;width:60px;height:60px;left:${e.offsetX-30}px;top:${e.offsetY-30}px;`;
+      this.style.position='relative';this.style.overflow='hidden';
+      this.appendChild(r);
+      setTimeout(()=>r.remove(),500);
+    });
+  });
+}
+
+// =================== INIT ===================
+document.addEventListener('DOMContentLoaded',()=>{
+  buildTermCards();
+  buildPYQCards();
+  redrawAll();
+  initTagNav();
+});
+</script>
+<script src="search-widget.js"></script>
+</body>
+</html>

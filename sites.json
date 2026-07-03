@@ -1,0 +1,101 @@
+[
+  {
+    "title": "ENSO",
+    "file": "enso.html",
+    "icon": "🌊",
+    "subject": "Geography",
+    "desc": "El Niño, La Niña & the Southern Oscillation — ocean-atmosphere coupling & global teleconnections",
+    "tags": ["Climatology", "GS I"],
+    "status": "live"
+  },
+  {
+    "title": "Indian Monsoon",
+    "file": "monsoon.html",
+    "icon": "🌧️",
+    "subject": "Geography",
+    "desc": "Mechanism, onset, withdrawal, variability & the ENSO-monsoon teleconnection",
+    "tags": ["Climatology", "GS I"],
+    "status": "live"
+  },
+  {
+    "title": "Buddhism",
+    "file": "buddhism.html",
+    "icon": "☸️",
+    "subject": "History",
+    "desc": "Origins, Four Noble Truths, Eightfold Path, schools, spread, councils & UPSC PYQs",
+    "tags": ["Ancient India", "GS I", "PYQs"],
+    "status": "live"
+  },
+  {
+  "title": "Jainism",
+  "file": "jainism.html",
+  "icon": "🕉️",
+  "subject": "History",
+  "desc": "One of the world's oldest living religions — a radical philosophy of non-violence, liberation of the soul, and absolute ethics",
+  "tags": ["GS I"],
+  "status": "live"
+  },
+  {
+    "title": "Currents",
+    "file": "currents.html",
+    "icon": "🌀",
+    "subject": "Geography",
+    "desc": "Ocean Gyres Thermohaline Circulation Atmospheric Cells Jet Streams Their Interactions",
+    "tags": ["Climatology", "GS I"],
+    "status": "live"
+  },
+  {
+    "title": "National park, sanctuaries, migration, biosphere reserves and wetlands",
+    "file": "wildlife.html",
+    "icon": "🐯",
+    "subject": "Environment",
+    "desc": "National Parks Wildlife Sanctuaries BiosphereReserves · Tiger Reserves · Wetlands",
+    "tags": ["Environment", "GS III"],
+    "status": "live"
+  },
+  {
+    "title": "Governor-General Acts of India",
+    "file": "governor-general-acts.html",
+    "icon": "⚖️",
+    "subject": "History",
+    "desc": "Regulating Act · Charter Acts · Crown Rule · Reform Acts · Press Laws · Independence Act",
+    "tags": ["History", "GS II"],
+    "status": "live"
+},
+{
+    "title": "Atosphere",
+    "file": "atmosphere.html",
+    "icon": "🌐",
+    "subject": "Geography",
+    "desc": "Pressure Belts · Circulation Cells · Surface Winds · Jet Streams · Cyclones · Hurricanes · Monsoons · Phenomena",
+    "tags": ["Geography", "GS I"],
+    "status": "live"
+},
+{
+    "title": "Volcanoes & Volcanism",
+    "file": "earthquakes-volcanoes-upsc.html",
+    "icon": "🌋",
+    "subject": "Geography",
+    "desc": "Types · Plate Tectonics · Ring of Fire · Hot Spots · Indian Context · Volcanic Landforms",
+    "tags": ["Geography", "GS I"],
+    "status": "live"
+},
+{
+  "title": "Water Bodies",
+  "file": "water_bodies.html",
+  "icon": "🏞️",
+  "subject": "Geography",
+  "desc": "Rivers, Lakes, Seas, Oceans, Glaciers, FLora & Fauna, Government Schemes",
+  "tags": ["Geography", "GS I"],
+  "status": "live"
+},
+{
+  "title": "NTPC CBT-2",
+  "file": "ntpc.html",
+  "icon": "RRB",
+  "subject": "Aptitude",
+  "desc": "Complete maths and reasoning revision for NTPC CBT-2",
+  "tags": ["NTPC", "Maths", "Reasoning"],
+  "status": "live"
+}
+]
