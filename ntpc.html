@@ -7,20 +7,44 @@
 <style>
   :root{
     --bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#22303f;
-    --text:#e6edf3; --sub:#8b9bab; --accent:#ff9f1c; --accent2:#2ec4b6;
+    --text:#e6edf3; --sub:#a9b7c6; --accent:#ff9f1c; --accent2:#2ec4b6;
     --green:#3ddc84; --red:#ff5d5d; --blue:#5eb1ff; --purple:#c792ea;
+    --code-bg:#0d1420; --code-text:#5eb1ff;
+    --example-bg:#0f1620;
+    --fund-tint: 199,146,234; --fund-tint-alpha:.10; --fund-text:#e2cff2;
+    --daytag-bg:rgba(94,177,255,.15); --daytag-text:#5eb1ff;
+    --done-tint:rgba(61,220,132,.12);
+    --header-fade: linear-gradient(180deg,#0b0f14 85%,transparent);
+    --scrollbar:#22303f;
+    --tab-active-text:#1a1200;
     --radius:14px;
   }
+  [data-theme="light"]{
+    --bg:#f5f7fa; --panel:#ffffff; --panel2:#eef1f6; --border:#d9e0e8;
+    --text:#141b24; --sub:#48555f; --accent:#a8560c; --accent2:#0d7a70;
+    --green:#157a3d; --red:#b3261e; --blue:#1d5fce; --purple:#7c3aed;
+    --code-bg:#101720; --code-text:#8ec4ff;
+    --example-bg:#f0f3f7;
+    --fund-tint: 124,58,237; --fund-tint-alpha:.08; --fund-text:#4c1d95;
+    --daytag-bg:rgba(29,95,206,.12); --daytag-text:#1d5fce;
+    --done-tint:rgba(21,122,61,.12);
+    --header-fade: linear-gradient(180deg,#f5f7fa 85%,transparent);
+    --scrollbar:#c7d0da;
+    --tab-active-text:#fff6ec;
+  }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;line-height:1.55;}
-  header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#0b0f14 85%,transparent);padding:14px 16px 8px;border-bottom:1px solid var(--border);backdrop-filter:blur(6px);}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;line-height:1.55;transition:background .2s,color .2s;}
+  header{position:sticky;top:0;z-index:50;background:var(--header-fade);padding:14px 16px 8px;border-bottom:1px solid var(--border);backdrop-filter:blur(6px);}
   .title-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
   h1{font-size:1.15rem;margin:0;letter-spacing:.3px;}
   h1 span{color:var(--accent);}
   #countdown{font-size:.8rem;background:var(--panel2);border:1px solid var(--border);padding:5px 10px;border-radius:20px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .header-right{display:flex;align-items:center;gap:8px;}
+  .theme-toggle{font-size:.85rem;background:var(--panel2);border:1px solid var(--border);width:32px;height:32px;border-radius:50%;color:var(--text);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;line-height:1;padding:0;}
+  .theme-toggle:hover{border-color:var(--accent2);}
   .tabs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:2px;}
   .tab-btn{flex:0 0 auto;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--panel);color:var(--sub);font-size:.85rem;cursor:pointer;font-weight:600;}
-  .tab-btn.active{background:var(--accent);color:#1a1200;border-color:var(--accent);}
+  .tab-btn.active{background:var(--accent);color:var(--tab-active-text);border-color:var(--accent);}
   .searchbar{margin-top:10px;}
   .searchbar input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-size:.9rem;}
   .searchbar input::placeholder{color:var(--sub);}
@@ -44,11 +68,11 @@
   .label.trickl{color:var(--accent2);}
   .label.formulal{color:var(--blue);}
   .label.examplel{color:var(--accent);}
-  .fund{background:rgba(199,146,234,.08);border-left:3px solid var(--purple);padding:10px 12px;border-radius:8px;font-size:.87rem;color:#d8c5ec;}
+  .fund{background:rgba(var(--fund-tint),var(--fund-tint-alpha));border-left:3px solid var(--purple);padding:10px 12px;border-radius:8px;font-size:.87rem;color:var(--fund-text);}
   .trick{background:var(--panel2);border-left:3px solid var(--accent2);padding:10px 12px;border-radius:8px;font-size:.87rem;margin-bottom:6px;}
   .trick b{color:var(--accent2);}
-  .formula{font-family:'Cascadia Code',Consolas,monospace;background:#0d1420;padding:8px 10px;border-radius:8px;font-size:.83rem;color:var(--blue);margin:2px 0;overflow-x:auto;white-space:pre-wrap;}
-  .example{margin-top:10px;padding:10px 12px;background:#0f1620;border-radius:8px;border:1px dashed var(--border);}
+  .formula{font-family:'Cascadia Code',Consolas,monospace;background:var(--code-bg);padding:8px 10px;border-radius:8px;font-size:.83rem;color:var(--code-text);margin:2px 0;overflow-x:auto;white-space:pre-wrap;}
+  .example{margin-top:10px;padding:10px 12px;background:var(--example-bg);border-radius:8px;border:1px dashed var(--border);}
   .example .q{font-size:.87rem;font-weight:600;color:var(--text);margin-bottom:6px;}
   .example .q::before{content:"Q. ";color:var(--accent);}
   .sol-toggle{font-size:.78rem;color:var(--accent);cursor:pointer;font-weight:700;display:inline-block;margin-top:2px;}
@@ -56,31 +80,53 @@
   .sol.show{display:block;}
   .sol .ans{color:var(--green);font-weight:700;}
   .done-btn{margin-top:14px;width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--sub);font-size:.78rem;cursor:pointer;}
-  .done-btn.done{background:rgba(61,220,132,.12);border-color:var(--green);color:var(--green);}
+  .done-btn.done{background:var(--done-tint);border-color:var(--green);color:var(--green);}
   .progress-wrap{display:flex;align-items:center;gap:8px;margin:10px 0 4px;}
   .progress-bar{flex:1;height:6px;background:var(--panel2);border-radius:4px;overflow:hidden;}
   .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--green));width:0%;transition:width .3s;}
   .progress-text{font-size:.72rem;color:var(--sub);white-space:nowrap;}
   .note{font-size:.78rem;color:var(--sub);margin-top:16px;text-align:center;}
   .hidden{display:none !important;}
-  .day-tag{font-size:.65rem;background:rgba(94,177,255,.15);color:var(--blue);padding:2px 7px;border-radius:6px;font-weight:700;margin-left:6px;white-space:nowrap;}
+  .day-tag{font-size:.65rem;background:var(--daytag-bg);color:var(--daytag-text);padding:2px 7px;border-radius:6px;font-weight:700;margin-left:6px;white-space:nowrap;}
+  .ca-topic .sub{color:var(--sub);font-size:.86rem;margin:2px 0 12px;}
+  .ca-topic h3{font-size:.92rem;color:var(--accent2);margin:16px 0 6px;}
+  .ca-topic ul{padding-left:20px;margin:10px 0;}
+  .ca-topic li{margin-bottom:7px;}
+  .ca-topic table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.84rem;}
+  .ca-topic th,.ca-topic td{border:1px solid var(--border);padding:8px 9px;text-align:left;vertical-align:top;}
+  .ca-topic th{background:var(--panel2);color:var(--accent);}
+  .ca-topic tr:nth-child(even) td{background:rgba(255,255,255,.025);}
+  [data-theme="light"] .ca-topic tr:nth-child(even) td{background:#f7f9fc;}
+  .highlight{background:rgba(255,159,28,.10);border-left:3px solid var(--accent);padding:10px 12px;border-radius:8px;margin:12px 0;color:var(--text);}
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  .card{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:12px;}
+  .card h3{margin-top:0;}
+  .exam-box{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0;}
+  .exam-box .card{text-align:center;}
+  .exam-box .card b{display:block;color:var(--accent);font-size:1rem;}
+  .imp{color:var(--red);font-weight:700;}
+  @media(max-width:760px){.grid2,.exam-box{grid-template-columns:1fr;}.ca-topic table{display:block;overflow-x:auto;white-space:nowrap;}}
   ::-webkit-scrollbar{height:6px;width:6px;}
-  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+  ::-webkit-scrollbar-thumb{background:var(--scrollbar);border-radius:4px;}
 </style>
 </head>
 <body>
 
 <header>
   <div class="title-row">
-    <h1>NTPC <span>CBT-2</span> Revision</h1>
-    <div id="countdown">7 days left</div>
+    <h1>NTPC <span>CBT-2</span> Integrated Revision</h1>
+    <div class="header-right">
+      <div id="countdown">7 days left</div>
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">🌙</button>
+    </div>
   </div>
   <div class="tabs">
     <button class="tab-btn active" data-group="maths">📐 Maths</button>
     <button class="tab-btn" data-group="reasoning">🧩 Reasoning</button>
+    <button class="tab-btn" data-group="current-affairs">📰 Current Affairs</button>
   </div>
   <div class="searchbar">
-    <input type="text" id="search" placeholder="Search a topic (e.g. profit, syllogism, HCF)...">
+    <input type="text" id="search" placeholder="Search a topic (e.g. profit, syllogism, HCF, budget, awards)...">
   </div>
   <div class="quicknav" id="quicknav"></div>
   <div class="progress-wrap">
@@ -1578,11 +1624,331 @@ Letters symmetric in BOTH: H I O X</div>
 
 </div><!-- end reasoning -->
 
-<div class="note">Built for your NTPC CBT-2 sprint · Tap a topic to expand · Fundamentals explain WHY a trick works, so you can rebuild it under pressure even if you forget the shortcut · Progress resets on page reload (screenshot if needed) · All the best 🚂</div>
 
+<!-- ===================== CURRENT AFFAIRS ===================== -->
+<div class="section-group" id="current-affairs">
+<div class="topic ca-topic" data-name="current affairs overview exam snapshot why current affairs matters rrb ntpc cbt 2 2026 cen 06 2025 graduate cen 07 2025 undergraduate 120 total questions 50 general awareness qs 14 18 current affairs qs approx 1 3 negative marking general awareness carries the highest weightage in cbt 2 and is the biggest scoring differentiator current affairs of the last 6 8 months dec 2025 july 2026 are most exam relevant focus on government schemes appointments awards sports defence summits rbi economy updates and science technology">
+  <div class="topic-head"><h2>1. 📌 Exam Snapshot & Why Current Affairs Matters</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<p class="sub">RRB NTPC CBT 2 2026 (CEN 06/2025 Graduate & CEN 07/2025 Undergraduate)</p>
+    <div class="exam-box">
+      <div class="card"><b>120</b>Total Questions</div>
+      <div class="card"><b>50</b>General Awareness Qs</div>
+      <div class="card"><b>14–18</b>Current Affairs Qs (approx.)</div>
+      <div class="card"><b>-1/3</b>Negative Marking</div>
+    </div>
+    <div class="highlight">
+      General Awareness carries the highest weightage in CBT 2 and is the biggest scoring differentiator. Current affairs of the <b>last 6–8 months (Dec 2025 – July 2026)</b> are most exam-relevant. Focus on: government schemes, appointments, awards, sports, defence, summits, RBI/economy updates, and science & technology.
+    </div>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs national national affairs key highlights 2026 recent government notifications policy moves june july 2026 viksit bharat g ram g programme launched in andhra pradesh to boost rural governance and development coal blocks allocation amendment rules 2026 notified allows insurance surety bonds instead of performance bank guarantees for coal block allottees under the mines and minerals act 1957 drugs rules 1945 amended by the centre to streamline approvals for cell and gene therapies fresh application module launched on the notary portal by the ministry of law justice for online notary applications by advocates government ordered removal of apps bat bms lossigy epoch i ion misused to remotely disable e rickshaws via unsecured bluetooth battery systems it ministry action led by it secretary s krishnan samarth semiconductor research hub 190 crore to be set up at iit gandhinagar jointly funded by meity and gujarat targeting training of 10 000 professionals in 5 years bureau of port security established by the government to strengthen maritime and cyber security national sports governance national sports board rules 2026 and national sports governance national sports tribunal rules 2026 notified geographical indication gi tags 8 new gi tags granted to himachal pradesh products in 2026 total 17 gi products for the state including kinnauri apple spiti seabuckthorn mandi sepuvadi dish chamba metal art and sirmauri loiya traditional gown himachal pradesh is pursuing gi status for chamba chukh and sirmaur ginger unesco global city recognitions lucknow added to unesco s list of creative cities of gastronomy bengaluru ranked among top global startup ecosystems 15th globally 6th in asia and asia s 2nd best ai native cluster after beijing 2026 report ecosystem valued at 153 billion with 30 active unicorns">
+  <div class="topic-head"><h2>2. 🇮🇳 National Affairs — Key Highlights (2026)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<h3>Recent Government Notifications & Policy Moves (June–July 2026)</h3>
+    <ul>
+      <li><b>Viksit Bharat – G-Ram G Programme</b> launched in Andhra Pradesh to boost rural governance and development.</li>
+      <li><b>Coal Blocks Allocation Amendment Rules, 2026</b> notified — allows Insurance Surety Bonds instead of Performance Bank Guarantees for coal block allottees under the Mines and Minerals Act, 1957.</li>
+      <li><b>Drugs Rules, 1945</b> amended by the Centre to streamline approvals for cell and gene therapies.</li>
+      <li><b>Fresh Application Module</b> launched on the Notary Portal by the Ministry of Law & Justice for online notary applications by advocates.</li>
+      <li>Government ordered removal of apps (BAT-BMS, Lossigy, Epoch-i-ion) misused to remotely disable e-rickshaws via unsecured Bluetooth battery systems — IT Ministry action led by IT Secretary S. Krishnan.</li>
+      <li><b>SAMARTH Semiconductor Research Hub</b> (₹190 crore) to be set up at IIT Gandhinagar, jointly funded by MeitY and Gujarat, targeting training of 10,000 professionals in 5 years.</li>
+      <li><b>Bureau of Port Security</b> established by the Government to strengthen maritime and cyber security.</li>
+      <li><b>National Sports Governance (National Sports Board) Rules, 2026</b> and <b>National Sports Governance (National Sports Tribunal) Rules, 2026</b> notified.</li>
+    </ul>
+
+    <h3>Geographical Indication (GI) Tags</h3>
+    <ul>
+      <li><b>8 new GI tags</b> granted to Himachal Pradesh products in 2026 (total 17 GI products for the state) — including Kinnauri Apple, Spiti Seabuckthorn, Mandi Sepuvadi (dish), Chamba Metal Art, and Sirmauri Loiya (traditional gown).</li>
+      <li>Himachal Pradesh is pursuing GI status for Chamba Chukh and Sirmaur Ginger.</li>
+    </ul>
+
+    <h3>UNESCO & Global City Recognitions</h3>
+    <ul>
+      <li>Lucknow added to UNESCO's list of "Creative Cities of Gastronomy."</li>
+      <li>Bengaluru ranked among top global startup ecosystems — 15th globally, 6th in Asia, and Asia's 2nd-best AI-native cluster after Beijing (2026 report); ecosystem valued at ~$153 billion with 30 active unicorns.</li>
+    </ul>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs appointments key appointments 2026 national institutional position appointee notes chief of army staff coas 31st general dhiraj seth launched vijay vision reform roadmap for modernisation jointness chief of defence staff cds lt gen ns raja subramani retd succeeded gen anil chauhan tenure ended may 30 2026 chairperson cbse lokhande prashant sitaram ias previously additional secretary home ministry part time chairman hdfc bank rajiv kumar former finance secretary former chief election commissioner 3 year tenure executive director rbi ravi shankar to oversee dept of statistics information management chief justice of india track latest justice b r gavai justice surya kant transitions reported in 2025 26 frequently updated verify latest via official sources before exam ceo uidai saurabh vijay also associated with indiaai mission leadership rbi governor sanjay malhotra chaired the monetary policy committee mpc meetings through 2025 26 tip appointment based questions are among the most frequently repeated in rrb exams revise the current heads of rbi sebi army navy air force cds cji election commission niti aayog and railway board close to the exam date">
+  <div class="topic-head"><h2>3. 🧑‍💼 Key Appointments 2026 (National & Institutional)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<table>
+      <tr><th>Position</th><th>Appointee</th><th>Notes</th></tr>
+      <tr><td>Chief of Army Staff (COAS) — 31st</td><td>General Dhiraj Seth</td><td>Launched "Vijay Vision" reform roadmap for modernisation & jointness</td></tr>
+      <tr><td>Chief of Defence Staff (CDS)</td><td>Lt. Gen. NS Raja Subramani (Retd)</td><td>Succeeded Gen. Anil Chauhan (tenure ended May 30, 2026)</td></tr>
+      <tr><td>Chairperson, CBSE</td><td>Lokhande Prashant Sitaram (IAS)</td><td>Previously Additional Secretary, Home Ministry</td></tr>
+      <tr><td>Part-time Chairman, HDFC Bank</td><td>Rajiv Kumar</td><td>Former Finance Secretary & former Chief Election Commissioner; 3-year tenure</td></tr>
+      <tr><td>Executive Director, RBI</td><td>Ravi Shankar</td><td>To oversee Dept. of Statistics & Information Management</td></tr>
+      <tr><td>Chief Justice of India</td><td>(Track latest — Justice B.R. Gavai / Justice Surya Kant transitions reported in 2025–26)</td><td>Frequently updated; verify latest via official sources before exam</td></tr>
+      <tr><td>CEO, UIDAI</td><td>Saurabh Vijay</td><td>Also associated with IndiaAI Mission leadership</td></tr>
+      <tr><td>RBI Governor</td><td>Sanjay Malhotra</td><td>Chaired the Monetary Policy Committee (MPC) meetings through 2025-26</td></tr>
+    </table>
+    <div class="highlight">
+      <span class="imp">Tip:</span> Appointment-based questions are among the most frequently repeated in RRB exams. Revise the current heads of RBI, SEBI, Army/Navy/Air Force, CDS, CJI, Election Commission, NITI Aayog, and Railway Board close to the exam date.
+    </div>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs budget union budget 2026 27 key highlights presented by finance minister nirmala sitharaman on 1 february 2026 first budget prepared in kartavya bhawan theme action over ambivalence reform over rhetoric people over populism structured around 3 kartavyas duties accelerating growth building citizen capacity and equitable access sabka saath sabka vikas gdp growth projected at 7 7 4 for fy 2026 27 fiscal deficit target 4 3 of gdp in be 2026 27 down from 4 4 in re 2025 26 debt to gdp ratio estimated at 55 6 in be 2026 27 long term target of 50 1 by fy 2030 31 total expenditure 53 5 lakh crore approx non debt receipts 36 5 lakh crore ministry of defence received the highest allocation 7 84 lakh crore 15 of total expenditure public capital expenditure raised to 12 2 lakh crore biopharma shakti scheme 10 000 crore outlay over 5 years 3 new nipers 7 upgraded 1 000 accredited clinical trial sites india semiconductor mission ism 2 0 launched focus on equipment materials full stack indian ip design electronics components manufacturing scheme 40 000 crore infrastructure risk guarantee fund to be set up for private infrastructure developers new dedicated freight corridor dankuni east to surat west 20 new national waterways to be operationalised in 5 years starting with nw 5 in odisha talcher angul to paradeep dhamra ports 7 high speed rail corridors planned e g mumbai pune delhi varanasi hyderabad bengaluru carbon capture utilisation storage ccus 20 000 crore over 5 years for power steel cement sectors city economic regions cer 5 000 crore per region via reform linked challenge mode for tier ii iii cities income tax act 2025 comes into force from 1 april 2026 disinvestment target 80 000 crore for 2026 27">
+  <div class="topic-head"><h2>4. 💰 Union Budget 2026-27 — Key Highlights</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<p class="sub">Presented by Finance Minister Nirmala Sitharaman on 1 February 2026 — first Budget prepared in Kartavya Bhawan</p>
+    <ul>
+      <li>Theme: <i>"Action over Ambivalence, Reform over Rhetoric, People over Populism"</i>, structured around <b>3 "Kartavyas" (duties)</b> — accelerating growth, building citizen capacity, and equitable access (Sabka Saath, Sabka Vikas).</li>
+      <li><b>GDP growth</b> projected at ~7–7.4% for FY 2026-27.</li>
+      <li><b>Fiscal deficit</b> target: 4.3% of GDP in BE 2026-27 (down from 4.4% in RE 2025-26).</li>
+      <li><b>Debt-to-GDP ratio</b>: estimated at 55.6% in BE 2026-27; long-term target of 50±1% by FY 2030-31.</li>
+      <li><b>Total expenditure</b>: ₹53.5 lakh crore (approx.); non-debt receipts ₹36.5 lakh crore.</li>
+      <li><b>Ministry of Defence</b> received the highest allocation (~₹7.84 lakh crore / ~15% of total expenditure).</li>
+      <li><b>Public capital expenditure</b> raised to ₹12.2 lakh crore.</li>
+      <li><b>Biopharma SHAKTI</b> scheme: ₹10,000 crore outlay over 5 years; 3 new NIPERs + 7 upgraded; 1,000+ accredited clinical trial sites.</li>
+      <li><b>India Semiconductor Mission (ISM) 2.0</b> launched — focus on equipment, materials & full-stack Indian IP design; Electronics Components Manufacturing Scheme (~₹40,000 crore).</li>
+      <li><b>Infrastructure Risk Guarantee Fund</b> to be set up for private infrastructure developers.</li>
+      <li><b>New Dedicated Freight Corridor:</b> Dankuni (East) to Surat (West).</li>
+      <li><b>20 new National Waterways</b> to be operationalised in 5 years — starting with NW-5 in Odisha (Talcher–Angul to Paradeep/Dhamra ports).</li>
+      <li><b>7 High-Speed Rail corridors</b> planned (e.g., Mumbai–Pune, Delhi–Varanasi, Hyderabad–Bengaluru).</li>
+      <li><b>Carbon Capture, Utilisation & Storage (CCUS):</b> ₹20,000 crore over 5 years for power, steel & cement sectors.</li>
+      <li><b>City Economic Regions (CER):</b> ₹5,000 crore per region via reform-linked challenge mode for Tier-II/III cities.</li>
+      <li><b>Income-tax Act, 2025</b> comes into force from 1 April 2026.</li>
+      <li><b>Disinvestment target:</b> ₹80,000 crore for 2026-27.</li>
+    </ul>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs economy economy banking rbi updates gst collections june 2026 1 95 lakh crore up 13 9 yoy led by import revenue industrial output iip growth hit a 5 month high of 5 1 in may 2026 up from 4 9 in april driven by electricity gas supply india s external debt rose to us 762 8 billion at end of fy26 up 26 3 billion yoy rbi data rbi revamped integrated ombudsman scheme rb ios 2026 effective from 1 july 2026 retains one nation one ombudsman approach covers banks large nbfcs assets 100 crore credit information companies compensation up to 30 lakh for financial loss 3 lakh for harassment delay npci partnered with hsbc india and jp morgan for real time forex settlement under international upi now active in 9 countries including france and uae kotak mahindra bank to acquire deutsche bank india s retail wealth business for 282 crore covers 29 000 crore loans 16 000 crore deposits 1 5 lakh customers expected completion by september 2027 bank of baroda partnered with japan s mizuho bank for m a financing advisory and forex hedging services rbi q safe committee 8 member expert panel formed for a quantum secure and adaptive financial ecosystem reported rbi policy repo rate adjustments through 2026 monetary policy cycles track latest mpc decisions before the exam">
+  <div class="topic-head"><h2>5. 📊 Economy, Banking & RBI Updates</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<ul>
+      <li><b>GST Collections (June 2026):</b> ₹1.95 lakh crore, up 13.9% YoY, led by import revenue.</li>
+      <li><b>Industrial Output (IIP):</b> Growth hit a 5-month high of <b>5.1%</b> in May 2026 (up from 4.9% in April), driven by electricity & gas supply.</li>
+      <li><b>India's External Debt:</b> Rose to <b>US$762.8 billion</b> at end of FY26 — up $26.3 billion YoY (RBI data).</li>
+      <li><b>RBI Revamped Integrated Ombudsman Scheme (RB-IOS 2026)</b> effective from 1 July 2026 — retains "One Nation, One Ombudsman" approach; covers banks, large NBFCs (assets ≥ ₹100 crore) & credit information companies. Compensation up to ₹30 lakh for financial loss, ₹3 lakh for harassment/delay.</li>
+      <li><b>NPCI</b> partnered with <b>HSBC India and JP Morgan</b> for real-time forex settlement under International UPI — now active in 9 countries including France and UAE.</li>
+      <li><b>Kotak Mahindra Bank</b> to acquire Deutsche Bank India's retail & wealth business for ₹282 crore (covers ~₹29,000 crore loans, ₹16,000 crore deposits, 1.5 lakh+ customers) — expected completion by September 2027.</li>
+      <li><b>Bank of Baroda</b> partnered with Japan's <b>Mizuho Bank</b> for M&A financing, advisory, and forex hedging services.</li>
+      <li><b>RBI Q-SAFE Committee</b> — 8-member expert panel formed for a "Quantum Secure and Adaptive Financial Ecosystem."</li>
+      <li>Reported RBI policy repo rate adjustments through 2026 monetary policy cycles — track latest MPC decisions before the exam.</li>
+    </ul>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs awards awards honours padma awards 2026 announced 25 26 january 2026 eve of 77th republic day total 131 awards 5 padma vibhushan 13 padma bhushan 113 padma shri approved by president droupadi murmu includes 19 women 6 foreigners nri pio oci and 16 posthumous awards category notable recipients field padma vibhushan dharmendra singh deol posthumous k t thomas n rajam p narayanan v s achuthanandan posthumous art public affairs literature padma bhushan alka yagnik mammootty uday kotak vijay amritraj shibu soren posthumous bhagat singh koshyari piyush pandey posthumous art trade industry sports public affairs padma shri rohit sharma harmanpreet kaur savita punia baldev singh praveen kumar para athlete r madhavan sports cinema second civil investiture ceremony held at rashtrapati bhavan honoured 65 personalities including rohit sharma mammootty r madhavan and alka yagnik in presence of pm modi and home minister amit shah other notable awards sunil bharti mittal honoured with the 2026 usispf leadership award isro honoured with the goddard astronautics award 2026 for the chandrayaan 3 mission taiwan travelogue awarded the 2026 international booker prize panchayat advancement index pai by the ministry of panchayati raj received a gold award for governance tech innovation two time sahitya akademi award winner tamil poet puviyarasu passed away july 2026 known for translation work and popularising tamil free verse">
+  <div class="topic-head"><h2>6. 🏅 Awards & Honours</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<h3>Padma Awards 2026 (Announced 25–26 January 2026, eve of 77th Republic Day)</h3>
+    <p>Total: <b>131 awards</b> (5 Padma Vibhushan, 13 Padma Bhushan, 113 Padma Shri) approved by President Droupadi Murmu — includes 19 women, 6 foreigners/NRI/PIO/OCI, and 16 posthumous awards.</p>
+    <table>
+      <tr><th>Category</th><th>Notable Recipients</th><th>Field</th></tr>
+      <tr><td>Padma Vibhushan</td><td>Dharmendra Singh Deol (Posthumous), K.T. Thomas, N. Rajam, P. Narayanan, V.S. Achuthanandan (Posthumous)</td><td>Art, Public Affairs, Literature</td></tr>
+      <tr><td>Padma Bhushan</td><td>Alka Yagnik, Mammootty, Uday Kotak, Vijay Amritraj, Shibu Soren (Posthumous), Bhagat Singh Koshyari, Piyush Pandey (Posthumous)</td><td>Art, Trade & Industry, Sports, Public Affairs</td></tr>
+      <tr><td>Padma Shri</td><td>Rohit Sharma, Harmanpreet Kaur, Savita Punia, Baldev Singh, Praveen Kumar (Para-athlete), R. Madhavan</td><td>Sports, Cinema</td></tr>
+    </table>
+    <div class="highlight">Second Civil Investiture Ceremony held at Rashtrapati Bhavan honoured 65 personalities including Rohit Sharma, Mammootty, R. Madhavan, and Alka Yagnik in presence of PM Modi and Home Minister Amit Shah.</div>
+
+    <h3>Other Notable Awards</h3>
+    <ul>
+      <li><b>Sunil Bharti Mittal</b> honoured with the <b>2026 USISPF Leadership Award</b>.</li>
+      <li><b>ISRO</b> honoured with the <b>Goddard Astronautics Award 2026</b> for the Chandrayaan-3 mission.</li>
+      <li><b>Taiwan Travelogue</b> awarded the <b>2026 International Booker Prize</b>.</li>
+      <li><b>Panchayat Advancement Index (PAI)</b> by the Ministry of Panchayati Raj received a Gold Award for governance/tech innovation.</li>
+      <li>Two-time <b>Sahitya Akademi Award</b> winner, Tamil poet Puviyarasu, passed away (July 2026) — known for translation work and popularising Tamil free verse.</li>
+    </ul>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs sports sports current affairs 2026 major events in 2026 icc men s t20 world cup 2026 hosted by india sri lanka india won a record title beating new zealand in the final by 96 runs 2026 winter olympics india sent 2 athletes arif khan best ever indian finish 39th in slalom and stanzin lundup 104th cross country skiing under 19 cricket world cup 2026 india won a record sixth title wpl 2026 royal challengers bangalore rcb won their 2nd wpl title with a record chase in vadodara asian beach games 2026 india signed off with six medals upcoming in 2026 commonwealth games glasgow scotland asian games aichi nagoya japan and summer youth olympics dakar senegal archery world cup 2026 antalya india won gold via recurve team dhiraj bommadevara led also won gold at puebla stage jyothi surekha led compound team bwf para world championships pramod bhagat won a record 6th sl3 gold title individual achievements hokato hotozhe sema nagaland became world no 1 in shot put f57 para athletics a subedar in 9 assam rifles first paralympian awarded the ati vishisht seva medal paris 2024 paralympics bronze medallist and arjuna award recipient tejaswin shankar clinched india s lone gold at asian indoor athletics championships 2026 j aadarsh ram won india s first ever men s high jump medal at asian indoor athletics championships national sports awards key facts major dhyan chand khel ratna award india s highest sporting honour renamed from rajiv gandhi khel ratna in aug 2021 first recipient viswanathan anand 1991 92 carries 25 lakh cash prize medallion certificate arjuna award india s second highest sporting honour instituted in 1961 recognises 4 year international level performance ceremony held annually around national sports day 29 august at rashtrapati bhavan">
+  <div class="topic-head"><h2>7. 🏆 Sports Current Affairs 2026</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<h3>Major Events in 2026</h3>
+    <ul>
+      <li><b>ICC Men's T20 World Cup 2026</b> — hosted by India & Sri Lanka; India won a record title beating New Zealand in the final by 96 runs.</li>
+      <li><b>2026 Winter Olympics</b> — India sent 2 athletes: Arif Khan (best-ever Indian finish, 39th in slalom) and Stanzin Lundup (104th, cross-country skiing).</li>
+      <li><b>Under-19 Cricket World Cup 2026</b> — India won a record sixth title.</li>
+      <li><b>WPL 2026:</b> Royal Challengers Bangalore (RCB) won their 2nd WPL title with a record chase in Vadodara.</li>
+      <li><b>Asian Beach Games 2026:</b> India signed off with six medals.</li>
+      <li>Upcoming in 2026: <b>Commonwealth Games (Glasgow, Scotland)</b>, <b>Asian Games (Aichi-Nagoya, Japan)</b>, and <b>Summer Youth Olympics (Dakar, Senegal)</b>.</li>
+      <li><b>Archery World Cup 2026 (Antalya):</b> India won gold via recurve team (Dhiraj Bommadevara-led); also won gold at Puebla stage (Jyothi Surekha-led compound team).</li>
+      <li><b>BWF Para World Championships:</b> Pramod Bhagat won a record 6th SL3 gold title.</li>
+    </ul>
+
+    <h3>Individual Achievements</h3>
+    <ul>
+      <li><b>Hokato Hotozhe Sema</b> (Nagaland) became <b>World No. 1 in Shot Put F57</b> (Para-athletics) — a Subedar in 9 Assam Rifles, first Paralympian awarded the Ati Vishisht Seva Medal, Paris 2024 Paralympics bronze medallist, and Arjuna Award recipient.</li>
+      <li><b>Tejaswin Shankar</b> clinched India's lone gold at Asian Indoor Athletics Championships 2026.</li>
+      <li><b>J. Aadarsh Ram</b> won India's first-ever men's high jump medal at Asian Indoor Athletics Championships.</li>
+    </ul>
+
+    <h3>National Sports Awards — Key Facts</h3>
+    <ul>
+      <li><b>Major Dhyan Chand Khel Ratna Award</b> — India's highest sporting honour (renamed from Rajiv Gandhi Khel Ratna in Aug 2021); first recipient: Viswanathan Anand (1991-92); carries ₹25 lakh cash prize, medallion & certificate.</li>
+      <li><b>Arjuna Award</b> — India's second-highest sporting honour, instituted in 1961; recognises 4-year international-level performance.</li>
+      <li>Ceremony held annually around <b>National Sports Day (29 August)</b> at Rashtrapati Bhavan.</li>
+    </ul>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs defence defence security general dhiraj seth 31st chief of the army staff launched vijay vision roadmap emphasising indigenisation drdo collaboration tri services jointness and modernisation lt gen ns raja subramani retd appointed as new chief of defence staff succeeding gen anil chauhan joint air defence doctrine released by the cds to integrate multi service radar systems indian army drdo tested indigenous loitering munitions kamikaze drone systems as part of self reliance in defence tech atmanirbhar bharat in defence defence budget 2026 27 highest ministry allocation 7 84 lakh crore with capital outlay for defence services up 17 6 over previous year continued joint military exercises with partner nations e g exercise harimau shakti with malaysia revise names partner countries of major bilateral multilateral exercises malabar yudh abhyas garuda shakti cope india etc">
+  <div class="topic-head"><h2>8. 🛡️ Defence & Security</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<ul>
+      <li><b>General Dhiraj Seth</b> — 31st Chief of the Army Staff; launched <b>"Vijay Vision"</b> roadmap emphasising indigenisation, DRDO collaboration, tri-services jointness, and modernisation.</li>
+      <li><b>Lt. Gen. NS Raja Subramani (Retd)</b> appointed as new Chief of Defence Staff, succeeding Gen. Anil Chauhan.</li>
+      <li><b>Joint Air Defence Doctrine</b> released by the CDS to integrate multi-service radar systems.</li>
+      <li>Indian Army & DRDO tested indigenous loitering munitions/kamikaze drone systems as part of self-reliance in defence tech (Atmanirbhar Bharat in defence).</li>
+      <li><b>Defence Budget 2026-27:</b> Highest ministry allocation (~₹7.84 lakh crore), with capital outlay for defence services up 17.6% over previous year.</li>
+      <li>Continued joint military exercises with partner nations (e.g., Exercise Harimau Shakti with Malaysia) — revise names & partner countries of major bilateral/multilateral exercises (Malabar, Yudh Abhyas, Garuda Shakti, Cope India, etc.).</li>
+    </ul>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs science science technology isro received the goddard astronautics award 2026 for chandrayaan 3 chandrayaan 2 dfsar observations revealed subsurface ice in the moon s south polar region aditya l1 mission second announcement of opportunity ao cycle for solar observation proposals opened brics heads of space agencies 2026 meeting held in bengaluru discussions on remote sensing satellite constellation space sustainability bharatiya antariksh hackathon bah 2026 launched by isro who added the first molecular diagnostic test for bundibugyo ebola relevant amid the drc outbreak 1 400 confirmed cases 438 deaths 16th india japan annual summit focused on economic security and artificial intelligence ai cooperation outcomes ministry of jal shakti partnered with isro to use satellite remote sensing data for tracking groundwater depletion">
+  <div class="topic-head"><h2>9. 🔬 Science & Technology</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<ul>
+      <li><b>ISRO</b> received the <b>Goddard Astronautics Award 2026</b> for Chandrayaan-3.</li>
+      <li><b>Chandrayaan-2 DFSAR</b> observations revealed subsurface ice in the Moon's south polar region.</li>
+      <li><b>Aditya-L1 Mission:</b> Second Announcement of Opportunity (AO) cycle for solar observation proposals opened.</li>
+      <li><b>BRICS Heads of Space Agencies 2026</b> meeting held in Bengaluru — discussions on remote sensing satellite constellation & space sustainability.</li>
+      <li><b>Bharatiya Antariksh Hackathon (BAH) 2026</b> launched by ISRO.</li>
+      <li><b>WHO</b> added the <b>first molecular diagnostic test for Bundibugyo Ebola</b> — relevant amid the DRC outbreak (1,400+ confirmed cases, 438+ deaths).</li>
+      <li><b>16th India-Japan Annual Summit</b> focused on economic security and Artificial Intelligence (AI) cooperation outcomes.</li>
+      <li>Ministry of Jal Shakti partnered with ISRO to use satellite/remote-sensing data for tracking groundwater depletion.</li>
+    </ul>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs international international affairs summits india hosted the 28th iora indian ocean rim association senior officials meeting in new delhi 15 16 june 2026 reviewed the next iora action plan 2028 2032 india chairs iora for 2025 27 focusing on maritime security blue economy 16th india japan annual summit outcomes on economic security and ai cooperation ministry of tourism signed an mou with google india to boost the digital visibility of indian tourism destinations india s continuing engagement in g20 brics and sco frameworks revise current chair nations and india s specific initiatives static gk linkage remember headquarters chairpersons and india s current position e g iora chairmanship 2025 27 for organisations like iora sco brics g20 saarc asean and the un security council non permanent seats">
+  <div class="topic-head"><h2>10. 🌍 International Affairs & Summits</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<ul>
+      <li><b>India hosted the 28th IORA (Indian Ocean Rim Association) Senior Officials Meeting</b> in New Delhi (15-16 June 2026) — reviewed the next IORA Action Plan (2028-2032); India chairs IORA for 2025-27, focusing on maritime security & blue economy.</li>
+      <li><b>16th India-Japan Annual Summit</b> — outcomes on economic security and AI cooperation.</li>
+      <li><b>Ministry of Tourism</b> signed an MoU with <b>Google India</b> to boost the digital visibility of Indian tourism destinations.</li>
+      <li>India's continuing engagement in <b>G20</b>, <b>BRICS</b>, and <b>SCO</b> frameworks — revise current chair nations and India's specific initiatives.</li>
+    </ul>
+    <div class="highlight">Static-GK linkage: Remember headquarters, chairpersons, and India's current position (e.g., IORA chairmanship 2025-27) for organisations like IORA, SCO, BRICS, G20, SAARC, ASEAN, and the UN Security Council non-permanent seats.</div>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs schemes government schemes initiatives scheme initiative focus area sarthak pds scheme public distribution system reform 25 530 crore outlay biopharma shakti biologics biosimilars manufacturing hub budget 2026 27 india semiconductor mission ism 2 0 semiconductor equipment materials ip design viksit bharat g ram g rural governance development andhra pradesh ummid programme phase ii management treatment of inherited genetic disorders ek ped maa ke naam environmental afforestation campaign namo oxygen park khelo bharat niti play india policy sports development 457 million annual funding approved 2025 rb ios 2026 revamped rbi integrated ombudsman scheme effective 1 july 2026">
+  <div class="topic-head"><h2>11. 📜 Government Schemes & Initiatives</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<table>
+      <tr><th>Scheme/Initiative</th><th>Focus Area</th></tr>
+      <tr><td>SARTHAK-PDS Scheme</td><td>Public Distribution System reform (₹25,530 crore outlay)</td></tr>
+      <tr><td>Biopharma SHAKTI</td><td>Biologics & biosimilars manufacturing hub (Budget 2026-27)</td></tr>
+      <tr><td>India Semiconductor Mission (ISM) 2.0</td><td>Semiconductor equipment, materials & IP design</td></tr>
+      <tr><td>Viksit Bharat – G-Ram G</td><td>Rural governance & development (Andhra Pradesh)</td></tr>
+      <tr><td>UMMID Programme (Phase-II)</td><td>Management & treatment of inherited genetic disorders</td></tr>
+      <tr><td>Ek Ped Maa Ke Naam</td><td>Environmental/afforestation campaign (Namo Oxygen Park)</td></tr>
+      <tr><td>Khelo Bharat Niti (Play India Policy)</td><td>Sports development; ~$457 million annual funding approved (2025)</td></tr>
+      <tr><td>RB-IOS 2026</td><td>Revamped RBI Integrated Ombudsman Scheme (effective 1 July 2026)</td></tr>
+    </table>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs days important days frequently asked date observance 26 january republic day padma awards announced on the eve 1 february union budget day traditionally 21 june international yoga day 1 july national doctors day india 29 august national sports day major dhyan chand s birth anniversary 2 october gandhi jayanti 26 november constitution day static current affairs overlap days linked with 2026 themes e g national doctors day 2026 theme are frequently tested check the latest theme for each observance close to the exam">
+  <div class="topic-head"><h2>12. 📅 Important Days (Frequently Asked)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<table>
+      <tr><th>Date</th><th>Observance</th></tr>
+      <tr><td>26 January</td><td>Republic Day (Padma Awards announced on the eve)</td></tr>
+      <tr><td>1 February</td><td>Union Budget Day (traditionally)</td></tr>
+      <tr><td>21 June</td><td>International Yoga Day</td></tr>
+      <tr><td>1 July</td><td>National Doctors' Day (India)</td></tr>
+      <tr><td>29 August</td><td>National Sports Day (Major Dhyan Chand's birth anniversary)</td></tr>
+      <tr><td>2 October</td><td>Gandhi Jayanti</td></tr>
+      <tr><td>26 November</td><td>Constitution Day</td></tr>
+    </table>
+    <div class="highlight">Static + Current Affairs overlap: Days linked with 2026 themes (e.g., National Doctors' Day 2026 theme) are frequently tested — check the latest theme for each observance close to the exam.</div>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs obituary notable obituaries 2026 puviyarasu tamil poet real name jagannathan two time sahitya akademi award winner translation for the work kaiyoppam founding member of vaanampaadi passed away july 2026 francois englert nobel laureate in physics 2013 higgs boson pioneer died at 93 reported june 2026 dharmendra singh deol veteran actor and v s achuthanandan former kerala cm both honoured posthumously with padma vibhushan 2026 shibu soren former jharkhand cm honoured posthumously with padma bhushan 2026 piyush pandey advertising veteran honoured posthumously with padma bhushan 2026">
+  <div class="topic-head"><h2>13. 🕊️ Notable Obituaries (2026)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<ul>
+      <li><b>Puviyarasu</b> (Tamil poet, real name Jagannathan) — two-time Sahitya Akademi Award winner (translation & for the work "Kaiyoppam"); founding member of Vaanampaadi; passed away July 2026.</li>
+      <li><b>Francois Englert</b> — Nobel Laureate in Physics (2013), Higgs boson pioneer, died at 93 (reported June 2026).</li>
+      <li><b>Dharmendra Singh Deol</b> (veteran actor) and <b>V.S. Achuthanandan</b> (former Kerala CM) — both honoured posthumously with Padma Vibhushan 2026.</li>
+      <li><b>Shibu Soren</b> (former Jharkhand CM) — honoured posthumously with Padma Bhushan 2026.</li>
+      <li><b>Piyush Pandey</b> (advertising veteran) — honoured posthumously with Padma Bhushan 2026.</li>
+    </ul>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="topic ca-topic" data-name="current affairs quickfacts quick revision fact sheet india static anchors 2026 president droupadi murmu vice president c p radhakrishnan prime minister narendra modi home minister amit shah finance minister nirmala sitharaman external affairs minister s jaishankar railway minister ashwini vaishnaw defence minister rajnath singh verify current frequently tested combos khel ratna renamed major dhyan chand khel ratna 2021 india s t20 world cup 2026 win hosted by india sri lanka rrb ntpc cbt 2 date 10 july 2026 padma awards 2026 131 total 5 13 113 union budget 2026 27 presented 1 feb 2026 kartavya bhawan fiscal deficit target fy27 4 3 of gdp study strategy prioritise the last 6 months jan july 2026 for one liner facts revise appointments awards schemes and sports winners twice before the exam cross check any name position with the latest official source pib rbi rajya sabha tv prs india since positions can change close to the exam date">
+  <div class="topic-head"><h2>14. ⚡ Quick-Revision Fact Sheet</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+<div class="grid2">
+      <div class="card">
+        <h3>India — Static Anchors (2026)</h3>
+        <ul>
+          <li>President: Droupadi Murmu</li>
+          <li>Vice President: C.P. Radhakrishnan</li>
+          <li>Prime Minister: Narendra Modi</li>
+          <li>Home Minister: Amit Shah</li>
+          <li>Finance Minister: Nirmala Sitharaman</li>
+          <li>External Affairs Minister: S. Jaishankar</li>
+          <li>Railway Minister: Ashwini Vaishnaw</li>
+          <li>Defence Minister: Rajnath Singh (verify current)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Frequently Tested Combos</h3>
+        <ul>
+          <li>Khel Ratna → renamed Major Dhyan Chand Khel Ratna (2021)</li>
+          <li>India's T20 World Cup 2026 win → hosted by India & Sri Lanka</li>
+          <li>RRB NTPC CBT 2 date → 10 July 2026</li>
+          <li>Padma Awards 2026 → 131 total (5+13+113)</li>
+          <li>Union Budget 2026-27 → presented 1 Feb 2026, Kartavya Bhawan</li>
+          <li>Fiscal deficit target FY27 → 4.3% of GDP</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight">
+      <b>Study Strategy:</b> Prioritise the last 6 months (Jan–July 2026) for one-liner facts. Revise appointments, awards, schemes, and sports winners twice before the exam. Cross-check any name/position with the latest official source (PIB, RBI, Rajya Sabha TV, PRS India) since positions can change close to the exam date.
+    </div>
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+<div class="note">Compiled for RRB NTPC CBT 2 2026 preparation from publicly available current-affairs sources (PIB, Testbook, Adda247, PRS India, Vajiram & Ravi, IBEF, Wikipedia — 2026 in Indian Sports, and others) as of early July 2026.
+    Always cross-verify names, dates, and figures with the latest official notifications before the exam, since current affairs data updates daily.</div>
+</div>
+<div class="note">Integrated NTPC CBT-2 sprint: Maths, Reasoning, and Current Affairs in one dashboard · Tap a topic to expand · Use search and quick-nav for fast revision · Progress resets on page reload.</div>
 </main>
 
 <script>
+  // Theme toggle — persists choice, defaults to system preference
+  (function(){
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const stored = localStorage.getItem('ntpc-theme');
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    const initial = stored || (prefersLight ? 'light' : 'dark');
+    applyTheme(initial);
+
+    btn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      const next = current === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem('ntpc-theme', next);
+    });
+
+    function applyTheme(theme){
+      if(theme === 'light'){
+        root.setAttribute('data-theme','light');
+        btn.textContent = '☀️';
+      } else {
+        root.removeAttribute('data-theme');
+        btn.textContent = '🌙';
+      }
+    }
+  })();
+
   // Tabs
   document.querySelectorAll('.tab-btn').forEach(btn=>{
     btn.addEventListener('click',()=>{
@@ -1591,6 +1957,7 @@ Letters symmetric in BOTH: H I O X</div>
       document.querySelectorAll('.section-group').forEach(g=>g.classList.remove('active'));
       document.getElementById(btn.dataset.group).classList.add('active');
       buildQuickNav();
+      updateProgress();
     });
   });
 
@@ -1638,8 +2005,9 @@ Letters symmetric in BOTH: H I O X</div>
   }
 
   function updateProgress(){
-    const all = document.querySelectorAll('.topic');
-    const done = document.querySelectorAll('.topic.doneflag');
+    const activeGroup = document.querySelector('.section-group.active');
+    const all = activeGroup ? activeGroup.querySelectorAll('.topic') : document.querySelectorAll('.topic');
+    const done = activeGroup ? activeGroup.querySelectorAll('.topic.doneflag') : document.querySelectorAll('.topic.doneflag');
     const pct = all.length ? Math.round((done.length/all.length)*100) : 0;
     document.getElementById('progFill').style.width = pct+'%';
     document.getElementById('progText').textContent = done.length+'/'+all.length+' topics revised';
@@ -1650,7 +2018,7 @@ Letters symmetric in BOTH: H I O X</div>
   document.getElementById('search').addEventListener('input',(e)=>{
     const q = e.target.value.toLowerCase().trim();
     document.querySelectorAll('.topic').forEach(topic=>{
-      const name = topic.dataset.name + ' ' + topic.querySelector('h2').textContent.toLowerCase();
+      const name = (topic.dataset.name || '') + ' ' + topic.textContent.toLowerCase();
       const match = name.includes(q);
       topic.classList.toggle('hidden', q.length>0 && !match);
       if(q.length>0 && match) topic.classList.add('open');
