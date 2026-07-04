@@ -33,28 +33,40 @@
     --tab-active-text:#fff6ec;
   }
   *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
   body{margin:0;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;line-height:1.55;transition:background .2s,color .2s;}
-  header{position:sticky;top:0;z-index:50;background:var(--header-fade);padding:14px 16px 8px;border-bottom:1px solid var(--border);backdrop-filter:blur(6px);}
-  .title-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
-  h1{font-size:1.15rem;margin:0;letter-spacing:.3px;}
+  header{position:sticky;top:0;z-index:50;background:var(--header-fade);padding:12px 14px 10px;border-bottom:1px solid var(--border);backdrop-filter:blur(6px);}
+  .title-row{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  h1{font-size:1.02rem;margin:0;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   h1 span{color:var(--accent);}
-  #countdown{font-size:.8rem;background:var(--panel2);border:1px solid var(--border);padding:5px 10px;border-radius:20px;color:var(--accent);font-weight:600;white-space:nowrap;}
-  .header-right{display:flex;align-items:center;gap:8px;}
-  .theme-toggle{font-size:.85rem;background:var(--panel2);border:1px solid var(--border);width:32px;height:32px;border-radius:50%;color:var(--text);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;line-height:1;padding:0;}
+  #countdown{font-size:.72rem;background:var(--panel2);border:1px solid var(--border);padding:6px 10px;border-radius:20px;color:var(--accent);font-weight:600;white-space:nowrap;}
+  .header-right{display:flex;align-items:center;gap:6px;flex:0 0 auto;}
+  .theme-toggle{font-size:.9rem;background:var(--panel2);border:1px solid var(--border);width:38px;height:38px;border-radius:50%;color:var(--text);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;line-height:1;padding:0;flex:0 0 auto;}
   .theme-toggle:hover{border-color:var(--accent2);}
-  .tabs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:2px;}
-  .tab-btn{flex:0 0 auto;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--panel);color:var(--sub);font-size:.85rem;cursor:pointer;font-weight:600;}
+  .tabs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;}
+  .tab-btn{flex:0 0 auto;padding:10px 16px;border-radius:20px;border:1px solid var(--border);background:var(--panel);color:var(--sub);font-size:.85rem;cursor:pointer;font-weight:600;min-height:40px;}
   .tab-btn.active{background:var(--accent);color:var(--tab-active-text);border-color:var(--accent);}
+  .more-toggle{display:none;width:100%;align-items:center;justify-content:center;gap:6px;margin-top:8px;background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;color:var(--sub);font-size:.78rem;font-weight:600;cursor:pointer;}
+  .more-toggle .arrow{font-size:.65rem;transition:transform .2s;}
+  header.compact .more-toggle{display:flex;}
+  header.compact.force-open .more-toggle .arrow{transform:rotate(180deg);}
+  .header-extra{overflow:hidden;max-height:1000px;opacity:1;transition:max-height .28s ease, opacity .2s ease, margin-top .28s ease;}
+  header.compact .header-extra{max-height:0;opacity:0;margin-top:0;pointer-events:none;}
+  header.compact.force-open .header-extra{max-height:1000px;opacity:1;margin-top:8px;pointer-events:auto;}
   .searchbar{margin-top:10px;}
-  .searchbar input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-size:.9rem;}
+  .searchbar input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-size:.95rem;}
   .searchbar input::placeholder{color:var(--sub);}
-  .quicknav{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;max-height:64px;overflow-y:auto;}
-  .quicknav button{font-family:inherit;font-size:.68rem;padding:4px 8px;border-radius:8px;background:var(--panel2);color:var(--sub);text-decoration:none;border:1px solid var(--border);white-space:nowrap;cursor:pointer;}
+  .quicknav-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:.78rem;color:var(--sub);font-weight:600;min-height:40px;}
+  .quicknav-toggle .arrow{transition:transform .2s;font-size:.7rem;}
+  .quicknav-toggle.open .arrow{transform:rotate(180deg);}
+  .quicknav{display:none;gap:6px;margin-top:8px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
+  .quicknav.open{display:flex;}
+  .quicknav button{flex:0 0 auto;font-family:inherit;font-size:.75rem;padding:8px 12px;border-radius:8px;background:var(--panel2);color:var(--sub);text-decoration:none;border:1px solid var(--border);white-space:nowrap;cursor:pointer;min-height:38px;}
   .quicknav button:hover{color:var(--text);border-color:var(--accent2);}
   main{max-width:860px;margin:0 auto;padding:14px 12px 60px;}
   .section-group{display:none;}
   .section-group.active{display:block;}
-  .topic{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;scroll-margin-top:210px;}
+  .topic{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;scroll-margin-top:var(--header-h,140px);}
   .topic-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;gap:10px;}
   .topic-head:hover{background:var(--panel2);}
   .topic-head h2{font-size:.98rem;margin:0;color:var(--text);}
@@ -106,13 +118,21 @@
   .exam-box .card b{display:block;color:var(--accent);font-size:1rem;}
   .imp{color:var(--red);font-weight:700;}
   @media(max-width:760px){.grid2,.exam-box{grid-template-columns:1fr;}.ca-topic table{display:block;overflow-x:auto;white-space:nowrap;}}
+  @media(max-width:400px){
+    header{padding:10px 12px 8px;}
+    h1{font-size:.92rem;max-width:56vw;}
+    #countdown{font-size:.68rem;padding:5px 8px;}
+    .tab-btn{padding:9px 12px;font-size:.8rem;}
+    main{padding:12px 10px 60px;}
+  }
+  main{scroll-behavior:smooth;}
   ::-webkit-scrollbar{height:6px;width:6px;}
   ::-webkit-scrollbar-thumb{background:var(--scrollbar);border-radius:4px;}
 </style>
 </head>
 <body>
 
-<header>
+<header id="siteHeader">
   <div class="title-row">
     <h1>NTPC <span>CBT-2</span> Integrated Revision</h1>
     <div class="header-right">
@@ -125,13 +145,23 @@
     <button class="tab-btn" data-group="reasoning">🧩 Reasoning</button>
     <button class="tab-btn" data-group="current-affairs">📰 Current Affairs</button>
   </div>
-  <div class="searchbar">
-    <input type="text" id="search" placeholder="Search a topic (e.g. profit, syllogism, HCF, budget, awards)...">
+  <div class="more-toggle" id="moreToggle">
+    <span>Search &amp; jump to topic</span>
+    <span class="arrow">▾</span>
   </div>
-  <div class="quicknav" id="quicknav"></div>
-  <div class="progress-wrap">
-    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
-    <div class="progress-text" id="progText">0/0 topics revised</div>
+  <div class="header-extra" id="headerExtra">
+    <div class="searchbar">
+      <input type="text" id="search" placeholder="Search a topic (e.g. profit, syllogism, HCF, budget, awards)...">
+    </div>
+    <div class="quicknav-toggle" id="quicknavToggle">
+      <span>📌 Jump to topic</span>
+      <span class="arrow">▾</span>
+    </div>
+    <div class="quicknav" id="quicknav"></div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-text" id="progText">0/0 topics revised</div>
+    </div>
   </div>
 </header>
 
@@ -1949,6 +1979,39 @@ Letters symmetric in BOTH: H I O X</div>
     }
   })();
 
+  // Compact header on scroll — keeps the reading area unobstructed on mobile,
+  // while a tap on "Search & jump to topic" can always bring it back
+  (function(){
+    const header = document.getElementById('siteHeader');
+    const moreToggle = document.getElementById('moreToggle');
+    let lastY = window.scrollY;
+
+    function setHeaderHeightVar(){
+      document.documentElement.style.setProperty('--header-h', (header.offsetHeight + 16) + 'px');
+    }
+
+    function onScroll(){
+      const y = window.scrollY;
+      if(y > 48 && y > lastY){
+        header.classList.add('compact');
+      } else if(y <= 48){
+        header.classList.remove('compact');
+        header.classList.remove('force-open');
+      }
+      lastY = y;
+      setHeaderHeightVar();
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', setHeaderHeightVar);
+
+    moreToggle.addEventListener('click', () => {
+      header.classList.toggle('force-open');
+      setTimeout(setHeaderHeightVar, 300);
+    });
+
+    setHeaderHeightVar();
+  })();
+
   // Tabs
   document.querySelectorAll('.tab-btn').forEach(btn=>{
     btn.addEventListener('click',()=>{
@@ -1976,12 +2039,23 @@ Letters symmetric in BOTH: H I O X</div>
       btn.addEventListener('click',(e)=>{
         e.preventDefault();
         topic.classList.add('open');
-        topic.scrollIntoView({behavior:'smooth', block:'start'});
+        nav.classList.remove('open');
+        quicknavToggle.classList.remove('open');
+        document.getElementById('siteHeader').classList.remove('force-open');
+        setTimeout(()=> topic.scrollIntoView({behavior:'smooth', block:'start'}), 50);
       });
       nav.appendChild(btn);
     });
   }
   buildQuickNav();
+
+  // Quicknav collapse/expand — collapsed by default so it never blocks content while scrolling
+  const quicknavToggle = document.getElementById('quicknavToggle');
+  const quicknavPanel = document.getElementById('quicknav');
+  quicknavToggle.addEventListener('click', () => {
+    quicknavPanel.classList.toggle('open');
+    quicknavToggle.classList.toggle('open');
+  });
 
   // Accordion
   document.querySelectorAll('.topic').forEach(topic=>{
