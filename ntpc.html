@@ -672,22 +672,49 @@ tan   0    1/√3   1     √3    ∞</div>
   <div class="topic-body"><div class="topic-inner">
 
     <div class="label fund">Fundamentals</div>
-    <div class="fund"><b>Mean</b> = average of all values. <b>Median</b> = middle value when data is arranged in order (average of two middle values if count is even) — unaffected by extreme outliers. <b>Mode</b> = the most frequently occurring value. DI questions test reading tables/graphs/pie-charts accurately under time pressure, not new maths concepts.</div>
+    <div class="fund"><b>Mean</b> = average of all values. <b>Median</b> = middle value when data is arranged in order (average of two middle values if count is even) — unaffected by extreme outliers. <b>Mode</b> = the most frequently occurring value — a dataset can have one mode, more than one (bimodal/multimodal), or none at all if every value occurs equally often. <b>Range</b> = Maximum value − Minimum value, the simplest measure of spread. DI questions test reading tables/graphs/pie-charts accurately under time pressure, not new maths concepts.</div>
 
     <div class="label formulal">Formulas</div>
-    <div class="formula">Median (odd n) = value at position <span class="frac"><span class="num">n+1</span><span class="den">2</span></span>
+    <div class="formula">Mean = <span class="frac"><span class="num">Sum of all values (Σx)</span><span class="den">Number of values (n)</span></span>
+Mean of first n natural numbers = <span class="frac"><span class="num">n+1</span><span class="den">2</span></span>
+Combined mean of two groups = <span class="frac"><span class="num">n₁m₁ + n₂m₂</span><span class="den">n₁ + n₂</span></span>
+Median (odd n) = value at position <span class="frac"><span class="num">n+1</span><span class="den">2</span></span>
 Median (even n) = average of values at <span class="frac"><span class="num">n</span><span class="den">2</span></span> and (<span class="frac"><span class="num">n</span><span class="den">2</span></span> + 1)
+Mode = value with the highest frequency (read directly off the data — no formula to compute it)
+Range = Maximum value − Minimum value
 Pie chart: total = 360° = 100%, so 1% = 3.6°</div>
 
     <div class="label trickl">Tricks</div>
+    <div class="trick">Data MUST be sorted in ascending order before you find the median — a very common exam trap is computing the "middle position" on unsorted data.</div>
+    <div class="trick">If a question says "one observation was misread as X instead of the correct Y," don't recompute the whole mean: corrected sum = (old mean × n) − X + Y, then divide by n again.</div>
     <div class="trick">Read the question BEFORE studying the table/graph in detail — you only need the specific rows/columns asked, not the whole dataset.</div>
     <div class="trick">For "% change" DI questions, use the fraction-equivalent table (Topic 4) instead of long division.</div>
 
     <div class="label examplel">Examples</div>
     <div class="example">
+      <div class="q">Find the mean of: 12, 18, 24, 6, 20</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Sum = 12+18+24+6+20 = 80. n = 5. Mean = 80/5 = <span class="ans">16</span>.</div>
+    </div>
+    <div class="example">
       <div class="q">Find the median of: 12, 5, 9, 18, 21, 7</div>
       <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
       <div class="sol">Sorted: 5,7,9,12,18,21. Even count(6) → median = (9+12)/2 = <span class="ans">10.5</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">Find the mode of: 4, 7, 4, 9, 7, 4, 2, 7, 7</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Frequency: 4 appears 3 times, 7 appears 4 times, 9 and 2 appear once each. Most frequent = <span class="ans">7</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">The mean weight of 10 students is 42 kg. One student's weight was wrongly recorded as 35 kg instead of the correct 53 kg. Find the correct mean.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Old sum = 42×10 = 420. Corrected sum = 420 − 35 + 53 = 438. Correct mean = 438/10 = <span class="ans">43.8 kg</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">The mean of 20 numbers is 15, and the mean of another 30 numbers is 25. Find the mean of all 50 numbers combined.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Combined mean = (20×15 + 30×25)/(20+30) = (300+750)/50 = 1050/50 = <span class="ans">21</span>.</div>
     </div>
 
     <button class="done-btn">Mark as revised</button>
