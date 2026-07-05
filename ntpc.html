@@ -141,7 +141,7 @@
     <h1>NTPC <span>CBT-2</span> Integrated Revision</h1>
     <div class="header-right">
       <div id="countdown">7 days left</div>
-      <a href="speed-trainer.html" class="theme-toggle" title="Speed Solving Trainer" aria-label="Speed Solving Trainer" style="text-decoration:none;">⚡</a>
+      <a href="speed-trainer.html" class="theme-toggle" title="Speed Solving Trainer" aria-label="Speed Solving Trainer" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;">⚡</a>
       <button type="button" class="theme-toggle" id="themeToggle" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">🌙</button>
     </div>
   </div>
@@ -546,6 +546,8 @@ CI − SI (3 years) = <span class="frac"><span class="num">P × R² × (300+R)</
     <div class="label trickl">Tricks</div>
     <div class="trick">Half-yearly compounding: use R/2 and 2T. Quarterly: use R/4 and 4T.</div>
     <div class="trick">For 2-year CI questions, use the direct difference formula instead of computing full CI and SI separately — much faster.</div>
+    <div class="trick"><b>Interest for a specific year alone</b> (e.g. "3rd year's interest"): don't compute total CI and subtract — instead, Interest for year n = Amount after (n−1) years × R/100. The amount at the start of year n already includes all prior interest, so one more year's growth on it IS that year's interest.</div>
+    <div class="trick"><b>Rule of 72 (doubling time estimate):</b> Time to double under CI ≈ 72 ÷ R. At 12% p.a., money roughly doubles in 6 years. It's an approximation, but fast enough to eliminate 2-3 wrong MCQ options instantly.</div>
 
     <div class="label examplel">Examples</div>
     <div class="example">
@@ -557,6 +559,16 @@ CI − SI (3 years) = <span class="frac"><span class="num">P × R² × (300+R)</
       <div class="q">The difference between CI and SI on a sum for 2 years at 5% is ₹25. Find the sum.</div>
       <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
       <div class="sol">P×(5/100)² = 25 → P×0.0025=25 → P = <span class="ans">₹10,000</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">₹8000 is invested at 10% p.a. compounded annually. Find the interest earned in the 3rd year alone.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Amount after 2 years = 8000×1.1×1.1 = 9680. Interest for 3rd year = 9680×10/100 = <span class="ans">₹968</span> (no need to compute the 3rd-year total amount at all).</div>
+    </div>
+    <div class="example">
+      <div class="q">Approximately how many years will a sum take to double itself at 8% p.a. compound interest?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Rule of 72: Time ≈ 72/8 = <span class="ans">≈9 years</span> (exact value is closer to 9 years via logarithms, but this estimate is fast enough to pick the closest MCQ option).</div>
     </div>
 
     
@@ -595,6 +607,7 @@ Pipe emptying while another fills: treat outlet efficiency as negative</div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick"><b>LCM Method (fastest approach):</b> assume total work = LCM of given days. Efficiency = Total work ÷ days taken. Then simply add/subtract efficiencies as needed and divide total work by combined efficiency.</div>
+    <div class="trick"><b>Sign convention (this is the whole topic):</b> every pipe is just a rate per hour — filling pipes are <b>positive</b>, leaks/outlets are <b>negative</b>. Add them all up algebraically; the sign of the final answer tells you whether the tank fills (+) or drains (−) overall.</div>
 
     <div class="label examplel">Examples</div>
     <div class="example">
@@ -606,6 +619,11 @@ Pipe emptying while another fills: treat outlet efficiency as negative</div>
       <div class="q">Pipe A fills a tank in 10 hours, Pipe B empties it in 15 hours. If both are opened together, how long to fill the tank?</div>
       <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
       <div class="sol">Total work = LCM(10,15)=30. A fills 3/hr, B empties 2/hr. Net=1/hr. Time = 30/1 = <span class="ans">30 hours</span>.</div>
+    </div>
+    <div class="example">
+      <div class="q">A pipe can fill a tank in 12 hours. Due to a leak in the bottom, it takes 15 hours to fill instead. If the tank is full, how long would the leak alone take to empty it?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">Fill rate − Leak rate = Combined rate → 1/12 − 1/x = 1/15. So 1/x = 1/12−1/15 = 5/60−4/60 = 1/60 → leak alone takes <span class="ans">60 hours</span> to empty a full tank. (Rule: whenever a leak slows down a fill, subtract the slower combined rate from the faster solo rate to isolate the leak's own rate.)</div>
     </div>
 
     
@@ -700,6 +718,9 @@ Average speed for 3 equal-distance legs at speeds a,b,c = <span class="frac"><sp
               Mean (M)
       (D−M)  :  (M−C)   → this is the ratio C:D</div>
 
+    <div class="label trickl">Reading the Cross</div>
+    <div class="trick">Subtract <b>diagonally</b>, not straight down: Dearer minus Mean gives the Cheaper's share of the ratio, and Mean minus Cheaper gives the Dearer's share. The ingredient whose price is <b>closer to the mean</b> always gets the <b>bigger</b> share of the ratio — if that's not what your answer shows, you've swapped the two diagonals.</div>
+
     <div class="label examplel">Examples</div>
     <div class="example">
       <div class="q">In what ratio must tea worth ₹60/kg be mixed with tea worth ₹80/kg so that the mixture is worth ₹65/kg?</div>
@@ -709,7 +730,7 @@ Average speed for 3 equal-distance legs at speeds a,b,c = <span class="frac"><sp
     <div class="example">
       <div class="q">A vessel contains 40 litres of milk. 4 litres is replaced with water, and the process is repeated once more. Find the milk left.</div>
       <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
-      <div class="sol">Milk left = 40×(1−4/40)² = 40×(0.9)² = 40×0.81 = <span class="ans">32.4 litres</span>.</div>
+      <div class="sol"><b>Why this formula:</b> each time you remove 4 litres from a well-mixed 40-litre vessel, you're removing the SAME fraction of whatever milk remains, not a fixed amount of milk — because the mixture is uniform, every litre removed is 4/40 = 1/10 milk-and-water in the same ratio as the whole vessel. So after each round, only 9/10 of the milk that was there survives, and this fraction multiplies for every repeat.<br><br><b>Fast way (avoid decimal multiplication):</b> Milk left = 40 × (9/10)² = 40 × 81/100. Cancel 40 with 100 first (40/100 = 2/5), then 2×81/5 = 162/5 = <span class="ans">32.4 litres</span>. Squaring 9 (whole number) and dividing once at the end is quicker than multiplying 0.9×0.9 then by 40.</div>
     </div>
 
     
@@ -718,11 +739,15 @@ Average speed for 3 equal-distance legs at speeds a,b,c = <span class="frac"><sp
     <div class="label formulal">Generalized Replacement Formula</div>
     <div class="formula">After n replacements of x units from a container of volume V (pure liquid), amount of original liquid left
 = V × (1 − x/V)ⁿ</div>
+    <div class="label trickl">🎯 Speed Tricks</div>
+    <div class="trick"><b>Skip the cross-multiplication:</b> in the alligation diagram, the ratio C:D is just (Dearer−Mean):(Mean−Cheaper) read straight off — no need to write the full formula each time, just subtract diagonally.</div>
+    <div class="trick"><b>When the target mean is exactly midway</b> between the two prices, the answer is always 1:1 — check this first before doing any subtraction, it's a common trap answer.</div>
+    <div class="trick"><b>Never multiply decimals like 0.9×0.9×0.9 by hand:</b> convert the fraction removed (e.g. 5/50 = 1/10) to a whole-number ratio (9/10), raise the whole numbers to the power (9³=729 — an easy whole-number cube), and only divide by the denominator's power ONCE at the very end. One clean division beats three messy decimal multiplications.</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">A 50-litre mixture of milk is repeatedly replaced with water: 5 litres are removed and replaced with water, three times in total. Find the amount of milk left.</div>
       <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
-      <div class="sol">Milk left = 50×(1−5/50)³ = 50×(0.9)³ = 50×0.729 = <span class="ans">36.45 litres</span>.</div>
+      <div class="sol"><b>Why this formula:</b> same logic as before — removing 5 litres from a well-mixed 50-litre vessel removes 5/50 = 1/10 of whatever milk currently remains (not a fixed 5 litres of milk, since it's a uniform mixture). So 9/10 of the milk survives each round, and three repeats means the fraction (9/10) applies three times in a row: (9/10)³.<br><br><b>Fast way (avoid decimal multiplication):</b> Milk left = 50 × (9/10)³ = 50 × 729/1000. Cancel 50 with 1000 first (50/1000 = 1/20), leaving 729/20 = <span class="ans">36.45 litres</span>. Cubing 9 (=729, a whole-number calculation) and dividing once at the end is much faster than multiplying 0.9×0.9×0.9 step by step.</div>
     </div>
     <div class="example">
       <div class="q">In what ratio should rice at ₹40/kg, ₹50/kg, and a target price of ₹44/kg be mixed using two types only?</div>
@@ -768,6 +793,9 @@ If a−1/a = x → a²+1/a² = x²+2</div>
     <div class="label formulal">Roots of a Quadratic</div>
     <div class="formula">For ax²+bx+c=0: Sum of roots = −b/a     Product of roots = c/a
 x = <span class="frac"><span class="num">−b ± √(b²−4ac)</span><span class="den">2a</span></span></div>
+    <div class="label trickl">🎯 Speed Tricks</div>
+    <div class="trick"><b>Don't solve for x if you don't need to:</b> "sum/product of roots" questions almost never need the quadratic formula — read sum and product straight off −b/a and c/a.</div>
+    <div class="trick"><b>For "a+1/a=x" type questions</b>, skip solving for a entirely — square or cube the given equation directly using the identity, never try to find a's actual value first.</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">Find the sum and product of the roots of x² − 5x + 6 = 0.</div>
@@ -818,6 +846,9 @@ Circle: angle in a semicircle = 90°; tangent ⊥ radius at point of contact</di
     <div class="formula">s = (a+b+c)/2 (semi-perimeter)
 Area = √[s(s−a)(s−b)(s−c)]
 Similar triangles: corresponding sides are proportional; ratio of areas = (ratio of corresponding sides)²</div>
+    <div class="label trickl">🎯 Speed Tricks</div>
+    <div class="trick"><b>Spot 3-4-5, 5-12-13, 8-15-17, 7-24-25</b> Pythagorean triplets instantly — most "find the hypotenuse/side" questions are scaled versions of these, so you can skip the square-root calculation entirely.</div>
+    <div class="trick"><b>Skip Heron's formula when a height is easy to spot</b> (e.g. right triangle, or isosceles split down the middle) — ½×base×height is almost always faster than computing s(s−a)(s−b)(s−c).</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">Find the area of a triangle with sides 5 cm, 6 cm, and 7 cm using Heron's formula.</div>
@@ -869,6 +900,9 @@ Hemisphere: V=2/3πr³, CSA=2πr², TSA=3πr²</div>
     <div class="label formulal">Frustum of a Cone</div>
     <div class="formula">Volume = <span class="frac"><span class="num">πh</span><span class="den">3</span></span>(R²+r²+Rr)
    where R,r = radii of the two circular ends, h = height</div>
+    <div class="label trickl">🎯 Speed Tricks</div>
+    <div class="trick"><b>"Melted and recast" questions:</b> equate volumes directly (never surface areas) since the material amount is conserved, not the shape's surface — this single rule solves almost every such question in one line.</div>
+    <div class="trick"><b>Use the k² / k³ scaling rule</b> instead of recomputing formulas whenever dimensions are scaled by a factor — it's faster than plugging the new value into the full formula.</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">If the radius of a sphere is doubled, by what factor does its volume increase?</div>
@@ -1034,6 +1068,9 @@ P(not E) = 1 − P(E)</div>
     <div class="label formulal">Circular Permutation</div>
     <div class="formula">n distinct people around a circle = (n−1)!
    (if clockwise and anticlockwise are considered the same, divide by 2 further)</div>
+    <div class="label trickl">🎯 Speed Tricks</div>
+    <div class="trick"><b>nCr shortcut:</b> nCr = nC(n−r), so always pick whichever side has the smaller number to compute — nC17 out of 20 is the same as nC3, far quicker to calculate.</div>
+    <div class="trick"><b>"At least one" probability questions:</b> almost always faster via P(at least one) = 1 − P(none), rather than adding up every individual favourable case.</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">In how many ways can 5 people be seated around a circular table?</div>
@@ -1106,6 +1143,9 @@ P(not E) = 1 − P(E)</div>
     
     <div class="label fund">Going Deeper</div>
     <div class="fund">When a partner's capital changes mid-year (withdraws or adds money) or joins later, break their investment into separate time-blocks and add up (capital × time) for each block — the partnership formula still applies, just piece by piece.</div>
+    <div class="label trickl">🎯 Speed Tricks</div>
+    <div class="trick"><b>Cancel common factors in the ratio early</b> — (5000×12):(6000×8) simplifies faster if you cancel the 1000s and reduce before multiplying out, e.g. 5×12:6×8 = 60:48 = 5:4.</div>
+    <div class="trick"><b>Skip computing the actual ratio product</b> if the question only asks who gets MORE — just compare capital×time directly without simplifying to lowest terms first.</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">A starts a business with ₹4000. After 4 months, B joins with ₹6000. Find the ratio of their profit shares at year-end.</div>
@@ -1904,6 +1944,9 @@ Hands coincide/overlap every 65 5/11 minutes</div>
     
     <div class="label fund">Going Deeper</div>
     <div class="fund">Two more clock sub-types: <b>hands at right angle</b> (90° apart, happens twice every hour) and <b>faulty/incorrect clocks</b> that gain or lose time at a steady rate — both build directly on the angle and coincidence formulas already given.</div>
+    <div class="label trickl">🎯 Speed Tricks</div>
+    <div class="trick"><b>Memorize 5.5°/min</b> as the relative speed of the minute hand over the hour hand — every clock angle/coincidence/right-angle question reduces to dividing some target angle by 5.5.</div>
+    <div class="trick"><b>For "faulty clock gains/loses X minutes per hour"</b> questions, just scale: extra/lost time = (X × actual hours elapsed) — no need to convert to ratios or fractions of a day unless the question spans more than 24 hours.</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">At what time between 3 and 4 o'clock are the hands of a clock at right angles (first occurrence)?</div>
@@ -2036,6 +2079,9 @@ Hands coincide/overlap every 65 5/11 minutes</div>
     <div class="fund">A useful extra formula finds how many people sit STRICTLY BETWEEN two known ranks (not the total count) — this is subtly different from the total-count formula, and mixing the two up is a common error.</div>
     <div class="label formulal">People Strictly Between Two Ranks</div>
     <div class="formula">People between two people at rank m and rank n (m&lt;n, both from the same end) = n − m − 1</div>
+    <div class="label trickl">🎯 Speed Tricks</div>
+    <div class="trick"><b>Always convert both ranks to the SAME end</b> before comparing or subtracting — mixing "from top" and "from bottom" ranks directly is the #1 source of errors in this topic.</div>
+    <div class="trick"><b>Total = left + right − 1</b> works for total count; drop the "−1" only when finding people strictly between (use n−m−1 instead) — keep these two formulas mentally separated.</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">In a row, Sonu is 8th from the left and Rita is 15th from the left. How many people sit between them?</div>
