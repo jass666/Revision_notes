@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speed Solving Trainer | NTPC CBT-2</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#22303f;
+    --text:#e6edf3; --sub:#a9b7c6; --accent:#ff9f1c; --accent2:#2ec4b6;
+    --green:#3ddc84; --red:#ff5d5d; --blue:#5eb1ff; --purple:#c792ea;
+    --code-bg:#0d1420; --code-text:#5eb1ff;
+    --example-bg:#0f1620;
+    --header-fade: linear-gradient(180deg,#0b0f14 85%,transparent);
+    --radius:14px;
+  }
+  [data-theme="light"]{
+    --bg:#f5f7fa; --panel:#ffffff; --panel2:#eef1f6; --border:#d9e0e8;
+    --text:#141b24; --sub:#48555f; --accent:#a8560c; --accent2:#0d7a70;
+    --green:#157a3d; --red:#b3261e; --blue:#1d5fce; --purple:#7c3aed;
+    --code-bg:#eef1f6; --code-text:#1d3a5f;
+    --example-bg:#f0f3f7;
+    --header-fade: linear-gradient(180deg,#f5f7fa 85%,transparent);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;line-height:1.55;}
+  header{position:sticky;top:0;z-index:50;background:var(--header-fade);padding:12px 14px 10px;border-bottom:1px solid var(--border);backdrop-filter:blur(6px);}
+  .title-row{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  h1{font-size:1.02rem;margin:0;}
+  h1 span{color:var(--accent);}
+  .theme-toggle{font-size:.9rem;background:var(--panel2);border:1px solid var(--border);width:38px;height:38px;border-radius:50%;color:var(--text);cursor:pointer;}
+  .tabs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:2px;}
+  .tab-btn{flex:0 0 auto;padding:9px 15px;border-radius:20px;border:1px solid var(--border);background:var(--panel);color:var(--sub);font-size:.85rem;cursor:pointer;font-weight:600;}
+  .tab-btn.active{background:var(--accent);color:#1a1200;border-color:var(--accent);}
+  main{max-width:760px;margin:0 auto;padding:14px 14px 60px;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;}
+  .card h2{margin:0 0 8px;font-size:.95rem;color:var(--accent2);cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+  .card h2 .arrow{font-size:.75rem;color:var(--sub);transition:transform .15s;}
+  .card.collapsed h2 .arrow{transform:rotate(-90deg);}
+  .card .body{font-size:.88rem;color:var(--sub);}
+  .card.collapsed .body{display:none;}
+  .trick{background:var(--example-bg);border-left:3px solid var(--purple);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:.86rem;color:var(--text);}
+  .trick b{color:var(--purple);}
+  table.ref{width:100%;border-collapse:collapse;font-size:.82rem;margin:8px 0;}
+  table.ref th,table.ref td{border:1px solid var(--border);padding:5px 7px;text-align:center;}
+  table.ref th{background:var(--panel2);color:var(--accent2);}
+  .grid-nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin:8px 0;}
+  .grid-nums div{background:var(--code-bg);color:var(--code-text);border-radius:6px;padding:5px 3px;text-align:center;font-size:.78rem;}
+  .grid-nums div b{color:var(--text);}
+  /* Drill */
+  .setup-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .choice-btn{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);font-size:.82rem;cursor:pointer;}
+  .choice-btn.sel{background:var(--accent);color:#1a1200;border-color:var(--accent);font-weight:700;}
+  .big-btn{width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent2);color:#04211e;font-weight:700;font-size:1rem;cursor:pointer;margin-top:8px;}
+  .drill-box{text-align:center;padding:20px 10px;}
+  .drill-timer{font-size:1.6rem;font-weight:800;color:var(--accent);}
+  .drill-q{font-size:1.7rem;font-weight:700;margin:16px 0;color:var(--text);}
+  .drill-input{font-size:1.4rem;text-align:center;width:160px;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--code-bg);color:var(--text);}
+  .drill-input.correct{border-color:var(--green);}
+  .drill-input.wrong{border-color:var(--red);}
+  .drill-stats{display:flex;justify-content:center;gap:18px;margin-top:14px;font-size:.85rem;color:var(--sub);}
+  .drill-stats b{color:var(--text);font-size:1rem;display:block;}
+  .result-box{text-align:center;padding:10px;}
+  .result-box .big{font-size:2.2rem;font-weight:800;color:var(--accent);}
+  #statsList div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:.85rem;}
+  #statsList div:last-child{border-bottom:none;}
+  .reset-btn{font-size:.78rem;color:var(--red);background:none;border:none;cursor:pointer;text-decoration:underline;margin-top:10px;}
+</style>
+</head>
+<body data-theme="dark">
+<header>
+  <div class="title-row">
+    <h1>⚡ <span>Speed</span> Solving Trainer</h1>
+    <div style="display:flex;align-items:center;gap:6px">
+      <a href="ntpc.html" class="theme-toggle" title="Back to Revision Dashboard" aria-label="Back to Revision Dashboard" style="text-decoration:none;">📐</a>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="sheet" onclick="showTab('sheet')">Cheat Sheet</button>
+    <button class="tab-btn" data-tab="drill" onclick="showTab('drill')">Drill Practice</button>
+    <button class="tab-btn" data-tab="stats" onclick="showTab('stats')">My Stats</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= CHEAT SHEET ================= -->
+<div class="tab-panel active" id="tab-sheet">
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Squares 1–30 <span class="arrow">▾</span></h2>
+    <div class="body">
+      <div class="grid-nums" id="sqGrid"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Cubes 1–20 <span class="arrow">▾</span></h2>
+    <div class="body">
+      <div class="grid-nums" id="cubeGrid"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Tables 11–20 <span class="arrow">▾</span></h2>
+    <div class="body">
+      <table class="ref" id="tableGrid"></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Fraction ↔ Percentage <span class="arrow">▾</span></h2>
+    <div class="body">
+      <p>Memorize these cold — converting a fraction to % (or back) in your head saves 15-20 seconds per question.</p>
+      <table class="ref" id="fracTable"></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Multiplication Shortcuts <span class="arrow">▾</span></h2>
+    <div class="body">
+      <div class="trick"><b>× 5:</b> multiply by 10, then halve. 84×5 → 840÷2 = 420.</div>
+      <div class="trick"><b>× 9:</b> multiply by 10, subtract the number. 47×9 → 470−47 = 423.</div>
+      <div class="trick"><b>× 11 (2-digit):</b> split the digits, put their sum in the middle. 45×11 → 4_(4+5)_5 = 495. If sum &gt; 9, carry the 1 left.</div>
+      <div class="trick"><b>× 25:</b> multiply by 100, divide by 4. 68×25 → 6800÷4 = 1700.</div>
+      <div class="trick"><b>Squaring numbers ending in 5:</b> n(n+1) then append 25. 65² → 6×7=42 → <b>4225</b>.</div>
+      <div class="trick"><b>Squaring near 50:</b> (25 + last two digits' offset) then square the offset. For 47² → 50−47=3 → 25−3=22, then 03²=09 → <b>2209</b>.</div>
+      <div class="trick"><b>Squaring near 100:</b> 96² → offset=−4 → 96−4=92, then (−4)²=16 → <b>9216</b>. Works for 90-110 range.</div>
+      <div class="trick"><b>Base method (near 100) multiplication:</b> 97×94 → offsets −3,−6 → cross-subtract: 97−6=91 (or 94−3=91), then (−3)×(−6)=18 → <b>9118</b>.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Divisibility Rules <span class="arrow">▾</span></h2>
+    <div class="body">
+      <table class="ref">
+        <tr><th>By</th><th>Rule</th></tr>
+        <tr><td>2</td><td>Last digit even</td></tr>
+        <tr><td>3</td><td>Digit sum divisible by 3</td></tr>
+        <tr><td>4</td><td>Last 2 digits divisible by 4</td></tr>
+        <tr><td>5</td><td>Ends in 0 or 5</td></tr>
+        <tr><td>6</td><td>Divisible by 2 AND 3</td></tr>
+        <tr><td>7</td><td>Double last digit, subtract from rest, repeat</td></tr>
+        <tr><td>8</td><td>Last 3 digits divisible by 8</td></tr>
+        <tr><td>9</td><td>Digit sum divisible by 9</td></tr>
+        <tr><td>10</td><td>Ends in 0</td></tr>
+        <tr><td>11</td><td>Alternating digit sum divisible by 11</td></tr>
+        <tr><td>13</td><td>4×last digit + rest, repeat</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Percentage Speed Tricks <span class="arrow">▾</span></h2>
+    <div class="body">
+      <div class="trick"><b>10% of a number:</b> shift decimal one place left. Build everything else off this: 5%=half of 10%, 20%=double 10%, 15%=10%+5%, 1%=10%÷10.</div>
+      <div class="trick"><b>x% of y = y% of x</b> — always pick whichever is easier to compute. 16% of 25 = 25% of 16 = 4.</div>
+      <div class="trick"><b>Successive % change shortcut:</b> combine two changes a%,b% as a+b+(ab/100). Never average them.</div>
+      <div class="trick"><b>+x% then −x%</b> (or vice versa) always nets a decrease of x²/100 percent.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Simplification / BODMAS Speed <span class="arrow">▾</span></h2>
+    <div class="body">
+      <div class="trick">Solve innermost brackets first, then "of", then ÷ and × left-to-right, then + and − left-to-right. Don't skip steps mentally past 2 operations — that's where silly mistakes cost time on recheck.</div>
+      <div class="trick">Scan the full expression once before writing anything — look for numbers that cancel out or combine easily (e.g. two terms that sum to a round number) and do those first.</div>
+      <div class="trick">Convert ugly fractions to decimals only if the decimal terminates quickly (halves, quarters, fifths); otherwise keep as fractions — decimals with repeating digits waste time.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Reasoning Speed Tips <span class="arrow">▾</span></h2>
+    <div class="body">
+      <div class="trick"><b>Blood relations:</b> draw the family tree as you read, one symbol per relation (+/− for gender, arrows for generation). Never try to hold it in your head past 2 relations.</div>
+      <div class="trick"><b>Coding-decoding:</b> check letter-position shift first (A=1...Z=26) before assuming a complex pattern — most codes are ±constant shifts or simple reversals.</div>
+      <div class="trick"><b>Direction sense:</b> always sketch a quick compass cross and plot each move as you read the sentence, don't try to track direction mentally.</div>
+      <div class="trick"><b>Series/analogy:</b> check difference-of-differences (2nd order) if 1st order differences aren't constant, before assuming a multiplicative pattern.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 onclick="toggleCard(this)">Exam-Day Speed Strategy <span class="arrow">▾</span></h2>
+    <div class="body">
+      <div class="trick"><b>Skip-and-return:</b> if a question takes more than ~40-45 seconds without a clear path, mark and move on. Returning fresh after finishing easier ones is faster than getting stuck.</div>
+      <div class="trick"><b>Section order:</b> do your strongest section first to bank easy marks and build momentum, then attempt your weakest section with remaining time.</div>
+      <div class="trick"><b>Elimination over calculation:</b> in MCQs, check if 2 options can be eliminated by a rough estimate (units digit, rounding, sign) before doing the full calculation.</div>
+      <div class="trick"><b>Don't verify what you're sure of:</b> re-checking correct answers burns time that's better spent on unattempted questions — trust a confident first pass.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= DRILL ================= -->
+<div class="tab-panel" id="tab-drill">
+
+  <div class="card" id="setupCard">
+    <h2>Set up your drill</h2>
+    <div class="body">
+      <p style="margin-top:0">Category</p>
+      <div class="setup-row" id="catRow"></div>
+      <p>Session length</p>
+      <div class="setup-row" id="lenRow"></div>
+      <button class="big-btn" onclick="startDrill()">Start Drill</button>
+    </div>
+  </div>
+
+  <div class="card" id="drillCard" style="display:none">
+    <div class="drill-box">
+      <div class="drill-timer" id="drillTimer">60</div>
+      <div class="drill-q" id="drillQ">–</div>
+      <input class="drill-input" id="drillInput" type="number" inputmode="numeric" autocomplete="off" placeholder="?">
+      <div class="drill-stats">
+        <div><b id="statSolved">0</b>Solved</div>
+        <div><b id="statCorrect">0</b>Correct</div>
+        <div><b id="statAvg">0.0s</b>Avg time</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="resultCard" style="display:none">
+    <div class="result-box">
+      <div>Session complete</div>
+      <div class="big" id="resFinal">0</div>
+      <div id="resDetail" style="color:var(--sub);font-size:.85rem;margin-top:6px"></div>
+      <button class="big-btn" onclick="resetToSetup()">Try Again</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= STATS ================= -->
+<div class="tab-panel" id="tab-stats">
+  <div class="card">
+    <h2>Personal Bests</h2>
+    <div class="body">
+      <div id="statsList"><p style="color:var(--sub)">No sessions recorded yet — run a drill to build your history.</p></div>
+      <button class="reset-btn" onclick="clearStats()">Clear all stats</button>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+/* ---------- THEME ---------- */
+function toggleTheme(){
+  const b = document.body;
+  const cur = b.getAttribute('data-theme');
+  b.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+}
+
+/* ---------- TABS ---------- */
+function showTab(name){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('.tab-btn[data-tab="'+name+'"]').classList.add('active');
+  if(name==='stats') renderStats();
+}
+
+/* ---------- COLLAPSIBLE CARDS ---------- */
+function toggleCard(h2){ h2.parentElement.classList.toggle('collapsed'); }
+
+/* ---------- BUILD REFERENCE TABLES ---------- */
+(function(){
+  const sq = document.getElementById('sqGrid');
+  for(let i=1;i<=30;i++){ sq.innerHTML += `<div>${i}² = <b>${i*i}</b></div>`; }
+  const cu = document.getElementById('cubeGrid');
+  for(let i=1;i<=20;i++){ cu.innerHTML += `<div>${i}³ = <b>${i*i*i}</b></div>`; }
+  const tb = document.getElementById('tableGrid');
+  let rows = ['<tr><th>×</th>'+[1,2,3,4,5,6,7,8,9,10].map(c=>`<th>${c}</th>`).join('')+'</tr>'];
+  for(let n=11;n<=20;n++){
+    let row = `<tr><th>${n}</th>`;
+    for(let c=1;c<=10;c++) row += `<td>${n*c}</td>`;
+    row += '</tr>';
+    rows.push(row);
+  }
+  tb.innerHTML = rows.join('');
+
+  const fracs = [[1,2],[1,3],[2,3],[1,4],[3,4],[1,5],[2,5],[3,5],[4,5],[1,6],[5,6],[1,7],[1,8],[3,8],[5,8],[7,8],[1,9],[1,10],[1,11],[1,12],[1,16],[1,20]];
+  const ft = document.getElementById('fracTable');
+  let frows = ['<tr><th>Fraction</th><th>%</th></tr>'];
+  fracs.forEach(([a,b])=>{
+    const pct = (a/b*100);
+    const pctStr = Number.isInteger(pct) ? pct+'%' : pct.toFixed(2).replace(/0+$/,'').replace(/\.$/,'')+'%';
+    frows.push(`<tr><td>${a}/${b}</td><td>${pctStr}</td></tr>`);
+  });
+  ft.innerHTML = frows.join('');
+})();
+
+/* ---------- DRILL SETUP ---------- */
+const categories = [
+  {id:'squares', label:'Squares (11-30)'},
+  {id:'cubes', label:'Cubes (1-20)'},
+  {id:'tables', label:'Tables (11-20)'},
+  {id:'pct', label:'% of a number'},
+  {id:'add', label:'2-digit add/sub'},
+  {id:'mixed', label:'Mixed'}
+];
+const lengths = [30,60,120];
+let selCat = 'mixed';
+let selLen = 60;
+
+(function(){
+  const cr = document.getElementById('catRow');
+  categories.forEach(c=>{
+    const b = document.createElement('button');
+    b.className = 'choice-btn'+(c.id===selCat?' sel':'');
+    b.textContent = c.label;
+    b.onclick = ()=>{ selCat=c.id; document.querySelectorAll('#catRow .choice-btn').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); };
+    cr.appendChild(b);
+  });
+  const lr = document.getElementById('lenRow');
+  lengths.forEach(l=>{
+    const b = document.createElement('button');
+    b.className = 'choice-btn'+(l===selLen?' sel':'');
+    b.textContent = l+'s';
+    b.onclick = ()=>{ selLen=l; document.querySelectorAll('#lenRow .choice-btn').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); };
+    lr.appendChild(b);
+  });
+})();
+
+/* ---------- QUESTION GENERATORS ---------- */
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+function genQuestion(cat){
+  let c = cat;
+  if(c==='mixed'){
+    const opts=['squares','cubes','tables','pct','add'];
+    c = opts[randInt(0,opts.length-1)];
+  }
+  if(c==='squares'){
+    const n = randInt(11,30);
+    return {text:`${n}² = ?`, ans:n*n};
+  }
+  if(c==='cubes'){
+    const n = randInt(1,20);
+    return {text:`${n}³ = ?`, ans:n*n*n};
+  }
+  if(c==='tables'){
+    const n = randInt(11,20), m = randInt(2,12);
+    return {text:`${n} × ${m} = ?`, ans:n*m};
+  }
+  if(c==='pct'){
+    const pcts=[5,10,15,20,25,50,75];
+    const p = pcts[randInt(0,pcts.length-1)];
+    const n = randInt(2,50)*4;
+    return {text:`${p}% of ${n} = ?`, ans: Math.round(p*n/100)};
+  }
+  if(c==='add'){
+    const a = randInt(10,99), b = randInt(10,99);
+    if(Math.random()<0.5) return {text:`${a} + ${b} = ?`, ans:a+b};
+    const hi = Math.max(a,b), lo = Math.min(a,b);
+    return {text:`${hi} − ${lo} = ?`, ans:hi-lo};
+  }
+}
+
+/* ---------- DRILL RUNTIME ---------- */
+let drillTimeLeft, drillTimerHandle, drillCurrent, drillSolved, drillCorrect, drillTimes, qStart;
+
+function startDrill(){
+  document.getElementById('setupCard').style.display='none';
+  document.getElementById('resultCard').style.display='none';
+  document.getElementById('drillCard').style.display='block';
+  drillTimeLeft = selLen;
+  drillSolved = 0; drillCorrect = 0; drillTimes = [];
+  document.getElementById('drillTimer').textContent = drillTimeLeft;
+  updateStatsLine();
+  nextQuestion();
+  drillTimerHandle = setInterval(()=>{
+    drillTimeLeft--;
+    document.getElementById('drillTimer').textContent = drillTimeLeft;
+    if(drillTimeLeft<=0) endDrill();
+  },1000);
+  const inp = document.getElementById('drillInput');
+  inp.value='';
+  inp.className='drill-input';
+  inp.oninput = checkAnswer;
+  setTimeout(()=>inp.focus(),100);
+}
+
+function nextQuestion(){
+  drillCurrent = genQuestion(selCat);
+  document.getElementById('drillQ').textContent = drillCurrent.text;
+  const inp = document.getElementById('drillInput');
+  inp.value='';
+  inp.className='drill-input';
+  qStart = Date.now();
+}
+
+function checkAnswer(){
+  const inp = document.getElementById('drillInput');
+  const val = inp.value.trim();
+  if(val==='') return;
+  if(parseInt(val,10) === drillCurrent.ans){
+    inp.className='drill-input correct';
+    drillSolved++; drillCorrect++;
+    drillTimes.push((Date.now()-qStart)/1000);
+    updateStatsLine();
+    setTimeout(nextQuestion, 220);
+  } else if(val.length >= String(drillCurrent.ans).length){
+    inp.className='drill-input wrong';
+    drillSolved++;
+    drillTimes.push((Date.now()-qStart)/1000);
+    updateStatsLine();
+    setTimeout(nextQuestion, 500);
+  }
+}
+
+function updateStatsLine(){
+  document.getElementById('statSolved').textContent = drillSolved;
+  document.getElementById('statCorrect').textContent = drillCorrect;
+  const avg = drillTimes.length ? (drillTimes.reduce((a,b)=>a+b,0)/drillTimes.length) : 0;
+  document.getElementById('statAvg').textContent = avg.toFixed(1)+'s';
+}
+
+function endDrill(){
+  clearInterval(drillTimerHandle);
+  document.getElementById('drillCard').style.display='none';
+  document.getElementById('resultCard').style.display='block';
+  const avg = drillTimes.length ? (drillTimes.reduce((a,b)=>a+b,0)/drillTimes.length) : 0;
+  const acc = drillSolved ? Math.round(drillCorrect/drillSolved*100) : 0;
+  document.getElementById('resFinal').textContent = drillCorrect + ' correct';
+  document.getElementById('resDetail').textContent = `${drillSolved} attempted · ${acc}% accuracy · ${avg.toFixed(1)}s avg per question`;
+  saveSession({cat:selCat, len:selLen, solved:drillSolved, correct:drillCorrect, avg:avg, acc:acc, date:new Date().toISOString()});
+}
+
+function resetToSetup(){
+  document.getElementById('resultCard').style.display='none';
+  document.getElementById('setupCard').style.display='block';
+}
+
+/* ---------- STORAGE / STATS ---------- */
+function saveSession(s){
+  try{
+    const key='speedTrainerHistory';
+    const hist = JSON.parse(localStorage.getItem(key) || '[]');
+    hist.push(s);
+    localStorage.setItem(key, JSON.stringify(hist));
+  }catch(e){ console.warn('storage unavailable', e); }
+}
+
+function renderStats(){
+  const el = document.getElementById('statsList');
+  let hist = [];
+  try{ hist = JSON.parse(localStorage.getItem('speedTrainerHistory') || '[]'); }catch(e){}
+  if(!hist.length){
+    el.innerHTML = '<p style="color:var(--sub)">No sessions recorded yet — run a drill to build your history.</p>';
+    return;
+  }
+  const byCategory = {};
+  hist.forEach(s=>{
+    if(!byCategory[s.cat] || s.correct > byCategory[s.cat].correct){
+      byCategory[s.cat] = s;
+    }
+  });
+  const labels = Object.fromEntries(categories.map(c=>[c.id,c.label]));
+  let html = '';
+  Object.keys(byCategory).forEach(cat=>{
+    const s = byCategory[cat];
+    html += `<div><span>${labels[cat]||cat} (best, ${s.len}s)</span><span><b>${s.correct}</b> correct · ${s.acc}% acc · ${s.avg.toFixed(1)}s avg</span></div>`;
+  });
+  html += `<div style="margin-top:8px;color:var(--sub)"><span>Total sessions run</span><span><b>${hist.length}</b></span></div>`;
+  el.innerHTML = html;
+}
+
+function clearStats(){
+  try{ localStorage.removeItem('speedTrainerHistory'); }catch(e){}
+  renderStats();
+}
+</script>
+</body>
+</html>
