@@ -23,7 +23,7 @@
     --bg:#f5f7fa; --panel:#ffffff; --panel2:#eef1f6; --border:#d9e0e8;
     --text:#141b24; --sub:#48555f; --accent:#a8560c; --accent2:#0d7a70;
     --green:#157a3d; --red:#b3261e; --blue:#1d5fce; --purple:#7c3aed;
-    --code-bg:#101720; --code-text:#8ec4ff;
+    --code-bg:#eef1f6; --code-text:#1d3a5f;
     --example-bg:#f0f3f7;
     --fund-tint: 124,58,237; --fund-tint-alpha:.08; --fund-text:#4c1d95;
     --daytag-bg:rgba(29,95,206,.12); --daytag-text:#1d5fce;
@@ -84,6 +84,10 @@
   .trick{background:var(--panel2);border-left:3px solid var(--accent2);padding:10px 12px;border-radius:8px;font-size:.87rem;margin-bottom:6px;}
   .trick b{color:var(--accent2);}
   .formula{font-family:'Cascadia Code',Consolas,monospace;background:var(--code-bg);padding:8px 10px;border-radius:8px;font-size:.83rem;color:var(--code-text);margin:2px 0;overflow-x:auto;white-space:pre-wrap;}
+  .formula .frac{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;vertical-align:middle;margin:2px 4px;line-height:1.25;}
+  .formula .frac .num,.formula .frac .den{padding:0 4px;white-space:nowrap;}
+  .formula .frac .num{border-bottom:1.4px solid currentColor;padding-bottom:1px;}
+  .formula .frac .den{padding-top:1px;}
   .example{margin-top:10px;padding:10px 12px;background:var(--example-bg);border-radius:8px;border:1px dashed var(--border);}
   .example .q{font-size:.87rem;font-weight:600;color:var(--text);margin-bottom:6px;}
   .example .q::before{content:"Q. ";color:var(--accent);}
@@ -179,9 +183,9 @@
 
     <div class="label formulal">Formulas</div>
     <div class="formula">Number of factors of N = a^p × b^q × c^r → (p+1)(q+1)(r+1)
-Sum of first n natural numbers = n(n+1)/2
-Sum of first n squares = n(n+1)(2n+1)/6
-Sum of first n cubes = [n(n+1)/2]²</div>
+Sum of first n natural numbers = <span class="frac"><span class="num">n(n+1)</span><span class="den">2</span></span>
+Sum of first n squares = <span class="frac"><span class="num">n(n+1)(2n+1)</span><span class="den">6</span></span>
+Sum of first n cubes = [<span class="frac"><span class="num">n(n+1)</span><span class="den">2</span></span>]²</div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick"><b>Divisibility:</b> 3 → digit sum ÷3 | 4 → last 2 digits ÷4 | 6 → div by 2 &amp; 3 | 8 → last 3 digits ÷8 | 9 → digit sum ÷9 | 11 → (sum of odd-place digits − sum of even-place digits) is 0 or a multiple of 11.</div>
@@ -221,8 +225,8 @@ Sum of first n cubes = [n(n+1)/2]²</div>
 
     <div class="label formulal">Formulas</div>
     <div class="formula">Product of two numbers = HCF × LCM   (2-number rule only)
-HCF of fractions = HCF(numerators) / LCM(denominators)
-LCM of fractions = LCM(numerators) / HCF(denominators)</div>
+HCF of fractions = <span class="frac"><span class="num">HCF(numerators)</span><span class="den">LCM(denominators)</span></span>
+LCM of fractions = <span class="frac"><span class="num">LCM(numerators)</span><span class="den">HCF(denominators)</span></span></div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick"><b>Division method</b> for HCF of large numbers is fastest: divide larger by smaller, then divisor by remainder, repeat until remainder is 0 — last divisor is HCF.</div>
@@ -323,7 +327,7 @@ LCM of fractions = LCM(numerators) / HCF(denominators)</div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick">If a:b = m:n, take a=mk, b=nk. Use one variable k to solve everything — avoids fraction chaos entirely.</div>
-    <div class="formula">Componendo: a/b = c/d  ⟹  a/b = (a+c)/(b+d)</div>
+    <div class="formula">Componendo: <span class="frac"><span class="num">a</span><span class="den">b</span></span> = <span class="frac"><span class="num">c</span><span class="den">d</span></span>  ⟹  <span class="frac"><span class="num">a</span><span class="den">b</span></span> = <span class="frac"><span class="num">a+c</span><span class="den">b+d</span></span></div>
 
     <div class="label examplel">Examples</div>
     <div class="example">
@@ -349,8 +353,8 @@ LCM of fractions = LCM(numerators) / HCF(denominators)</div>
     <div class="fund">Average (arithmetic mean) represents the "central" value of a data set — total sum spread evenly across all items. It is sensitive to every value in the set (unlike median), so one extreme value can shift it significantly.</div>
 
     <div class="label formulal">Formulas</div>
-    <div class="formula">Average = Sum of observations / Number of observations
-New avg after replacing one item = Old avg + (difference in value / total items)
+    <div class="formula">Average = <span class="frac"><span class="num">Sum of observations</span><span class="den">Number of observations</span></span>
+New avg after replacing one item = Old avg + <span class="frac"><span class="num">difference in value</span><span class="den">total items</span></span>
 Average of n consecutive numbers = middle value (if n is odd) or avg of middle two (if n even)</div>
 
     <div class="label trickl">Tricks</div>
@@ -380,9 +384,9 @@ Average of n consecutive numbers = middle value (if n is odd) or avg of middle t
     <div class="fund"><b>Cost Price (CP)</b> is what the seller paid; <b>Selling Price (SP)</b> is what the buyer pays; <b>Marked Price (MP)</b> is the labelled/listed price before discount. Profit = SP−CP (when SP&gt;CP); Loss = CP−SP (when CP&gt;SP). Discount is always calculated on MP, while profit/loss % is always calculated on CP unless stated otherwise.</div>
 
     <div class="label formulal">Formulas</div>
-    <div class="formula">Profit% = (SP−CP)/CP × 100     Loss% = (CP−SP)/CP × 100
-SP = CP(100+P%)/100            CP = SP×100/(100+P%)
-Successive discounts a% &amp; b% → Net = a+b − (ab/100)</div>
+    <div class="formula">Profit% = <span class="frac"><span class="num">SP−CP</span><span class="den">CP</span></span> × 100     Loss% = <span class="frac"><span class="num">CP−SP</span><span class="den">CP</span></span> × 100
+SP = <span class="frac"><span class="num">CP × (100+P%)</span><span class="den">100</span></span>          CP = <span class="frac"><span class="num">SP × 100</span><span class="den">100+P%</span></span>
+Successive discounts a% &amp; b% → Net = a+b − <span class="frac"><span class="num">ab</span><span class="den">100</span></span></div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick"><b>Marked Price trick:</b> if discount d% and profit p% are both given on CP, use SP = MP(1−d/100) = CP(1+p/100) to connect MP and CP directly.</div>
@@ -412,10 +416,10 @@ Successive discounts a% &amp; b% → Net = a+b − (ab/100)</div>
     <div class="fund"><b>Simple Interest</b> is calculated only on the original principal for every period, so it grows linearly. <b>Compound Interest</b> is calculated on principal + previously accumulated interest, so it grows faster (interest earns interest). CI is always ≥ SI for the same P, R, T (equal only in year 1).</div>
 
     <div class="label formulal">Formulas</div>
-    <div class="formula">SI = P×R×T/100
+    <div class="formula">SI = <span class="frac"><span class="num">P × R × T</span><span class="den">100</span></span>
 CI (annual) = P(1+R/100)^T − P
 CI − SI (2 years) = P×(R/100)²
-CI − SI (3 years) = P×R²(300+R)/100³</div>
+CI − SI (3 years) = <span class="frac"><span class="num">P × R² × (300+R)</span><span class="den">100³</span></span></div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick">Half-yearly compounding: use R/2 and 2T. Quarterly: use R/4 and 4T.</div>
@@ -445,7 +449,7 @@ CI − SI (3 years) = P×R²(300+R)/100³</div>
     <div class="fund">Work problems are solved by converting "days to complete a job" into "work done per day" (efficiency), because efficiencies add up directly when people work together, unlike raw days. <b>Pipes &amp; Cistern</b> is the same concept — an inlet pipe does positive work (fills), an outlet pipe does negative work (empties).</div>
 
     <div class="label formulal">Formulas</div>
-    <div class="formula">If A takes x days, B takes y days → together: xy/(x+y) days
+    <div class="formula">If A takes x days, B takes y days → together: <span class="frac"><span class="num">xy</span><span class="den">x+y</span></span> days
 If A does work in x days, B in y days, working together but leaving early:
    remaining work is handled by dividing total work=LCM(x,y)
 Pipe emptying while another fills: treat outlet efficiency as negative</div>
@@ -479,9 +483,9 @@ Pipe emptying while another fills: treat outlet efficiency as negative</div>
     <div class="label formulal">Formulas</div>
     <div class="formula">km/h → m/s : multiply by 5/18
 m/s → km/h : multiply by 18/5
-Train crossing pole/man = train length / speed
-Train crossing platform = (train length + platform length) / speed
-Two trains crossing each other (opposite dir) = sum of lengths / sum of speeds
+Train crossing pole/man = <span class="frac"><span class="num">train length</span><span class="den">speed</span></span>
+Train crossing platform = <span class="frac"><span class="num">train length + platform length</span><span class="den">speed</span></span>
+Two trains crossing each other (opposite dir) = <span class="frac"><span class="num">sum of lengths</span><span class="den">sum of speeds</span></span>
 Boat: Downstream speed = B+S, Upstream speed = B−S
    where B=boat speed in still water, S=stream speed</div>
 
@@ -578,7 +582,7 @@ If a−1/a = x → a²+1/a² = x²+2</div>
     <div class="formula">Sum of angles of a triangle = 180°
 Exterior angle = sum of the two opposite interior angles
 Sum of interior angles of an n-sided polygon = (n−2)×180°
-Each interior angle of a regular n-gon = (n−2)×180°/n
+Each interior angle of a regular n-gon = <span class="frac"><span class="num">(n−2)×180°</span><span class="den">n</span></span>
 Pythagoras: (Hypotenuse)² = (Base)² + (Height)²
 Circle: angle in a semicircle = 90°; tangent ⊥ radius at point of contact</div>
 
@@ -671,8 +675,8 @@ tan   0    1/√3   1     √3    ∞</div>
     <div class="fund"><b>Mean</b> = average of all values. <b>Median</b> = middle value when data is arranged in order (average of two middle values if count is even) — unaffected by extreme outliers. <b>Mode</b> = the most frequently occurring value. DI questions test reading tables/graphs/pie-charts accurately under time pressure, not new maths concepts.</div>
 
     <div class="label formulal">Formulas</div>
-    <div class="formula">Median (odd n) = value at position (n+1)/2
-Median (even n) = average of values at n/2 and (n/2 + 1)
+    <div class="formula">Median (odd n) = value at position <span class="frac"><span class="num">n+1</span><span class="den">2</span></span>
+Median (even n) = average of values at <span class="frac"><span class="num">n</span><span class="den">2</span></span> and (<span class="frac"><span class="num">n</span><span class="den">2</span></span> + 1)
 Pie chart: total = 360° = 100%, so 1% = 3.6°</div>
 
     <div class="label trickl">Tricks</div>
@@ -698,9 +702,9 @@ Pie chart: total = 360° = 100%, so 1% = 3.6°</div>
     <div class="fund"><b>Permutation</b> = arrangement where ORDER matters (e.g. ranking 3 people 1st/2nd/3rd). <b>Combination</b> = selection where order does NOT matter (e.g. choosing a 3-person committee). <b>Probability</b> of an event = (favourable outcomes)/(total possible outcomes), always between 0 and 1.</div>
 
     <div class="label formulal">Formulas</div>
-    <div class="formula">nPr = n!/(n−r)!         nCr = n!/[r!(n−r)!]
+    <div class="formula">nPr = <span class="frac"><span class="num">n!</span><span class="den">(n−r)!</span></span>         nCr = <span class="frac"><span class="num">n!</span><span class="den">r!(n−r)!</span></span>
 nCr = nC(n−r)           nC0 = 1, nCn = 1
-Probability P(E) = favourable outcomes / total outcomes
+Probability P(E) = <span class="frac"><span class="num">favourable outcomes</span><span class="den">total outcomes</span></span>
 P(not E) = 1 − P(E)</div>
 
     <div class="label examplel">Examples</div>
@@ -770,16 +774,16 @@ P(not E) = 1 − P(E)</div>
 
     <div class="label formulal">AP Formulas</div>
     <div class="formula">nth term: aₙ = a + (n−1)d
-Sum of n terms: Sₙ = n/2 × [2a + (n−1)d]
-   also: Sₙ = n/2 × (first term + last term)
+Sum of n terms: Sₙ = <span class="frac"><span class="num">n</span><span class="den">2</span></span> × [2a + (n−1)d]
+   also: Sₙ = <span class="frac"><span class="num">n</span><span class="den">2</span></span> × (first term + last term)
 Common difference: d = aₙ − aₙ₋₁</div>
 
     <div class="label formulal">GP Formulas</div>
     <div class="formula">nth term: aₙ = a × r^(n−1)
-Sum of n terms (r≠1): Sₙ = a(rⁿ−1)/(r−1)   [use when r&gt;1]
-                        Sₙ = a(1−rⁿ)/(1−r)   [use when r&lt;1]
-Sum of infinite GP (|r|&lt;1 only): S∞ = a/(1−r)
-Common ratio: r = aₙ / aₙ₋₁</div>
+Sum of n terms (r≠1): Sₙ = <span class="frac"><span class="num">a(rⁿ−1)</span><span class="den">r−1</span></span>   [use when r&gt;1]
+                        Sₙ = <span class="frac"><span class="num">a(1−rⁿ)</span><span class="den">1−r</span></span>   [use when r&lt;1]
+Sum of infinite GP (|r|&lt;1 only): S∞ = <span class="frac"><span class="num">a</span><span class="den">1−r</span></span>
+Common ratio: r = <span class="frac"><span class="num">aₙ</span><span class="den">aₙ₋₁</span></span></div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick">Most "series" questions in the Reasoning tab are secretly simple APs — spot the constant difference fast.</div>
@@ -895,9 +899,9 @@ m/s → km/h : multiply by 18/5
     <div class="formula">Let b = speed of boat in still water, s = speed of stream.
 Downstream speed = b + s
 Upstream speed   = b − s
-b = (Downstream + Upstream) / 2
-s = (Downstream − Upstream) / 2
-Avg speed for equal distance up &amp; down = (2 × Downstream × Upstream) / (Downstream + Upstream)</div>
+b = <span class="frac"><span class="num">Downstream + Upstream</span><span class="den">2</span></span>
+s = <span class="frac"><span class="num">Downstream − Upstream</span><span class="den">2</span></span>
+Avg speed for equal distance up &amp; down = <span class="frac"><span class="num">2 × Downstream × Upstream</span><span class="den">Downstream + Upstream</span></span></div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick">If a question gives you downstream and upstream speeds directly, don't re-derive b and s unless asked — plug straight into the average-speed formula, which is just the standard "same distance, two speeds" average-speed formula from TSD applied to this special case.</div>
@@ -936,7 +940,7 @@ a^(−n) = 1/a^n           a^(1/n) = ⁿ√a</div>
 log_a(x/y) = log_a x − log_a y
 log_a(x^n) = n·log_a x
 log_a a = 1        log_a 1 = 0
-Change of base: log_a x = log_b x / log_b a</div>
+Change of base: log_a x = <span class="frac"><span class="num">log_b x</span><span class="den">log_b a</span></span></div>
 
     <div class="label trickl">Tricks</div>
     <div class="trick">To rationalize a denominator with a single surd (e.g. 1/√2), multiply top and bottom by that surd. For a binomial surd denominator (e.g. 1/(√5+√3)), multiply by the conjugate (√5−√3) — the surds cancel via (a+b)(a−b)=a²−b².</div>
@@ -973,9 +977,9 @@ Change of base: log_a x = log_b x / log_b a</div>
 
     <div class="label formulal">Formulas</div>
     <div class="formula">Distance between (x₁,y₁) and (x₂,y₂) = √[(x₂−x₁)² + (y₂−y₁)²]
-Midpoint of (x₁,y₁),(x₂,y₂) = ((x₁+x₂)/2, (y₁+y₂)/2)
-Section formula (divides in ratio m:n) = ((mx₂+nx₁)/(m+n), (my₂+ny₁)/(m+n))
-Slope of line through (x₁,y₁),(x₂,y₂) = (y₂−y₁)/(x₂−x₁)
+Midpoint of (x₁,y₁),(x₂,y₂) = (<span class="frac"><span class="num">x₁+x₂</span><span class="den">2</span></span>, <span class="frac"><span class="num">y₁+y₂</span><span class="den">2</span></span>)
+Section formula (divides in ratio m:n) = (<span class="frac"><span class="num">mx₂+nx₁</span><span class="den">m+n</span></span>, <span class="frac"><span class="num">my₂+ny₁</span><span class="den">m+n</span></span>)
+Slope of line through (x₁,y₁),(x₂,y₂) = <span class="frac"><span class="num">y₂−y₁</span><span class="den">x₂−x₁</span></span>
 Area of triangle with vertices (x₁,y₁),(x₂,y₂),(x₃,y₃) =
   ½ |x₁(y₂−y₃) + x₂(y₃−y₁) + x₃(y₁−y₂)|</div>
 
@@ -1308,7 +1312,7 @@ Odd day → day code: 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat</div>
     <div class="fund">A clock face is 360° divided into 12 hours, so each hour mark is 30° apart. The minute hand completes a full 360° in 60 minutes (6°/min), while the hour hand completes 360° in 12 hours = 720 minutes (0.5°/min). The relative speed between them (6−0.5=5.5°/min) is why they coincide roughly every 65 5/11 minutes instead of every 60.</div>
 
     <div class="label formulal">Formula</div>
-    <div class="formula">Angle between hands = |30H − 11M/2| degrees
+    <div class="formula">Angle between hands = |30H − <span class="frac"><span class="num">11M</span><span class="den">2</span></span>| degrees
    (H=hour shown, M=minutes shown)
 Hands coincide/overlap every 65 5/11 minutes</div>
 
