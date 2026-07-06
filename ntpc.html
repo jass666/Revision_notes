@@ -39,7 +39,7 @@
   .title-row{display:flex;justify-content:space-between;align-items:center;gap:10px;}
   h1{font-size:1.02rem;margin:0;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   h1 span{color:var(--accent);}
-  #countdown{font-size:.72rem;background:var(--panel2);border:1px solid var(--border);padding:6px 10px;border-radius:20px;color:var(--accent);font-weight:600;white-space:nowrap;}
+
   .header-right{display:flex;align-items:center;gap:6px;flex:0 0 auto;}
   .theme-toggle{font-size:.9rem;background:var(--panel2);border:1px solid var(--border);width:38px;height:38px;border-radius:50%;color:var(--text);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;line-height:1;padding:0;flex:0 0 auto;}
   .theme-toggle:hover{border-color:var(--accent2);}
@@ -125,7 +125,6 @@
   @media(max-width:400px){
     header{padding:10px 12px 8px;}
     h1{font-size:.92rem;max-width:56vw;}
-    #countdown{font-size:.68rem;padding:5px 8px;}
     .tab-btn{padding:9px 12px;font-size:.8rem;}
     main{padding:12px 10px 60px;}
   }
@@ -140,7 +139,6 @@
   <div class="title-row">
     <h1>NTPC <span>CBT-2</span> Integrated Revision</h1>
     <div class="header-right">
-      <div id="countdown">7 days left</div>
       <a href="speed-trainer.html" class="theme-toggle" title="Speed Solving Trainer" aria-label="Speed Solving Trainer" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;">⚡</a>
       <button type="button" class="theme-toggle" id="themeToggle" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">🌙</button>
     </div>
@@ -149,6 +147,7 @@
     <button class="tab-btn active" data-group="maths">📐 Maths</button>
     <button class="tab-btn" data-group="reasoning">🧩 Reasoning</button>
     <button class="tab-btn" data-group="current-affairs">📰 Current Affairs</button>
+    <button class="tab-btn" data-group="static-gk">📚 Static GK</button>
   </div>
   <div class="more-toggle" id="moreToggle">
     <span>Search &amp; jump to topic</span>
@@ -664,7 +663,7 @@ CI − SI (3 years) = <span class="frac"><span class="num">P × R² × (300+R)</
     <div class="label fund">Going Deeper</div>
     <div class="fund">When compound interest is calculated at a <b>different rate each year</b>, you cannot use P(1+R/100)^T — instead multiply by a separate growth factor for each year individually.</div>
     <div class="label formulal">Variable-Rate CI</div>
-    <div class="formula">Amount = P × (1+R₁/100) × (1+R₂/100) × (1+R₃/100) ...</div>
+    <div class="formula">Amount = P × (1+<span class="frac"><span class="num">R₁</span><span class="den">100</span></span>) × (1+<span class="frac"><span class="num">R₂</span><span class="den">100</span></span>) × (1+<span class="frac"><span class="num">R₃</span><span class="den">100</span></span>) ...</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
       <div class="q">Find the compound amount on ₹5000 for 2 years if the rate is 10% for the first year and 20% for the second year.</div>
@@ -772,8 +771,8 @@ Pipe emptying while another fills: treat outlet efficiency as negative</div>
     <div class="fund">Speed = Distance/Time — the three quantities are always linked, so given any two you can find the third. When two objects move toward each other, their speeds add (relative speed); when moving in the same direction, relative speed is the difference. For trains/boats, "length" of the moving object matters because crossing something means covering that length plus the object's own length.</div>
 
     <div class="label formulal">Formulas</div>
-    <div class="formula">km/h → m/s : multiply by 5/18
-m/s → km/h : multiply by 18/5
+    <div class="formula">km/h → m/s : multiply by <span class="frac"><span class="num">5</span><span class="den">18</span></span>
+m/s → km/h : multiply by <span class="frac"><span class="num">18</span><span class="den">5</span></span>
 Train crossing pole/man = <span class="frac"><span class="num">train length</span><span class="den">speed</span></span>
 Train crossing platform = <span class="frac"><span class="num">train length + platform length</span><span class="den">speed</span></span>
 Two trains crossing each other (opposite dir) = <span class="frac"><span class="num">sum of lengths</span><span class="den">sum of speeds</span></span>
@@ -933,7 +932,7 @@ If a−1/a = x → a²+1/a² = x²+2</div>
     <div class="label fund">Going Deeper</div>
     <div class="fund">Quadratic equations (ax²+bx+c=0) show up as algebra word problems. The <b>discriminant</b> D=b²−4ac tells you the nature of roots without solving: D&gt;0 → two real distinct roots, D=0 → equal roots, D&lt;0 → no real roots. Sum and product of roots can be found directly from the coefficients, without solving the equation.</div>
     <div class="label formulal">Roots of a Quadratic</div>
-    <div class="formula">For ax²+bx+c=0: Sum of roots = −b/a     Product of roots = c/a
+    <div class="formula">For ax²+bx+c=0: Sum of roots = <span class="frac"><span class="num">−b</span><span class="den">a</span></span>     Product of roots = <span class="frac"><span class="num">c</span><span class="den">a</span></span>
 x = <span class="frac"><span class="num">−b ± √(b²−4ac)</span><span class="den">2a</span></span></div>
     <div class="label trickl">🎯 Speed Tricks</div>
     <div class="trick"><b>Don't solve for x if you don't need to:</b> "sum/product of roots" questions almost never need the quadratic formula — read sum and product straight off −b/a and c/a.</div>
@@ -996,7 +995,7 @@ Circle: angle in a semicircle = 90°; tangent ⊥ radius at point of contact</di
     <div class="label fund">Going Deeper</div>
     <div class="fund"><b>Similar triangles</b> (same shape, proportional sides) let you find unknown lengths using ratios instead of full trigonometry. <b>Heron's Formula</b> finds a triangle's area from all three sides directly, useful when no height is given.</div>
     <div class="label formulal">Heron's Formula & Similarity</div>
-    <div class="formula">s = (a+b+c)/2 (semi-perimeter)
+    <div class="formula">s = <span class="frac"><span class="num">a+b+c</span><span class="den">2</span></span> (semi-perimeter)
 Area = √[s(s−a)(s−b)(s−c)]
 Similar triangles: corresponding sides are proportional; ratio of areas = (ratio of corresponding sides)²</div>
     <div class="label trickl">🎯 Speed Tricks</div>
@@ -1500,8 +1499,8 @@ Common ratio: r = <span class="frac"><span class="num">aₙ</span><span class="d
 1 gallon (imperial) ≈ 4.546 litres</div>
 
     <div class="label formulal">Speed</div>
-    <div class="formula">km/h → m/s : multiply by 5/18
-m/s → km/h : multiply by 18/5
+    <div class="formula">km/h → m/s : multiply by <span class="frac"><span class="num">5</span><span class="den">18</span></span>
+m/s → km/h : multiply by <span class="frac"><span class="num">18</span><span class="den">5</span></span>
 1 knot ≈ 1.852 km/h</div>
 
     <div class="label formulal">Time</div>
@@ -1547,7 +1546,7 @@ m/s → km/h : multiply by 18/5
     <div class="label fund">Going Deeper</div>
     <div class="fund">Temperature conversion is a common "hidden" unit-conversion question, and data-storage units occasionally extend beyond GB. Both follow the same "write it as a formula, plug in" discipline as the rest of this topic.</div>
     <div class="label formulal">Temperature & Extended Data Units</div>
-    <div class="formula">°F = (°C × 9/5) + 32        °C = (°F − 32) × 5/9
+    <div class="formula">°F = (°C × <span class="frac"><span class="num">9</span><span class="den">5</span></span>) + 32        °C = (°F − 32) × <span class="frac"><span class="num">5</span><span class="den">9</span></span>
 1 TB = 1024 GB      1 PB = 1024 TB</div>
     <div class="label examplel">More Practice</div>
     <div class="example">
@@ -1638,11 +1637,11 @@ Avg speed for equal distance up &amp; down = <span class="frac"><span class="num
     <div class="label formulal">Laws of Indices</div>
     <div class="formula">a^m × a^n = a^(m+n)      a^m ÷ a^n = a^(m−n)
 (a^m)^n = a^(mn)         a^0 = 1 (a≠0)
-a^(−n) = 1/a^n           a^(1/n) = ⁿ√a</div>
+a^(−n) = <span class="frac"><span class="num">1</span><span class="den">a^n</span></span>           a^(1/n) = ⁿ√a</div>
 
     <div class="label formulal">Laws of Logarithms</div>
     <div class="formula">log_a(xy) = log_a x + log_a y
-log_a(x/y) = log_a x − log_a y
+log_a(<span class="frac"><span class="num">x</span><span class="den">y</span></span>) = log_a x − log_a y
 log_a(x^n) = n·log_a x
 log_a a = 1        log_a 1 = 0
 Change of base: log_a x = <span class="frac"><span class="num">log_b x</span><span class="den">log_b a</span></span></div>
@@ -3251,6 +3250,380 @@ Water-unchanged digits: 0, 1, 8 (same set, since digits are typically vertically
     Always cross-verify names, dates, and figures with the latest official notifications before the exam, since current affairs data updates daily.</div>
 </div>
 <div class="note">Integrated NTPC CBT-2 sprint: Maths, Reasoning, and Current Affairs in one dashboard · Tap a topic to expand · Use search and quick-nav for fast revision · Progress resets on page reload.</div>
+<div class="section-group" id="static-gk">
+
+<div class="topic" data-name="static gk history of india freedom struggle ancient medieval modern indus valley mauryan gupta mughal british raj 1857 revolt independence movement">
+  <div class="topic-head"><h2>1. 🏛️ History of India &amp; Freedom Struggle</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Ancient India</div>
+    <div class="fund">The <b>Indus Valley Civilization</b> (c. 2500 BCE) was urban, with sites at Harappa, Mohenjo-daro, Lothal (dockyard) and Dholavira — known for planned grid cities and drainage, but no deciphered script or evidence of temples/kings found yet. The <b>Vedic Age</b> followed (Rig Veda oldest text). The <b>Mauryan Empire</b> (Chandragupta Maurya, then Ashoka) unified most of India; Ashoka adopted Buddhism after the Kalinga war and spread edicts on pillars/rocks. The <b>Gupta Age</b> (4th–6th century CE) is called India's "Golden Age" — Aryabhata (zero, astronomy), Kalidasa (literature).</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Dynasty-founder pairs</b> are the single most repeated question type: Maurya→Chandragupta Maurya, Gupta→Sri Gupta/Chandragupta I, Delhi Sultanate→Qutbuddin Aibak (Slave dynasty), Mughal→Babur (1526, Battle of Panipat I). Memorize founder + first major battle together, not in isolation.</div>
+    <div class="trick"><b>Ashoka's edicts</b> are commonly tested for their script (Brahmi/Kharosthi) and the animal capital (four lions, adopted as India's National Emblem, originally atop the Sarnath pillar).</div>
+
+    <div class="label fund">Medieval India</div>
+    <div class="fund">The <b>Delhi Sultanate</b> (1206–1526) had 5 dynasties: Slave (Mamluk), Khilji, Tughlaq, Sayyid, Lodi. The <b>Mughal Empire</b> (1526–1857) had 6 major rulers commonly tested: Babur→Humayun→Akbar→Jahangir→Shah Jahan→Aurangzeb. Akbar introduced Din-i-Ilahi and the Mansabdari system; Shah Jahan built the Taj Mahal (in memory of Mumtaz Mahal).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Who founded the Mauryan Empire and which battle is associated with the fall of the Mughal-era resistance at Panipat (first battle)?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Mauryan Empire founded by Chandragupta Maurya (c. 321 BCE), guided by Chanakya (Kautilya)<br>
+- First Battle of Panipat (1526): Babur defeated Ibrahim Lodi, founding the Mughal Empire in India<br>
+- <span class="ans">Chandragupta Maurya (Mauryan founder); Babur vs Ibrahim Lodi (1st Panipat, 1526)</span></div>
+    </div>
+
+    <div class="label fund">Modern India &amp; Freedom Struggle</div>
+    <div class="fund">Key milestones: <b>1757</b> Battle of Plassey (British foothold in Bengal), <b>1857</b> First War of Independence (Mangal Pandey, Rani Lakshmibai, Bahadur Shah Zafar), <b>1885</b> Indian National Congress founded (first president W.C. Bonnerjee, founder A.O. Hume), <b>1905</b> Partition of Bengal (Lord Curzon), <b>1919</b> Jallianwala Bagh massacre (Gen. Dyer), <b>1930</b> Dandi March / Salt Satyagraha (Gandhi), <b>1942</b> Quit India Movement, <b>15 Aug 1947</b> Independence.</div>
+    <div class="trick"><b>Movement-leader-year triads</b> are heavily tested: Non-Cooperation (1920-22, Gandhi), Civil Disobedience/Dandi March (1930, Gandhi), Quit India (1942, Gandhi, "Do or Die"). Also know INA (Subhash Chandra Bose, "Jai Hind", "Give me blood, I will give you freedom").</div>
+    <div class="highlight">India's freedom fighters overlap heavily with Static-GK + Days: Gandhi Jayanti (2 Oct), Martyrs' Day (30 Jan — Gandhi's assassination), Independence Day (15 Aug, 1947), Republic Day (26 Jan, 1950 — Constitution came into force).</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk indian polity constitution fundamental rights directive principles parliament president amendments">
+  <div class="topic-head"><h2>2. ⚖️ Indian Polity &amp; Constitution</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Constitution Basics</div>
+    <div class="fund">The Constitution of India was adopted on <b>26 November 1949</b> and came into force on <b>26 January 1950</b>. Dr. B.R. Ambedkar chaired the Drafting Committee. It is the <b>longest written constitution</b> in the world, originally 395 Articles/22 Parts/8 Schedules (now more via amendments). Borrowed features: Fundamental Rights (USA), Directive Principles (Ireland), Parliamentary system (UK), Federal structure (Canada).</div>
+
+    <div class="label formulal">Key Structures</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Fundamental Rights (Part III)</h3>
+        <ul>
+          <li>Right to Equality (Art 14-18)</li>
+          <li>Right to Freedom (Art 19-22)</li>
+          <li>Right against Exploitation (23-24)</li>
+          <li>Right to Freedom of Religion (25-28)</li>
+          <li>Cultural &amp; Educational Rights (29-30)</li>
+          <li>Right to Constitutional Remedies (32)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Union Government</h3>
+        <ul>
+          <li>President — Head of State (Art 52)</li>
+          <li>Vice President — ex-officio Rajya Sabha Chairman</li>
+          <li>PM — real executive head (Art 74-75)</li>
+          <li>Lok Sabha: max 552 seats, 5-year term</li>
+          <li>Rajya Sabha: max 250, permanent house (1/3 retire every 2 yrs)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Article number recall:</b> Art 32 = Right to Constitutional Remedies (Ambedkar called it the "Heart and Soul" of the Constitution). Art 356 = President's Rule. Art 370 = special status to J&amp;K (abrogated Aug 2019). Art 21 = Right to Life &amp; Personal Liberty (widely interpreted by courts).</div>
+    <div class="trick"><b>Amendment landmarks:</b> 42nd Amendment (1976) added "Socialist, Secular" to Preamble + Fundamental Duties; 44th Amendment (1978) removed Right to Property from Fundamental Rights (now a legal right, Art 300A); 73rd/74th Amendments (1992) gave constitutional status to Panchayati Raj/Municipalities; 101st Amendment (2016) introduced GST.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Which Article of the Indian Constitution is invoked for imposing President's Rule in a state?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- President's Rule (state constitutional machinery failure) is governed by Article 356<br>
+- <span class="ans">Article 356</span></div>
+    </div>
+
+    <div class="label fund">Directive Principles &amp; Fundamental Duties</div>
+    <div class="fund">DPSPs (Part IV, Art 36-51) are non-justiciable guidelines for governance (e.g., uniform civil code, village panchayats). Fundamental Duties (Part IVA, Art 51A) were added by the 42nd Amendment (1976) — originally 10, now 11 duties (86th Amendment added one on parents' duty to provide education).</div>
+    <div class="highlight">Static-GK overlap: know the current President, Vice President, Speaker of Lok Sabha, Chief Justice of India, and Attorney General — these change and are separately tracked in Current Affairs, but the constitutional POWERS/ARTICLES attached to each post are pure static GK.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk geography india world rivers mountains states capitals climate soil types">
+  <div class="topic-head"><h2>3. 🗺️ Geography — India &amp; World</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Physical Geography of India</div>
+    <div class="fund">India is divided into 6 physiographic regions: the Himalayas, Northern Plains, Peninsular Plateau, Indian Desert, Coastal Plains, and Islands. The Himalayas have 3 parallel ranges: Himadri (Greater), Himachal (Lesser), Shiwalik (Outer). <b>Kanchenjunga</b> (India's highest peak) is in Sikkim; K2 (Mt. Godwin Austen, world's 2nd highest) lies in Pakistan-Occupied Kashmir.</div>
+
+    <div class="label formulal">Rivers &amp; Origins</div>
+    <div class="formula">Ganga → Gangotri glacier (Uttarakhand), flows to Bay of Bengal
+Yamuna → Yamunotri glacier
+Brahmaputra → Angsi glacier (Tibet, called Tsangpo there)
+Indus → near Mansarovar Lake (Tibet)
+Godavari → Trimbakeshwar, Nashik (Maharashtra) — "Dakshin Ganga"
+Krishna → Mahabaleshwar (Maharashtra)
+Narmada &amp; Tapi → flow WESTWARD into Arabian Sea (exception to eastward-flowing pattern)</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Westward-flowing rivers</b> (Narmada, Tapi, Mahi, Sabarmati, Luni) are a favourite trap — almost all major Indian rivers flow east into the Bay of Bengal, so remember this short exception list separately.</div>
+    <div class="trick"><b>Longest/largest superlatives:</b> Longest river in India = Ganga; largest state (area) = Rajasthan; smallest state (area) = Goa; largest state (population) = Uttar Pradesh; largest coastline = Gujarat; largest river island = Majuli (Assam, on Brahmaputra).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Which two major Indian rivers flow westward into the Arabian Sea instead of eastward?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Most Peninsular rivers flow east into the Bay of Bengal due to the eastward slope of the plateau<br>
+- Narmada and Tapi are the key exceptions, flowing through rift valleys westward<br>
+- <span class="ans">Narmada and Tapi</span></div>
+    </div>
+
+    <div class="label fund">World Geography Essentials</div>
+    <div class="fund">Continents (largest to smallest by area): Asia, Africa, North America, South America, Antarctica, Europe, Australia. Longest river in the world: Nile (Africa). Largest desert: Sahara (hot) / Antarctica (cold, technically largest overall). Largest ocean: Pacific. Highest mountain: Everest (Nepal-China border, 8,849 m).</div>
+    <div class="trick"><b>Tropics &amp; lines:</b> Tropic of Cancer (23.5°N) passes through 8 Indian states — Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, WB, Tripura, Mizoram. Equator (0°) does NOT pass through India.</div>
+    <div class="highlight">Static-GK linkage: State-capital-CM combos, national parks by state, and classical dance forms by state (covered in the Art &amp; Culture topic) are frequently cross-tested alongside geography — revise them together.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk indian economy five year plans gdp niti aayog banking rbi taxation">
+  <div class="topic-head"><h2>4. 💹 Indian Economy — Static Concepts</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Planning &amp; Institutions</div>
+    <div class="fund">India had <b>12 Five-Year Plans</b> (1951-2017), modeled on the Soviet system; the Planning Commission was replaced by <b>NITI Aayog</b> (National Institution for Transforming India) in Jan 2015. NITI Aayog is a policy think-tank (not a constitutional/statutory body) with the PM as ex-officio Chairperson. The <b>RBI</b> (est. 1935, nationalized 1949) is India's central bank, headquartered in Mumbai — it controls monetary policy via the repo rate, CRR, and SLR.</div>
+
+    <div class="label formulal">Key Terms</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Banking Terms</h3>
+        <ul>
+          <li><b>Repo Rate</b>: rate RBI lends to banks</li>
+          <li><b>Reverse Repo</b>: rate RBI borrows from banks</li>
+          <li><b>CRR</b>: % of deposits banks keep with RBI as cash</li>
+          <li><b>SLR</b>: % of deposits kept in liquid assets (cash/gold/securities)</li>
+          <li><b>NPA</b>: Non-Performing Asset (bad loan)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Economic Indicators</h3>
+        <ul>
+          <li><b>GDP</b>: total value of goods/services within a country</li>
+          <li><b>GNP</b>: GDP + net income from abroad</li>
+          <li><b>Fiscal Deficit</b>: total expenditure − total receipts (excl. borrowings)</li>
+          <li><b>Inflation</b>: measured via CPI (retail) and WPI (wholesale)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Nationalization dates:</b> RBI nationalized 1949; 14 major banks nationalized 1969 (Indira Gandhi); 6 more in 1980. <b>GST</b> (Goods and Services Tax) was rolled out on <b>1 July 2017</b> — "One Nation, One Tax" — via the 101st Constitutional Amendment (2016).</div>
+    <div class="trick"><b>Stock exchanges:</b> BSE (Bombay Stock Exchange, Asia's oldest, est. 1875, index = Sensex); NSE (National Stock Exchange, est. 1992, index = Nifty 50).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Which institution replaced the Planning Commission of India, and in which year?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- The Planning Commission (est. 1950) was dissolved by the NDA government<br>
+- Replaced by NITI Aayog on 1 January 2015<br>
+- <span class="ans">NITI Aayog, January 2015</span></div>
+    </div>
+    <div class="highlight">This overlaps heavily with the Economy/Banking/RBI Current Affairs topic — treat the static concepts here (definitions, institutions, historic dates) as the base layer, and the Current Affairs tab as the "latest update" layer on top of it.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk general science physics units si laws of motion light sound electricity">
+  <div class="topic-head"><h2>5. 🔭 General Science — Physics</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Core Concepts (up to 10th CBSE level)</div>
+    <div class="fund"><b>Newton's Laws of Motion:</b> 1st (inertia — object at rest/motion stays that way unless acted on by force), 2nd (F=ma), 3rd (every action has an equal and opposite reaction). <b>SI Units:</b> length-metre, mass-kilogram, time-second, current-ampere, temperature-kelvin. Common derived units: Force-Newton, Energy/Work-Joule, Power-Watt, Pressure-Pascal.</div>
+
+    <div class="label formulal">Frequently Tested Facts</div>
+    <div class="formula">Speed of light in vacuum = 3×10^8 m/s
+Speed of sound in air (approx) = 343 m/s
+Sound needs a medium to travel; light does not
+Convex lens/mirror = converges light; Concave = diverges
+Normal human body temperature = 37°C (98.6°F)
+Absolute zero = 0 K = −273.15°C</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Everyday-physics questions</b> dominate NTPC GK (why does ice float, why sky is blue, why we see lightning before hearing thunder). Link each to ONE keyword: ice floats → density of water is max at 4°C, ice is less dense; sky blue → Rayleigh scattering; lightning before thunder → light travels faster than sound.</div>
+    <div class="trick"><b>Inventor-invention pairs</b> are a guaranteed 1-2 questions: Newton (gravity), Einstein (theory of relativity), Edison (bulb), Bell (telephone), Marconi (radio), CV Raman (Raman effect, Nobel 1930 — only Indian to win Nobel in Physics while working in India).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Why do we see lightning before we hear the thunder during a storm?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Light travels at ~3×10^8 m/s; sound travels at only ~343 m/s in air<br>
+- Since light is enormously faster, it reaches our eyes almost instantly while the sound takes longer to arrive<br>
+- <span class="ans">Because light travels much faster than sound</span></div>
+    </div>
+    <div class="highlight">Static-GK cross-link: Indian Nobel laureates in science (C.V. Raman - Physics 1930, Har Gobind Khorana - Medicine 1968, Venkatraman Ramakrishnan - Chemistry 2009) are frequently asked alongside physics/chemistry/biology topics.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk general science chemistry periodic table elements acids bases metals non metals">
+  <div class="topic-head"><h2>6. ⚗️ General Science — Chemistry</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Core Concepts</div>
+    <div class="fund">The <b>Periodic Table</b> (Mendeleev, modern version by moving to atomic number) has 18 groups and 7 periods. Elements are classified as metals (left/centre — good conductors, malleable), non-metals (right — poor conductors), and metalloids (border, e.g. silicon, boron). <b>Acids</b> turn blue litmus red (pH &lt;7); <b>Bases</b> turn red litmus blue (pH &gt;7); pH 7 is neutral (pure water).</div>
+
+    <div class="label formulal">Common Chemical Formulas / Names</div>
+    <div class="formula">Water = H2O            Common salt = NaCl
+Baking soda = NaHCO3   Washing soda = Na2CO3
+Vinegar = dilute Acetic acid (CH3COOH)
+Marble/Limestone = CaCO3
+Quick lime = CaO       Slaked lime = Ca(OH)2
+Rust = Iron oxide (Fe2O3), formed by oxidation in presence of moisture</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Gas identification questions</b> are common: CO2 turns lime water milky; O2 supports combustion; N2 is the most abundant gas in air (~78%, O2 is ~21%); noble gases (He, Ne, Ar, Kr, Xe, Rn) are chemically inert (complete outer shell).</div>
+    <div class="trick"><b>Everyday chemistry:</b> LPG main component = butane/propane; CNG = methane; the gas used in soda/fizzy drinks = CO2; the gas that causes the "rotten egg" smell = H2S (hydrogen sulphide).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">What is the chemical name and formula of "washing soda"?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Washing soda is used as a cleaning agent and water softener<br>
+- Its chemical name is Sodium Carbonate<br>
+- <span class="ans">Sodium Carbonate, Na2CO3</span></div>
+    </div>
+    <div class="highlight">Tip: NTPC chemistry questions rarely go beyond Class 10 NCERT level — prioritise periodic table basics, acids/bases/salts, and common compound names over advanced organic chemistry.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk general science biology human body diseases vitamins nutrition cell">
+  <div class="topic-head"><h2>7. 🧬 General Science — Biology</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Human Body Basics</div>
+    <div class="fund">The human body has 206 bones (adult), the heart has 4 chambers (2 atria, 2 ventricles), and the largest organ is the skin. Blood groups: A, B, AB, O (with Rh factor +/−) — <b>O-negative</b> is the universal donor, <b>AB-positive</b> is the universal recipient. Normal blood pressure ≈ 120/80 mmHg; normal pulse rate ≈ 72 beats/min.</div>
+
+    <div class="label formulal">Vitamins &amp; Deficiency Diseases</div>
+    <div class="formula">Vitamin A (retinol) → deficiency causes Night blindness; sources: carrot, milk
+Vitamin B1 (thiamine) → Beriberi
+Vitamin C (ascorbic acid) → Scurvy; sources: citrus fruits
+Vitamin D (calciferol) → Rickets (children) / Osteomalacia (adults); made in skin via sunlight
+Vitamin K → Blood clotting deficiency (excess bleeding)</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Discoverer-disease-vaccine sets</b> are common: Edward Jenner (smallpox vaccine), Louis Pasteur (rabies vaccine, pasteurization), Alexander Fleming (Penicillin, first antibiotic). <b>Cell biology:</b> Robert Hooke discovered the cell (1665); mitochondria = "powerhouse of the cell"; nucleus = "control center".</div>
+    <div class="trick"><b>Communicable vs non-communicable:</b> Malaria (Anopheles mosquito, Plasmodium parasite), Dengue (Aedes mosquito), TB (bacteria, Mycobacterium tuberculosis) are communicable; Diabetes, Hypertension are non-communicable (lifestyle-linked).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Deficiency of which vitamin causes Night Blindness, and what is a good dietary source of it?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Night blindness is linked to poor rod-cell function in the retina<br>
+- This is caused by a deficiency of Vitamin A<br>
+- <span class="ans">Vitamin A; sources include carrots, milk, liver, and green leafy vegetables</span></div>
+    </div>
+    <div class="highlight">Static-GK overlap: questions on "which mosquito causes which disease" and "which vitamin deficiency causes which disease" repeat almost every NTPC cycle — build a small personal cheat-sheet of these pairs and revise it last.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk computer awareness abbreviations hardware software internet basics shortcuts">
+  <div class="topic-head"><h2>8. 💻 Computer Awareness &amp; Abbreviations</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Hardware vs Software</div>
+    <div class="fund"><b>Hardware</b> = physical parts you can touch (CPU, RAM, monitor, keyboard, mouse, hard disk). <b>Software</b> = programs/instructions (System software like OS — Windows/Linux; Application software like MS Word/browsers). <b>RAM</b> (Random Access Memory) is volatile/temporary; <b>ROM</b> (Read Only Memory) is non-volatile and stores boot instructions permanently.</div>
+
+    <div class="label formulal">Common Abbreviations</div>
+    <div class="formula">CPU = Central Processing Unit      RAM = Random Access Memory
+URL = Uniform Resource Locator     HTTP = HyperText Transfer Protocol
+HTML = HyperText Markup Language   USB = Universal Serial Bus
+LAN = Local Area Network           WAN = Wide Area Network
+PDF = Portable Document Format     GUI = Graphical User Interface
+IP = Internet Protocol             ATM = Automated Teller Machine
+UPS = Uninterruptible Power Supply IoT = Internet of Things</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>Generation of computers</b> (frequently tested): 1st gen — vacuum tubes; 2nd gen — transistors; 3rd gen — integrated circuits (ICs); 4th gen — microprocessors; 5th gen — AI-based. Group them with keyword "smaller and faster each generation".</div>
+    <div class="trick"><b>Shortcut keys:</b> Ctrl+C (copy), Ctrl+V (paste), Ctrl+Z (undo), Ctrl+P (print), Ctrl+S (save), Alt+F4 (close window), Ctrl+A (select all) — these repeat as direct one-liner questions.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">What is the full form of "HTTP" and what is it used for?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- HTTP stands for HyperText Transfer Protocol<br>
+- It is the protocol used for transferring web pages over the internet<br>
+- <span class="ans">HyperText Transfer Protocol — used to load webpages via hyperlinks</span></div>
+    </div>
+    <div class="highlight">NTPC computer questions are basics-only (no coding) — prioritise abbreviations, generations, input/output devices, and common shortcut keys over networking theory.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk environment ecology biodiversity national parks wildlife sanctuaries climate change">
+  <div class="topic-head"><h2>9. 🌱 Environment, Ecology &amp; Wildlife</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Core Concepts</div>
+    <div class="fund">An <b>ecosystem</b> = living organisms + their non-living environment interacting as a system. <b>Biodiversity hotspots</b> in India: Western Ghats, Eastern Himalayas, Indo-Burma region, Sundaland (Nicobar Islands) — 4 of the world's 36 hotspots touch India. <b>Project Tiger</b> launched 1973 to protect the Bengal Tiger (India's national animal); India hosts ~70-75% of the world's wild tiger population.</div>
+
+    <div class="label formulal">Famous National Parks (State-wise)</div>
+    <div class="formula">Jim Corbett NP — Uttarakhand (India's first NP, 1936, tigers)
+Kaziranga NP — Assam (one-horned rhinoceros, UNESCO site)
+Gir NP — Gujarat (only home of the Asiatic Lion)
+Sundarbans NP — West Bengal (mangroves, Royal Bengal Tiger)
+Ranthambore NP — Rajasthan (tigers)
+Bandipur NP — Karnataka (tigers, part of Nilgiri Biosphere)</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>National symbols</b> repeat every cycle: National Animal — Tiger; National Bird — Peacock; National Flower — Lotus; National Tree — Banyan; National Fruit — Mango; National Aquatic Animal — Ganges River Dolphin; National Heritage Animal — Elephant.</div>
+    <div class="trick"><b>Global environment pacts:</b> Kyoto Protocol (1997, greenhouse gases), Paris Agreement (2015, limit warming to well below 2°C), Ramsar Convention (wetlands — India has 80+ Ramsar sites as of 2026, most in South Asia).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Which national park is the only natural habitat of the Asiatic Lion, and in which state is it located?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Asiatic Lions survive in the wild only in one specific protected forest in India<br>
+- That is Gir National Park, located in Gujarat<br>
+- <span class="ans">Gir National Park, Gujarat</span></div>
+    </div>
+    <div class="highlight">Static + Current Affairs overlap: new Ramsar sites, new Tiger Reserves, and updated tiger-census figures are announced periodically — treat this topic's facts as the base layer and check the Current Affairs tab for the latest additions before the exam.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="topic" data-name="static gk art culture dance forms classical music unesco world heritage sites india books authors">
+  <div class="topic-head"><h2>10. 🎭 Art, Culture &amp; Books/Authors</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Classical Dance Forms (State-wise)</div>
+    <div class="fund">India has 8 recognized classical dance forms, each tied to a state — this state-dance pairing is one of the most repeated NTPC static-GK questions.</div>
+
+    <div class="label formulal">Dance-State Pairs</div>
+    <div class="formula">Bharatanatyam — Tamil Nadu       Kathak — Uttar Pradesh
+Kathakali — Kerala                Kuchipudi — Andhra Pradesh
+Odissi — Odisha                   Manipuri — Manipur
+Mohiniyattam — Kerala              Sattriya — Assam</div>
+
+    <div class="label trickl">Tricks</div>
+    <div class="trick"><b>UNESCO World Heritage Sites in India</b> (a growing, frequently-updated list — currently 40+ sites) commonly tested ones: Taj Mahal, Qutub Minar, Red Fort, Ajanta &amp; Ellora Caves, Khajuraho, Sun Temple (Konark), Hampi, Western Ghats, Kaziranga, Jaipur (Pink City). Group by category (cultural vs natural) to avoid confusion.</div>
+    <div class="trick"><b>Famous authors &amp; works:</b> Rabindranath Tagore (Gitanjali, wrote both India's &amp; Bangladesh's national anthems, first Asian Nobel laureate — Literature, 1913); R.K. Narayan (Malgudi Days); Kalidasa (Abhijnanashakuntalam, ancient Sanskrit poet); Munshi Premchand (Godaan, Hindi literature).</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Kathakali is the classical dance form of which Indian state?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Kathakali is a highly stylized, colourful dance-drama form<br>
+- It originated in and is associated with Kerala<br>
+- <span class="ans">Kerala</span></div>
+    </div>
+
+    <div class="label fund">National Symbols &amp; Anthems</div>
+    <div class="fund">National Anthem: "Jana Gana Mana" — Rabindranath Tagore (adopted 1950). National Song: "Vande Mataram" — Bankim Chandra Chattopadhyay. National Emblem: Ashoka's Lion Capital (from Sarnath), with the motto "Satyameva Jayate" (from the Mundaka Upanishad).</div>
+    <div class="highlight">Static-GK linkage: "First in India" facts (first PM - Nehru, first woman PM - Indira Gandhi, first President - Rajendra Prasad, first CJI - H.J. Kania, first Param Vir Chakra - Major Somnath Sharma) are a distinct high-yield sub-topic — keep a running list of these as you revise.</div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
+<div class="note">Static GK compiled to align with the RRB NTPC CBT-2 General Awareness syllabus (History, Polity, Geography, Economy, General Science, Computer Awareness, Environment, Art &amp; Culture). This is the stable "base layer" — pair it with the Current Affairs tab for the latest 6-8 months of updates before the exam.</div>
+</div>
+
 </main>
 
 <script>
@@ -3400,21 +3773,6 @@ Water-unchanged digits: 0, 1, 8 (same set, since digits are typically vertically
       if(q.length>0 && match) topic.classList.add('open');
     });
   });
-
-  // Countdown
-  const EXAM_DATE = new Date();
-  EXAM_DATE.setDate(EXAM_DATE.getDate()+7);
-  EXAM_DATE.setHours(9,0,0,0);
-  function updateCountdown(){
-    const now = new Date();
-    const diff = EXAM_DATE - now;
-    if(diff<=0){ document.getElementById('countdown').textContent='Exam day — go smash it 🚀'; return; }
-    const d = Math.floor(diff/(1000*60*60*24));
-    const h = Math.floor((diff/(1000*60*60))%24);
-    document.getElementById('countdown').textContent = d+'d '+h+'h left';
-  }
-  updateCountdown();
-  setInterval(updateCountdown,60000);
 </script>
 </body>
 </html>
