@@ -1864,6 +1864,175 @@ Line through (x₁,y₁),(x₂,y₂): (y−y₁) = <span class="frac"><span clas
   </div></div>
 </div>
 
+<div class="topic" data-name="fast calculation tricks vedic maths speed multiplication division decimals hcf lcm factors square root cube root">
+  <div class="topic-head"><h2>27. Fast Calculation Tricks (Speed Maths)</h2><span class="chev">▶</span></div>
+  <div class="topic-body"><div class="topic-inner">
+
+    <div class="label fund">Fundamentals</div>
+    <div class="fund">This topic is not a separate syllabus item — it's a toolbox of shortcuts you apply INSIDE every other topic (percentage, SI/CI, TSD, DI, approximation) to cut calculation time. The goal is to never do long multiplication/division by hand in the exam when a pattern-based shortcut exists. Practice each trick until it becomes automatic, not something you consciously "look up" mid-exam.</div>
+
+    <div class="label formulal">Multiplying by nearby powers of 10 / 5 / 25</div>
+    <div class="formula">×5 = ×10÷2   ×25 = ×100÷4   ×50 = ×100÷2
+×15 = ×10 + half of that   ×9 = ×10 − original   ×11 = ×10 + original
+×99 = ×100 − original   ×101 = ×100 + original</div>
+    <div class="trick">Never multiply directly by 5, 25, 50, 9, 11, 99, or 101 — convert to a power-of-10 operation instead, e.g. 84×5 = 840÷2 = 420, and 84×99 = 8400−84 = 8316.</div>
+    <div class="trick">×11 shortcut for any number: write the first digit, then each pair of adjacent digits added together, then the last digit, carrying over 10s — e.g. 243×11: 2, 2+4=6, 4+3=7, 3 → 2673.</div>
+
+    <div class="label formulal">Squaring numbers ending in 5</div>
+    <div class="formula">(a5)² = a×(a+1) followed by 25
+e.g. 35² : 3×4=12 → 1225   |  65²: 6×7=42 → 4225   |  95²: 9×10=90 → 9025</div>
+
+    <div class="label formulal">Squaring any number near a base (100)</div>
+    <div class="formula">(100±k)² = 10000 ± 200k + k²
+e.g. 98² = 10000 − 400 + 4 = 9604   |  104² = 10000 + 800 + 16 = 10816</div>
+    <div class="trick">For numbers close to 100 (like 96–104), use (100±k)² above — much faster than direct multiplication, and works the same way near any base (50, 20, 1000, etc.) by swapping 100 for that base.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find 68 × 25 quickly.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- 25 = 100÷4, so 68×25 = 68×100÷4 = 6800÷4<br>
+- 6800÷4 = <span class="ans">1700</span></div>
+    </div>
+    <div class="example">
+      <div class="q">Find 103 × 97 quickly.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Both are close to 100: 103=100+3, 97=100−3<br>
+- Use (a+b)(a−b) form = 100² − 3² = 10000 − 9<br>
+- = <span class="ans">9991</span></div>
+    </div>
+
+    <div class="label fund">Decimals — fast handling</div>
+    <div class="fund">Most "decimal trouble" in the exam is just misplaced decimal points, not hard arithmetic. Convert decimals to whole numbers first, do the arithmetic, then place the decimal back by counting total decimal digits.</div>
+    <div class="trick">To multiply decimals, ignore the decimal points completely, multiply as whole numbers, then count total decimal places in both numbers and place the point that many digits from the right — e.g. 2.5 × 1.2 → 25×12=300 → 2 total decimal places → 3.00 = 3.</div>
+    <div class="trick">To divide by a decimal, multiply both number and divisor by a power of 10 to clear the decimal from the divisor first — e.g. 4.8 ÷ 0.02 = 480 ÷ 2 = 240 (multiplied both by 100).</div>
+    <div class="trick">Recurring decimals convert instantly to fractions: 0.333... = 1/3, 0.666... = 2/3, 0.142857142857... = 1/7 — recognize these rather than compute.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Calculate 3.6 × 0.05</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Ignore decimals: 36 × 5 = 180<br>
+- Total decimal places = 1 (from 3.6) + 2 (from 0.05) = 3<br>
+- Place point 3 digits from right in 180 → 0.180 = <span class="ans">0.18</span></div>
+    </div>
+    <div class="example">
+      <div class="q">Calculate 12.6 ÷ 0.003</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Multiply both by 1000 to clear decimals: 12600 ÷ 3<br>
+- = <span class="ans">4200</span></div>
+    </div>
+
+    <div class="label fund">HCF & LCM — the fast way (recap + speed layer)</div>
+    <div class="fund">Don't factorize large numbers from scratch under time pressure — use the division method for HCF, and the HCF-LCM product relation to skip a full LCM calculation whenever HCF is already known.</div>
+    <div class="formula">HCF by division method: divide larger by smaller, then divisor by remainder,
+repeat until remainder=0 → last divisor = HCF
+Relation: LCM × HCF = Product of the two numbers (only for exactly 2 numbers)</div>
+    <div class="trick">For 2 numbers, once you have HCF, get LCM instantly as (Number1 × Number2) ÷ HCF — never separately factorize for LCM if HCF is already found.</div>
+    <div class="trick">HCF of fractions = HCF of numerators ÷ LCM of denominators. LCM of fractions = LCM of numerators ÷ HCF of denominators — memorize this reversal, it's a common trap.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find the HCF and LCM of 84 and 126 using the fast method.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Division method: 126÷84 → remainder 42; 84÷42 → remainder 0<br>
+- So HCF = 42<br>
+- LCM = (84×126)÷42 = 10584÷42 = <span class="ans">HCF=42, LCM=252</span></div>
+    </div>
+
+    <div class="label fund">Factors — counting instantly</div>
+    <div class="fund">Never list out factors one by one under time pressure — use prime factorization and a direct formula to count them, and use the same factorization to test divisibility instantly.</div>
+    <div class="formula">If N = a^p × b^q × c^r (prime factorization),
+Number of factors = (p+1)(q+1)(r+1)
+Sum of factors = [(a^(p+1)-1)/(a-1)] × [(b^(q+1)-1)/(b-1)] × ...</div>
+    <div class="trick">To find total factors, prime-factorize N first (using divisibility rules for 2,3,5,7,11 to speed this up), add 1 to each exponent, and multiply — e.g. 360 = 2³×3²×5¹ → (3+1)(2+1)(1+1) = 24 factors.</div>
+    <div class="trick">A perfect square always has an ODD number of total factors — a fast elimination check when a question asks "which of these is a perfect square."</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">How many factors does 180 have?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Prime factorize: 180 = 2²×3²×5¹<br>
+- Number of factors = (2+1)(2+1)(1+1) = 3×3×2<br>
+- = <span class="ans">18 factors</span></div>
+    </div>
+
+    <div class="label fund">Square roots — fast estimation & exact calculation</div>
+    <div class="fund">For perfect squares, the last digit of N tells you the possible last digit(s) of √N instantly — pair this with counting digit-pairs to nail the answer in seconds without long division.</div>
+    <div class="formula">Last digit of N → possible last digit of √N:
+1→1 or 9   4→2 or 8   9→3 or 7   6→4 or 6   5→5   0→0
+Digit-pairs rule: split N into pairs from the right; number of pairs = number of digits in √N</div>
+    <div class="trick">To find √N for a perfect square: (1) count digit-pairs from the right to fix the digit-count of the answer, (2) use the leading digits to bracket the tens digit, (3) use the last-digit rule above to pick between the two candidates.</div>
+    <div class="trick">For non-perfect squares, bracket between the two nearest perfect squares and interpolate linearly for an approximate value — e.g. √50 is between 7²=49 and 8²=64, very close to 49, so √50≈7.07.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find √7396 without long division.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Pair digits from right: 73|96 → 2 pairs → answer has 2 digits<br>
+- 73 lies between 8²=64 and 9²=81 → tens digit = 8<br>
+- Last digit of 7396 is 6 → units digit is 4 or 6 (since 4²=16, 6²=36)<br>
+- Test 84² = 7056 (too low) → so units digit must be the other option<br>
+- <span class="ans">√7396 = 86</span> (check: 86²=7396 ✓)</div>
+    </div>
+    <div class="example">
+      <div class="q">Estimate √130 to one decimal place.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Nearest perfect squares: 11²=121, 12²=144<br>
+- 130 is 9 past 121, and the gap to 144 is 23<br>
+- Fraction of gap ≈ 9/23 ≈ 0.39 → add to 11<br>
+- <span class="ans">√130 ≈ 11.4</span></div>
+    </div>
+
+    <div class="label fund">Cube roots — the exam-favorite shortcut</div>
+    <div class="fund">RRB/SSC almost always test cube roots of perfect cubes only (1 to ~10,000), and this has a near-instant shortcut using the last-digit map plus digit-grouping — much faster than square roots since each last digit maps to exactly ONE possible units digit (no ambiguity).</div>
+    <div class="formula">Last digit of N → last digit of ∛N (unique, unlike square roots):
+1→1  2→8  3→7  4→4  5→5  6→6  7→3  8→2  9→9  0→0
+Grouping rule: split N into groups of 3 digits from the right;
+number of groups = number of digits in ∛N</div>
+    <div class="trick">To find ∛N for a perfect cube: (1) group digits in 3s from the right to get the digit-count of the answer, (2) use the last digit of N to read off the units digit of ∛N directly from the table (no guessing needed), (3) use the leading group to bracket the tens digit via memorized cubes 1³–10³.</div>
+
+    <div class="label examplel">Examples</div>
+    <div class="example">
+      <div class="q">Find ∛17576.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Group from right in 3s: 17|576 → 2 groups → 2-digit answer<br>
+- Last digit of 17576 is 6 → units digit of cube root is 6 (unique)<br>
+- Leading group 17 lies between 2³=8 and 3³=27 → tens digit = 2<br>
+- <span class="ans">∛17576 = 26</span> (check: 26³=17576 ✓)</div>
+    </div>
+    <div class="example">
+      <div class="q">Find ∛571787.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Group from right in 3s: 571|787 → 2 groups → 2-digit answer<br>
+- Last digit of 571787 is 7 → units digit of cube root is 3 (from table)<br>
+- Leading group 571 lies between 8³=512 and 9³=729 → tens digit = 8<br>
+- <span class="ans">∛571787 = 83</span> (check: 83³=571787 ✓)</div>
+    </div>
+
+    <div class="label fund">Going Deeper — combining tricks under time pressure</div>
+    <div class="fund">Real exam questions rarely test one trick in isolation — they stack a square/cube identification with a percentage or an approximation step. Train yourself to spot which shortcut applies FIRST (nearby-base squaring? last-digit rule? decimal shift?) before starting to calculate, since picking the right trick is often 80% of the time saved.</div>
+
+    <div class="label examplel">More Practice</div>
+    <div class="example">
+      <div class="q">Simplify: (0.05 × 0.4) ÷ 0.02</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Numerator: ignore decimals, 5×4=20, total 3 decimal places → 0.020 = 0.02<br>
+- Now 0.02 ÷ 0.02<br>
+- = <span class="ans">1</span></div>
+    </div>
+    <div class="example">
+      <div class="q">Which is larger: √175 or ∛5832?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- √175: between 13²=169 and 14²=196, so √175 ≈13.2<br>
+- ∛5832: group as 5|832 → 2 digits; last digit 2→units digit 8; leading 5 is between 1³=1 and 2³=8 → tens digit=1 → 18³=5832<br>
+- Compare 13.2 vs 18 → <span class="ans">∛5832 is larger</span></div>
+    </div>
+
+    <button class="done-btn">Mark as revised</button>
+  </div></div>
+</div>
+
 
 </div><!-- end maths -->
 
