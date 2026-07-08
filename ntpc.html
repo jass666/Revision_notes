@@ -436,6 +436,46 @@ LCM of fractions = <span class="frac"><span class="num">LCM(numerators)</span><s
 - <span class="ans">1% net decrease</span></div>
     </div>
 
+    <div class="label fund">🧭 More Percentage Techniques — the ones that trip people up</div>
+    <div class="fund">Beyond simple "find x% of y" and equal-rate successive changes, four patterns show up again and again in exams: working BACKWARD from a final value to the original (reverse percentage), chaining DIFFERENT rates over several periods (not the same r each time), figuring out how a fraction's own value shifts when both its top and bottom change by different percentages, and stacking a markup + discount + tax in one line. Each has its own one-line shortcut below — recognizing which pattern a question is, is 90% of the battle.</div>
+
+    <div class="label trickl">Advanced Tricks — Part 2</div>
+    <div class="trick"><b>Reverse percentage (finding the ORIGINAL value):</b> if a value became V after increasing by r%, original = V × 100/(100+r); if it became V after decreasing by r%, original = V × 100/(100−r). Do NOT take r% of V and subtract/add — that silently uses the wrong base and gives the wrong answer.</div>
+    <div class="trick"><b>Different rate each period:</b> when the rate itself changes every year (r1%, r2%, r3%, ... — not the same r), just multiply the growth factors one after another: Final = P×(1+r1/100)×(1+r2/100)×(1+r3/100)×... Never average the rates; averaging only works when the base amount stays fixed, which it doesn't here.</div>
+    <div class="trick"><b>Fraction whose numerator AND denominator both change:</b> if the numerator changes by a% and the denominator by b% (each ± ), the fraction's own % change = [(a−b)/(100+b)]×100. This is really just the reverse-percentage idea applied to a ratio instead of a plain number.</div>
+    <div class="trick"><b>Markup → discount → tax chains:</b> treat each step as its own multiplying factor on 100 and chain them left to right, exactly like successive % changes — e.g. 30% markup then 20% discount then 5% tax is 100×1.30×0.80×1.05, not three separate percentages added together.</div>
+
+    <div class="label examplel">More Percentage Practice</div>
+    <div class="example">
+      <div class="q">The population of a village, after increasing by 10% this year, is now 6,600. Find last year's population.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- This is reverse percentage — 6,600 is the value AFTER a 10% increase, so it is 110% of the original, not 100%<br>
+- Original = V × 100/(100+r) = 6600 × 100/110<br>
+- = 660000/110 = <span class="ans">6,000</span></div>
+    </div>
+    <div class="example">
+      <div class="q">In an exam, the maximum marks are increased by 20% and a student's score increases by 10% (compared to a previous exam). Find the % change in the student's percentage (score ÷ maximum).</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- The fraction here is score/maximum — numerator (score) changes by a=+10%, denominator (maximum) changes by b=+20%<br>
+- Use [(a−b)/(100+b)]×100 = [(10−20)/120]×100 = (−10/120)×100 = <span class="ans">−8.33% (the student's percentage falls by 8.33%)</span><br>
+- Quick check with real numbers: old max=100, old score=50 (50%); new max=120, new score=55 → new percentage=55/120=45.83%, a fall of (50−45.83)/50×100 ≈ 8.33% ✓</div>
+    </div>
+    <div class="example">
+      <div class="q">A sum of ₹8,000 grows by 10% in year 1, then by 20% in year 2, then falls by 5% in year 3. Find the value at the end of year 3.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Different rate each year, so chain the three factors directly — don't average 10, 20, −5<br>
+- Final = 8000 × 1.10 × 1.20 × 0.95<br>
+- 8000×1.10=8800; 8800×1.20=10,560; 10,560×0.95 = <span class="ans">₹10,032</span></div>
+    </div>
+    <div class="example">
+      <div class="q">A shopkeeper marks up his cost price by 30%, then offers a 20% discount on the marked price, and finally charges 5% tax on the discounted price. Find the overall % change from cost price to the amount the customer actually pays.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Chain all three multiplying factors on a base of 100, in the order they're applied: markup, then discount, then tax<br>
+- 100 × 1.30 × 0.80 × 1.05<br>
+- 100×1.30=130; 130×0.80=104; 104×1.05=109.2<br>
+- Customer pays 109.2% of cost price → overall <span class="ans">9.2% increase</span></div>
+    </div>
+
     <button class="done-btn">Mark as revised</button>
   </div></div>
 </div>
@@ -468,7 +508,47 @@ LCM of fractions = <span class="frac"><span class="num">LCM(numerators)</span><s
 - C's share = (C's parts ÷ total parts) × total amount = (5/10) × 1200 = <span class="ans">₹600</span></div>
     </div>
 
-    
+    <div class="label fund">Fast-Solving Toolkit — speed over algebra</div>
+    <div class="fund">Most ratio questions get solved SLOWLY because people set up an equation and cross-multiply from scratch every time. The fast approach is to recognize the question TYPE first (splitting a total, comparing two ratios, combining ratios, or a ratio changing after some quantity is added/removed) and jump straight to the matching shortcut below instead of re-deriving it.</div>
+
+    <div class="label trickl">Speed tricks</div>
+    <div class="trick">Dividing a total in a ratio: never find "1 part" as a separate step in your head — go straight to (share's parts ÷ total parts) × total, in one line, e.g. splitting ₹4500 in 4:5:6 → total parts=15, so the middle share = (5/15)×4500 = ₹1500 directly.</div>
+    <div class="trick">Comparing two ratios (which is bigger, a:b or c:d?): cross-multiply instead of converting to decimals — a:b > c:d exactly when a×d > b×c. E.g. is 5:7 > 8:11? Check 5×11=55 vs 7×8=56 → 55<56, so 5:7 < 8:11. This is faster and error-proof compared to computing 5/7=0.714 and 8/11=0.727.</div>
+    <div class="trick">"Ratio changes after adding/subtracting a fixed quantity": always use the k-method (a=mk, b=nk) and write ONE equation from the new ratio — don't introduce two separate variables. This turns a 2-variable problem into a 1-variable one instantly.</div>
+    <div class="trick">Combining 3+ ratios (a:b, b:c, c:d given, find a:b:c:d): don't solve pairwise one at a time — LCM all the middle terms in one shot by chaining multiplications, so a:b:c:d comes out in a single pass instead of three merge steps.</div>
+    <div class="trick">Ratio ↔ percentage/fraction conversion should be instant, not calculated: a:b share of a is a/(a+b) as a fraction, then use your memorized fraction-percentage table (from the Approximation topic) to read off the % directly — e.g. ratio 3:2 → A's share = 3/5 = 60% (no division needed if 3/5 is recognized on sight).</div>
+    <div class="trick">Inverse proportion questions (more workers→less time, more speed→less time) can be solved by direct multiplication, skipping the "unitary method" writeup: if x1 workers take d1 days, then for x2 workers, days = (x1×d1)/x2 — one line, no separate "1 worker takes..." step.</div>
+
+    <div class="label examplel">Speed Examples</div>
+    <div class="example">
+      <div class="q">Which ratio is larger: 9:13 or 11:16?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Cross-multiply instead of dividing: compare 9×16 vs 13×11<br>
+- 9×16=144, 13×11=143<br>
+- 144>143, so 9/13 > 11/16 → <span class="ans">9:13 is larger</span></div>
+    </div>
+    <div class="example">
+      <div class="q">₹6000 is divided in the ratio 2:3:5. Find the largest share directly (no intermediate steps).</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Total parts = 2+3+5 = 10<br>
+- Largest share = (5/10)×6000 in one line<br>
+- = <span class="ans">₹3000</span></div>
+    </div>
+    <div class="example">
+      <div class="q">If A:B = 2:3, B:C = 5:7, C:D = 4:9, find A:B:C:D in one pass.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Multiply the three ratios term-by-term to chain them: A:B:C:D = (2×5×4) : (3×5×4) : (3×7×4) : (3×7×9)<br>
+- = 40 : 60 : 84 : 189<br>
+- Check this divides by common factors if any — here no common factor across all four, so <span class="ans">A:B:C:D = 40:60:84:189</span></div>
+    </div>
+    <div class="example">
+      <div class="q">12 workers finish a job in 15 days. How many days will 18 workers take?</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Inverse proportion (more workers → fewer days): days = (x1×d1)/x2<br>
+- = (12×15)/18 = 180/18<br>
+- = <span class="ans">10 days</span></div>
+    </div>
+
     <div class="label fund">Going Deeper</div>
     <div class="fund">The <b>mean proportional (geometric mean)</b> between two numbers a and c is the value b such that a:b = b:c, i.e. b² = ac. This extends the idea of proportion beyond simple ratios and appears when combining two separate ratios into one combined ratio (a:b:c).</div>
     <div class="label trickl">Advanced Tricks</div>
@@ -489,6 +569,35 @@ LCM of fractions = <span class="frac"><span class="num">LCM(numerators)</span><s
 - Scale a:b by ×4 → a:b = 8:12<br>
 - Scale b:c by ×3 → b:c = 12:15<br>
 - Now b matches (=12) in both, so combine directly → <span class="ans">a:b:c = 8:12:15</span></div>
+    </div>
+
+    <div class="label fund">🧭 Maneuvering Harder Ratio Problems — "weighted" ratios (investment/time-style)</div>
+    <div class="fund">The ratio questions that feel like a headache are almost never simple "divide a total" problems — they're <b>weighted</b> ratios, where each person's share depends on TWO factors multiplied together (amount × time, quantity × concentration, speed × time, etc.), and on top of that the amount often changes partway through (money is added or withdrawn, someone joins late or leaves early — see the <b>Partnership</b> topic for the full worked method). The general skill that unlocks all of these is the same 3-step move every time, regardless of the story dressed around it.</div>
+
+    <div class="label trickl">The 3-step move for any "changing quantity" ratio problem</div>
+    <div class="trick"><b>Step 1 — Identify the TWO factors being multiplied.</b> Ratio problems with a "headache" feel are hiding a hidden second variable: usually TIME (money invested for X months, a tap open for X hours) or CONCENTRATION (mixture problems). Ask: "ratio of WHAT quantity, weighted by WHAT duration/strength?"</div>
+    <div class="trick"><b>Step 2 — Break any change into separate constant blocks.</b> The instant an amount is added, removed, or a person joins/leaves, that's a signal to split the timeline there. Never try to average a changing quantity — compute (value × duration) for each constant block separately, then add the blocks for that person/quantity.</div>
+    <div class="trick"><b>Step 3 — Form the ratio from the TOTALS, then divide like normal.</b> Once each person/quantity has one final weighted total, you're back to an ordinary "divide in this ratio" problem — total parts, (share's parts ÷ total parts) × whole, exactly like the simple examples above. The complexity is entirely front-loaded into Steps 1–2; Step 3 is always easy.</div>
+    <div class="trick">If a problem gives dates instead of durations (e.g. "invested from 1 April to 30 September"), convert to a plain month-count FIRST, before touching Step 1 — don't try to do date arithmetic and ratio arithmetic in the same line.</div>
+
+    <div class="label examplel">Worked Example — weighted ratio with a mid-way change</div>
+    <div class="example">
+      <div class="q">Two tanks are being filled. Tank X receives water at 8 litres/min for the first 20 minutes, then the rate is increased to 12 litres/min for the next 10 minutes. Tank Y receives water at a constant 10 litres/min for the full 30 minutes. Find the ratio of total water collected in X to that in Y.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Step 1: the hidden second factor here is TIME — total water = rate × time, in separate constant-rate blocks<br>
+- Step 2 (Tank X has a rate change, so split it): first block 8×20=160; second block 12×10=120 → Total X = 160+120 = 280<br>
+- Tank Y has no change, one block: 10×30 = 300<br>
+- Step 3: form the ratio of the two TOTALS → X:Y = 280:300, divide by 20 → <span class="ans">14:15</span></div>
+    </div>
+    <div class="example">
+      <div class="q">A, B and C rent a pasture. A grazes 10 cows for 7 months, B grazes 12 cows for 5 months, and C grazes 15 cows for 3 months, but after the first 2 months C adds 5 more cows for the remaining 1 month of his stay. If total rent is ₹1,010, find C's share.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Step 1: hidden second factor is TIME again — rent share ∝ (cows × months), same idea as capital × time in Partnership<br>
+- A: 10×7 = 70 (no change, one block)<br>
+- B: 12×5 = 60 (no change, one block)<br>
+- C has a change after 2 of his 3 months, so split into two blocks: first 2 months at 15 cows: 15×2=30; last 1 month at 15+5=20 cows: 20×1=20 → Total C = 30+20 = 50<br>
+- Step 3: weights A:B:C = 70:60:50 → divide by 10 → 7:6:5 (sum = 18)<br>
+- C's share = (5/18) × 1010 = <span class="ans">₹280.56</span></div>
     </div>
 
     <button class="done-btn">Mark as revised</button>
@@ -1383,6 +1492,52 @@ P(not E) = 1 − P(E)</div>
 - First 6 months at ₹10,000: 10000×6 = 60,000<br>
 - After withdrawing ₹4000, remaining capital = 10000−4000 = 6000, for the next 6 months: 6000×6 = 36,000<br>
 - Total capital-months = 60,000+36,000 = <span class="ans">96,000</span></div>
+    </div>
+
+    <div class="label fund">🧭 The Master Method — Timeline / Capital-Time Ledger (for messy, multi-transaction problems)</div>
+    <div class="fund">These are the questions that feel like a headache: several partners, each adding money, withdrawing money, joining late, or leaving early — sometimes more than once. They're only scary because there's no single plug-in formula. The fix is to stop hunting for a formula and instead build one small "ledger" per partner: mark every event on a 0-to-12-month timeline, chop the year into intervals of CONSTANT capital, compute (capital × interval length) for each interval, and add those up to get that partner's total "weight". Once every partner has one weight number, the rest is an ordinary ratio-division problem — exactly like splitting a total in a ratio, which you already know how to do fast.</div>
+
+    <div class="label trickl">🎯 Speed Tricks for Multi-Transaction Problems</div>
+    <div class="trick"><b>Sketch it, don't imagine it.</b> Draw a rough line 0───12 for each partner and jot the capital above each segment as you read the question. This single habit is what prevents 90% of mistakes — missed intervals, double-counted months, wrong join/exit points.</div>
+    <div class="trick"><b>Withdrawal ≠ new problem.</b> A withdrawal or addition never changes any PAST interval — it only changes the capital used in intervals from that point onward. Don't go back and "correct" earlier months.</div>
+    <div class="trick"><b>Exit means stop, not zero.</b> If a partner leaves the business entirely, their ledger simply ends there — you don't need to write "0 × remaining months"; you just stop adding intervals for them after the exit point.</div>
+    <div class="trick"><b>Late entry means start late.</b> A partner joining mid-year never gets credited for months before they joined — their very first interval begins at their join-month, not at month 0.</div>
+    <div class="trick"><b>Loss splits exactly like profit.</b> There is no separate "loss formula" — the same capital×time ratio divides a loss just as it divides a profit. Only the word changes, not the method.</div>
+    <div class="trick"><b>Unify the time unit first.</b> If the question mixes months and years, or gives actual dates (e.g. "joins on 1st May"), convert everything to months before multiplying — mixing units is the single most common silent error.</div>
+    <div class="trick"><b>Cancel common factors early, even with 3+ intervals.</b> Once every partner's weight is computed, divide all of them by their GCD immediately (as with any ratio) — this keeps the final division arithmetic small no matter how many transactions fed into it.</div>
+
+    <div class="label examplel">Multi-Transaction Practice (the real headache-makers)</div>
+    <div class="example">
+      <div class="q">A starts with ₹12,000 for the full year. B starts with ₹9,000, but withdraws ₹3,000 after 4 months for the rest of the year. C starts with ₹6,000 and, after 6 months, adds another ₹6,000 for the remaining period. If the year-end profit is ₹56,000, find each partner's share.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Build each partner's ledger as a chain of (capital × interval) blocks:<br>
+- <b>A</b> — one interval, full year: 12000×12 = 144,000<br>
+- <b>B</b> — first 4 months at ₹9,000: 9000×4=36,000; then capital drops to 9000−3000=6000 for the remaining 8 months: 6000×8=48,000 → total B = 36,000+48,000 = 84,000<br>
+- <b>C</b> — first 6 months at ₹6,000: 6000×6=36,000; then capital rises to 6000+6000=12,000 for the remaining 6 months: 12000×6=72,000 → total C = 36,000+72,000 = 108,000<br>
+- Weights: A:B:C = 144000:84000:108000 → divide by 12,000 → <b>12:7:9</b> (sum of parts = 28)<br>
+- Value of 1 part = 56000/28 = 2000<br>
+- A's share = 12×2000 = <span class="ans">₹24,000</span>, B's share = 7×2000 = <span class="ans">₹14,000</span>, C's share = 9×2000 = <span class="ans">₹18,000</span></div>
+    </div>
+    <div class="example">
+      <div class="q">A and B start a business with ₹15,000 and ₹12,000. After 4 months, A withdraws completely and leaves the business, and at the same time C joins with ₹18,000. At year-end the profit is ₹58,000. Find each person's share.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- A's ledger has only ONE interval — from month 0 to month 4, then it simply stops (exit, not zero):<br>
+- <b>A</b>: 15000×4 = 60,000<br>
+- <b>B</b> stays in for the entire year unaffected by A's exit: 12000×12 = 144,000<br>
+- <b>C</b>'s ledger starts only from month 4 (late entry), running for the remaining 8 months: 18000×8 = 144,000<br>
+- Weights: A:B:C = 60000:144000:144000 → divide by 12,000 → <b>5:12:12</b> (sum = 29)<br>
+- Value of 1 part = 58000/29 = 2000<br>
+- A's share = 5×2000 = <span class="ans">₹10,000</span>, B's share = 12×2000 = <span class="ans">₹24,000</span>, C's share = 12×2000 = <span class="ans">₹24,000</span></div>
+    </div>
+    <div class="example">
+      <div class="q">P starts a business with ₹20,000. After 3 months, Q joins with ₹15,000. After a further 3 months (i.e. 6 months from the start), P increases his capital by ₹5,000 and keeps it that way till year-end. The business makes a LOSS of ₹9,900 for the year. Find each partner's share of the loss.</div>
+      <span class="sol-toggle" onclick="toggleSol(this)">Show solution ▾</span>
+      <div class="sol">- Same ledger method — a loss is divided exactly like a profit, just don't let the word "loss" make you think there's a different rule<br>
+- <b>P</b>: months 0–6 at ₹20,000: 20000×6=120,000; months 6–12 at 20000+5000=25,000: 25000×6=150,000 → total P = 270,000<br>
+- <b>Q</b> joins at month 3, so invests for the remaining 9 months at a flat ₹15,000: 15000×9 = 135,000<br>
+- Weights: P:Q = 270000:135000 → divide by 135,000 → <b>2:1</b> (sum = 3)<br>
+- Value of 1 part = 9900/3 = 3300<br>
+- P's share of loss = 2×3300 = <span class="ans">₹6,600</span>, Q's share of loss = 1×3300 = <span class="ans">₹3,300</span></div>
     </div>
 
     <button class="done-btn">Mark as revised</button>
